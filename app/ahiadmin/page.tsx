@@ -10,7 +10,7 @@ export default function adminPage() {
                 <Header />  
            </div>
 
-           <main className="flex flex-col justify-start items-center py-4 px-4  md:w-screen md:h-screen lg:w-screen lg:h-screen">
+           <main className="flex flex-col justify-start items-center p-2  md:w-screen md:h-screen lg:w-screen lg:h-screen">
                  <AdminPage />
            </main>
            <div className="md:hidden lg:hidden">

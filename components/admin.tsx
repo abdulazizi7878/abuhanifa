@@ -1,6 +1,6 @@
 export default function AdminPage(){
     return(
-        <div className="flex justify-between w-full h-full">
+        <div className="flex justify-center items-start  w-full h-full">
             <AdminHeader />
             <AdminMain />
         </div>
@@ -11,7 +11,7 @@ export default function AdminPage(){
 
 function AdminHeader(){
     return(
-        <div className="w-[20%] h-full flex flex-col items-start gap-4 border-r border-r-(--border)">
+        <div className="w-50 h-full flex-col items-start gap-4 border-r border-r-(--border) hidden md:flex lg:flex  ">
 
             <div className="w-[99%] h-[90%] flex flex-col justify-start items-center gap-4">
 
@@ -23,46 +23,46 @@ function AdminHeader(){
                 <div className="border border-(--border) rounded-4xl px-4 py-3 w-49/52 h-[90%] flex flex-col gap-4 overflow-scroll">
                   
                   <div className="w-49/50">
-                        <p className="pl-4 text-sm">View</p>
+                        <p className="p-4 text-sm">View</p>
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="/ahiadmin/status">Status</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="/ahiadmin/orders">Orders</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="/ahiadmin/comments">Messages & Comments</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="/ahiadmin/registered">Registered</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/status">Status</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/orders">Orders</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/comments">Messages & Comments</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/registered">Registered</a>
                             </ul>
                         </nav>                    
                     </div>
 
                     <div className="w-49/50">
-                        <p className="pl-4 text-sm">blogs</p>
+                        <p className="p-4 text-sm">blogs</p>
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="/ahiadmin/create/blog">Create blog</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Edit blog</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Remove blog</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/create/blog">Create</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Edit</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Remove</a>
                             </ul>
                         </nav>                    
                     </div>
                     
                     <div className="w-49/50">
-                        <p className="pl-4 text-sm">product</p>
+                        <p className="p-4 text-sm">product</p>
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Create Product</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Edit Product</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Remove Product</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Create</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Edit </a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Remove </a>
                             </ul>
                         </nav>                    
                     </div>
                                         
                     <div className="w-49/50">
-                        <p className="pl-4 text-sm">promotion</p>
+                        <p className="p-4 text-sm">promotion</p>
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Create Promotion</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Edit Promotion</a>
-                                <a className="bg-(--secondary) w-11/12 text-center text-sm rounded-xl duration-300 hover:bg-(--secondary)/80" href="">Remove Promotion</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Create </a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Edit </a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Remove </a>
                             </ul>
                         </nav>                    
                     </div>
@@ -86,7 +86,10 @@ function AdminHeader(){
 
 function AdminMain() {
     return(
-        <div className="w-[70%]">
+        <div className="w-11/12 h-full border overflow-y-scroll">
+            <div>
+
+            </div>
             <h1>
                 Im admin main
             </h1>
