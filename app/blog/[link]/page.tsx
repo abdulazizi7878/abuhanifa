@@ -3,9 +3,10 @@ import Footer from "@/components/footer";
 import Blog from "@/components/blog";
 import Blogs from "@/components/blogs";
 
-export default async function blog({params}){
+export default async function blog(params){
 
-    const {link} = await params;
+    const slug = await params?.params;
+    const link = slug?.link;
 
     return(
         <>
