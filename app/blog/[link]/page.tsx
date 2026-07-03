@@ -6,7 +6,10 @@ import Blogs from "@/components/blogs";
 export default async function blog(params){
 
     const slug = await params?.params;
-    const link = slug?.link;
+    const link = await slug?.link;
+
+    console.log(link);
+    
 
     return(
         <>
