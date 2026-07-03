@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Menbere:wght@100..700&family=Ubuntu&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --border:#0000002c;
+  --primary: #753aa0f6;
+  --secondary:#5d77ec;
+  --primary-font: 'Ubuntu', sans-serif;
+  --secondary-font: 'Changa One', arial;
+  --third-font: 'Menbere', sans-serif;
 }
 
 @theme inline {
@@ -12,15 +19,79 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+.dark {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --border:#ffffff77;
+    --primary: #00bbffe1;
+    --secondary:#5d3d91;
   }
+
+html{
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--primary-font), Arial, sans-serif;
+}
+::-webkit-scrollbar{
+  width: 0;
+}
+
+._AY{
+  animation: APPEAR linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+@keyframes APPEAR {
+  from{
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+._AX{
+  animation: AX linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+@keyframes AX {
+  from{
+    transform: translateX(100%);
+    opacity: .4;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+._AXX{
+  animation: AXX linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+@keyframes AXX {
+  from{
+    transform: translateX(-100%);
+    opacity: .4;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+._LI::before{
+  content: "— ";
+}
+
+
+@keyframes breath {
+  from{
+    padding: ;
+  }
 }
