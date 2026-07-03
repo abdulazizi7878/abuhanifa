@@ -3,12 +3,16 @@ import Footer from "@/components/footer";
 import Blog from "@/components/blog";
 import Blogs from "@/components/blogs";
 
-export default async function blog(params){
 
-    const slug = await params?.params;
-    const link = await slug?.link;
+type PageProps = {
+  params: Promise<{
+    link: string;
+  }>;
+};
 
-    console.log(link);
+export default async function blog({params}){
+
+    const {link} = await params;
     
 
     return(
