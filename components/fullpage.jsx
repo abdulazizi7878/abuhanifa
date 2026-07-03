@@ -250,7 +250,7 @@ function Cont(){
                     </h1>    
                 </div> 
 
-                <div className="mx-auto py-6 px-10 border border-(--border) rounded-2xl">
+                <div className="mx-auto max-w-[95%] py-6 px-10 border border-(--border) rounded-2xl">
                     <div className="">
                         <img src="/images/profile-1.jpg" alt="OWNER'S IMAGE" className="size-35 rounded-full" />
                     </div>
@@ -349,7 +349,7 @@ function Img({src}){
 }
 function Why({eng, amh, dir}){
     return(
-        <div className={`${dir} w-full flex flex-col gap-2  md:w-[90vw] lg:w-[70vw] border border-(--border) bg-purple-950/60 p-4 rounded-full duration-300 hover:shadow-2xl hover:shadow-foreground/50`}> 
+        <div className={`${dir} max-w-[99%] flex flex-col gap-2  md:w-[90vw] lg:w-[70vw] border border-(--border) bg-purple-950/60 p-4 rounded-full duration-300 hover:shadow-2xl hover:shadow-foreground/50`}> 
             <p className="text-center text-white text-sm sm:text-md md:text-lg lg:text-lg ">{eng}.</p>
             <p className="text-center text-white text-[12px] sm:text-sm md:text-sm lg:text-sm font-[family-name:var(--third-font)]">{amh}</p>
         </div>
