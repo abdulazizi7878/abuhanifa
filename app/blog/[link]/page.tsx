@@ -10,7 +10,7 @@ type PageProps = {
   }>;
 };
 
-export default async function blog({params}){
+export default async function blog({params}:PageProps){
 
     const {link} = await params;
     
