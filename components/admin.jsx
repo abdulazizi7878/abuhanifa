@@ -1,8 +1,13 @@
+"use client"
+
+import { useEffect, useState } from "react"
+
 export default function AdminPage(){
     return(
-        <div className="flex justify-center items-start  w-full h-full">
+        <div className="flex justify-center items-start  w-full min-h-[70vh]">
             <AdminHeader />
             <AdminMain />
+            <AdminMainSm />
         </div>
     )
 }
@@ -26,10 +31,11 @@ function AdminHeader(){
                         <p className="p-4 text-sm">View</p>
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/status">Status</a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/orders">Orders</a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/comments">Messages & Comments</a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/registered">Registered</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/view/orders">Orders</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/view/comments">Messages & Comments</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/view/blogs">Blogs</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/view/products">Products</a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/view/promotions">Promotions</a>
                             </ul>
                         </nav>                    
                     </div>
@@ -39,8 +45,6 @@ function AdminHeader(){
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
                                 <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/create/blog">Create</a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Edit</a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Remove</a>
                             </ul>
                         </nav>                    
                     </div>
@@ -50,8 +54,6 @@ function AdminHeader(){
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
                                 <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Create</a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Edit </a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Remove </a>
                             </ul>
                         </nav>                    
                     </div>
@@ -60,9 +62,7 @@ function AdminHeader(){
                         <p className="p-4 text-sm">promotion</p>
                         <nav>
                             <ul className="flex flex-col gap-2 justify-center items-center">
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Create </a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Edit </a>
-                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="">Remove </a>
+                                <a className="border-y border-y-(--border)/50 w-11/12 text-center text-[12px] duration-300 hover:bg-foreground/10" href="/ahiadmin/create/promotion">Create </a>
                             </ul>
                         </nav>                    
                     </div>
@@ -82,7 +82,7 @@ function AdminHeader(){
 
 function AdminMain() {
     return(
-        <div className="w-11/12 h-full border overflow-y-scroll">
+        <div className="w-11/12 h-full border hidden md:flex overflow-y-scroll">
             <div>
 
             </div>
@@ -93,6 +93,35 @@ function AdminMain() {
     )
 }
 
+function AdminMainSm(){
+    return(
+        <div className="mt-25 w-full flex flex-col justify-center items-center gap-y-6 md:hidden">
+            <div>
+                <h1 className="text-2xl">Welcome to Admin Page</h1>
+            </div>
+            <div className="w-full flex flex-wrap justify-center items-center gap-6">
+                <LinkDivs text={"Create Blog"} link={"/ahiadmin/create/blog"}  />
+                <LinkDivs text={"Create Promotion"} link={"/ahiadmin/create/promotion"}  />
+                <LinkDivs text={"Create Product"} link={"/ahiadmin/create/product"}  />
+                <LinkDivs text={"View Blogs"} link={"/ahiadmin/view/blog"}  />
+                <LinkDivs text={"View Comments & messages"} link={"/ahiadmin/view/comments"}  />
+                <LinkDivs text={"View Orders"} link={"/ahiadmin/view/orders"}  />
+                <LinkDivs text={"View Products"} link={"/ahiadmin/view/products"}  />
+                <LinkDivs text={"View Promotions"} link={"/ahiadmin/view/promotions"}  />
+            </div>
+        </div>
+    )
+}
+
+function LinkDivs({text,link}){
+
+    return(
+    <div className={`bg-(--secondary) size-35 border border-(--border) px-4 flex justify-center items-center rounded-2xl shadow-lg relative`}>
+        <p className="text-center">{text}</p>
+        <a href={link} className="absolute inset-0"></a>
+    </div>
+    )
+}
 
 
 
