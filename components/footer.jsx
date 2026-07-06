@@ -1,8 +1,8 @@
 export default function Footer(){
     return(
-        <footer className="w-full pt-10 flex flex-col justify-center items-center gap-10 border-t border-t-[var(--border)]">
+        <footer className="w-full pt-10 flex flex-col justify-center items-center gap-10 border-t border-t-(--border)">
 
-            <div className="w-11/12 lg:10/12 flex flex-wrap justify-between items-center mx-auto gap-y-10">
+            <div className="w-11/12 lg:10/12 flex flex-wrap justify-center items-center mx-auto gap-y-10">
                <div className="">
                     <div className="w-fit flex flex-col gap-4 justify-center items-center">
                         <img src="/images/logo.jpg" alt="ABU_HANIFA_INSTALLATION" className="rounded-full size-35" />
@@ -12,7 +12,7 @@ export default function Footer(){
                     </div>
                </div>
 
-               <div className="w-full sm:w-full md:w-full lg:w-2/3 flex flex-wrap justify-around">
+               <div className="w-full sm:w-full md:w-full lg:w-2/3 flex flex-wrap gap-y-6 justify-around">
 
                     <div className="">
                         <p className="font-bold text-center underline">Quick Links</p>
@@ -20,6 +20,8 @@ export default function Footer(){
                             <ul className="flex flex-col justify-center items-center">
                                 <li><a href="/#">Home</a></li>
                                 <li><a href="/contact">Contact</a></li>
+                                <li><a href="/order">Order</a></li>
+                                <li><a href="/blog">Blog</a></li>
                                 <li><a href="/#services">Services</a></li>
                                 <li><a href="/#mission">Mission</a></li>
                             </ul>
@@ -41,7 +43,7 @@ export default function Footer(){
                </div>
             </div>
 
-            <div className="mt-15  gap-x-6 gap-y-4 flex flex-wrap  items-center">
+            <div className="mt-15  gap-x-6 gap-y-4 flex flex-wrap w-11/12 justify-center items-center">
 
                 <div className="relative">
                     <div className="rounded-full py-1.5 px-2 pr-6 bg-blue-400">
@@ -94,9 +96,10 @@ export default function Footer(){
                 </div>
             </div>
 
-            <div className="my-4 flex flex-col bg-foreground duration-100 py-2 px-7 sm:px-20 md:px-30 lg:px-40 rounded-full" style={{animation:"breath 1s ease infinite"}}>
-                <span className="text-center text-sm text-background">ABU-HANIFA INSTALLATION | 2026 &copy; All right reserved  </span>
-                <span className="text-center text-sm text-background">Deigned and Developed by <a href="https://t.me/abdulazizseman">Abdu</a></span>
+            <div className="my-4 w-11/12 flex flex-col  py-2 px-4 sm:px-10 md:px-10 lg:px-10 rounded-full">
+                <span className="text-center text-[11px] sm:text-sm ">ABU-HANIFA INSTALLATION | 2026 &copy; ALL RIGHT RESERVED </span>
+                <a href="https://t.me/abdulazizseman" className="text-center text-[11px] sm:text-sm ">DESIGNED AND DEVELOPED BY ...ABDU...</a>
+                <hr className="my-4" />
             </div>
 
         </footer>

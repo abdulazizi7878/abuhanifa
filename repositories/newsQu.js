@@ -2,7 +2,7 @@ import {db} from "@/lib/db";
 
 
 export async function ShowAllBlogs() {
-    const [result] = await db.query("SELECT * FROM blogs;");
+    const [result] = await db.query("SELECT * FROM blog;");
     
     if (!result) throw new Error("We couldn't found Blogs");
     
@@ -13,7 +13,7 @@ export async function ShowAllBlogs() {
 
 export async function ShowBlog(link) {
     const [result] = await db.query(
-        "SELECT * FROM blogs WHERE link = ?",
+        "SELECT * FROM blog WHERE link = ?",
         [link]
     );
     
@@ -25,10 +25,10 @@ export async function ShowBlog(link) {
     };
 }
 
-export async function InsertComment(email,comment,blogId) {
+export async function InsertComment(name,email,comment,blogId) {
     const [result] = await db.query(
-        "INSERT INTO comments (email,comment,blog_id) VALUES (?,?,?);",
-        [email,comment,blogId]
+        "INSERT INTO comments (name,email,comment,blog_id) VALUES (?,?,?,?);",
+        [name,email,comment,blogId]
     );
 
     if (!result) throw new Error("Comment cann't be posted!");
@@ -40,7 +40,7 @@ export async function InsertComment(email,comment,blogId) {
 
 export async function ShowComments(blogId) {
     const [result] = await db.query(
-        "SELECT comment FROM comments WHERE blog_id = ? ORDER BY id DESC",
+        "SELECT comment, name FROM comments WHERE blog_id = ? ORDER BY id DESC",
         [blogId]
     );
 
@@ -49,4 +49,11 @@ export async function ShowComments(blogId) {
     return{
         result
     }
+}
+
+export async function InserBlog(title,description,link) {
+    const [result] = await db.query(
+        "INSERT INTO blog (title, description, link) VALUE(?,?,?)",
+        [title,description,link]
+    )
 }

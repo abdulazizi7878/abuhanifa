@@ -66,11 +66,7 @@ function AdminHeader(){
                             </ul>
                         </nav>                    
                     </div>
-
                 </div>
-
-
-
 
             </div>
 

@@ -53,7 +53,7 @@ export default function Header(){
     return(
         <div className="px-2 py-4 flex flex-col justify-center items-center w-full h-fit fixed top-0 left-0 z-10">
             <header 
-            className="w-[100%] sm:w-[98%] md:w-[95%] lg:w-[93%] border-1 border-[var(--border)] p-3 px-6  dark:bg-background/60 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15"
+            className="w-full sm:w-[98%] md:w-[95%] lg:w-[93%] border-1 border-(--border) p-3 px-6  dark:bg-background/60 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15"
             >
                 <div className="hd w-full flex justify-between items-center">
 
@@ -76,9 +76,18 @@ export default function Header(){
                     <div className="border bg-foreground flex items-center gap-x-4  md:gap-x-6 lg:gap-x-6 px-5 py-2 rounded-full">
 
                         <div className="menu cursor-pointer" onClick={()=>{setNavvisible(!isNavVisible)}}>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--background)">
-                                 <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
-                            </svg>
+                            {
+                                (isNavVisible ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--background)">
+                                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+                                    </svg>
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg"  height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--background)">
+                                        <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+                                    </svg>                                    
+                                ))
+                            }
+
                         </div>
 
                         <div className="theme transition-all duration-300 border-1  border-background/15 rounded-[8px] bg-background/20 hover:bg-background/25 cursor-pointer  px-2 py-1" onClick={()=>{
@@ -89,18 +98,19 @@ export default function Header(){
 
                         </div>
                     </div>
-                </div>
+                </div>       
+            </header>
 
-            </header>   
+            <Nav isNavVisible={isNavVisible} onClick={()=>(setNavvisible(!isNavVisible))} /> 
         </div>
     )
 }
 
 
-function Nav(){
+function Nav({isNavVisible, onClick}){
     return(
-            <div className={`flex bg-red-50 justify-end w-26/27 min-h-40 py-2 duration-400 translate-x-full`} id="nav">
-                <div className="bg-background rounded-[50px] flex flex-col gap-6 justify-start items-center py-10 px-20 md:px-26 shadow-xl shadow-foreground/30 relative">
+            <div className={`duration-400 fixed top-22 ${(isNavVisible ? "right-[5%]" : "-right-100")}  flex justify-end min-h-40 py-2`} id="nav">
+                <div className="relative bg-background rounded-[50px] flex flex-col gap-6 justify-start items-center py-10 px-20 md:px-26 shadow-xl shadow-foreground/30 relative">
                    <div>
                         <h1>Abu-Hanifa <span className="text-(--primary)">Installation</span></h1>    
                         <hr className="w-full my-1" />                     
@@ -115,6 +125,11 @@ function Nav(){
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/#services">services</a></li>
                     </ul>
                     <span className="text-[11px] text-center">Abu-Hanifa Installation <br /> &copy; All Right Reserved</span>
+                   </div>
+                   <div className="absolute top-6 right-6 bg-foreground/50  rounded-xl px-2 py-1 cursor-pointer" onClick={onClick}>
+                      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--background)">
+                           <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+                      </svg>
                    </div>
                 </div>
             </div>         

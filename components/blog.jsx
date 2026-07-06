@@ -34,7 +34,7 @@ export default function Blog({link}){
 
 
     return(
-        <div className="">
+        <div className="w-full">
 
             {
                 (isLoading ? (<Loading loadingItem={"Blog"} />) : (blog?.map((bl,index)=>(
@@ -80,7 +80,7 @@ function OneBlog({title,description,image,created_at,link, blog_id}){
     }
 
     return(
-        <div className="border-b pb-10 mb-10 flex flex-wrap gap-y-10">
+        <div className="w-full border-b border-b-(--border) pb-10 mb-10 flex flex-wrap gap-y-10">
 
             <div className={`flex duration-400 flex-col gap-y-6 ${isCommentSectionShown ? "sm:w-full md:w-1/2" : "w-full"}`}>
                 

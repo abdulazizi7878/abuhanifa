@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "repositories/newsQu.js", "services/mailer.js"  ],
+, "repositories/newsQu.js", "services/mailer.js", "components/footer.jsx", "components/admin.jsx", "components/about.jsx", "components/blog.jsx", "components/blogPage.jsx", "components/blogs.jsx", "components/contact.jsx", "components/some.jsx", "components/reviews.jsx", "components/over.jsx", "components/order.jsx", "components/loading.jsx", "components/header.jsx", "components/fullpage.jsx"  ],
   "exclude": ["node_modules"]
 }

@@ -4,13 +4,13 @@ import Reviews from "@/components/reviews";
 
 export default function FullPage(){
     return(
-        <div className="w-full flex flex-col justify-center items-center">
+        <>
             <Header />
-            <section className="mt-30 w-20/20 flex justify-center items-center">
+            <main className="mt-25 flex justify-center items-center" >
                  <Cont />
-            </section>
+            </main>
             <Footer />
-        </div>
+        </>
     )
 }
 
@@ -19,11 +19,10 @@ export default function FullPage(){
 
 function Cont(){
     return(
-        <div className="flex flex-col justify-center items-center">
-            <section className="w-11/12 my-10 flex flex-wrap gap-y-20">
+        <div className="flex flex-col justify-center items-center w-full">
+            <section className="w-11/12 my-10 flex flex-wrap gap-y-20 ">
 
-                <div className=" px-4 w-full sm:w-full md:w-1/2 lg:w-1/2 flex justify-center items-center">
-                    {/* Changing font for the header text */}
+                <div className="md:w-1/2 lg:w-1/2 flex justify-center items-center">
 
                     <div className=" flex flex-col">
                         <div>
@@ -32,7 +31,7 @@ function Cont(){
                             </h1>
                             <hr  />
                             <h2 className="text-2xl mt-6 mb-2 font-[family-name:var(--primary-font)]">
-                                General <span className="text-(--primary) font-bold">Electric</span>  and <span className="text-(--primary) font-bold">plumping work.</span>
+                                General <span className="text-red-500 font-bold">Electric</span>  and <span className="text-(--primary) font-bold">plumping work.</span>
                             </h2>        
                             <p className="font-stretch-150% font-[family-name:var(--primary-font)]">
                                 We are a team of highly skilled and experienced electricians and plumpers, dedicated to providing top-notch electrical and plumbing services to our clients.
@@ -49,7 +48,7 @@ function Cont(){
                                 <span className="text-white">
                                     Get In touch
                                 </span>
-                                <a href="/contact" className="absolute inset-0" ></a>
+                                <a href="/order" className="absolute inset-0" ></a>
                             </div>
 
                             <div className="w-fit px-6 py-2 border border-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
@@ -58,35 +57,31 @@ function Cont(){
                                 </span>
                                 <a href="#services" className="absolute inset-0" ></a>
                             </div>
-
                         </div>
-
                     </div>
 
                 </div>
-
-
-                <div className="hidden md:flex lg:flex px-4 w-full md:w-1/2 lg:w-1/2 flex-wrap-reverse justify-center items-center">
-                    <img src="/images/logo.jpg" alt="ABU_HANIFA_INSTALLATION" className="w-11/15 max-w-1/2 rounded-full" />
+                <div className="hidden md:w-1/2 lg:w-1/2 md:flex justify-center items-center">
+                    <img src="/images/logo.jpg" className="rounded-full size-60" />
                 </div>
-                
-                
-                
             </section>
 
-            <hr className="my-26" />
 
-            <section className="my-10 w-11/12  bg-gray-700 px-6 py-10 rounded-4xl " id="mission">
-                <div className="w-full flex flex-col gap-6">
-                    <p className="mx-auto text-background bg-(--primary) px-6 py-1 rounded-2xl font-bold">Our Mission</p>
-                    <p className="mx-auto text-center max-w-120 text-white font-[family-name:var(--primary-font)]">
+            <hr className="my-2" />
+
+            <section className="my-10 w-full max-w-150 px-6  bg-purple-950/60 py-10 rounded-4xl " id="mission">
+                <div className="flex flex-col gap-6">
+                    <p className="mx-auto text-background text-white bg-(--primary) px-6 py-1 rounded-2xl font-bold">
+                        Our Mission
+                    </p>
+                    <p className="mx-auto text-center text-white font-[family-name:var(--primary-font)]">
                         Our mission is to provide reliable and efficient electrical and plumbing services to our clients, while maintaining the highest standards of safety, quality, and professionalism.
                     </p>
                     <div className="w-fit mx-auto px-6 py-2 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                         <span className="text-white">
                             Get In touch
                         </span>
-                        <a href="/contact" className="absolute inset-0" ></a>
+                        <a href="/order" className="absolute inset-0" ></a>
                     </div>
                 </div>
             </section>
@@ -97,14 +92,14 @@ function Cont(){
                     <hr />
                 </div>
                 <div className="flex flex-wrap my-10 gap-x-16 gap-y-10  justify-center items-center">
-                    <Service key={1} imgSource={"a.webp"} title={"Full Installations"} description={"Wiring for new builds, remodels, and system upgrades"} />  
-                    <Service key={2} imgSource={"b.jpg"} title={"Circuit Breaker"} description={"Modernize your home with safe and up-to-date systems"} />  
-                    <Service key={3} imgSource={"a.webp"} title={"Lighting Design"} description={"Custom indoor/outdoor lighting, energy-efficient upgrades"} />  
+                    <Service imgSource={"a.webp"} title={"Full Installations"} description={"Wiring for new builds, remodels, and system upgrades"} />  
+                    <Service imgSource={"b.jpg"} title={"Circuit Breaker"} description={"Modernize your home with safe and up-to-date systems"} />  
+                    <Service imgSource={"a.webp"} title={"Lighting Design"} description={"Custom indoor/outdoor lighting, energy-efficient upgrades"} />  
                 </div>
                 
             </section>
 
-            <section className="my-20 flex flex-col gap-6">
+            <section className="my-20 flex flex-col gap-y-6">
                 
                 <div className="flex">
                     <h1 className="mx-auto text-center text-2xl font-extrabold">
@@ -125,31 +120,14 @@ function Cont(){
                 </div>
             </section>
 
-            <section className="my-26 py-20 flex flex-col items-center bg-purple-950/60 w-screen">
+            <section className="my-26 py-20  items-center bg-purple-950/60 w-full">
                      <div>
-                          <h1 className="text-4xl font-black text-white">Our works</h1>
-                     </div>
-                     <div className="flex gap-x-10 overflow-x-scroll px-10 py-20 w-screen">
-                        <Img src={1} />
-                        <Img src={2} />
-                        <Img src={3} />
-                        <Img src={4} />
-                        <Img src={5} />
-                        <Img src={6} />
-                        <Img src={7} />
-                        <Img src={8} />
-                        <Img src={9} />
-                        <Img src={10} />
-                        <Img src={11} />
-                        <Img src={12} />
-                        <Img src={13} />
-                        <Img src={14} />
-                        <Img src={15} />
+                          <h1 className="text-4xl font-black text-white mx-2">Our works</h1>
                      </div>
             </section>
 
             <section className="my-26" id="why">
-                <div className="flex flex-col gap-y-10">
+                <div className="flex flex-col justify-center items-center gap-y-10">
 
                     <div className="flex mx-auto w-max">
                         <h1 className="text-center font-bold text-xl">
@@ -159,7 +137,7 @@ function Cont(){
                         </h1>
                     </div>
 
-                    <div className="w-full  py-4 flex flex-col justify-center items-center gap-y-8">
+                    <div className="w-29/30  py-4 flex flex-col justify-center items-center gap-y-8">
 
                         <Why eng={"Our Professional and Certified"} amh={"ባለሙያዎቹ በዘርፉ የሰለጠኑ፣ ሰርተፍኬት ያላቸው እና ከፍተኛ ልምድ ያካበቱ ናቸው።"} dir={"_AX"} />
                         <Why eng={"Attention to Detail & High-Quality Work"} amh={"ለዝርዝር ነገሮች ትኩረት መስጠት እና ጥራቱን የጠበቀ ስራ "} dir={"_AXX"} />
@@ -169,7 +147,7 @@ function Cont(){
 
                     </div>
 
-                    <div className="flex flex-wrap  justify-around items-center gap-4">
+                    <div className="flex flex-col sm:flex-wrap md:flex-wrap lg:flex-wrap  justify-around items-center gap-4">
                              
                         <div className="w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                             <span className="text-background">
@@ -198,28 +176,28 @@ function Cont(){
                 <div className="mt-4 flex flex-wrap justify-center items-center">
                     <div className="">
                         <ul className="flex flex-wrap justify-center gap-8 mt-6">
-                            <li className="_LI px-8 py-4 text-center w-full  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
+                            <li className="_LI _AY  sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
                                <span className="font-extrabold">Full Installations</span> <br /> — Piping for new builds, remodels, and complete system upgrades.
                                <div>
                                 <img src="/images/demo-1-a.webp" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
                                 <div className="absolute inset-0 bg-background/80 -z-1"></div>
                                </div>
                             </li>
-                            <li className="_LI px-8 py-4 text-center w-full  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
+                            <li className="_LI _AY sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
                                 <span className="font-extrabold">Water Heaters & Pumps</span> <br /> — Modernize your home with efficient, safe, and up-to-date water systems.
                                <div>
                                  <img src="/images/demo-1-b.jpg" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
                                 <div className="absolute inset-0 bg-background/80 -z-1"></div>
                                </div>
                             </li>
-                            <li className="_LI px-8 py-4 text-center w-full  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
+                            <li className="_LI _AY sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
                                 <span className="font-extrabold">Sanitary & Layout Design</span> <br /> — Custom indoor/outdoor fixtures, eco-friendly and water-saving upgrades.
                                <div>
                                  <img src="/images/demo-1-b.jpg" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
                                 <div className="absolute inset-0 bg-background/80 -z-1"></div>
                                </div>
                             </li>
-                            <li className="_LI px-8 py-4 text-center w-full  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
+                            <li className="_LI _AY sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
                                 <span className="font-extrabold">Plumbing Services</span> <br /> — Piping, fixtures, drainage clearing, and routine safety inspections.
                                <div>
                                  <img src="/images/demo-1-b.jpg" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
@@ -232,13 +210,13 @@ function Cont(){
             </section>
 
             <section className="my-20 flex flex-col w-11/12">
-                <div className="mx-auto w-100">
+                <div className="mx-auto w-11/12">
                     <h1 className="text-center font-bold text-2xl">
                         Reviews by our Satisfied Clients
                     </h1>
                 </div>
 
-                <div className="w-10/12 mx-auto px-4 py-10 flex flex-wrap justify-center items-center gap-10">
+                <div className="w-full mx-auto px-4 py-10 flex flex-wrap justify-center items-center gap-10">
                     <Reviews />
                 </div>
             </section>
@@ -246,11 +224,11 @@ function Cont(){
             <section className="my-20 flex flex-col gap-10">
                 <div>
                     <h1 className="font-black text-4xl text-center">
-                        "Owner"
+                        "Owner Profile"
                     </h1>    
                 </div> 
 
-                <div className="mx-auto max-w-[95%] py-6 px-10 border border-(--border) rounded-2xl">
+                <div className="mx-auto max-w-[95%] w-auto py-6 px-10 border border-(--border) duration-200 hover:shadow-lg rounded-2xl">
                     <div className="">
                         <img src="/images/profile-1.jpg" alt="OWNER'S IMAGE" className="size-35 rounded-full" />
                     </div>
@@ -264,12 +242,12 @@ function Cont(){
                             My professions:
                         </p>
                         <ul className="my-2">
-                            <li className="_LI">Master of Science (M.Sc) in Project Management</li>
-                            <li className="_LI">Bachelor of Science (B.Sc) in Chemistry</li>
-                            <li className="_LI">Building Electrical Installation</li>
-                            <li className="_LI">Sanitary and Plumbing Installation</li>
-                            <li className="_LI">Computer Maintenance and Networking</li>
-                            <li className="_LI">Mobile, Smart phone Hardware and Software Maintenances</li>
+                            <li className="_LI _AY">Master of Science (M.Sc) in Project Management</li>
+                            <li className="_LI _AY">Bachelor of Science (B.Sc) in Chemistry</li>
+                            <li className="_LI _AY">Building Electrical Installation</li>
+                            <li className="_LI _AY">Sanitary and Plumbing Installation</li>
+                            <li className="_LI _AY">Computer Maintenance and Networking</li>
+                            <li className="_LI _AY">Mobile, Smart phone Hardware and Software Maintenances</li>
                         </ul>
                     </div>
                 </div>
@@ -341,15 +319,15 @@ function Service({imgSource, title, description}){
 
 function Img({src}){
     return(
-        <div className="relative min-w-90 h-max">
-            <img src={`/images/w-${src}.jpg`} className="w-full h-full rounded-2xl" alt="" /> 
+        <div className="relative w-60 max-h-100">
+            <img src={`/images/w-${src}.jpg`} className="w-full h-full rounded-2xl" alt="OUR_WORKS" /> 
             <div className="absolute inset-0 bg-foreground/20  rounded-2xl"></div>                           
         </div>
     )
 }
 function Why({eng, amh, dir}){
     return(
-        <div className={`${dir} max-w-[99%] flex flex-col gap-2  md:w-[90vw] lg:w-[70vw] border border-(--border) bg-purple-950/60 p-4 rounded-full duration-300 hover:shadow-2xl hover:shadow-foreground/50`}> 
+        <div className={`${dir} max-w-[99%] w-11/12 flex flex-col gap-2  md:w-[90vw] lg:w-[70vw] border border-(--border) bg-purple-950/60 p-4 rounded-full duration-300 hover:shadow-2xl hover:shadow-foreground/50`}> 
             <p className="text-center text-white text-sm sm:text-md md:text-lg lg:text-lg ">{eng}.</p>
             <p className="text-center text-white text-[12px] sm:text-sm md:text-sm lg:text-sm font-[family-name:var(--third-font)]">{amh}</p>
         </div>

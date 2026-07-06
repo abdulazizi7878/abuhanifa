@@ -1,4 +1,5 @@
-import { InsertComment, ShowAllBlogs, ShowBlog, ShowComments } from "../repositories/newsQu";
+import { randomUUID } from "crypto";
+import { InserBlog, InsertComment, ShowAllBlogs, ShowBlog, ShowComments } from "../repositories/newsQu";
 
 export async function GetBlogs() {
     const blogs = await ShowAllBlogs();
@@ -15,13 +16,14 @@ export async function GetBlog(link) {
     }
 }
 
-export async function PostComment(email,comment,blogId) {
-    
+export async function PostComment(name,email,comment,blogId) {
+
+    if (!name) throw new Error("name required!");
     if (!email) throw new Error("email required!");
     if (!comment) throw new Error("comment text required!");
     if (!blogId) throw new Error("comment can't be posted right now!");
 
-    const Rcomment = await InsertComment(email, comment, blogId);
+    const Rcomment = await InsertComment(name, email, comment, blogId);
 
     return Rcomment;
 
@@ -35,4 +37,14 @@ export async function GetComments(blogId) {
     return{
         comments
     }
+}
+
+export async function PostBlog(title, description) {
+    if(!title) throw new Error("Title Required");
+    if(!description) throw new Error("DEscription Required");
+
+    const link = randomUUID();
+
+    const Rblog = await InserBlog(title,description,link);
+    return Rblog;
 }

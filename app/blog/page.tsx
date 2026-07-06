@@ -1,4 +1,4 @@
-import Heaader from "@/components/some";
+import Heaader from "@/components/header";
 import Footer from "@/components/footer";
 import BlogPage from "@/components/blogPage";
 
