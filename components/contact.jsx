@@ -162,7 +162,7 @@ export default function ContactPage(){
                                 </div>                            
                         </div>
 
-                        <div className="flex px-6 py-2 duration-300 hover:px-8 rounded-4xl bg-blue-400 cursor-pointer" onClick={()=>{window.location.href ="https://t.me/ahietjny";}} >
+                        <div className="flex px-6 py-2 duration-300 hover:px-8 rounded-4xl bg-blue-400 cursor-pointer" onClick={()=>{window.location.href ="https://t.me/ahieth";}} >
                             <span className="text-background">
                                Join our Telegram channel  
                             </span>
