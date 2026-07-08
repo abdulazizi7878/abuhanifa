@@ -29,7 +29,7 @@ export default function CreateBlog() {
             if (data.success === true) {
                 let title = document.querySelector("#title").value;
                 let description = document.querySelector("#description").value;
-                let image = data.fileName;
+                let image = data.url;
 
                 try {
                     const responsePost = await fetch("/api/postblog",{
