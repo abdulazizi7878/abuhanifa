@@ -11,8 +11,8 @@ export default async function handler(req, res) {
         return;
     }
 
-    const {title, description} = req.body;
-    const response = await PostBlog(title,description);
+    const {title, description,image} = req.body;
+    const response = await PostBlog(title,description,image);
 
     res.status(200).json({
         success:true,

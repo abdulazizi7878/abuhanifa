@@ -51,9 +51,9 @@ export async function ShowComments(blogId) {
     }
 }
 
-export async function InserBlog(title,description,link) {
+export async function InserBlog(title,description,image,link) {
     const [result] = await db.query(
-        "INSERT INTO blog (title, description, link) VALUE(?,?,?)",
-        [title,description,link]
+        "INSERT INTO blog (title, description, image, link) VALUE(?,?,?,?)",
+        [title,description,image,link]
     )
 }
