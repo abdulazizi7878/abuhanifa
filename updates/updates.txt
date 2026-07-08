@@ -1,0 +1,4 @@
+updates for db will lis here:
+
+i created a new table named contacts
+new table named promotion

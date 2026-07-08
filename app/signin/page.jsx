@@ -34,9 +34,15 @@ function Sss(){
                 })
             })
             const responseData = await response.json();
+            if(responseData.success == true){
+                window.location.href = `/ahiadmin`
+            } else {
+                alert("INVALID CREDENTIALS!")
+            }
+
             console.log(responseData);
         } catch(err){
-            alert("INVALID CREDENTIALS!");
+            alert("SERVER ERROR!");
         }
     }
 

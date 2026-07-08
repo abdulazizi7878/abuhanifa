@@ -3,33 +3,36 @@
 import Loading from "../components/loading";
 import { useEffect, useState } from "react";
 
-export default function ViewComments(){
+export default function ViewOrders(){
     return(
         <div className="w-50/51 flex flex-col gap-4">
             <h1 className="text-xl">Orders</h1>
             <hr />
             <div className="w-full flex flex-col">
-                <Comments />
+                <Orders />
             </div>
         </div>
     )
 }
 
 
-function Comments() {
+function Orders() {
 
     const [orders, setOrders] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     async function GetOrders() {
         try {
-            const response = await fetch("/api/showallorders");
+            const response = await fetch("/api/showallorders",{
+                method:"POST"
+            });
             const responseData = await response.json();
 
             setOrders(responseData?.orders);
             setIsLoading(false);            
         } catch(err){
             console.log(err);
+            setIsLoading(false); 
         }
     }
 

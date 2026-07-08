@@ -153,7 +153,7 @@ function Cont(){
                             <span className="text-background">
                                 Join our Telegram Channel
                             </span>
-                            <a href="#services" className="absolute inset-0" ></a>
+                            <a href="https://t.me/ahieth" className="absolute inset-0" ></a>
                         </div>
 
                         <div className="w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">

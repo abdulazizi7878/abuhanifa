@@ -9,9 +9,25 @@ export async function ShowAllComments() {
 }
 
 export async function ShowAllOrders() {
-    const [comments] = await db.query(
+    const [orders] = await db.query(
         "SELECT * FROM orders;"
     );
 
-    return comments;
+    return orders;
+}
+
+export async function ShowAllMessages() {
+    const [messages] = await db.query(
+        "SELECT * FROM contact;"
+    );
+
+    return messages;
+}
+
+export async function ShowAllPromotions() {
+    const [promotions] = await db.query(
+        "SELECT * FROM promotions;"
+    );
+
+    return promotions;
 }

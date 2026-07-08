@@ -15,7 +15,7 @@ export default function ViewComments(){
             <h1 className="text-xl">Message From contact Page</h1>
             <hr />
             <div>
-
+                <Messages />
             </div>
         </div>
     )
@@ -29,13 +29,17 @@ function Comments() {
 
     async function GetComments() {
         try {
-            const response = await fetch("/api/showallcomments");
+            const response = await fetch("/api/showallcomments",{
+                method:"POST"
+            }
+            );
             const responseData = await response.json();
 
             setComments(responseData?.comments);
             setIsLoading(false);
         } catch(err){
             console.log(err);
+            setIsLoading(false)
         }
     }
 
@@ -63,6 +67,56 @@ function Comment({name,email,comment}){
         <div>
             <p className="font-black text-[11px]">{name} <br /> {email} </p>
             <p>{comment}</p>    
+        </div>
+        </div>
+    )
+}
+
+function Messages() {
+
+    const [messages, setMessages] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    async function GetMessages() {
+        try {
+            const response = await fetch("/api/showallmessages",{
+                method:"POST"
+            }
+            );
+            const responseData = await response.json();
+
+            setMessages(responseData?.messages);
+            setIsLoading(false);
+        } catch(err){
+            console.log(err);
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(()=>{
+        GetMessages()
+    },[]);
+
+    return(
+        <div className="flex flex-col gap-4 ">
+            {
+                (isLoading ? (<Loading loadingItem={"messages"} />) : (
+                    messages?.map((ms, index)=>(
+                        <Message key={index} name={ms.name} email={ms.email} message={ms.message} />
+                    ))
+                ))
+            }
+        </div>
+    )
+}
+
+
+function Message({name,email,message}){
+    return(
+        <div className="border border-(--border)/50 rounded-2xl mx-auto p-4 w-full">
+        <div>
+            <p className="font-black text-[11px]">{name} <br /> {email} </p>
+            <p>{message}</p>    
         </div>
         </div>
     )

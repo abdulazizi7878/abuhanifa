@@ -11,7 +11,7 @@ export default async function view({params}) {
 
     const avPage = {
         comments: <ViewComments/>,
-        orders:<ViewOrders />,
+        orders: <ViewOrders />,
         products: <ViewProducts />,
         promotions:<ViewPromotions />
     };

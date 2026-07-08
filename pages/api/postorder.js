@@ -1,6 +1,15 @@
-import { EnterOrder } from "../../services/order.service"
+import { EnterOrder } from "../../services/insert.service"
 
 export default async function handler(req, res) {
+
+  if(req.method != "POST"){
+        res.status(405).json({
+            success:false,
+            message:"Method Not Allowed"
+        })
+
+        return;
+    }
     
     const {name,phone_number, location, job, job_type, comment} = req.body;
     

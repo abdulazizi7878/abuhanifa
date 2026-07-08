@@ -2,6 +2,15 @@ import { PostComment } from "../../services/news";
 
 export default async function handler(req, res) {
 
+    if(req.method != "POST"){
+        res.status(405).json({
+            success:false,
+            message:"Method Not Allowed"
+        })
+
+        return;
+    }
+
     const {name,email,comment, blogId} = req.body;
   
 try {

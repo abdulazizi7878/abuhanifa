@@ -143,8 +143,8 @@ function EnterName({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <label htmlFor="name" className="ml-3 text-foreground/55">Name / sm</label>
-                <input onChange={(e)=>{checker(e.target.value)}} autoComplete="name" type="text" placeholder="Enter your full name" title="full name" id="name" className="border border-(--border) rounded-4xl px-6 py-3 md:py-4 duration-300 hover:px-8 shadow-lg outline-(--primary)" />                
+                <label htmlFor="name" className="ml-3 text-foreground/55">Full Name / ሙሉ ስም</label>
+                <input onChange={(e)=>{checker(e.target.value)}} autoComplete="name" type="text" placeholder="Name / ስም" title="full name" id="name" className="border border-(--border) rounded-4xl px-6 py-3 md:py-4 duration-300 hover:px-8 shadow-lg outline-(--primary)" />                
             </div>
         </div>
     )
@@ -164,8 +164,8 @@ function EnterPhoneNumber({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <label htmlFor="phoneNumber" className="ml-3 text-foreground/55">Phone Number / slk kutr</label>
-                <input onChange={(e)=>{checker(e.target.value)}} type="number" placeholder="Enter your Phone number" title="Phone Number" id="phoneNumber" className="border border-(--border) rounded-4xl px-6 py-3 md:py-4 duration-300 hover:px-8 shadow-lg outline-(--primary)" />                
+                <label htmlFor="phoneNumber" className="ml-3 text-foreground/55">Phone Number / ስልክ ቁጥር</label>
+                <input onChange={(e)=>{checker(e.target.value)}} type="number" placeholder="Number / ቁጥር" title="Phone Number" id="phoneNumber" className="border border-(--border) rounded-4xl px-6 py-3 md:py-4 duration-300 hover:px-8 shadow-lg outline-(--primary)" />                
             </div>
         </div>
     )
@@ -187,13 +187,13 @@ function ChooseLocation({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <label htmlFor="location" className="ml-3 text-foreground/55">Location / megegna</label>
+                <label htmlFor="location" className="ml-3 text-foreground/55">Location / ቦታ (መገኛ)</label>
                 <select title="location" id="location" className="border border-(--border) px-6 py-2 duration-300 hover:px-8 rounded-2xl outline-(--primary) " onChange={(e)=>{checker(e.target.value)}}>
                     <option className="text-black">Choose</option>
-                    <option value="addis_ababa" className="text-black">Addis Ababa / adis abeba</option>
-                    <option value="buta_jira" className="text-black">Buta Jira / butajera</option>
-                    <option value="worabe" className="text-black">Worabe / werabe</option>
-                    <option value="halaba" className="text-black">Halaba / halaba</option>
+                    <option value="addis_ababa" className="text-black">Addis Ababa / አዲስ አበባ</option>
+                    <option value="buta_jira" className="text-black">Buta Jira / ቡታጅራ</option>
+                    <option value="worabe" className="text-black">Worabe / ወራቤ</option>
+                    <option value="halaba" className="text-black">Halaba / ሃላባ</option>
                 </select>
             </div>
         </div>
@@ -218,16 +218,16 @@ function ChooseJob({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <span className="ml-3 text-foreground/55">Select the Job / sra ymretu</span>
+                <span className="ml-3 text-foreground/55">Select the Job / ስራውን ይምረጡ</span>
                 
                 <div className="flex gap-2">
                     <input type="checkbox" value={"electric"} id="electric" title="electric" onChange={(e)=>{checker(e.target.checked)}} /> 
-                    <label htmlFor="electric">Electric / ye mabrat</label> 
+                    <label htmlFor="electric">Electric / የማብራት</label> 
                 </div>
 
                 <div className="flex gap-2">
                     <input type="checkbox" value={"plumbing"} id="plumbing" title="plumbing" onChange={(e)=>{checker(e.target.checked)}} /> 
-                    <label htmlFor="plumbing">Plumbing / ye buanbua</label>                   
+                    <label htmlFor="plumbing">Plumbing / የቧንቧ</label>                   
                 </div>
 
             </div>
@@ -254,21 +254,21 @@ function ChooseJobType({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <span className="ml-3 text-foreground/55">Select The Job Type / ye sra aynet ymretu</span>
+                <span className="ml-3 text-foreground/55">Select The Job Type / የስራ አይነት ይምረጡ</span>
                 
                 <div className="flex gap-2">
                     <input type="checkbox" value={"new"} id="new" title="New" onChange={(e)=>{checker(e.target.checked)}} /> 
-                    <label htmlFor="new">New Installation / addis zrgata</label> 
+                    <label htmlFor="new">New Installation / አዲስ ዝርጋታ</label> 
                 </div>
 
                 <div className="flex gap-2">
                     <input type="checkbox" value={"maintenance"} id="maintenance" title="Maintenance" onChange={(e)=>{checker(e.target.checked)}} /> 
-                    <label htmlFor="maintenance">Renovation and Maintenance / yeneberen neger mades</label>                   
+                    <label htmlFor="maintenance">Renovation and Maintenance / የነበረን ማደስ</label>                   
                 </div>
 
                 <div className="flex gap-2">
                     <input type="checkbox" value={"finishing"} id="finishing" title="Finishing" onChange={(e)=>{checker(e.target.checked)}} /> 
-                    <label htmlFor="finishing">Finishing Work / ye matenakekiya sira</label>                   
+                    <label htmlFor="finishing">Finishing Work / የማጠናቀቂያ ስራ</label>                   
                 </div>
 
             </div>
@@ -291,7 +291,7 @@ function AddComment({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <span className="ml-3 text-foreground/55">If you have any idea... / yetgnawm has kalot...</span>
+                <span className="ml-3 text-foreground/55">If you have any idea... / የትኛውም ሃሳብ ካሎት...</span>
 
                 <textarea  onChange={(e)=>{checker(e.target.value)}} id="comment" className="w-11/12 sm:w-100 md:w-120 lg:w-130 min-h-60 border border-(--border) px-6 py-4 duration-300 hover:px-8 outline-(--primary) rounded-4xl" placeholder="If you have anything you want to say about the work...">
                 </textarea>
@@ -307,7 +307,7 @@ function Final({OnClick}){
             <h1 className="text-foreground/50">🎉 You Are Almost Finished 🎉</h1>
             <p className="text-sm text-foreground/50">Tap submit button</p>
             <button onClick={OnClick} className="bg-(--primary) px-4 py-2 rounded-2xl duration-400 hover:px-5 cursor-pointer text-foreground/70">
-                submit
+                send / ይላኩ
             </button>
         </div>
     )

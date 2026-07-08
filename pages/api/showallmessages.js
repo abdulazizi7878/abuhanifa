@@ -1,4 +1,4 @@
-import {GetAllOrders} from "../../services/view.services";
+import {GetAllMessages} from "../../services/view.services";
 
 export default async function handler(req,res) {
 
@@ -9,14 +9,14 @@ export default async function handler(req,res) {
         })
 
         return;
-    }    
+    }
 
     try {
-        const reponse = await GetAllOrders();
+        const reponse = await GetAllMessages();
 
         res.status(200).json({
             success:true,
-            orders: reponse
+            messages: reponse
         })
     } catch (err) {
         res.status(500).json({

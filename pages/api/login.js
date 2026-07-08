@@ -1,34 +1,40 @@
 import { LogIn } from "../../services/auth.services"
-import { cookies } from "next/headers";
 
 export default async function handler(req,res) {
 
+
+
     const {username,password} = req.body;
    
+    try{
         const response = await LogIn(username,password);
 
-        const cookieStore = await cookies();
-        cookieStore.set("token",response.token,{
-            httpOnly:true,
-            secure: process.env.NODE_ENV === "test",
-            sameSite:"lax",
-            maxAge: 60 * 60 * 7,
-            path:"/"
-        });
+        if (response.success == true) {
+            res.setHeader(
+                'Set-Cookie',
+                 `token=${response.token}; path=/; HttpOnly; Secure; SameSite=Strict`
+            )
 
-        res.status(200).json({
-            success:response.success,
-            message:response.success === true ? "successfully signed in" : ( response.success === false ? "invalid credentials" : "something gone wrong"),
-            token: response.token,
-            err: response.error.message
-        })
+            res.status(200).json({
+                success:true,
+                message:"sign in successful"
+            })
 
-        return
+            return;
+        } else {
+            res.status(200).json({
+                success:false,
+                message:"Invalid credentials",
+            })            
+        }
+
+
+    } catch(err){
+
         res.status(500).json({
             success:false,
             message:"server error",
-            erroe:err.message
+            error:err.message
         })
-    
-
+    }
 }

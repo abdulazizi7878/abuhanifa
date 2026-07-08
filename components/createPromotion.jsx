@@ -11,10 +11,11 @@ export default function CreatePromotion() {
         imageFile.click();
     }
 
-    async function PostPromotion() {
+    function GimmeId(id){
+        return document.getElementById(id).value;
+    }
 
-        let title = document.querySelector("#title").value;
-        let description = document.querySelector("#description").value;
+    async function PostPromotion() {
 
         const response = await fetch("/api/postpromotion",{
             headers:{
@@ -23,8 +24,13 @@ export default function CreatePromotion() {
             method:"POST",
             credentials:"include",
             body:JSON.stringify({
-                title: title,
-                description: description
+                name: GimmeId("name"),
+                email:GimmeId("email"),
+                phone_number:GimmeId("phoneNumber"),
+                title: GimmeId("title"),
+                description: GimmeId("description"),
+                image:"/images/demo-1-b.jpg",
+                owner_link: GimmeId("link")
             })
         })
         const responseData = await response.json();
@@ -54,10 +60,11 @@ export default function CreatePromotion() {
             <div>
                 <div className="flex flex-col justify-center items-start gap-6">
                     <input type="text" id="name" title="Name" placeholder="Name"  required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
+                    <input type="email" id="email" title="Email" placeholder="Email"  required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
                     <input type="number" id="phoneNumber" title="Phone Number" placeholder="Phone Number" required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
                     <input type="text" id="title" title="Title of the Promotion" placeholder="Title" required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
                     <textarea  id="description" title="Description" placeholder="Description" className="w-11/12 min-h-80 px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" ></textarea>
-                    <input type="text" id="link" title="Connection link" placeholder="Connection Link... Telegram"  required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
+                    <input type="text" id="link" title="Owner link" placeholder="OWner Link... Telegram"  required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
                     <input type="file"   onChange={(e)=>setFile(e.target.files[0])} id="image" />
                     <div className="flex flex-wrap justify-center items-center gap-4">
                         <button onClick={()=>{imageSelect()}} className="px-4 py-2 hover:px-5 shadow-lg outline-(--primary) rounded-4xl bg-(--primary) duration-300 hover:bg-(--primary)/80 text-background cursor-pointer">
