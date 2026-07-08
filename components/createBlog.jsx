@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+import Uploading from "./uploading";
 export default function CreateBlog() {
 
     const [file, setFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
 
     function imageSelect(){
         let imageFile = document.getElementById("image");
@@ -12,6 +14,7 @@ export default function CreateBlog() {
     }
 
     async function PostBlog() {
+        setUploading(true);
         const formData = new FormData();
         formData.append("image",file);
 
@@ -22,9 +25,7 @@ export default function CreateBlog() {
                 body:formData
             });
 
-            const data = await response.json();
-            console.log(data);
-            
+            const data = await response.json();            
 
             if (data.success === true) {
                 let title = document.querySelector("#title").value;
@@ -45,19 +46,22 @@ export default function CreateBlog() {
                             })
                     })
 
+                    setUploading(false);
                     alert("Blog successfuly posted");
                     location.reload();
 
                 } catch(err){
+                    setUploading(false);
                     alert("We couldn't post the blog")
                 }
             }            
         } catch(err){
+            setUploading(false);
             alert("we couldn't post the blog")
         }
 
 
-        
+        setUploading(false);
 
     }
 
@@ -79,6 +83,9 @@ export default function CreateBlog() {
                             <br /> 
                             Slected Image Size: <i>{(file ? (`${file.size/1000000} mb`) : ("Not Measured"))} </i> 
                         </span>
+                    </div>
+                    <div>
+                        {uploading && <Uploading uploadingItem="blog" />}
                     </div>
                     <div>
                         <button onClick={()=>{PostBlog()}} title="Post the blog" className="px-4 py-2 hover:px-5 shadow-lg outline-(--primary) rounded-4xl bg-(--primary) duration-300 hover:bg-(--primary)/80 text-background cursor-pointer">
