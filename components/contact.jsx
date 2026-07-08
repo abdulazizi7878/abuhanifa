@@ -1,8 +1,15 @@
 "use client"
 
+import { useState } from "react";
+import Uploading from "./uploading";
 export default function ContactPage(){
 
+
+    const [uploading, setUploading] = useState(false);
+
     async function sendEmail() {
+
+        setUploading(true);
 
         let name = document.querySelector("#name");
         let email = document.querySelector("#email");
@@ -21,9 +28,17 @@ export default function ContactPage(){
                 })
             })            
             const res = await response.json();
-            alert("email sent successfuly");
+            if(res.success){ 
+                alert("email sent successfuly");  
+                location.reload();
+            } else {
+                alert(res.message);
+            }
+            
+            setUploading(false);
         } catch(err){
-            console.log("erro: ", err);
+            console.log("error: ");
+            setUploading(false);
         }
 
     }
@@ -43,6 +58,7 @@ export default function ContactPage(){
                         <input type="email" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder="Your Email" title="Please Enter Your Email!" autoComplete="email" id="email" />
                         <textarea  className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder="Leave something" title="Contact box, leave something comment, order, review, job, Advertisement..." >
                         </textarea>
+                        {uploading && <Uploading uploadingItem="email" />}
                         <button className="bg-foreground text-background px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl" onClick={sendEmail}>
                             Send 
                         </button>

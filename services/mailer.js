@@ -1,20 +1,19 @@
 import { transporter } from "../lib/mail";
-import { NextResponse } from "next/server";
 
-export default async function sendEmail(req) {
+export default async function sendEmail({name, email, message}) {
 
-  const {name,email,message} = await req.json();
+ // const {name,email,message} = await req.json();
+
+  await transporter.verify();
+  console.log("SMTP server is ready to take messages");
 
   await transporter.sendMail({
     from: process.env.SMTP_USER,
-    to: "owner@example.com",
-    subject: "Message from the web",
-    text: message
+    to: "offlixsupport@gmail.com",
+    subject: "Message from contact form",
+    text: `Message from Abu Hanifa page, \nName: ${name}\nEmail: ${email}\nMessage: ${message}`,
   });
 
-  return NextResponse.json({
-    success:true,
-    message:"message sent"
-  });
+  return true;
   
 }

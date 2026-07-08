@@ -1,9 +1,9 @@
-//import sendEmail from "../../services/mailer";
+import sendEmail from "../../services/mailer";
 import {EnterMessage} from "../../services/insert.service";
 
 export default async function handler(req, res) {
 
-    if(req.method != "POST"){
+   if(req.method != "POST"){
         res.status(405).json({
             success:false,
             message:"Method Not Allowed"
@@ -14,9 +14,30 @@ export default async function handler(req, res) {
     
     const {name,email, message} = req.body;
 
-    const messageInserted = await EnterMessage(name,email,message);
-  //  const emailSent = await sendEmail(req);
-    
-    
-    return messageInserted
+    try{
+        
+
+        try{
+            const emailSent = await sendEmail({name, email, message});
+        } catch(err){
+
+           return res.status(500).json({
+                success:false,
+                message:"Email couldn't be sent but message was saved",
+            })
+
+            
+        }
+        const messageInserted = await EnterMessage(name,email,message);
+
+        res.status(200).json({
+            success:true,
+            message:"email sent"
+        })
+    } catch(err){
+        res.status(500).json({
+            success:false,
+            message:"Email couldn't be sent and message couldn't be saved",
+        })
+    }
 }
