@@ -51,7 +51,7 @@ function Blog({title,description,image,created_at,link}){
         <div className="pb-6 w-full sm:w-82 md:w-82 lg:w-82 overflow-hidden border border-(--border) rounded-2xl flex flex-col justify-center items-center gap-y-4 relative">
             
             <div className="w-full h-[35%] flex justify-center items-center overflow-hidden bg-foreground/20">
-                <img src={`/uploads/${image}`} alt="NEWS_IMAGE" className="h-full max-h-50" />
+                <img src={image} alt="NEWS_IMAGE" className="h-full max-h-50" />
             </div>
 
             <div className="gap-y-2 flex flex-col justify-center items-center">

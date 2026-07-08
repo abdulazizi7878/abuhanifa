@@ -85,7 +85,7 @@ function OneBlog({title,description,image,created_at,link, blog_id}){
             <div className={`flex duration-400 flex-col gap-y-6 ${isCommentSectionShown ? "sm:w-full md:w-1/2" : "w-full"}`}>
                 
                 <div className="w-full flex justify-center items-center overflow-hidden bg-foreground/20">
-                    <img src={`/uploads/${image}`} alt="NEWS_IMAGE" className="h-full max-h-70" />
+                    <img src={image} alt="NEWS_IMAGE" className="h-full max-h-70" />
                 </div>
 
                 <div className="gap-y-2 flex flex-col justify-center items-center">
