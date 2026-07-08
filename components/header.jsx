@@ -90,7 +90,7 @@ export default function Header(){
 
                         </div>
 
-                        <div className="theme transition-all duration-300 border-1  border-background/15 rounded-[8px] bg-background/20 hover:bg-background/25 cursor-pointer  px-2 py-1" onClick={()=>{
+                        <div className="theme transition-all duration-300 border border-background/15 rounded-lg bg-background/20 hover:bg-background/25 cursor-pointer  px-2 py-1" onClick={()=>{
                             ChangeTheme()
                         }} >
                             <div id="theme" className="transition-all duration-1000" >
@@ -110,7 +110,7 @@ export default function Header(){
 function Nav({isNavVisible, onClick}){
     return(
             <div className={`duration-400 fixed top-22 ${(isNavVisible ? "right-[5%]" : "-right-100")}  flex justify-end min-h-40 py-2`} id="nav">
-                <div className="relative bg-background rounded-[50px] flex flex-col gap-6 justify-start items-center py-10 px-20 md:px-26 shadow-xl shadow-foreground/30 relative">
+                <div className="relative bg-background rounded-[50px] flex flex-col gap-6 justify-start items-center py-10 px-20 md:px-26 shadow-xl shadow-foreground/30">
                    <div>
                         <h1>Abu-Hanifa <span className="text-(--primary)">Installation</span></h1>    
                         <hr className="w-full my-1" />                     

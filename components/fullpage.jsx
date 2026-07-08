@@ -26,17 +26,17 @@ function Cont(){
 
                     <div className=" flex flex-col">
                         <div>
-                            <h1 className="text-5xl my-2 font-[family-name:var(--secondary-font)] ">
+                            <h1 className="text-5xl my-2 font-(family-name:--secondary-font) ">
                                 Abu - Hanifa Installation 
                             </h1>
                             <hr  />
-                            <h2 className="text-2xl mt-6 mb-2 font-[family-name:var(--primary-font)]">
+                            <h2 className="text-2xl mt-6 mb-2 font-(family-name:--primary-font)">
                                 General <span className="text-red-500 font-bold">Electric</span>  and <span className="text-(--primary) font-bold">plumping work.</span>
                             </h2>        
-                            <p className="font-stretch-150% font-[family-name:var(--primary-font)]">
+                            <p className="font-stretch-150% font-(family-name:--primary-font)">
                                 We are a team of highly skilled and experienced electricians and plumpers, dedicated to providing top-notch electrical and plumbing services to our clients.
                             </p>
-                            <p className="mt-4 font-stretch-150% font-[family-name:var(--primary-font)]">
+                            <p className="mt-4 font-stretch-150% font-(family-name:--primary-font)">
                                 Our team is committed to delivering high-quality workmanship, exceptional customer service, and innovative solutions to meet the unique needs of each project.
                             </p>
                                                         
@@ -71,10 +71,10 @@ function Cont(){
 
             <section className="my-10 w-11/12  bg-purple-950/60 px-6 py-8 rounded-4xl " id="mission">
                 <div className="flex flex-col gap-6">
-                    <p className="mx-auto text-background text-white bg-(--primary) px-6 py-1 rounded-2xl font-bold">
+                    <p className="mx-auto  text-white bg-(--primary) px-6 py-1 rounded-2xl font-bold">
                         Our Mission
                     </p>
-                    <p className="mx-auto text-center text-white font-[family-name:var(--primary-font)]">
+                    <p className="mx-auto text-center text-white font-(family-name:--primary-font)">
                         Our mission is to provide reliable and efficient electrical and plumbing services to our clients, while maintaining the highest standards of safety, quality, and professionalism.
                     </p>
                     <div className="w-fit mx-auto px-6 py-2 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
@@ -113,7 +113,7 @@ function Cont(){
                         Backed by the latest industry codes and safety standards, 
                         our skilled electricians guarantee a seamless experience from start to finish.
                     </p>
-                    <p className="text-center sm:w-1/2 md:w-1/3 lg:1/3 font-[family-name:var(--third-font)]">
+                    <p className="text-center sm:w-1/2 md:w-1/3 lg:1/3 font-(family-name:--third-font)">
                         ለህንጻዎ ተስማሚ የሆኑ አስተማማኝ የኤሌክትሪክ መፍትሄዎች። አዳዲስ የአሰራር ደንቦችን (Codes) እና የደህንነት 
                         መስፈርቶችን መሰረት በማድረግ፣ የተካኑ የኤሌክትሪክ ባለሙያዎቻችን ስራውን ከመጀመሪያ እስከ መጨረሻ በስኬት ለማጠናቀቅ ዋስትና ይሰጣሉ።
                     </p>
@@ -307,7 +307,7 @@ function Service({imgSource, title, description}){
                 <p className="font-extralight">
                     {description}
                 </p>
-                <div className="absolute bottom-[-80px] left-[-15%] -z-1">
+                <div className="absolute -bottom-20 left-[-15%] -z-1">
                     <img src={`/images/demo-1-${imgSource}`} className="w-60 h-30 z-2 rounded-4xl" />
                     <div className="bg-background/75 absolute inset-0 rounded-4xl"></div>
                 </div>
@@ -329,7 +329,7 @@ function Why({eng, amh, dir}){
     return(
         <div className={`${dir} max-w-[99%] w-11/12 flex flex-col gap-2  md:w-[90vw] lg:w-[70vw] border border-(--border) bg-purple-950/60 p-4 rounded-full duration-300 hover:shadow-2xl hover:shadow-foreground/50`}> 
             <p className="text-center text-white text-sm sm:text-md md:text-lg lg:text-lg ">{eng}.</p>
-            <p className="text-center text-white text-[12px] sm:text-sm md:text-sm lg:text-sm font-[family-name:var(--third-font)]">{amh}</p>
+            <p className="text-center text-white text-[12px] sm:text-sm md:text-sm lg:text-sm font-(family-name:--third-font)">{amh}</p>
         </div>
     )
 }
