@@ -84,7 +84,7 @@ export default function CreateBlog() {
                             Slected Image Size: <i>{(file ? (`${file.size/1000000} mb`) : ("Not Measured"))} </i> 
                         </span>
                     </div>
-                    <div>
+                    <div className="w-full flex justify-center items-center">
                         {uploading && <Uploading uploadingItem="blog" />}
                     </div>
                     <div>
