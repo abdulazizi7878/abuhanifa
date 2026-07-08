@@ -99,7 +99,7 @@ export default function Footer(){
             <div className="my-4 w-11/12 flex flex-col  py-2 px-4 sm:px-10 md:px-10 lg:px-10 rounded-full">
                 <span className="text-center text-[11px] sm:text-sm ">ABU-HANIFA INSTALLATION | 2026 &copy; ALL RIGHT RESERVED </span>
                 <a href="https://t.me/abdulazizseman" className="text-center text-[11px] sm:text-sm ">DESIGNED AND DEVELOPED BY ...ABDU...</a>
-                <hr className="my-4" />
+                <hr className="my-2" />
             </div>
 
         </footer>

@@ -21,7 +21,7 @@ export default function ContactPage(){
                 })
             })            
             const res = await response.json();
-            console.log(res);
+            alert("email sent successfuly");
         } catch(err){
             console.log("erro: ", err);
         }
@@ -30,7 +30,7 @@ export default function ContactPage(){
 
     return(
         <div className="w-full flex flex-col justify-start items-center">
-            <div className="w-10/12 flex flex-col justify-center items-start gap-10">
+            <div className="w-11/12 flex flex-col justify-center items-start gap-10">
 
                  <div className="w-full">
                     <div>
@@ -39,8 +39,8 @@ export default function ContactPage(){
                     </div>
                     <div className="w-full flex flex-col justify-center items-start gap-6">
 
-                        <input type="text" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary)" placeholder="Your Name" title="Please Enter Your Name!" autoComplete="name" id="name" />
-                        <input type="email" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary)" placeholder="Your Email" title="Please Enter Your Email!" autoComplete="email" id="email" />
+                        <input type="text" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder="Your Name" title="Please Enter Your Name!" autoComplete="name" id="name" />
+                        <input type="email" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder="Your Email" title="Please Enter Your Email!" autoComplete="email" id="email" />
                         <textarea  className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder="Leave something" title="Contact box, leave something comment, order, review, job, Advertisement..." >
                         </textarea>
                         <button className="bg-foreground text-background px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl" onClick={sendEmail}>

@@ -51,15 +51,15 @@ export default function Header(){
 
 
     return(
-        <div className="px-2 py-4 flex flex-col justify-center items-center w-full h-fit fixed top-0 left-0 z-10">
+        <div className="py-4 flex flex-col justify-center items-center w-22/23 h-fit fixed top-0 left-[50%] translate-x-[-50%] z-10 ">
             <header 
-            className="w-full sm:w-[98%] md:w-[95%] lg:w-[93%] border-1 border-(--border) p-3 px-6  dark:bg-background/60 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15"
+            className="w-full sm:w-[98%] md:w-[95%] lg:w-[93%] border border-(--border) p-3 px-6  dark:bg-background/60 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15"
             >
                 <div className="hd w-full flex justify-between items-center">
 
                     <div className="logo flex justify-center items-center gap-x-2 md:gap-x-4 lg:gap-x-4">
                         <img src="/images/logo.jpg" alt="ABUHANIFA_INSTALLATION_LOGO" width={50} height={50} className="rounded-full" />  
-                        <p className="text-sm text-center sm:hidden md:flex lg:flex">Abu-Hanifa <br /> Installation</p>
+                        <p className="text-[10px] md:text-sm text-center sm:hidden md:flex lg:flex">Abu-Hanifa <br /> Installation</p>
                     </div>
 
                     <div className="navs w-0 overflow-hidden duration-300 sm:w-3/5 md:w-3/5 lg:4/5">

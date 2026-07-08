@@ -6,7 +6,7 @@ export default function FullPage(){
     return(
         <>
             <Header />
-            <main className="mt-25 flex justify-center items-center" >
+            <main className="mt-25 flex justify-center items-center w-full" >
                  <Cont />
             </main>
             <Footer />
@@ -69,7 +69,7 @@ function Cont(){
 
             <hr className="my-2" />
 
-            <section className="my-10 w-full max-w-150 px-6  bg-purple-950/60 py-10 rounded-4xl " id="mission">
+            <section className="my-10 w-11/12  bg-purple-950/60 px-6 py-8 rounded-4xl " id="mission">
                 <div className="flex flex-col gap-6">
                     <p className="mx-auto text-background text-white bg-(--primary) px-6 py-1 rounded-2xl font-bold">
                         Our Mission
@@ -129,9 +129,9 @@ function Cont(){
             <section className="my-26" id="why">
                 <div className="flex flex-col justify-center items-center gap-y-10">
 
-                    <div className="flex mx-auto w-max">
-                        <h1 className="text-center font-bold text-xl">
-                            Why Abu Hanifa Installation?  
+                    <div className="flex mx-auto">
+                        <h1 className="text-center font-black text-xl">
+                            Why Abu Hanifa  Installation?  
                             <br />
                             አቡሐኒፋ ኢንስታሌሽንን መምረጥ ለምን አስፈለገ? 
                         </h1>
@@ -139,24 +139,24 @@ function Cont(){
 
                     <div className="w-29/30  py-4 flex flex-col justify-center items-center gap-y-8">
 
-                        <Why eng={"Our Professional and Certified"} amh={"ባለሙያዎቹ በዘርፉ የሰለጠኑ፣ ሰርተፍኬት ያላቸው እና ከፍተኛ ልምድ ያካበቱ ናቸው።"} dir={"_AX"} />
-                        <Why eng={"Attention to Detail & High-Quality Work"} amh={"ለዝርዝር ነገሮች ትኩረት መስጠት እና ጥራቱን የጠበቀ ስራ "} dir={"_AXX"} />
-                        <Why eng={"Transparent Pricing & No Hidden Fees"} amh={"ግልጽ የሆነ የዋጋ ተመን እና ምንም አይነት የተደበቀ ክፍያ የሌለበት"} dir={"_AX"} />
-                        <Why eng={"Commitment to Safety and Industry Standards"} amh={"ለደህንነት እና ለኢንዱስትሪ መስፈርቶች (ስታንዳርዶች) ያለን ቁርጠኝነት"} dir={"_AXX"} />
-                        <Why eng={"We take great pride in bringing all professinals feilds toghether under one roof"} amh={"ሁሉንም የሙያ ዘርፎች በአንድ ጣራ ስር ይዘን በመገኘታችን"} dir={"_AX"} />
+                        <Why eng={"Our Professional and Certified"} amh={"ባለሙያዎቹ በዘርፉ የሰለጠኑ፣ ሰርተፍኬት ያላቸው እና ከፍተኛ ልምድ ያካበቱ ናቸው።"} dir={"_AY"} />
+                        <Why eng={"Attention to Detail & High-Quality Work"} amh={"ለዝርዝር ነገሮች ትኩረት መስጠት እና ጥራቱን የጠበቀ ስራ "} dir={"_AY"} />
+                        <Why eng={"Transparent Pricing & No Hidden Fees"} amh={"ግልጽ የሆነ የዋጋ ተመን እና ምንም አይነት የተደበቀ ክፍያ የሌለበት"} dir={"_AY"} />
+                        <Why eng={"Commitment to Safety and Industry Standards"} amh={"ለደህንነት እና ለኢንዱስትሪ መስፈርቶች (ስታንዳርዶች) ያለን ቁርጠኝነት"} dir={"_AY"} />
+                        <Why eng={"We take great pride in bringing all professinals feilds toghether under one roof"} amh={"ሁሉንም የሙያ ዘርፎች በአንድ ጣራ ስር ይዘን በመገኘታችን"} dir={"_AY  "} />
 
                     </div>
 
                     <div className="flex flex-col sm:flex-wrap md:flex-wrap lg:flex-wrap  justify-around items-center gap-4">
                              
-                        <div className="w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
+                        <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                             <span className="text-background">
                                 Join our Telegram Channel
                             </span>
                             <a href="https://t.me/ahieth" className="absolute inset-0" ></a>
                         </div>
 
-                        <div className="w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
+                        <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                             <span className="text-background">
                                 Order Now 
                             </span>
