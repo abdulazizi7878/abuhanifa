@@ -23,6 +23,8 @@ export default function CreateBlog() {
             });
 
             const data = await response.json();
+            console.log(data);
+            
 
             if (data.success === true) {
                 let title = document.querySelector("#title").value;
