@@ -79,7 +79,7 @@ function Product({name,price,description,image,link}){
     }
 
     return(
-        <Link href={`/products/${link}`} className="group duration-300 hover:-translate-y-1 hover:shadow-lg overflow-hidden border border-(--border)/50 rounded-4xl flex flex-col relative">
+        <Link href={`/products/${link}`} className="group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg overflow-hidden border border-(--border)/50 rounded-4xl flex flex-col relative">
             
             <div className="w-full h-[55%] flex justify-center items-center overflow-hidden bg-foreground/20">
                 <img src={image} alt="PRODUCTS_IMAGE" className="h-full w-auto transition-transform duration-300 group-hover:scale-110 " />
