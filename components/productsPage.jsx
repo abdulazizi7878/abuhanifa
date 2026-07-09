@@ -68,7 +68,7 @@ function Product({name,price,description,image,link}){
             if(navigator.share){
                 await navigator.share({
                     title:name,
-                    text:description,
+                    text: name + " - " + description,
                     url:window.location.origin + `/products/${link}`
                 });
             }
