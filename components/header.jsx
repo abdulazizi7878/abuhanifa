@@ -65,11 +65,11 @@ export default function Header(){
                     <div className="navs w-0 overflow-hidden duration-300 sm:w-3/5 md:w-3/5 lg:4/5">
                         <ul className="w-full flex justify-around">
                             <li><a href="/#" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Home</a></li>
-                            <li><a href="/#mission" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Mission</a></li>
-                            <li><a href="/#services" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Services</a></li>
-                            <li><a href="/contact/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Contact</a></li>
                             <li><a href="/order/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Order</a></li>
+                            <li><a href="/products/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Products</a></li>
                             <li><a href="/blog/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Blog</a></li>
+                            <li><a href="/contact/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Contact</a></li>
+                            <li><a href="/#services" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Services</a></li>
                         </ul>
                     </div>
 
@@ -120,6 +120,7 @@ function Nav({isNavVisible, onClick}){
                     <ul className="flex flex-col gap-1.5 justify-center items-center">
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/">home</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/blog">blog</a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/products">products</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/contact">contact</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/order">order</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/#services">services</a></li>

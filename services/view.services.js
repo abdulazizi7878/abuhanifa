@@ -1,4 +1,4 @@
-import {ShowAllComments,ShowAllMessages,ShowAllOrders, ShowAllPromotions} from "../repositories/viewQu";
+import {ShowAllComments,ShowAllMessages,ShowAllOrders, ShowAllPromotions, ShowOneProduct} from "../repositories/viewQu";
 
 export async function GetAllComments() {
     const result = await ShowAllComments();
@@ -18,4 +18,9 @@ export async function GetAllMessages() {
 export async function GetAllPromotions() {
     const result = await ShowAllPromotions();
     return result
+}
+
+export async function GetOneProduct(link) {
+    const result = await ShowOneProduct(link);
+    return result;
 }

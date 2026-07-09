@@ -39,3 +39,12 @@ export async function ShowAllProducts() {
 
     return products;
 }
+
+export async function ShowOneProduct(link) {
+    const [product] = await db.query(
+        "SELECT * FROM products WHERE link = ?",
+        [link]
+    )
+
+    return product;
+}

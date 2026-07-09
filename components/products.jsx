@@ -24,11 +24,9 @@ function Products(){
             const response = await fetch("/api/showproducts",{
                 method:"POST"
             });
-            const data = await response.json();
-            console.log(data);
-            
+            const data = await response.json();            
             setProducts(data?.data);
-            setLoading(false);                        
+            setLoading(false);                                    
         } catch (err) {
             console.log("ERROR, WHILE FETCHING");
             setLoading(false);
@@ -82,7 +80,7 @@ function Product({name,price,description,image,link}){
         <Link href={`/products/${link}`} className="group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg overflow-hidden border border-(--border)/50 rounded-4xl flex flex-col relative">
             
             <div className="w-full h-[55%] flex justify-center items-center overflow-hidden bg-foreground/20">
-                <img src={image} alt="PRODUCTS_IMAGE" className="h-full w-auto transition-transform duration-300 group-hover:scale-110 " />
+                <img src={image} alt={`${name}-image`} className="h-full w-auto transition-transform duration-300 group-hover:scale-110 " />
             </div>
 
             <div className="mt-2 flex flex-col mx-2">

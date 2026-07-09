@@ -1,6 +1,7 @@
 import Heaader from "@/components/header";
 import Footer from "@/components/footer";
-import ProductsPage from "@/components/productsPage";
+import ProductsPage from "@/components/products";
+
 export default function blogpage(){
     return(
         <>
