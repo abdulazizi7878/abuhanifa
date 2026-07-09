@@ -31,3 +31,11 @@ export async function ShowAllPromotions() {
 
     return promotions;
 }
+
+export async function ShowAllProducts() {
+    const [products] = await db.query(
+        "SELECT * FROM products;"
+    );
+
+    return products;
+}
