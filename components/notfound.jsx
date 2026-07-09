@@ -1,7 +1,7 @@
 export default function NotFound({page}){
     return(
        <div className="flex flex-col justify-center items-center gap-6">
-            <img src="/not-found.svg" className="w-100" alt="NOT_FOUND"  />
+            <img src="/images/not-found.svg" className="w-100" alt="NOT_FOUND"  />
             <h1 className="text-center">
 
                 Page : / {page}<br />

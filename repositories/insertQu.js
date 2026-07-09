@@ -25,3 +25,12 @@ export async function InsertPromotion(name,email,phone_number, title, descriptio
     )
     return result;
 }
+
+export async function InsertProduct(name,price,description,image,link) {
+    const [result] = await db.query(
+        "INSERT INTO products(name,price,description,image,link) VALUES(?,?,?,?,?)",
+        [name,price,description,image,link]
+    )
+
+    return result;
+}

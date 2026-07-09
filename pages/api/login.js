@@ -12,7 +12,7 @@ export default async function handler(req,res) {
         if (response.success == true) {
             res.setHeader(
                 'Set-Cookie',
-                 `token=${response.token}; path=/; HttpOnly; Secure; SameSite=Strict`
+                 `token=${response.token}; path=/; HttpOnly; Secure; SameSite=lax; MaxAge=${60 * 60 * 24 * 7}`
             )
 
             res.status(200).json({

@@ -1,5 +1,6 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import Image from "next/image";
 
 
 export default async function NotFound(){
@@ -11,7 +12,7 @@ export default async function NotFound(){
 
            <main className="flex flex-col justify-center items-center py-20 mt-10 min-h-[70vh]">
                 <div className="flex flex-col justify-center items-center gap-6">
-                    <img src="/not-found.svg" className="w-100" alt="NOT_FOUND"  />
+                    <Image src="/images/not-found.svg" className="w-100" alt="NOT_FOUND" width={300} height={300} loading="eager" />
                     <h1 className="text-center">
 
                         Page : /<br />
