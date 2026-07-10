@@ -19,6 +19,10 @@ export const metadata: Metadata = {
     default: "Abu-Hanifa Installation",
     template: "%s | Abu-Hanifa Installation",
   },
+  
+  verification: {
+    google: "FtolZh8OJ9N57Cl2H143vSCzDUbQZLIaoU6PfKV5CK4",
+  },
 
   description:
     "Abu-Hanifa Installation provides professional electrical installation, plumbing, maintenance, wiring, and general installation services across Ethiopia, especially Addis Ababa, Worabe, Halaba, Butajira, and Central Ethiopia.",
