@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Loading from "./loading";
 import Image from "next/image";
+import Uploading from "./uploading";
 
 export default function OrderProduct({link}){
     return(
@@ -19,6 +20,7 @@ function CheckPriceAndOrder({link}){
     const [priceLoading, setPriceLoading] = useState(false);
     const [product, setProduct]= useState(null);
     const [file,setFile] = useState(null);
+    const [uploading,setUploading] = useState(false);
 
     async function CheckPrice(type) {
         setPriceLoading(true);
@@ -79,6 +81,7 @@ function CheckPriceAndOrder({link}){
             return;
         }
         
+        setUploading(true);
 
         const imageData = new FormData();
         imageData.append("image",file);
@@ -108,24 +111,26 @@ function CheckPriceAndOrder({link}){
                         })
                     })
 
-                    const data = await response.json();
-                    console.log(data);
-                    
+                    const data = await response.json();                    
 
                     if (data.success) {
                         alert("Product Successfully submitted");
                         location.reload();
+                        setUploading(false);
                     } else{
-                        alert("We couldn't order your product 1");
+                        alert("We couldn't order your product");
+                        setUploading(false);
                     }
 
                 } catch(err){
-                    alert("We couldn't order your product 2");
+                    alert("We couldn't order your product");
+                    setUploading(false);
                     console.log(err);
                 }
             }
         } catch(err){
-            alert("We couldn't order your product 3");
+            alert("We couldn't order your product");
+            setUploading(false);
         }
     }
 
@@ -210,6 +215,11 @@ function CheckPriceAndOrder({link}){
                 <label htmlFor="file" className="ml-3 text-foreground/50" >Upload payment reciption image / የከፈሉበትን ደረሰኝ ምስል ይላኩ </label>
                 <input type="file" id="file" title="File" hidden onChange={(e)=>setFile(e.target.files[0])} />
                 <button onClick={()=>{document.getElementById("file").click();}} className="bg-foreground/20 px-4 py-1 rounded-4xl shadow cursor-pointer text-foreground/70 transition-all duration-300 hover:pl-6">Upload Image</button>         
+                <div>
+                    {
+                        (uploading && (<Uploading uploadingItem={"order"} />))
+                    }
+                </div>
                 <button onClick={()=>{SendOrder();}} className="bg-foreground mt-10 px-4 py-1 rounded-4xl shadow cursor-pointer text-background/80 transition-all duration-300 hover:pl-6">Submit</button>                
             </div>
         </div>           
