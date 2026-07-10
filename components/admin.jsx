@@ -24,7 +24,7 @@ function AdminMainSm(){
                 <LinkDivs text={"Create Product"} link={"/ahiadmin/create/product"}  />
                 <LinkDivs text={"View Blogs"} link={"/ahiadmin/view/blog"}  />
                 <LinkDivs text={"View Comments & messages"} link={"/ahiadmin/view/comments"}  />
-                <LinkDivs text={"View Orders"} link={"/ahiadmin/view/orders"}  />
+                <LinkDivs text={"View Job and Product Orders"} link={"/ahiadmin/view/orders"}  />
                 <LinkDivs text={"View Products"} link={"/ahiadmin/view/products"}  />
                 <LinkDivs text={"View Promotions"} link={"/ahiadmin/view/promotions"}  />
             </div>

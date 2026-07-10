@@ -2,21 +2,27 @@
 
 import Loading from "../components/loading";
 import { useEffect, useState } from "react";
+import ImageViewer from "./imgviewer";
 
 export default function ViewOrders(){
     return(
         <div className="w-50/51 flex flex-col gap-4">
-            <h1 className="text-xl">Orders</h1>
-            <hr />
+
             <div className="w-full flex flex-col">
-                <Orders />
+                <h1 className="text-xl">Job Orders</h1>
+                <hr />
+                <JobOrders />
+
+                <h1 className="text-xl">Product Orders</h1>
+                <hr />
+                <ProductOrders />
             </div>
         </div>
     )
 }
 
 
-function Orders() {
+function JobOrders() {
 
     const [orders, setOrders] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +68,87 @@ function Order({name,phone,location,job,job_type,comment}){
             <p>{job} <br /> {job_type}</p>
             <p className="mt-2 px-6 py-3 rounded-2xl border border-(--border)">{ (comment ? comment : (<span className="text-foreground/30">skipped by the user</span>))}</p>    
         </div>
+        </div>
+    )
+}
+
+
+function ProductOrders() {
+
+    const [ordered, setOrdered] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    async function getProOrders() {
+
+        try{
+        const response = await fetch("/api/showproductorders",{
+            headers:{
+                "Content-Type":"application/josn"
+            },
+            method:"POST",
+        })
+        const data = await response.json(); 
+        setOrdered(data?.data) 
+        setLoading(false);
+        } catch(err){
+            alert("Error while fetching")
+            setLoading(false)
+        }
+
+        
+    }
+
+    useEffect(()=>{
+        getProOrders();
+    },[])
+
+    return(
+        <div className="flex flex-wrap justify-center items-center gap-4 mt-4">
+            {
+                (loading ? (<Loading loadingItem={"ordered products"} />) :(ordered?.map((or,index)=>(
+                    <ProOrder 
+                        key={index} 
+                        username={or.username} 
+                        phone_number={or.phone_number} 
+                        account_number={or.account_number}  
+                        image={or.image}
+                        product_name={or.product_name} 
+                        product_price={or.product_price} 
+                        ordered_amount={or.amount}
+                        total_price={Number(or.price) * Number(or.amount)}
+                        date={or.created_at}
+                    />
+                ))))
+            }
+        </div>
+    )
+}
+
+function ProOrder({username,phone_number,account_number,image,product_name,product_price,ordered_amount,total_price,date}){
+
+    const [viewerVisible,setViewerVisible] = useState(false);
+
+    return(
+        <div className="border border-(--border)/60 rounded-4xl flex flex-col gap-4 p-6 w-64">
+            {            
+                (viewerVisible && (<ImageViewer imageSrc={image} OnClick={()=>{setViewerVisible(false)}} />))
+            }
+            <div>
+                <p>Name:  <span className="font-black">{username} </span> </p>
+                <p>Phone Number: <span className="font-black">{phone_number}</span> </p>
+                <p>Account Number: <span className="font-black">{account_number}</span> </p>
+                <p>Product Name:  <span className="font-black">{product_name}</span></p>
+                <p>Product Price: <span className="font-black">{product_price}</span> </p>
+                <p>Ordered Amount: <span className="font-black">{ordered_amount}</span>  </p>
+                <p>Total: <span className="font-black">{total_price}</span></p>
+                <p>Date: <span className="font-black text-sm">{date}</span></p>
+
+                <div className="flex flex-col justify-center items-center">
+                   <p>Recept:</p>
+                   <button onClick={()=>{setViewerVisible(true)}} className="bg-foreground/30 px-4 py-1 rounded-4xl">View image</button> 
+                </div>
+                
+            </div>
         </div>
     )
 }
