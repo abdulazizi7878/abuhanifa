@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 export default function Header(){
 
     const [isNavVisible, setNavvisible] = useState(false);
+    const [screenPosition, setScreenPosition] = useState(0);
+    const [lastScreenPosition, setLastScreenPosition] = useState(0);
+
 
    function ChangeTheme() {
 
@@ -50,10 +53,37 @@ export default function Header(){
     },[]);
 
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setScreenPosition(window.scrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        const header = document.getElementById("header");
+
+        if (!header) return;
+
+        if (screenPosition > lastScreenPosition) {
+            header.style.transform = "translateY(-100px)";
+        } else {
+            header.style.transform = "translateY(0)";
+        }
+
+        setLastScreenPosition(screenPosition);
+    }, [screenPosition]);
+
+
     return(
-        <div className="py-4 flex flex-col justify-center items-center w-22/23 h-fit fixed top-0 left-[50%] translate-x-[-50%] z-10 ">
+        <div className="py-4 flex flex-col justify-center items-center w-29/30 h-fit fixed top-0 left-[50%] translate-x-[-50%] z-10 transition-transform duration-500" id="header">
             <header 
-            className="w-full sm:w-[98%] md:w-[95%] lg:w-[93%] border border-(--border) p-3 px-6  dark:bg-background/60 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15"
+            className="w-full sm:w-[98%] md:w-full lg:w-[98%] border border-(--border) p-3 px-6  dark:bg-background/60 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15"
             >
                 <div className="hd w-full flex justify-between items-center">
 

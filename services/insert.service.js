@@ -1,4 +1,4 @@
-import {InsertMessage, InsertOrder, InsertProduct, InsertPromotion} from "../repositories/insertQu";
+import {InsertMessage, InsertOrder, InsertOrderProduct, InsertProduct, InsertPromotion} from "../repositories/insertQu";
 import { randomUUID } from "crypto";
 
 export async function EnterOrder(name,phone_number,location,job,job_type,comment) {
@@ -45,6 +45,18 @@ export async function EnterProduct(name,price,description,image) {
     let link = await randomUUID();
 
     const response = await InsertProduct(name,price,description,image,link);
+
+    return response;
+}
+
+export async function EnterOrderProduct(name,phone_number,account_number,amount,image,product_id) {
+    if(!name) throw new Error("Enter a valid Name");
+    if (!phone_number) throw new Error("Enter a valid Phone Number");
+    if(!account_number) throw new Error("Enter a valid account Number");
+    if(!image) throw new Error("Enter a valid image");
+    if(!product_id) throw new Error("Refresh the page and order it again!");
+
+    const response = await InsertOrderProduct(name,phone_number,account_number,amount,image,product_id);
 
     return response;
 }

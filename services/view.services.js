@@ -20,7 +20,12 @@ export async function GetAllPromotions() {
     return result
 }
 
-export async function GetOneProduct(link) {
+export async function GetOneProduct(link,amount) {
     const result = await ShowOneProduct(link);
-    return result;
+    const price = result[0].price;
+    const totalPrice = (price * amount);
+    return {
+        result:result,
+        totalPrice:totalPrice
+    };
 }
