@@ -19,7 +19,6 @@ export default function OneProduct({link}) {
                 })
             })
             const resData = await response.json();
-            console.log(resData);
             setLoading(false);
             if (resData.success) {
                 setProduct(resData?.data);
