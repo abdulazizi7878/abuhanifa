@@ -113,7 +113,7 @@ function ProductOrders() {
                         account_number={or.account_number}  
                         image={or.image}
                         product_name={or.product_name} 
-                        product_price={or.product_price} 
+                        product_price={or.price} 
                         ordered_amount={or.amount}
                         total_price={Number(or.price) * Number(or.amount)}
                         date={or.created_at}
