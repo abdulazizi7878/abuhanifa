@@ -28,10 +28,7 @@ export default async function adminPage() {
 
     return(
         <>
-            
-           <div className="md:hidden lg:hidden">
-                <Header />  
-           </div>
+        <Header />  
 
            <main className="flex flex-col justify-start items-center p-2  md:w-screen md:h-screen lg:w-screen lg:h-screen">
                  <AdminPage />
