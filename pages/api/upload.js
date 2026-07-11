@@ -24,6 +24,15 @@ export default async function handler(req, res) {
         });
     }
 
+    /*
+    res.status(200).json({
+        success: true,
+        url:"/images/demo-1-a.webp",
+    });
+    return;
+    */
+
+
     try {
 
         const form = formidable({
