@@ -32,7 +32,6 @@ function Promotions() {
             setPromotions(responseData?.promotions);
             setIsLoading(false);
         } catch(err){
-            console.log(err);
             setIsLoading(false)
         }
     }

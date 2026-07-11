@@ -28,7 +28,7 @@ function Products(){
             setProducts(data?.data);
             setLoading(false);                                    
         } catch (err) {
-            console.log("ERROR, WHILE FETCHING");
+            alert("ERROR, WHILE FETCHING");
             setLoading(false);
         }
     }

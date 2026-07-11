@@ -23,7 +23,7 @@ export default function Blog({link}){
             setBlog(data?.data?.blog?.result);
             setLoading(false);
         } catch (err) {
-            console.log("ERROR, WHILE FETCHING", err);
+            console.log("ERROR, WHILE FETCHING");
         }
     }
     
@@ -72,9 +72,7 @@ function OneBlog({title,description,image,created_at,link, blog_id}){
                await navigator.share(blogData);
             }
         } catch (err){
-            await navigator.clipboard.writeText(window.location.href);
-            console.log(err);
-            
+            await navigator.clipboard.writeText(window.location.href);            
         }
 
     }

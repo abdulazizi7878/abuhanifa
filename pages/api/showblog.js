@@ -14,7 +14,7 @@ export default async function handlers(req,res) {
     const result = await GetBlog(req.body.link);
 
     res.status(200).json({
-        status:"success",
+        success:true,
         data: result
     });
 }

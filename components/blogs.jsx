@@ -16,7 +16,7 @@ export default function Blogs(){
             setBlogs(data?.data?.blogs?.result);
             setLoading(false);                        
         } catch (err) {
-            console.log("ERROR, WHILE FETCHING", err);
+            alert("ERROR, WHILE FETCHING");
         }
     }
     

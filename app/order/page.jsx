@@ -58,10 +58,8 @@ export default function order(){
                 alert("ORDER COULDN'T BE POSTED RIGHT NOW");
             }
             const respData = await response.json();
-            console.log(respData);
             
         } catch(err){
-            console.log("ERROR MESSAGE: ",err);
             alert("ORDER COULDN'T BE POSTED RIGHT NOW");
         }
      }

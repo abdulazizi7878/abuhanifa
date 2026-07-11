@@ -1,5 +1,6 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import ViewBlogs from "@/components/viewblogs";
 import ViewComments from "@/components/viewComments";
 import ViewOrders from "@/components/viewOrders";
 import ViewProducts from "@/components/viewProducts";
@@ -13,7 +14,8 @@ export default async function view({params}) {
         comments: <ViewComments/>,
         orders: <ViewOrders />,
         products: <ViewProducts />,
-        promotions:<ViewPromotions />
+        promotions:<ViewPromotions />,
+        blogs:<ViewBlogs />
     };
 
     return(

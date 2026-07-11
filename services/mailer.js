@@ -5,8 +5,7 @@ export default async function sendEmail({name, email, message}) {
  // const {name,email,message} = await req.json();
 
   await transporter.verify();
-  console.log("SMTP server is ready to take messages");
-
+  
   await transporter.sendMail({
     from: process.env.SMTP_USER,
     to: "offlixsupport@gmail.com",

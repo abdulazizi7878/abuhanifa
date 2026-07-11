@@ -28,7 +28,6 @@ export default function ContactPage(){
                 })
             })            
             const res = await response.json();
-            console.log(res);
             if(res.success){ 
                 alert("email sent successfuly");  
                 location.reload();
@@ -38,7 +37,6 @@ export default function ContactPage(){
             
             setUploading(false);
         } catch(err){
-            console.log("error: ");
             setUploading(false);
         }
 

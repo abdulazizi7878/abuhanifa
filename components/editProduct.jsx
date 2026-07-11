@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import Updating from "./updating";
 
 export default function EditProducts({link}){
     return(
@@ -14,6 +15,7 @@ function Product({link}){
 
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [updating, setUpdating] = useState(false);
 
 
     async function GetProduct() {
@@ -39,7 +41,7 @@ function Product({link}){
 
         } catch(err){
             setLoading(false);
-            console.log("error while fetching");
+            alert("error while fetching");
         }
     }
 
@@ -49,6 +51,8 @@ function Product({link}){
 
 
     async function UpdateProduct() {
+        setUpdating(true);
+
         try{
             const response = await fetch("/api/updateproduct",{
                 headers:{
@@ -66,9 +70,11 @@ function Product({link}){
             const data = await response.json();
             if(data.success){
                 window.location.href = "/ahiadmin/view/products"
+                setUpdating(false);
             }
         } catch(err){
-            alert("we couldn't update the product");            
+            alert("we couldn't update the product");      
+            setUpdating(false);      
         }
     }
 
@@ -78,6 +84,9 @@ function Product({link}){
                 <input type="text" id="name" defaultValue={product?.[0].name} contentEditable title="Product Name" placeholder="Product Name" required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
                 <input type="number" id="price" defaultValue={product?.[0].price} title="Product Price" placeholder="Product Price in birr..." required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
                 <textarea  id="description" defaultValue={product?.[0].description} title="Description" placeholder="Product Description" className="w-11/12 min-h-80 px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" ></textarea>                
+                {
+                    (updating && <Updating Updating_item={"blog"} />)
+                }
                 <button onClick={()=>{UpdateProduct()}} className="bg-foreground/90 text-background px-6 transition-all duration-300 hover:pl-8 cursor-pointer py-1 rounded-4xl">Update</button>
             </div>
 

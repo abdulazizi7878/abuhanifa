@@ -29,7 +29,6 @@ export default function OneProduct({link}) {
 
         } catch(err){
             setLoading(false);
-            console.log("error while fetching",err);
         }
     }
 

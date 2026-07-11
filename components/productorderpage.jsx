@@ -45,9 +45,7 @@ function CheckPriceAndOrder({link}){
             setPriceLoading(false);
         } catch(err){
             setProduct("error");
-            setPriceLoading(false)
-            console.log(err);
-            
+            setPriceLoading(false)            
         }
 
 

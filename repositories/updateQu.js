@@ -8,3 +8,12 @@ export async function UpdateProduct(name,price,desciption,link) {
 
     return res;
 }
+
+export async function UpdateBlog(title,desciption,link) {
+    const res = await db.query(
+        "UPDATE blog SET title = ?, description = ? WHERE link = ?",
+        [title,desciption,link]
+    )
+
+    return res;
+}

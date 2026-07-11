@@ -38,7 +38,6 @@ function Comments() {
             setComments(responseData?.comments);
             setIsLoading(false);
         } catch(err){
-            console.log(err);
             setIsLoading(false)
         }
     }
@@ -88,7 +87,6 @@ function Messages() {
             setMessages(responseData?.messages);
             setIsLoading(false);
         } catch(err){
-            console.log(err);
             setIsLoading(false);
         }
     }

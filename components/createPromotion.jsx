@@ -33,9 +33,7 @@ export default function CreatePromotion() {
                 owner_link: GimmeId("link")
             })
         })
-        const responseData = await response.json();
-        console.log(responseData);
-        
+        const responseData = await response.json();        
     }
 
     async function PostImage() {
@@ -48,12 +46,9 @@ export default function CreatePromotion() {
         });
 
         const data = await response.json();
-        console.log(data);
     }
 
-    useEffect(()=>{
-        console.log(file);
-    },[file])
+
 
     return(
         <div className="w-full h-full md:w-11/12 lg:w-11/12">

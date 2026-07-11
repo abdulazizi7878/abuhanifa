@@ -37,7 +37,6 @@ function JobOrders() {
             setOrders(responseData?.orders);
             setIsLoading(false);            
         } catch(err){
-            console.log(err);
             setIsLoading(false); 
         }
     }
