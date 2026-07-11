@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     } catch(err){
         res.status(500).json({
             success:false,
-            message:"We couldn't fetch the data"
+            message:"We couldn't fetch the data",
         })
     }
 }

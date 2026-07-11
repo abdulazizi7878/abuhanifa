@@ -109,7 +109,10 @@ function OneBlog({title,description,image,created_at,link, blog_id}){
                 <div className="w-full flex justify-center items-center overflow-hidden bg-foreground/20">
                      {
                         (isVideo ? (
-                            <video controls src={image} className="h-full max-h-70" width="100%" />
+                            <video autoPlay controls  className="h-full max-h-70" width="100%" loop >
+                                <source src={image} type="video/mp4" />
+                                Your browser doesn't support the video tag
+                            </video>
                         ) : (
                             <img src={image} alt="NEWS_IMAGE" className="h-full max-h-70" />
                         ))

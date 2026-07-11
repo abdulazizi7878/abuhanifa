@@ -48,7 +48,7 @@ export default function Blogs(){
 
 function Blog({title,description,image,created_at,link}){
 
-    const isVideo = /\.(mp4|mov|avi|wmv|flv|mkv)$/i.test(image);
+    const isVideo = /\.(mp4|mov|avi|wmv|flv|mkv|webm|m4v|3gp|mpeg)$/i.test(image);
 
     return(
         <div className="pb-6 w-full sm:w-82 md:w-82 lg:w-82 overflow-hidden border border-(--border) rounded-2xl flex flex-col justify-center items-center gap-y-4 relative">
@@ -56,7 +56,7 @@ function Blog({title,description,image,created_at,link}){
             <div className="w-full h-[35%] flex justify-center items-center overflow-hidden bg-foreground/20">
                 {
                     isVideo ? (
-                        <video controls src={image} className="h-full max-h-50" width="100%" />
+                        <video controls  src={image} className="h-full max-h-50" width="100%" />
                     ) : (
                         <img src={image} alt="NEWS_IMAGE" className="h-full max-h-50" />
                     )
