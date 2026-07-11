@@ -21,6 +21,7 @@ function CheckPriceAndOrder({link}){
     const [product, setProduct]= useState(null);
     const [file,setFile] = useState(null);
     const [uploading,setUploading] = useState(false);
+    const [location,setLocation] = useState(null);
 
     async function CheckPrice(type) {
         setPriceLoading(true);
@@ -72,12 +73,19 @@ function CheckPriceAndOrder({link}){
             alert("please enter your phone number!");
             return;
         }
+        if (!location || location == "other" || location == null || location == "choose") {
+           alert("choose or write your location") ;
+           return;
+        } 
         if (!accountNumber) {
             alert("please enter your account number!");
             return;
         }
         if (!amount) {
             amount = 1;
+        }
+        if (!file) {
+            alert("please upload image");
             return;
         }
         
@@ -104,6 +112,7 @@ function CheckPriceAndOrder({link}){
                         body: JSON.stringify({
                             name:name,
                             phone_number:phoneNumber,
+                            location: location,
                             account_number:accountNumber,
                             amount:amount,
                             image:image,
@@ -127,6 +136,8 @@ function CheckPriceAndOrder({link}){
                     setUploading(false);
                     console.log(err);
                 }
+            } else {
+                alert("We couldn't order your product")
             }
         } catch(err){
             alert("We couldn't order your product");
@@ -191,6 +202,21 @@ function CheckPriceAndOrder({link}){
             <div className="flex flex-col gap-2 p-2 justify-center items-start">
                 <label htmlFor="phoneNumber" className="ml-3 text-foreground/50" >Phone Number / ስልክ ቁጥር</label>
                 <input type="number" id="phoneNumber" min={90000000} placeholder="09..." title="Phone Number" className="border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl" />                
+            </div>
+
+           <div className="flex flex-col gap-2 p-2 justify-center items-start">
+                <label htmlFor="location" className="ml-3 text-foreground/50" >Location / መገኛ</label>
+                <select  id="location" onChange={(e)=>{setLocation(e.target.value);}} className="border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl">
+                    <option value="" className="text-black" >choose / ይምረጡ</option>
+                    <option value="addis_ababa" className="text-black">Addis ababa / አዲስ አባባ</option>
+                    <option value="buta_jira" className="text-black" >Butajira / ቡታጀራ</option>
+                    <option value="worabe" className="text-black">Worabe / ወራቤ</option>
+                    <option value="halaba" className="text-black">Halaba / ሃላባ</option>
+                    <option value="other" className="text-black">Other / ሌላ ቦታ</option>
+                </select>
+                {
+                    (location == "other" || location != null && location != "choose" && location != "addis_ababa" && location != "buta_jira" && location != "worabe" && location != "halaba" ? (<input onChange={(e)=>{setLocation(e.target.value)}} type="text" id="customeLocation" placeholder={`write your location / መገኛዎን ይጻፉ`} className="border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl" />) : (""))
+                }
             </div>
 
             <div className="flex flex-col gap-2 p-2 justify-center items-start">

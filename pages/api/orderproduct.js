@@ -11,11 +11,11 @@ export default async function handler(req, res) {
         return;
     }
 
-    const {name,phone_number,account_number,amount,image,product_id} = req.body;
+    const {name,phone_number,location,account_number,amount,image,product_id} = req.body;
 
     try{
 
-    const response = await EnterOrderProduct(name,phone_number,account_number,amount,image,product_id);
+    const response = await EnterOrderProduct(name,phone_number,location,account_number,amount,image,product_id);
 
     res.status(200).json({
         success:true,

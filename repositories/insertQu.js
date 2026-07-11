@@ -35,10 +35,10 @@ export async function InsertProduct(name,price,description,image,link) {
     return result;
 }
 
-export async function InsertOrderProduct(name,phone_number,account_number,amount,image,product_id) {
+export async function InsertOrderProduct(name,phone_number,location,account_number,amount,image,product_id) {
     const [result] = await db.query(
-        "INSERT INTO ordered_products (name,phone_number,account_number,amount, image,product_id) VALUES(?,?,?,?,?,?)",
-        [name,phone_number,account_number,amount,image,product_id]
+        "INSERT INTO ordered_products (name,phone_number,location,account_number,amount, image,product_id) VALUES(?,?,?,?,?,?)",
+        [name,phone_number,location,account_number,amount,image,product_id]
     )
 
     return result;

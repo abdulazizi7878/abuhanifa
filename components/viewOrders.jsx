@@ -110,10 +110,12 @@ function ProductOrders() {
                         key={index} 
                         username={or.username} 
                         phone_number={or.phone_number} 
+                        location={or.location}
                         account_number={or.account_number}  
                         image={or.image}
                         product_name={or.product_name} 
                         product_price={or.price} 
+                        product_image={or.product_image}
                         ordered_amount={or.amount}
                         total_price={Number(or.price) * Number(or.amount)}
                         date={or.created_at}
@@ -124,30 +126,40 @@ function ProductOrders() {
     )
 }
 
-function ProOrder({username,phone_number,account_number,image,product_name,product_price,ordered_amount,total_price,date}){
+function ProOrder({username,phone_number,location,account_number,image,product_name,product_price,product_image,ordered_amount,total_price,date}){
+ 
+    const [rImageVisible,setRImageVisible] = useState(false);
+    const [pImageVisible,setPImageVisible] = useState(false);
 
-    const [viewerVisible,setViewerVisible] = useState(false);
 
     return(
-        <div className="border border-(--border)/60 rounded-4xl flex flex-col gap-4 p-6 w-64">
+        <div className="border border-(--border)/60 rounded-4xl flex flex-col gap-6 p-6">
             {            
-                (viewerVisible && (<ImageViewer imageSrc={image} OnClick={()=>{setViewerVisible(false)}} />))
+                (rImageVisible && (<ImageViewer imageSrc={image} OnClick={()=>{setRImageVisible(false)}} />))
             }
-            <div>
+            {
+                (pImageVisible && (<ImageViewer imageSrc={product_image} OnClick={()=>{setPImageVisible(false)}} />))
+            }
+            <div className="flex flex-col gap-2">
                 <p>Name:  <span className="font-black">{username} </span> </p>
                 <p>Phone Number: <span className="font-black">{phone_number}</span> </p>
+                <p>Location: <span className="font-black">{location}</span> </p>
                 <p>Account Number: <span className="font-black">{account_number}</span> </p>
                 <p>Product Name:  <span className="font-black">{product_name}</span></p>
                 <p>Product Price: <span className="font-black">{product_price}</span> </p>
                 <p>Ordered Amount: <span className="font-black">{ordered_amount}</span>  </p>
                 <p>Total: <span className="font-black">{total_price}</span></p>
                 <p>Date: <span className="font-black text-sm">{date}</span></p>
+            </div>
 
-                <div className="flex flex-col justify-center items-center">
-                   <p>Recept:</p>
-                   <button onClick={()=>{setViewerVisible(true)}} className="bg-foreground/30 px-4 py-1 rounded-4xl">View image</button> 
-                </div>
-                
+            <div className="flex flex-wrap justify-start items-start gap-3">
+                <p>Recept Image:</p>
+                <button onClick={()=>{setRImageVisible(true)}} className="bg-foreground/30 px-2 py-1 rounded-4xl text-sm">View image</button> 
+            </div>
+
+            <div className="flex flex-wrap justify-start items-start gap-3">
+                <p>Product Image:</p>
+                <button onClick={()=>{setPImageVisible(true)}} className="bg-foreground/30 px-2 py-1 rounded-4xl text-sm">View image</button> 
             </div>
         </div>
     )

@@ -49,14 +49,15 @@ export async function EnterProduct(name,price,description,image) {
     return response;
 }
 
-export async function EnterOrderProduct(name,phone_number,account_number,amount,image,product_id) {
+export async function EnterOrderProduct(name,phone_number,location,account_number,amount,image,product_id) {
     if(!name) throw new Error("Enter a valid Name");
     if (!phone_number) throw new Error("Enter a valid Phone Number");
-    if(!account_number) throw new Error("Enter a valid account Number");
+    if (!location) throw new Error("Enter a valid Location");
+    if(!account_number) throw new Error("Enter a valid Account Number");
     if(!image) throw new Error("Enter a valid image");
     if(!product_id) throw new Error("Refresh the page and order it again!");
 
-    const response = await InsertOrderProduct(name,phone_number,account_number,amount,image,product_id);
+    const response = await InsertOrderProduct(name,phone_number,location,account_number,amount,image,product_id);
 
     return response;
 }
