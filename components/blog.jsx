@@ -79,13 +79,21 @@ function OneBlog({title,description,image,created_at,link, blog_id}){
 
     }
 
+    const isVideo = /\.(mp4|mov|avi|wmv|flv|mkv)$/i.test(image);
+
     return(
         <div className="w-full border-b border-b-(--border) pb-10 mb-10 flex flex-wrap gap-y-10">
 
             <div className={`flex duration-400 flex-col gap-y-6 ${isCommentSectionShown ? "sm:w-full md:w-1/2" : "w-full"}`}>
                 
                 <div className="w-full flex justify-center items-center overflow-hidden bg-foreground/20">
-                    <img src={image} alt="NEWS_IMAGE" className="h-full max-h-70" />
+                     {
+                        (isVideo ? (
+                            <video controls src={image} className="h-full max-h-70" width="100%" />
+                        ) : (
+                            <img src={image} alt="NEWS_IMAGE" className="h-full max-h-70" />
+                        ))
+                     }
                 </div>
 
                 <div className="gap-y-2 flex flex-col justify-center items-center">

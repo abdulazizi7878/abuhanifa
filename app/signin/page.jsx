@@ -39,8 +39,6 @@ function Sss(){
             } else {
                 alert("INVALID CREDENTIALS!")
             }
-
-            console.log(responseData);
         } catch(err){
             alert("SERVER ERROR!");
         }

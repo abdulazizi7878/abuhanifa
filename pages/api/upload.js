@@ -20,6 +20,14 @@ export default async function handler(req, res) {
             message: "Method not allowed",
         });
     }
+/*
+    res.status(200).json({
+        success:true,
+        url:"/images/a.mp4"
+    })
+    return;
+
+    */
 
     try {
         const form = formidable({
