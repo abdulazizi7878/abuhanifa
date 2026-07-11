@@ -79,6 +79,13 @@ function OneBlog({title,description,image,created_at,link, blog_id}){
 
     }
 
+    document.title = title;
+    document.querySelector('meta[name="description"]').setAttribute("content", description);
+    document.querySelector('meta[property="og:title"]').setAttribute("content", title);
+    document.querySelector('meta[property="og:description"]').setAttribute("content", description);
+    document.querySelector('meta[property="og:image"]').setAttribute("content", image);
+    document.querySelector('meta[property="og:url"]').setAttribute("content", window.location.href);
+
     const isVideo = /\.(mp4|mov|avi|wmv|flv|mkv)$/i.test(image);
 
     return(
