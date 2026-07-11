@@ -87,7 +87,7 @@ function ProductOrders() {
             },
             method:"POST",
         })
-        const data = await response.json(); 
+        const data = await response.json();         
         setOrdered(data?.data) 
         setLoading(false);
         } catch(err){

@@ -37,7 +37,7 @@ export async function InsertProduct(name,price,description,image,link) {
 
 export async function InsertOrderProduct(name,phone_number,location,account_number,amount,image,product_id) {
     const [result] = await db.query(
-        "INSERT INTO ordered_products (name,phone_number,location,account_number,amount, image,product_id) VALUES(?,?,?,?,?,?)",
+        "INSERT INTO ordered_products (name,phone_number,location,account_number,amount, image,product_id) VALUES(?,?,?,?,?,?,?)",
         [name,phone_number,location,account_number,amount,image,product_id]
     )
 

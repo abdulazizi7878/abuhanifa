@@ -1,5 +1,6 @@
 import formidable from "formidable";
 import cloudinary from "cloudinary";
+import { url } from "node:inspector";
 
 export const config = {
     api: {
@@ -22,8 +23,6 @@ export default async function handler(req, res) {
             message: "Method not allowed",
         });
     }
-
-
 
     try {
 
