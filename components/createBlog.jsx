@@ -16,7 +16,7 @@ export default function CreateBlog() {
     async function PostBlog() {
         setUploading(true);
         const formData = new FormData();
-        formData.append("image",file);
+        formData.append("file",file);
 
         try{
 
@@ -73,7 +73,7 @@ export default function CreateBlog() {
                 <div className="flex flex-col justify-center items-start gap-6">
                     <input type="text" id="title" title="Title of the blog" placeholder="Title" required className="px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" />
                     <textarea  id="description" title="Description" placeholder="Description" className="w-11/12 min-h-80 px-6 py-2 border border-(--border) rounded-4xl outline-(--primary) shadow-lg" ></textarea>
-                    <input type="file" hidden  onChange={(e)=>setFile(e.target.files[0])} id="image" />
+                    <input type="file" accept="image/*,video/*" hidden  onChange={(e)=>setFile(e.target.files[0])} id="image" />
                     <div className="flex flex-wrap justify-center items-center gap-4">
                         <button onClick={()=>{imageSelect()}} className="px-4 py-2 hover:px-5 shadow-lg outline-(--primary) rounded-4xl bg-(--primary) duration-300 hover:bg-(--primary)/80 text-background cursor-pointer">
                             Select an Image
