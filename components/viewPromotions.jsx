@@ -2,6 +2,7 @@
 
 import Loading from "../components/loading";
 import { useEffect, useState } from "react";
+import DelteLayout from "./delete";
 
 export default function ViewPromotions(){
     return(
@@ -45,7 +46,7 @@ function Promotions() {
             {
                 (isLoading ? (<Loading loadingItem={"promotions"} />) : (
                     promotions?.map((pr, index)=>(
-                        <Promotion key={index} name={pr.name} email={pr.email} title={pr.title} description={pr.description} image={pr.image} link={pr.link} owner_link={pr.owner_link} phone_number={pr.phone_number} />
+                        <Promotion key={index} id={pr.id} name={pr.name} email={pr.email} title={pr.title} description={pr.description} image={pr.image} link={pr.link} owner_link={pr.owner_link} phone_number={pr.phone_number} />
                     ))
                 ))
             }
@@ -54,10 +55,33 @@ function Promotions() {
 }
 
 
-function Promotion({title,description,link}){
+function Promotion({title,description,link,id}){
+
+  const [deleteLayout, setDeleteLayout] = useState(false);
+
+    
+    async function Delete() {
+        try{
+            const response = await fetch("/api/delete",{
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                method:"POST",
+                body:JSON.stringify({
+                    item:"promotion",
+                    id:id
+                })
+            })            
+            location.reload();
+        } catch(err){
+            alert("Deleting failed!")
+        }
+    }
     return(
         <div className="border border-(--border) px-4 py-3 rounded-2xl transition-all duration-300 hover:shadow-lg flex flex-wrap justify-between items-center gap-6">
-           
+           {
+            (deleteLayout && <DelteLayout itemName={title} OnCancel={()=>{setDeleteLayout(false)}} OnDelete={()=>{Delete(),setDeleteLayout(false)}} />)
+           }
             <div className="w-auto flex flex-row justify-between items-center gap-6">
                 <span className="text-foreground/80 text-sm bg-foreground/10 px-2">{title}</span>
                 <span className="text-foreground/80 text-sm line-clamp-2 bg-foreground/10 px-2">{description}</span>
@@ -65,7 +89,7 @@ function Promotion({title,description,link}){
 
             <div className="flex flex-row justify-evenly items-center gap-4">
                 <a href={`/ahiadmin/edit/promotions/${link}`} className="text-blue-500 px-2 text-sm rounded-4xl bg-blue-500/20 cursor-pointer transition-all duration-300 hover:pr-4">Edit</a>
-                <a className="text-red-400 px-2 text-sm rounded-4xl bg-red-400/20 cursor-pointer transition-all duration-300 hover:pl-4">Delete</a>
+                <button onClick={()=>{setDeleteLayout(true)}} className="text-red-400 px-2 text-sm rounded-4xl bg-red-400/20 cursor-pointer transition-all duration-300 hover:pl-4">Delete</button>
             </div>
         </div>
     )

@@ -2,6 +2,7 @@
 
 
 import { useEffect, useState } from "react";
+import DelteLayout from "./delete";
 
 export default function ViewProducts(){
     return(
@@ -48,17 +49,40 @@ function Products() {
         <div className="w-11/12 flex flex-col gap-4">
             {
                 (products && products?.map((pr, index)=>(
-                    <Product key={index} name={pr.name} price={pr.price} link={pr.link} />
+                    <Product key={index} id={pr.id} name={pr.name} price={pr.price} link={pr.link} />
                 )))
             }
         </div>
     )
 }
 
-function Product({name,price,link}){
+function Product({name,price,link,id}){
+
+    const [deleteLayout, setDeleteLayout] = useState(false);
+
+    
+    async function Delete() {
+        try{
+            const response = await fetch("/api/delete",{
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                method:"POST",
+                body:JSON.stringify({
+                    item:"product",
+                    id:id
+                })
+            })            
+            location.reload();
+        } catch(err){
+            alert("Deleting failed!")
+        }
+    }
     return(
-        <div className="border border-(--border) px-4 py-3 rounded-2xl transition-all duration-300 hover:shadow-lg flex flex-wrap justify-between items-center gap-6">
-           
+        <div className="border border-(--border) px-4 py-3 rounded-2xl transition-all duration-300 hover:shadow-lg flex flex-wrap justify-between items-center gap-6">           
+            {
+            (deleteLayout && <DelteLayout itemName={name} OnCancel={()=>{setDeleteLayout(false)}} OnDelete={()=>{Delete(),setDeleteLayout(false)}} />)
+            }
             <div className=" flex flex-row justify-evenly items-center gap-4">
                 <span className="text-foreground/80 text-sm">{name}</span>
                 <span className="text-foreground/80 text-sm">{price} Birr</span>
@@ -66,7 +90,7 @@ function Product({name,price,link}){
 
             <div className="flex flex-row justify-evenly items-center gap-3">
                 <a href={`/ahiadmin/edit/products/${link}`} className="text-blue-500 px-2 text-sm rounded-4xl bg-blue-500/20 cursor-pointer transition-all duration-300 hover:pr-4">Edit</a>
-                <a className="text-red-400 px-2 text-sm rounded-4xl bg-red-400/20 cursor-pointer transition-all duration-300 hover:pl-4">Delete</a>
+                <button onClick={()=>{setDeleteLayout(true)}} className="text-red-400 px-2 text-sm rounded-4xl bg-red-400/20 cursor-pointer transition-all duration-300 hover:pl-4">Delete</button>
             </div>
         </div>
     )
