@@ -1,4 +1,4 @@
-import { EditBlog } from "../../services/update.services";
+import { EditPromotion } from "../../services/update.services";
 
 export default async function handler(req,res) {
 
@@ -9,10 +9,10 @@ export default async function handler(req,res) {
         });
     }
     
-    const {title, description, link} = req.body;
+    const {name,email,phone_number,title,description,owner_link,link} = req.body;
 
     try {
-        const response = await EditBlog(title,description,link);
+        const response = await EditPromotion(name,email,phone_number,title,description,owner_link,link);
 
         res.status(200).json({
             success:true,

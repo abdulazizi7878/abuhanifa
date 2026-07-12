@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 export default function ViewComments(){
     return(
         <div className="w-50/51 flex flex-col gap-4">
-            <h1 className="text-xl">Comments From Blog Post</h1>
+            <h1 className="text-xl">All Comments</h1>
             <hr />
             <div className="w-full flex flex-col">
                 <Comments />
             </div>
             
-            <h1 className="text-xl">Message From contact Page</h1>
+            <h1 className="text-xl">All Messages</h1>
             <hr />
             <div>
                 <Messages />

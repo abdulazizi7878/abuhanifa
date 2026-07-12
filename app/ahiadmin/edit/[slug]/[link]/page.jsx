@@ -3,6 +3,7 @@ import Footer from "@/components/footer";
 import NotFound from "@/components/notfound";
 import EditProducts from "@/components/editProduct";
 import EditBlogs from "@/components/editBlogs";
+import EditPromotions from "@/components/editpromotion";
 
 export default async function editthings({params}) {
     const {link} = await params;
@@ -10,7 +11,8 @@ export default async function editthings({params}) {
 
     const pages = {
         products: <EditProducts link={link} />,
-        blogs: <EditBlogs link={link} />
+        blogs: <EditBlogs link={link} />,
+        promotions: <EditPromotions link={link} />
     }
     
     return(

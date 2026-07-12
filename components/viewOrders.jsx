@@ -9,11 +9,11 @@ export default function ViewOrders(){
         <div className="w-50/51 flex flex-col gap-4">
 
             <div className="w-full flex flex-col">
-                <h1 className="text-xl">Job Orders</h1>
+                <h1 className="text-xl">All Job Orders</h1>
                 <hr />
                 <JobOrders />
 
-                <h1 className="text-xl">Product Orders</h1>
+                <h1 className="text-xl">All Product Orders</h1>
                 <hr />
                 <ProductOrders />
             </div>

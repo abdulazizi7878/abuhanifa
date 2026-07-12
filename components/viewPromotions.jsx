@@ -23,7 +23,7 @@ function Promotions() {
 
     async function GetPromotions() {
         try {
-            const response = await fetch("/api/showallpromotions",{
+            const response = await fetch("/api/showpromotions",{
                 method:"POST"
             }
             );
@@ -54,30 +54,19 @@ function Promotions() {
 }
 
 
-function Promotion({name,email,phone_number,title,description,image,link,owner_link}){
+function Promotion({title,description,link}){
     return(
-        <div className="pb-6 w-full sm:w-82 md:w-82 lg:w-82 overflow-hidden border border-(--border) rounded-2xl flex flex-col justify-center items-center gap-y-4 relative">
-                
-                <div className="w-full h-[35%] flex justify-center items-center overflow-hidden bg-foreground/20">
-                    <img src={image} alt="PROMOTION_IMAGE" className="h-full max-h-50" />
-                </div>
-
-                <div className="gap-y-2 flex flex-col justify-center items-center">
-                    <h2 className="text-xl font-bold w-11/12">
-                        {title}
-                    </h2>
-                    <p className="line-clamp-4 w-40/41 px-2">
-                        {description}
-                    </p>
-                    <div className="w-full flex flex-col gap-y-4 justify-center items-start mt-4">
-                        <a href={owner_link} className="px-4 py-2 duration-300 hover:px-6 bg-(--primary)/20 rounded-2xl text-sm shadow">Contact me on Telegram</a>
-                        <a href={`tel:${phone_number}`} className="px-4 py-2 duration-300 hover:px-6 bg-(--primary)/20 rounded-2xl text-sm shadow">Phone :- {phone_number}</a>
-                        <a href={`mailto:${email}`} className="px-4 py-2 duration-300 hover:px-6 bg-(--primary)/20 rounded-2xl text-sm shadow">Email :- {email}</a>                        
-                    </div>
-
-                </div>
-                <a href={`/promotion/${link}`} className="absolute inset-0"></a>
+        <div className="border border-(--border) px-4 py-3 rounded-2xl transition-all duration-300 hover:shadow-lg flex flex-wrap justify-between items-center gap-6">
+           
+            <div className="w-auto flex flex-row justify-between items-center gap-6">
+                <span className="text-foreground/80 text-sm bg-foreground/10 px-2">{title}</span>
+                <span className="text-foreground/80 text-sm line-clamp-2 bg-foreground/10 px-2">{description}</span>
             </div>
+
+            <div className="flex flex-row justify-evenly items-center gap-4">
+                <a href={`/ahiadmin/edit/promotions/${link}`} className="text-blue-500 px-2 text-sm rounded-4xl bg-blue-500/20 cursor-pointer transition-all duration-300 hover:pr-4">Edit</a>
+                <a className="text-red-400 px-2 text-sm rounded-4xl bg-red-400/20 cursor-pointer transition-all duration-300 hover:pl-4">Delete</a>
+            </div>
+        </div>
     )
 }
-

@@ -98,7 +98,7 @@ function CheckPriceAndOrder({link}){
                 body:imageData
             })
             const imgUrl = await imgResponse.json();
-                        
+
             if (imgUrl.success) {
                 const image = imgUrl?.url;
 
@@ -126,20 +126,20 @@ function CheckPriceAndOrder({link}){
                         window.location.reload();
                         setUploading(false);
                     } else{
-                        alert("We couldn't order your product 1");
+                        alert("We couldn't order your product");
                         setUploading(false);
                     }
 
                 } catch(err){
-                    alert("We couldn't order your product 2");
+                    alert("We couldn't order your product");
                     setUploading(false);                    
                 }
             } else {
-                alert("We couldn't order your product 3");
+                alert("We couldn't order your product");
                 setUploading(false);
             }
         } catch(err){
-            alert("We couldn't order your product 4");
+            alert("We couldn't order your product");
             setUploading(false);
         }
     }

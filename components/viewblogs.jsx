@@ -5,9 +5,7 @@ import { useEffect, useState } from "react";
 export default function ViewBlogs(){
     return(
         <div className="w-full flex flex-col justify-center items-center">
-            <p className="font-bold w-11/12">
-                Edit and Delete Blogs
-            </p>
+            <h1 className="text-xl">All Blogs</h1>
             <hr className="w-full my-4" />
             <Blogs />
         </div>

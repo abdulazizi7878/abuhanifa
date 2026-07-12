@@ -17,3 +17,12 @@ export async function UpdateBlog(title,desciption,link) {
 
     return res;
 }
+
+export async function UpdatePromotion(name,email,phone_number,title,description,owner_link,link) {
+    const res = await db.query(
+        "UPDATE promotions SET name = ?, email = ?, phone_number = ?, title = ?, description = ?, owner_link = ? WHERE link = ?",
+        [name,email,phone_number,title,description,owner_link,link]
+    )
+
+    return res;
+}

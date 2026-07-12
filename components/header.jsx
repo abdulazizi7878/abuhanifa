@@ -97,6 +97,7 @@ export default function Header(){
                             <li><a href="/#" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Home</a></li>
                             <li><a href="/order/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Order</a></li>
                             <li><a href="/products/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Products</a></li>
+                            <li><a href="/promotions/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Promotions</a></li>
                             <li><a href="/blog/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Blog</a></li>
                             <li><a href="/contact/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Contact</a></li>
                             <li><a href="/#services" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Services</a></li>
@@ -140,7 +141,7 @@ export default function Header(){
 function Nav({isNavVisible, onClick}){
     return(
             <div className={`duration-400 fixed top-22 ${(isNavVisible ? "right-[5%]" : "-right-100")}  flex justify-end min-h-40 py-2`} id="nav">
-                <div className="relative bg-background rounded-[50px] flex flex-col gap-6 justify-start items-center py-10 px-20 md:px-26 shadow-xl shadow-foreground/30">
+                <div className="relative bg-background/50 backdrop-blur-2xl backdrop-saturate-200 rounded-[50px] flex flex-col gap-6 justify-start items-center py-10 px-20 md:px-26 shadow-xl shadow-foreground/30">
                    <div>
                         <h1>Abu-Hanifa <span className="text-(--primary)">Installation</span></h1>    
                         <hr className="w-full my-1" />                     
@@ -151,6 +152,7 @@ function Nav({isNavVisible, onClick}){
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/">home</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/blog">blog</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/products">products</a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/promotions">promotions</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/contact">contact</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/order">order</a></li>
                         <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/#services">services</a></li>
