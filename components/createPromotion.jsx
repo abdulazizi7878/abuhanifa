@@ -53,6 +53,11 @@ export default function CreatePromotion() {
                 })
                 const responseData = await response2.json();
                 setUploading(false);
+                if (responseData.success) {
+                   alert("Promotion posted successfully!");
+                } else {
+                    alert("We couldn't post the promotion!")
+                }
                 
             } catch(err){
                 alert("We couldn't post the promotion!")
