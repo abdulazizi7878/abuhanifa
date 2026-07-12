@@ -56,3 +56,12 @@ export async function ShowOrderedProducts() {
 
     return products;
 }
+
+export async function ShowPromotion(link) {
+    const [promotion] = await db.query(
+        "SELECT * FROM promotions WHERE link = ?;",
+        [link]
+    );
+
+    return promotion;
+}

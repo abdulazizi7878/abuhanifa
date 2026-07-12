@@ -21,7 +21,7 @@ function Promotion({link}){
 
     async function GetPromotion() {
         try{
-            const response = await fetch("/api/showpromotions",{
+            const response = await fetch("/api/showpromotion",{
                 headers:{
                     "Content-Type":"application/json"
                 },
@@ -32,8 +32,9 @@ function Promotion({link}){
             })
             const resData = await response.json();            
             setLoading(false);
+            
             if (resData.success) {
-                setPromotion(resData?.promotions);
+                setPromotion(resData?.data);
             } else {
                 alert("We couldn't get the Promotion");
             }
