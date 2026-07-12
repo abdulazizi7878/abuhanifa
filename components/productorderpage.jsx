@@ -90,7 +90,7 @@ function CheckPriceAndOrder({link}){
         setUploading(true);
 
         const imageData = new FormData();
-        imageData.append("image",file);
+        imageData.append("file",file);
 
         try{
             const imgResponse = await fetch("/api/upload",{
@@ -98,6 +98,7 @@ function CheckPriceAndOrder({link}){
                 body:imageData
             })
             const imgUrl = await imgResponse.json();
+                        
             if (imgUrl.success) {
                 const image = imgUrl?.url;
 
@@ -125,20 +126,20 @@ function CheckPriceAndOrder({link}){
                         window.location.reload();
                         setUploading(false);
                     } else{
-                        alert("We couldn't order your product");
+                        alert("We couldn't order your product 1");
                         setUploading(false);
                     }
 
                 } catch(err){
-                    alert("We couldn't order your product");
+                    alert("We couldn't order your product 2");
                     setUploading(false);                    
                 }
             } else {
-                alert("We couldn't order your product");
+                alert("We couldn't order your product 3");
                 setUploading(false);
             }
         } catch(err){
-            alert("We couldn't order your product");
+            alert("We couldn't order your product 4");
             setUploading(false);
         }
     }
