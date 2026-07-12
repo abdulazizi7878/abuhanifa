@@ -31,10 +31,10 @@ function Cont(){
                             </h1>
                             <hr  />
                             <h2 className="text-2xl mt-6 mb-2 font-(family-name:--primary-font)">
-                                General <span className="text-red-500 font-bold">Electric</span>  and <span className="text-(--primary) font-bold">plumping work.</span>
+                                General <span className="text-red-500 font-bold">Electric</span>  and <span className="text-(--primary) font-bold">plumbing work.</span>
                             </h2>        
                             <p className="font-stretch-150% font-(family-name:--primary-font)">
-                                We are a team of highly skilled and experienced electricians and plumpers, dedicated to providing top-notch electrical and plumbing services to our clients.
+                                We are a team of highly skilled and experienced electricians and plumbers, dedicated to providing top-notch electrical and plumbing services to our clients.
                             </p>
                             <p className="mt-4 font-stretch-150% font-(family-name:--primary-font)">
                                 Our team is committed to delivering high-quality workmanship, exceptional customer service, and innovative solutions to meet the unique needs of each project.
