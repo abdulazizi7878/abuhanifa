@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import Uploading from "./uploading";
 
 export default function CreatePromotion() {
 
@@ -94,6 +95,9 @@ export default function CreatePromotion() {
                         </span>
                     </div>
                     <div>
+                        {
+                            (uploading && (<Uploading uploadingItem={"promotion"} />))
+                        }
                         <button onClick={()=>{PostPromotion()}} title="Post the Promotion" className="px-4 py-2 hover:px-5 shadow-lg outline-(--primary) rounded-4xl bg-(--primary) duration-300 hover:bg-(--primary)/80 text-background cursor-pointer">
                           POST
                         </button>                
