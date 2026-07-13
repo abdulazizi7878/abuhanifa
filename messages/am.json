@@ -62,5 +62,42 @@
         "Mission": "ተልዕኮ",
         "Contacts": "ያግኙን",
         "Other": "ሌሎች"
+    },
+    "contact": {
+        "Contact us Today": "ዛሬ ያግኙን",
+        "To contact by Email": "በኢሜይል ለማግኘት",
+        "Name": "ስም",
+        "Email": "ኢሜይል",
+        "Leave Message": "መልእክት ያስቀምጡ",
+        "Send": "ይላኩ",
+        "Other options": "ሌሎች አማራጮች",
+        "Instagram": "ኢንስታግራም",
+        "TikTok": "ቲክቶክ",
+        "YouTube": "ዩቲዩብ",
+        "Facebook": "ፌስቡክ",
+        "Telegram": "ቴሌግራም",
+        "Join our Telegram channel": "የቴሌግራም ቻናላችንን ይቀላቀሉ"
+    },
+    "order": {
+        "Back to Home": "ወደ መነሻ ይመለሱ",
+        "Next": "ቀጣይ",
+        "Back": "ተመለስ",
+        "Name": "ስም",
+        "Phone Number": "ስልክ ቁጥር",
+        "Location": "ቦታ",
+        "Choose": "ይምረጡ",
+        "Addis Ababa": "አዲስ አበባ",
+        "Buta Jira": "ቡታጅራ",
+        "Worabe": "ወራቤ",
+        "Halaba": "ሀላባ",
+        "Select the Job": "ስራውን ይምረጡ",
+        "Electric": "ኤሌክትሪክ",
+        "Plumbing": "ቧንቧ",
+        "New Installation": "አዲስ ተከላ",
+        "Renovation and Maintenance": "ማደሻ እና ጥገና",
+        "Finishing Work": "የፊኒሺንግ ስራ",
+        "If you have any idea": "ያለዎትን ሃሳብ እዚህ ይግለጹ",
+        "You Are Almost Finished": "ሊጨርሱ ነው",
+        "Send": "ይላኩ"
     }
 }

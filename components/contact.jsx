@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import Uploading from "./uploading";
+import { useTranslations } from "next-intl";
+
 export default function ContactPage(){
 
+    const t = useTranslations("contact");
 
     const [uploading, setUploading] = useState(false);
 
@@ -48,18 +51,18 @@ export default function ContactPage(){
 
                  <div className="w-full">
                     <div>
-                        <h1 className="text-3xl font-black">Contact us Today</h1>    
-                        <p className="text-md my-2">To contact by Email</p>
+                        <h1 className="text-3xl font-black">{t("Contact us Today")}</h1>    
+                        <p className="text-md my-2">{t("To contact by Email")}</p>
                     </div>
                     <div className="w-full flex flex-col justify-center items-start gap-6">
 
-                        <input type="text" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder="Your Name" title="Please Enter Your Name!" autoComplete="name" id="name" />
-                        <input type="email" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder="Your Email" title="Please Enter Your Email!" autoComplete="email" id="email" />
-                        <textarea  className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder="Leave something" title="Contact box, leave something comment, order, review, job, Advertisement..." >
+                        <input type="text" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder={t("Name")} title="Please Enter Your Name!" autoComplete="name" id="name" />
+                        <input type="email" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder={t("Email")} title="Please Enter Your Email!" autoComplete="email" id="email" />
+                        <textarea  className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder={t("Leave Message")} title="Contact box, leave something comment, order, review, job, Advertisement..." >
                         </textarea>
                         {uploading && <Uploading uploadingItem="email" />}
                         <button className="bg-foreground text-background px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl" onClick={sendEmail}>
-                            Send 
+                            {t("Send")} 
                         </button>
                     </div>
                  </div>
@@ -68,8 +71,7 @@ export default function ContactPage(){
 
                  <div className="w-full flex flex-col gap-10">
                     <div>
-                        <h1 className="text-3xl font-black">OR</h1>
-                        <p className="text-md my-2">Using other options</p>
+                        <p className="text-md text-2xl font-black my-2">{t("Other options")}</p>
                     </div>
                     <div className="border border-(--border) flex flex-col justify-center items-center gap-10 h-60 rounded-4xl">
 
@@ -87,7 +89,7 @@ export default function ContactPage(){
                                     </div> 
 
                                     <div className="transition-all duration-300 absolute bottom-0 h-fit px-4 rounded-2xl">
-                                        <span className="text-sm">Instagram</span>
+                                        <span className="text-sm">{t("Instagram")}</span>
                                     </div>
                                     
                                 </div>
@@ -104,7 +106,7 @@ export default function ContactPage(){
                                     </div> 
 
                                     <div className="transition-all duration-300 absolute bottom-0 h-fit px-4 rounded-2xl">
-                                        <span className="text-sm">TikTok</span>
+                                        <span className="text-sm">{t("TikTok")}</span>
                                     </div>
                                     
                                 </div>
@@ -121,7 +123,7 @@ export default function ContactPage(){
                                     </div> 
 
                                     <div className="transition-all duration-300 absolute bottom-0 h-fit px-4 rounded-2xl">
-                                        <span className="text-sm">YouTube</span>
+                                        <span className="text-sm">{t("YouTube")}</span>
                                     </div>
                                     
                                 </div>
@@ -138,7 +140,7 @@ export default function ContactPage(){
                                     </div> 
 
                                     <div className="transition-all duration-300 absolute bottom-0 h-fit px-4 rounded-2xl">
-                                        <span className="text-sm">Facebook</span>
+                                        <span className="text-sm">{t("Facebook")}</span>
                                     </div>
                                     
                                 </div>
@@ -155,7 +157,7 @@ export default function ContactPage(){
                                     </div> 
 
                                     <div className="transition-all duration-300 absolute bottom-0 h-fit px-4 rounded-2xl">
-                                        <span className="text-sm">Telegram</span>
+                                        <span className="text-sm">{t("Telegram")}</span>
                                     </div>
                                     
                                 </div>                            
@@ -163,7 +165,7 @@ export default function ContactPage(){
 
                         <div className="flex px-6 py-2 duration-300 hover:px-8 rounded-4xl bg-blue-400 cursor-pointer" onClick={()=>{window.location.href ="https://t.me/ahieth";}} >
                             <span className="text-background">
-                               Join our Telegram channel  
+                               {t("Join our Telegram channel")}  
                             </span>
                             <div className="px-2 rounded-2xl">
                                 <svg width="24" height="24" viewBox="0 0 128 128" fill="blue" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">

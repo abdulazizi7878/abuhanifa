@@ -63,5 +63,42 @@
         "Mission": "مهمتنا",
         "Contacts": "جهات الاتصال",
         "Other": "أخرى"
+    },
+    "contact": {
+        "Contact us Today": "تواصل معنا اليوم",
+        "To contact by Email": "للتواصل عبر البريد الإلكتروني",
+        "Name": "الاسم",
+        "Email": "البريد الإلكتروني",
+        "Leave Message": "اترك رسالة",
+        "Send": "إرسال",
+        "Other options": "خيارات أخرى",
+        "Instagram": "إنستغرام",
+        "TikTok": "تيك توك",
+        "YouTube": "يوتيوب",
+        "Facebook": "فيسبوك",
+        "Telegram": "تلغرام",
+        "Join our Telegram channel": "انضم إلى قناتنا على تلغرام"
+    },
+    "order": {
+        "Back to Home": "العودة إلى الرئيسية",
+        "Next": "التالي",
+        "Back": "رجوع",
+        "Name": "الاسم",
+        "Phone Number": "رقم الهاتف",
+        "Location": "الموقع",
+        "Choose": "اختر",
+        "Addis Ababa": "أديس أبابا",
+        "Buta Jira": "بوتاجرا",
+        "Worabe": "ورابي",
+        "Halaba": "هالابا",
+        "Select the Job": "اختر نوع العمل",
+        "Electric": "كهرباء",
+        "Plumbing": "سباكة",
+        "New Installation": "تركيب جديد",
+        "Renovation and Maintenance": "ترميم وصيانة",
+        "Finishing Work": "أعمال التشطيب",
+        "If you have any idea": "إذا كان لديك أي فكرة",
+        "You Are Almost Finished": "أوشكت على الانتهاء",
+        "Send": "إرسال"
     }
 }

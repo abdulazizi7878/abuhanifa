@@ -62,5 +62,42 @@
         "Mission":"Mission",
         "Contacts":"Contacts",
         "Other":"Other"
+    },
+    "contact":{
+        "Contact us Today":"Contact us Today",
+        "To contact by Email":"To contact by Email",
+        "Name":"Name",
+        "Email":"Email",
+        "Leave Message":"Leave Message",
+        "Send":"Send",
+        "Other options":"Other options",
+        "Instagram":"Instagram",
+        "TikTok":"TikTok",
+        "YouTube":"YouTube",
+        "Facebook":"Facebook",
+        "Telegram":"Telegram",
+        "Join our Telegram channel":"Join our Telegram channel"
+    },
+    "order":{
+        "Back to Home":"Back to Home",
+        "Next":"Next",
+        "Back":"Back",
+        "Name":"Name",
+        "Phone Number":"Phone Number",
+        "Location":"Location",
+        "Choose":"Choose",
+        "Addis Ababa":"Addis Ababa",
+        "Buta Jira":"Buta Jira",
+        "Worabe":"Worabe",
+        "Halaba":"Halaba",
+        "Select the Job":"Select the Job",
+        "Electric":"Electric",
+        "Plumbing":"Plumbing",
+        "New Installation":"New Installation",
+        "Renovation and Maintenance":"Renovation and Maintenance",
+        "Finishing Work":"Finishing Work",
+        "If you have any idea":"If you have any idea",
+        "You Are Almost Finished":"You Are Almost Finished",
+        "Send":"Send"
     }
 }
