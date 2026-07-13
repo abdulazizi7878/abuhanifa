@@ -36,10 +36,10 @@ function Cont(){
                                 {t("title")} 
                             </h1>
                             <hr  />
-                            <h2 className="text-2xl mt-6 mb-2 font-(family-name:--primary-font)">
+                            <h2 className="text-2xl mt-6 mb-2 ">
                                 {t("sub-title")}
                             </h2>        
-                            <p className="font-stretch-150% font-(family-name:--primary-font)">
+                            <p className="font-stretch-150%">
                                 {t("description")}
                             </p>
 
@@ -75,10 +75,10 @@ function Cont(){
 
             <section className="my-10 w-11/12  bg-purple-950/60 px-6 py-8 rounded-4xl " id="mission">
                 <div className="flex flex-col gap-6">
-                    <p className="mx-auto  text-white bg-(--primary) px-6 py-1 rounded-2xl font-bold">
+                    <p className="mx-auto  text-white bg-(--primary) px-6 py-1 rounded-2xl">
                         {t("Our Mission")}
                     </p>
-                    <p className="mx-auto text-center text-white font-(family-name:--primary-font)">
+                    <p className="mx-auto text-center text-white">
                         {t("mission")}
                     </p>
                     <div className="w-fit mx-auto px-6 py-2 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">

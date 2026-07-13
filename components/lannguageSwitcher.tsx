@@ -15,7 +15,6 @@ export default function LanguageSwitcher() {
   const pathname = usePathname();
 
   function changeLanguage(newLocale: string) {
-    // pathname ባዶ ሊሆን ስለሚችል መኖሩን እናረጋግጣለን
     if (!pathname) return;
 
     const segments = pathname.split("/");

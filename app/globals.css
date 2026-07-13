@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Menbere:wght@100..700&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -11,6 +12,7 @@
   --primary-font: 'Ubuntu', sans-serif;
   --secondary-font: 'Changa One', arial;
   --third-font: 'Menbere', sans-serif;
+  --arabic-font: 'IBM Plex Sans Arabic', sans-serif;
 }
 
 @theme inline {
@@ -32,10 +34,19 @@ html{
   scroll-behavior: smooth;
 }
 
+.en{
+  font-family: var(--primary-font);
+}
+.am{
+  font-family: var(--third-font);
+}
+.ar{
+  font-family: var(--arabic-font);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--primary-font), Arial, sans-serif;
 }
 ::-webkit-scrollbar{
   width: 0;
