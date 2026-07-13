@@ -193,7 +193,7 @@ function ChooseLocation({makeItAvailable, makeItUnAvailable}) {
             <div className="flex flex-col justify-center items-start gap-y-4">
                 <label htmlFor="location" className="ml-3 text-foreground/55">{t("Location")}</label>
                 <select title="location" id="location" className="border border-(--border) px-6 py-2 duration-300 hover:px-8 rounded-2xl outline-(--primary) " onChange={(e)=>{checker(e.target.value)}}>
-                    <option className="text-black">Choose</option>
+                    <option className="text-black">{t("Choose")}</option>
                     <option value="addis_ababa" className="text-black">{t("Addis Ababa")}</option>
                     <option value="buta_jira" className="text-black">{t("Buta Jira")}</option>
                     <option value="worabe" className="text-black">{t("Worabe")}</option>
