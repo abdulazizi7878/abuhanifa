@@ -130,6 +130,8 @@ export default function order(){
 }
 
 function EnterName({makeItAvailable, makeItUnAvailable}) {
+    const t = useTranslations("order");
+
     
     function checker(e){
 
@@ -151,6 +153,7 @@ function EnterName({makeItAvailable, makeItUnAvailable}) {
 }
 
 function EnterPhoneNumber({makeItAvailable, makeItUnAvailable}) {
+    const t = useTranslations("order");
     
     function checker(e){
         
@@ -174,6 +177,7 @@ function EnterPhoneNumber({makeItAvailable, makeItUnAvailable}) {
 
 
 function ChooseLocation({makeItAvailable, makeItUnAvailable}) {
+    const t = useTranslations("order");
     
     function checker(e){
                 
@@ -202,6 +206,7 @@ function ChooseLocation({makeItAvailable, makeItUnAvailable}) {
 
 
 function ChooseJob({makeItAvailable, makeItUnAvailable}) {
+    const t = useTranslations("order");
     
     function checker(e){
                 
@@ -237,6 +242,7 @@ function ChooseJob({makeItAvailable, makeItUnAvailable}) {
 
 
 function ChooseJobType({makeItAvailable, makeItUnAvailable}) {
+    const t = useTranslations("order");
     
     function checker(e){
                 
@@ -278,6 +284,7 @@ function ChooseJobType({makeItAvailable, makeItUnAvailable}) {
 
 
 function AddComment({makeItAvailable, makeItUnAvailable}) {
+    const t = useTranslations("order");
     
     function checker(e){
 
@@ -302,6 +309,8 @@ function AddComment({makeItAvailable, makeItUnAvailable}) {
 
 
 function Final({OnClick}){
+    const t = useTranslations("order");
+
     return(
         <div className="border border-(--border)/35 rounded-4xl flex flex-col justify-center items-center gap-10 shrink-0 w-full">
             <h1 className="text-foreground/50">🎉 {t("You Are Almost Finished")} 🎉</h1>
