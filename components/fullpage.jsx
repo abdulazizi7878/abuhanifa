@@ -32,14 +32,14 @@ function Cont(){
 
                     <div className=" flex flex-col">
                         <div>
-                            <h1 className="text-5xl my-2 font-(family-name:--secondary-font) ">
+                            <h1 className="text-4xl my-2 font-(family-name:--secondary-font) ">
                                 {t("title")} 
                             </h1>
                             <hr  />
-                            <h2 className="text-2xl mt-6 mb-2 ">
+                            <h2 className="text-xl mt-6 mb-2 ">
                                 {t("sub-title")}
                             </h2>        
-                            <p className="font-stretch-150%">
+                            <p className="mt-6 text-md">
                                 {t("description")}
                             </p>
 
@@ -49,14 +49,14 @@ function Cont(){
                         <div className="mt-6 flex flex-wrap gap-4">
 
                             <div className="w-fit px-6 py-2 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
-                                <span className="text-white">
+                                <span className="text-white text-sm">
                                     {t("Get In touch")}
                                 </span>
                                 <a href="/order" className="absolute inset-0" ></a>
                             </div>
 
                             <div className="w-fit px-6 py-2 border border-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
-                                <span className="text-(--primary)">
+                                <span className="text-(--primary) text-sm">
                                     {t("Learn More")}
                                 </span>
                                 <a href="#services" className="absolute inset-0" ></a>
@@ -75,14 +75,14 @@ function Cont(){
 
             <section className="my-10 w-11/12  bg-purple-950/60 px-6 py-8 rounded-4xl " id="mission">
                 <div className="flex flex-col gap-6">
-                    <p className="mx-auto  text-white bg-(--primary) px-6 py-1 rounded-2xl">
+                    <p className="mx-auto text-sm  text-white bg-(--primary) px-6 py-1 rounded-2xl">
                         {t("Our Mission")}
                     </p>
-                    <p className="mx-auto text-center text-white">
+                    <p className="mx-auto text-md text-center text-white">
                         {t("mission")}
                     </p>
                     <div className="w-fit mx-auto px-6 py-2 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
-                        <span className="text-white">
+                        <span className="text-white text-sm">
                             {t("Get In touch")}
                         </span>
                         <a href="/order" className="absolute inset-0" ></a>
@@ -92,7 +92,7 @@ function Cont(){
 
             <section id="services" className="w-11/12">
                 <div className="w-full">
-                    <p>{t("OUR SERVICES")}</p>
+                    <p className="text-sm">{t("OUR SERVICES")}</p>
                     <hr />
                 </div>
                 <div className="flex flex-wrap my-10 gap-x-16 gap-y-10  justify-center items-center">
@@ -112,7 +112,7 @@ function Cont(){
                 </div>
 
                 <div className="w-11/12 flex flex-wrap justify-center gap-y-8 mx-auto md:gap-x-10 lg:gap-x-10">
-                    <p className="text-center sm:w-1/2 md:w-1/3 lg:1/3">
+                    <p className="text-center text-md sm:w-1/2 md:w-2/3 lg:1/3">
                         {t("commitment")}
                     </p>
                 </div>
@@ -120,7 +120,7 @@ function Cont(){
 
             <section className="my-26 py-20  items-center bg-purple-950/60 w-full">
                      <div>
-                          <h1 className="text-4xl font-black text-white mx-2">Our works</h1>
+                          <h1 className="text-4xl font-black text-white mx-2"></h1>
                      </div>
             </section>
 
@@ -146,14 +146,14 @@ function Cont(){
                     <div className="flex flex-col sm:flex-wrap md:flex-wrap lg:flex-wrap  justify-around items-center gap-4">
                              
                         <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
-                            <span className="text-background">
+                            <span className="text-background text-sm">
                                 {t("join")}
                             </span>
                             <a href="https://t.me/ahieth" className="absolute inset-0" ></a>
                         </div>
 
                         <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
-                            <span className="text-background">
+                            <span className="text-background text-sm">
                                 {t("order")}
                             </span>
                             <a href="/order" className="absolute inset-0" ></a>
@@ -207,7 +207,7 @@ function Cont(){
 
             <section className="my-20 flex flex-col w-11/12">
                 <div className="mx-auto w-11/12">
-                    <h1 className="text-center font-bold text-2xl">
+                    <h1 className="text-center font-bold text-xl">
                        {t("review")}
                     </h1>
                 </div>
@@ -219,30 +219,30 @@ function Cont(){
 
             <section className="my-20 flex flex-col gap-10">
                 <div>
-                    <h1 className="font-black text-4xl text-center">
+                    <h1 className="font-black text-3xl text-center">
                         "{t("profile")}"
                     </h1>    
                 </div> 
 
-                <div className="mx-auto max-w-[95%] w-auto py-6 px-10 border border-(--border) duration-200 hover:shadow-lg rounded-2xl">
+                <div className="mx-auto max-w-[92%] md:w-5/9 w-auto py-6 px-10 border border-(--border) duration-200 hover:shadow-lg rounded-2xl">
                     <div className="">
                         <img src="/images/profile-1.jpg" alt="OWNER'S IMAGE" className="size-35 rounded-full" />
                     </div>
                     <hr className="my-4"/>
                     <div>
-                        <p className="my-2">
+                        <p className="my-2 text-sm">
                             {t("intro")}
                         </p>
-                        <p className="font-black">
+                        <p className="font-black text-md">
                             {t("My professions")}:
                         </p>
                         <ul className="my-2">
-                            <li className="_LI _AY">{t("p1")}</li>
-                            <li className="_LI _AY">{t("p2")}</li>
-                            <li className="_LI _AY">{t("p3")}</li>
-                            <li className="_LI _AY">{t("p4")}</li>
-                            <li className="_LI _AY">{t("p5")}</li>
-                            <li className="_LI _AY">{t("p6")}</li>
+                            <li className="_LI _AY text-sm">{t("p1")}</li>
+                            <li className="_LI _AY text-sm">{t("p2")}</li>
+                            <li className="_LI _AY text-sm">{t("p3")}</li>
+                            <li className="_LI _AY text-sm">{t("p4")}</li>
+                            <li className="_LI _AY text-sm">{t("p5")}</li>
+                            <li className="_LI _AY text-sm">{t("p6")}</li>
                         </ul>
                     </div>
                 </div>
@@ -251,7 +251,7 @@ function Cont(){
             <section className="flex flex-col justify-center items-center mt-20 bg-(--primary) h-screen w-full  relative">
 
                 <div className="mx-auto  w-11/12">
-                    <h1 className="text-white text-6xl _AY">
+                    <h1 className="text-white text-5xl _AY">
                         {t("Let's work together")}
                     </h1>                    
                 </div>
