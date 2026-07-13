@@ -1,7 +1,7 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import AdminPage from "@/components/admin";
-import {VeriifyToken} from "../../lib/jwt";
+import {VeriifyToken} from "../../../lib/jwt";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 

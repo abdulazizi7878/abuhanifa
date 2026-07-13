@@ -1,9 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import {useTranslations} from "next-intl";
+import LanguageSwitcher from "./lannguageSwitcher";
 
 export default function Header(){
 
+    const t = useTranslations("header");
     const [isNavVisible, setNavvisible] = useState(false);
     const [screenPosition, setScreenPosition] = useState(0);
     const [lastScreenPosition, setLastScreenPosition] = useState(0);
@@ -89,18 +92,18 @@ export default function Header(){
 
                     <div className="logo flex justify-center items-center gap-x-2 md:gap-x-4 lg:gap-x-4">
                         <img src="/images/logo.jpg" alt="ABUHANIFA_INSTALLATION_LOGO" width={50} height={50} className="rounded-full" />  
-                        <p className="text-[10px] md:text-sm text-center sm:hidden md:flex lg:flex">Abu-Hanifa <br /> Installation</p>
+                        <p className="text-[13px] w-28 md:text-sm text-left sm:hidden md:flex lg:flex">{t("title")}</p>
                     </div>
 
-                    <div className="navs w-0 overflow-hidden duration-300 sm:w-3/5 md:w-3/5 lg:4/5">
+                    <div className="navs w-0 overflow-hidden duration-300 sm:w-14/20 md:w-3/5 lg:4/5">
                         <ul className="w-full flex justify-around">
-                            <li><a href="/#" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Home</a></li>
-                            <li><a href="/order/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Order</a></li>
-                            <li><a href="/products/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Products</a></li>
-                            <li><a href="/promotions/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Promotions</a></li>
-                            <li><a href="/blog/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Blog</a></li>
-                            <li><a href="/contact/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Contact</a></li>
-                            <li><a href="/#services" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">Services</a></li>
+                            <li><a href="/#" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("home")}</a></li>
+                            <li><a href="/order/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("order")}</a></li>
+                            <li><a href="/products/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("products")}</a></li>
+                            <li><a href="/promotions/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("promotions")}</a></li>
+                            <li><a href="/blog/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("blog")}</a></li>
+                            <li><a href="/contact/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("contact")}</a></li>
+                            <li><a href="/#services" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("services")}</a></li>
                         </ul>
                     </div>
 
@@ -139,24 +142,28 @@ export default function Header(){
 
 
 function Nav({isNavVisible, onClick}){
+
+    const t = useTranslations("header");
+
     return(
             <div className={`duration-400 fixed top-22 ${(isNavVisible ? "right-[5%]" : "-right-100")}  flex justify-end min-h-40 py-2`} id="nav">
                 <div className="relative bg-background/50 backdrop-blur-2xl backdrop-saturate-200 rounded-[50px] flex flex-col gap-6 justify-start items-center py-10 px-20 md:px-26 shadow-xl shadow-foreground/30">
                    <div>
-                        <h1>Abu-Hanifa <span className="text-(--primary)">Installation</span></h1>    
+                        <h1>{t("title")}</h1>    
                         <hr className="w-full my-1" />                     
                    </div>
                 
                    <div className="flex flex-col gap-6 justify-center items-center">
                     <ul className="flex flex-col gap-1.5 justify-center items-center">
-                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/">home</a></li>
-                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/blog">blog</a></li>
-                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/products">products</a></li>
-                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/promotions">promotions</a></li>
-                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/contact">contact</a></li>
-                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/order">order</a></li>
-                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/#services">services</a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/"> {t("home")} </a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/blog"> {t("blog")} </a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/products"> {t("products")} </a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/promotions"> {t("promotions")} </a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/contact"> {t("contact")} </a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/order"> {t("order")} </a></li>
+                        <li className="text-sm duration-200 px-4 hover:bg-foreground hover:text-background rounded-2xl"><a href="/#services"> {t("services")} </a></li>
                     </ul>
+                    <LanguageSwitcher />
                     <span className="text-[11px] text-center">Abu-Hanifa Installation <br /> &copy; All Right Reserved</span>
                    </div>
                    <div className="absolute top-6 right-6 bg-foreground/50  rounded-xl px-2 py-1 cursor-pointer" onClick={onClick}>

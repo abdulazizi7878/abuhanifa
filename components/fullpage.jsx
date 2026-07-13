@@ -1,6 +1,8 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Reviews from "@/components/reviews";
+import { useTranslations } from "next-intl";
+import Telegram from "./telegram";
 
 export default function FullPage(){
     return(
@@ -8,6 +10,7 @@ export default function FullPage(){
             <Header />
             <main className="mt-25 flex justify-center items-center w-full" >
                  <Cont />
+                 <Telegram />
             </main>
             <Footer />
         </>
@@ -18,6 +21,9 @@ export default function FullPage(){
 
 
 function Cont(){
+
+    const t = useTranslations("home");
+
     return(
         <div className="flex flex-col justify-center items-center w-full">
             <section className="w-11/12 my-10 flex flex-wrap gap-y-20 ">
@@ -27,18 +33,16 @@ function Cont(){
                     <div className=" flex flex-col">
                         <div>
                             <h1 className="text-5xl my-2 font-(family-name:--secondary-font) ">
-                                Abu - Hanifa Installation 
+                                {t("title")} 
                             </h1>
                             <hr  />
                             <h2 className="text-2xl mt-6 mb-2 font-(family-name:--primary-font)">
-                                General <span className="text-red-500 font-bold">Electric</span>  and <span className="text-(--primary) font-bold">plumbing work.</span>
+                                {t("sub-title")}
                             </h2>        
                             <p className="font-stretch-150% font-(family-name:--primary-font)">
-                                We are a team of highly skilled and experienced electricians and plumbers, dedicated to providing top-notch electrical and plumbing services to our clients.
+                                {t("description")}
                             </p>
-                            <p className="mt-4 font-stretch-150% font-(family-name:--primary-font)">
-                                Our team is committed to delivering high-quality workmanship, exceptional customer service, and innovative solutions to meet the unique needs of each project.
-                            </p>
+
                                                         
                         </div>
 
@@ -46,14 +50,14 @@ function Cont(){
 
                             <div className="w-fit px-6 py-2 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                                 <span className="text-white">
-                                    Get In touch
+                                    {t("Get In touch")}
                                 </span>
                                 <a href="/order" className="absolute inset-0" ></a>
                             </div>
 
                             <div className="w-fit px-6 py-2 border border-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                                 <span className="text-(--primary)">
-                                    Learn More
+                                    {t("Learn More")}
                                 </span>
                                 <a href="#services" className="absolute inset-0" ></a>
                             </div>
@@ -72,14 +76,14 @@ function Cont(){
             <section className="my-10 w-11/12  bg-purple-950/60 px-6 py-8 rounded-4xl " id="mission">
                 <div className="flex flex-col gap-6">
                     <p className="mx-auto  text-white bg-(--primary) px-6 py-1 rounded-2xl font-bold">
-                        Our Mission
+                        {t("Our Mission")}
                     </p>
                     <p className="mx-auto text-center text-white font-(family-name:--primary-font)">
-                        Our mission is to provide reliable and efficient electrical and plumbing services to our clients, while maintaining the highest standards of safety, quality, and professionalism.
+                        {t("mission")}
                     </p>
                     <div className="w-fit mx-auto px-6 py-2 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                         <span className="text-white">
-                            Get In touch
+                            {t("Get In touch")}
                         </span>
                         <a href="/order" className="absolute inset-0" ></a>
                     </div>
@@ -88,13 +92,13 @@ function Cont(){
 
             <section id="services" className="w-11/12">
                 <div className="w-full">
-                    <p>OUR SERVICES</p>
+                    <p>{t("OUR SERVICES")}</p>
                     <hr />
                 </div>
                 <div className="flex flex-wrap my-10 gap-x-16 gap-y-10  justify-center items-center">
-                    <Service imgSource={"a.webp"} title={"Full Installations"} description={"Wiring for new builds, remodels, and system upgrades"} />  
-                    <Service imgSource={"b.jpg"} title={"Circuit Breaker"} description={"Modernize your home with safe and up-to-date systems"} />  
-                    <Service imgSource={"a.webp"} title={"Lighting Design"} description={"Custom indoor/outdoor lighting, energy-efficient upgrades"} />  
+                    <Service imgSource={"a.webp"} title={t("Full Installations")} description={t("service 1")} />  
+                    <Service imgSource={"b.jpg"} title={t("Circuit Breaker")} description={t("service 2")} />  
+                    <Service imgSource={"a.webp"} title={t("Lighting Design")} description={t("service 3")} />  
                 </div>
                 
             </section>
@@ -103,19 +107,13 @@ function Cont(){
                 
                 <div className="flex">
                     <h1 className="mx-auto text-center text-2xl font-extrabold">
-                        Our Commitment to Excellence
+                        {t("Our Commitment to Excellence")}
                     </h1>
                 </div>
 
                 <div className="w-11/12 flex flex-wrap justify-center gap-y-8 mx-auto md:gap-x-10 lg:gap-x-10">
                     <p className="text-center sm:w-1/2 md:w-1/3 lg:1/3">
-                        Dependable electrical solutions tailored to your property. 
-                        Backed by the latest industry codes and safety standards, 
-                        our skilled electricians guarantee a seamless experience from start to finish.
-                    </p>
-                    <p className="text-center sm:w-1/2 md:w-1/3 lg:1/3 font-(family-name:--third-font)">
-                        ለህንጻዎ ተስማሚ የሆኑ አስተማማኝ የኤሌክትሪክ መፍትሄዎች። አዳዲስ የአሰራር ደንቦችን (Codes) እና የደህንነት 
-                        መስፈርቶችን መሰረት በማድረግ፣ የተካኑ የኤሌክትሪክ ባለሙያዎቻችን ስራውን ከመጀመሪያ እስከ መጨረሻ በስኬት ለማጠናቀቅ ዋስትና ይሰጣሉ።
+                        {t("commitment")}
                     </p>
                 </div>
             </section>
@@ -131,19 +129,17 @@ function Cont(){
 
                     <div className="flex mx-auto">
                         <h1 className="text-center font-black text-xl">
-                            Why Abu Hanifa  Installation?  
-                            <br />
-                            አቡሐኒፋ ኢንስታሌሽንን መምረጥ ለምን አስፈለገ? 
+                            {t("why abu hanifa installation")}                            
                         </h1>
                     </div>
 
                     <div className="w-29/30  py-4 flex flex-col justify-center items-center gap-y-8">
 
-                        <Why eng={"Our Professional and Certified"} amh={"ባለሙያዎቹ በዘርፉ የሰለጠኑ፣ ሰርተፍኬት ያላቸው እና ከፍተኛ ልምድ ያካበቱ ናቸው።"} dir={"_AY"} />
-                        <Why eng={"Attention to Detail & High-Quality Work"} amh={"ለዝርዝር ነገሮች ትኩረት መስጠት እና ጥራቱን የጠበቀ ስራ "} dir={"_AY"} />
-                        <Why eng={"Transparent Pricing & No Hidden Fees"} amh={"ግልጽ የሆነ የዋጋ ተመን እና ምንም አይነት የተደበቀ ክፍያ የሌለበት"} dir={"_AY"} />
-                        <Why eng={"Commitment to Safety and Industry Standards"} amh={"ለደህንነት እና ለኢንዱስትሪ መስፈርቶች (ስታንዳርዶች) ያለን ቁርጠኝነት"} dir={"_AY"} />
-                        <Why eng={"We take great pride in bringing all professinals feilds toghether under one roof"} amh={"ሁሉንም የሙያ ዘርፎች በአንድ ጣራ ስር ይዘን በመገኘታችን"} dir={"_AY  "} />
+                        <Why text={t("why 1")} dir={"_AY"} />
+                        <Why text={t("why 2")} dir={"_AY"} />
+                        <Why text={t("why 3")} dir={"_AY"} />
+                        <Why text={t("why 4")} dir={"_AY"} />
+                        <Why text={t("why 5")} dir={"_AY  "} />
 
                     </div>
 
@@ -151,14 +147,14 @@ function Cont(){
                              
                         <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                             <span className="text-background">
-                                Join our Telegram Channel
+                                {t("join")}
                             </span>
                             <a href="https://t.me/ahieth" className="absolute inset-0" ></a>
                         </div>
 
                         <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                             <span className="text-background">
-                                Order Now 
+                                {t("order")}
                             </span>
                             <a href="/order" className="absolute inset-0" ></a>
                         </div>                    
@@ -212,7 +208,7 @@ function Cont(){
             <section className="my-20 flex flex-col w-11/12">
                 <div className="mx-auto w-11/12">
                     <h1 className="text-center font-bold text-2xl">
-                        Reviews by our Satisfied Clients
+                       {t("review")}
                     </h1>
                 </div>
 
@@ -224,7 +220,7 @@ function Cont(){
             <section className="my-20 flex flex-col gap-10">
                 <div>
                     <h1 className="font-black text-4xl text-center">
-                        "Owner Profile"
+                        "{t("profile")}"
                     </h1>    
                 </div> 
 
@@ -235,19 +231,18 @@ function Cont(){
                     <hr className="my-4"/>
                     <div>
                         <p className="my-2">
-                            Hello, I'm Jemal, Owner of Abu - Hanifa Installation, <br /> I would like
-                            to bring fast, high quality works for our clients.
+                            {t("intro")}
                         </p>
                         <p className="font-black">
-                            My professions:
+                            {t("My professions")}:
                         </p>
                         <ul className="my-2">
-                            <li className="_LI _AY">Master of Science (M.Sc) in Project Management</li>
-                            <li className="_LI _AY">Bachelor of Science (B.Sc) in Chemistry</li>
-                            <li className="_LI _AY">Building Electrical Installation</li>
-                            <li className="_LI _AY">Sanitary and Plumbing Installation</li>
-                            <li className="_LI _AY">Computer Maintenance and Networking</li>
-                            <li className="_LI _AY">Mobile, Smart phone Hardware and Software Maintenances</li>
+                            <li className="_LI _AY">{t("p1")}</li>
+                            <li className="_LI _AY">{t("p2")}</li>
+                            <li className="_LI _AY">{t("p3")}</li>
+                            <li className="_LI _AY">{t("p4")}</li>
+                            <li className="_LI _AY">{t("p5")}</li>
+                            <li className="_LI _AY">{t("p6")}</li>
                         </ul>
                     </div>
                 </div>
@@ -257,28 +252,28 @@ function Cont(){
 
                 <div className="mx-auto  w-11/12">
                     <h1 className="text-white text-6xl _AY">
-                        Let's work together
+                        {t("Let's work together")}
                     </h1>                    
                 </div>
 
                 <div className="mx-auto flex gap-6  w-11/12 my-10">
                     <div className="_AXX w-fit px-6 py-4 bg-white rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                         <span className="text-black">
-                            Contact 
+                            {t("contact")} 
                         </span>
                         <a href="/contact" className="absolute inset-0" ></a>
                     </div>  
                     
                     <div className="_AX w-fit px-6 py-4 bg-white rounded-4xl cursor-pointer relative duration-300 hover:px-8">
                         <span className="text-black">
-                            Order
+                            {t("order")}
                         </span>
                         <a href="/order" className="absolute inset-0" ></a>
                     </div>  
                 </div>
 
                 <div className="absolute bottom-4">
-                    <h1 className="font-black bg-background text-foreground py-2 px-6 rounded-full">&copy;Abu-Hanifa Installation</h1>
+                    <h1 className="font-black bg-background text-foreground py-2 px-6 rounded-full">&copy;{t("ahi")}</h1>
                 </div>
             </section>
         </div>
@@ -325,11 +320,10 @@ function Img({src}){
         </div>
     )
 }
-function Why({eng, amh, dir}){
+function Why({text, dir}){
     return(
         <div className={`${dir} max-w-[99%] w-11/12 flex flex-col gap-2  md:w-[90vw] lg:w-[70vw] border border-(--border) bg-purple-950/60 p-4 rounded-full duration-300 hover:shadow-2xl hover:shadow-foreground/50`}> 
-            <p className="text-center text-white text-sm sm:text-md md:text-lg lg:text-lg ">{eng}.</p>
-            <p className="text-center text-white text-[12px] sm:text-sm md:text-sm lg:text-sm font-(family-name:--third-font)">{amh}</p>
+            <p className="text-center text-white text-sm sm:text-md md:text-lg lg:text-lg ">{text}.</p>
         </div>
     )
 }

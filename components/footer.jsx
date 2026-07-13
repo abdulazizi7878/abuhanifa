@@ -1,4 +1,10 @@
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./lannguageSwitcher";
+
 export default function Footer(){
+
+    const t = useTranslations("footer");
+
     return(
         <footer className="w-full pt-10 flex flex-col justify-center items-center gap-10 border-t border-t-(--border)">
 
@@ -7,7 +13,7 @@ export default function Footer(){
                     <div className="w-fit flex flex-col gap-4 justify-center items-center">
                         <img src="/images/logo.jpg" alt="ABU_HANIFA_INSTALLATION" className="rounded-full size-35" />
                         <p className="font-black">
-                            ABU - HANIFA INSTALLATION
+                            {t("ABU - HANIFA INSTALLATION")}
                         </p>                        
                     </div>
                </div>
@@ -15,27 +21,27 @@ export default function Footer(){
                <div className="w-full sm:w-full md:w-full lg:w-2/3 flex flex-wrap gap-y-6 justify-around">
 
                     <div className="">
-                        <p className="font-bold text-center underline">Quick Links</p>
+                        <p className="font-bold text-center underline">{t("Quick Links")}</p>
                         <nav>
                             <ul className="flex flex-col justify-center items-center">
-                                <li><a href="/#">Home</a></li>
-                                <li><a href="/contact">Contact</a></li>
-                                <li><a href="/order">Order</a></li>
-                                <li><a href="/blog">Blog</a></li>
-                                <li><a href="/#services">Services</a></li>
-                                <li><a href="/#mission">Mission</a></li>
+                                <li><a href="/#">{t("Home")}</a></li>
+                                <li><a href="/contact">{t("Contact")}</a></li>
+                                <li><a href="/order">{t("Order")}</a></li>
+                                <li><a href="/blog">{t("Blog")}</a></li>
+                                <li><a href="/#services">{t("Services")}</a></li>
+                                <li><a href="/#mission">{t("Mission")}</a></li>
                             </ul>
                         </nav>                        
                     </div>
 
                     <div className="">
-                        <p className="font-bold text-center underline">Contacts</p>
+                        <p className="font-bold text-center underline">{t("Contacts")}</p>
                         <nav>
                             <ul className="flex flex-col justify-center items-center">
                                 <li><a href="tel:+251936489696">+2519-3648-96-96</a></li>
                                 <li><a href="tel:+251705489696">+2517-0548-96-96</a></li>
                                 <li><a href="mailto:contact@abuhanifainstallation.com">contact@abuhanifainstallation.com</a></li>
-                                <li><a href="/contact">Other</a></li>
+                                <li><a href="/contact">{t("Other")}</a></li>
                             </ul>
                         </nav>                        
                     </div>
@@ -100,6 +106,10 @@ export default function Footer(){
                 <span className="text-center text-[11px] sm:text-sm ">ABU-HANIFA INSTALLATION | 2026 &copy; ALL RIGHT RESERVED </span>
                 <a href="https://t.me/abdulazizseman" className="text-center text-[11px] sm:text-sm ">DESIGNED AND DEVELOPED BY ...ABDU...</a>
                 <hr className="my-2" />
+            </div>
+
+            <div className="mb-10 -mt-6">
+                <LanguageSwitcher />
             </div>
 
         </footer>
