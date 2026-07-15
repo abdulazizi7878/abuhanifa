@@ -13,8 +13,16 @@ export default function order(){
 
 
     useEffect(()=>{
+        let dir = document.documentElement.dir;
+        let direction;
+        if (dir === "rtl") {
+            direction = 0;
+        } else {
+            direction = 1;
+        }
+
         let cont = document.getElementById("_P_CONT");
-        cont.style.transform = `translateX(-${(part - 1) * 100}%)`
+        cont.style.transform = `translateX(${direction == 1 ? "-" : ""}${(part - 1) * 100}%)`
         
         if (part > 1) {
             setIsBack(true);

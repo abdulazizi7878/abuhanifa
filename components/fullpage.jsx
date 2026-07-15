@@ -98,7 +98,11 @@ function Cont(){
                 <div className="flex flex-wrap my-10 gap-x-16 gap-y-10  justify-center items-center">
                     <Service imgSource={"a.webp"} title={t("Full Installations")} description={t("service 1")} />  
                     <Service imgSource={"b.jpg"} title={t("Circuit Breaker")} description={t("service 2")} />  
-                    <Service imgSource={"a.webp"} title={t("Lighting Design")} description={t("service 3")} />  
+                    <Service imgSource={"d.jpeg"} title={t("Lighting Design")} description={t("service 3")} />  
+                    <Service imgSource={"h.jpeg"} title={t("Water Heaters & Pumps")} description={t("service 4")} />  
+                    <Service imgSource={"g.jpg"} title={t("Sanitary & Layout Design")} description={t("service 5")} />  
+                    <Service imgSource={"f.jpeg"} title={t("Plumbing Services")} description={t("service 6")} />  
+
                 </div>
                 
             </section>
@@ -145,62 +149,19 @@ function Cont(){
 
                     <div className="flex flex-col sm:flex-wrap md:flex-wrap lg:flex-wrap  justify-around items-center gap-4">
                              
-                        <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
-                            <span className="text-background text-sm">
+                        <div className="_AY w-fit px-6 py-4 bg-purple-950/60 shadow-xl shadow-foreground/40 rounded-4xl cursor-pointer relative duration-300 hover:px-8">
+                            <span className="text-white text-sm">
                                 {t("join")}
                             </span>
                             <a href="https://t.me/ahieth" className="absolute inset-0" ></a>
                         </div>
 
-                        <div className="_AY w-fit px-6 py-4 bg-(--primary) rounded-4xl cursor-pointer relative duration-300 hover:px-8">
-                            <span className="text-background text-sm">
+                        <div className="_AY w-fit px-6 py-4 bg-purple-950/60 shadow-xl shadow-foreground/40 rounded-4xl cursor-pointer relative duration-300 hover:px-8">
+                            <span className="text-white text-sm">
                                 {t("order")}
                             </span>
                             <a href="/order" className="absolute inset-0" ></a>
                         </div>                    
-                    </div>
-                </div>
-            </section>
-
-            <section className="my-20">
-                <div className="flex">
-                    <h1 className="text-center mx-auto font-semibold text-xl">
-                        Plumping and Sanitary Related Works
-                    </h1>
-                </div>
-
-                <div className="mt-4 flex flex-wrap justify-center items-center">
-                    <div className="">
-                        <ul className="flex flex-wrap justify-center gap-8 mt-6">
-                            <li className="_LI _AY  sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
-                               <span className="font-extrabold">Full Installations</span> <br /> — Piping for new builds, remodels, and complete system upgrades.
-                               <div>
-                                <img src="/images/demo-1-a.webp" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
-                                <div className="absolute inset-0 bg-background/80 -z-1"></div>
-                               </div>
-                            </li>
-                            <li className="_LI _AY sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
-                                <span className="font-extrabold">Water Heaters & Pumps</span> <br /> — Modernize your home with efficient, safe, and up-to-date water systems.
-                               <div>
-                                 <img src="/images/demo-1-b.jpg" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
-                                <div className="absolute inset-0 bg-background/80 -z-1"></div>
-                               </div>
-                            </li>
-                            <li className="_LI _AY sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
-                                <span className="font-extrabold">Sanitary & Layout Design</span> <br /> — Custom indoor/outdoor fixtures, eco-friendly and water-saving upgrades.
-                               <div>
-                                 <img src="/images/demo-1-b.jpg" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
-                                <div className="absolute inset-0 bg-background/80 -z-1"></div>
-                               </div>
-                            </li>
-                            <li className="_LI _AY sm:px-8 py-4 text-center w-11/12  sm:w-1/3 md:w-1/4 lg:w-1/5 border border-(--border)/65 rounded-4xl overflow-hidden relative">
-                                <span className="font-extrabold">Plumbing Services</span> <br /> — Piping, fixtures, drainage clearing, and routine safety inspections.
-                               <div>
-                                 <img src="/images/demo-1-b.jpg" className="rounded-2xl absolute -z-10 -right-25 -top-30 " alt="DEMO_IMAGE" />
-                                <div className="absolute inset-0 bg-background/80 -z-1"></div>
-                               </div>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </section>
