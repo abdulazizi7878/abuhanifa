@@ -158,10 +158,10 @@ function CheckPriceAndOrder({link}){
                 <label htmlFor="amount" className="text-foreground/50" >{t("Amount of product")}</label>
                 <div className="flex flex-col items-center justify-around gap-4">
                     <input type="number" id="amount1" min={1} placeholder="1" title="Amount of product, the default amount is one" className="w-20 border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl" />                
-                    <button onClick={()=>{CheckPrice(1)}} className="px-4 py-2 bg-foreground text-background/80 rounded-4xl shadow-lg cursor-pointer transition-all duration-300 hover:pl-5 hover:shadow-xl hover:bg-foreground/80">Check price</button>
+                    <button onClick={()=>{CheckPrice(1)}} className="px-4 py-2 bg-foreground text-background/80 rounded-4xl shadow-lg cursor-pointer transition-all duration-300 hover:pl-5 hover:shadow-xl hover:bg-foreground/80">{t("Check price")}</button>
                     <div>
                         {
-                            (priceLoading ? (<Loading loadingItem={"price"} /> ) : (<p className="text-foreground/60 text-xl"> {product?.totalPrice} birr</p>))
+                            (priceLoading ? (<Loading loadingItem={"price"} /> ) : (<p className="text-foreground/60 text-xl"> {product?.totalPrice} {t("birr")}</p>))
                         }
                     </div>
                 </div>
@@ -220,14 +220,14 @@ function CheckPriceAndOrder({link}){
 
             <div className="flex flex-col gap-2 p-2 justify-center items-start">
                 <label htmlFor="accountNumber" className="ml-3 text-foreground/50" >{t("Your Bank Account Number")}</label>
-                <input type="number" id="accountNumber" min={1000000} placeholder={("Your Bank Account Number")} title="Your Bank account Number, you can write any type of account number..." className="border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl" />                
+                <input type="number" id="accountNumber" min={1000000} placeholder={t("Your Bank Account Number")} title="Your Bank account Number, you can write any type of account number..." className="border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl" />                
             </div>
 
             <div className="flex flex-col gap-2 p-2 justify-center items-start">
                 <label htmlFor="amount" className="ml-3 text-foreground/50" >{t("Amount of product")}</label>
                 <div className="flex flex-col gap-6">
                     <div className="flex items-center gap-4">
-                       <input type="number" id="amount2" min={1} onChange={(e)=>{CheckPrice(2)}} placeholder="Amount Number... 1" title="Amount of product, the default amount is one" className="border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl" />                
+                       <input type="number" id="amount2" min={1} onChange={(e)=>{CheckPrice(2)}} placeholder={t("Amount Number")} title="Amount of product, the default amount is one" className="border border-(--border) px-4 py-2 outline-(--primary) rounded-4xl" />                
                        <p className="text-md text-center"> {product?.totalPrice} <span className="text-red-400 text-sm">{t("birr")}</span></p>
                     </div>
                         {
