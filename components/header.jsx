@@ -107,7 +107,7 @@ export default function Header(){
                     </div>
 
                     <div>
-                       <LanguageSwitcher /> 
+                       <LanguageSwitcher display={false} /> 
                     </div>
 
                     <div className="border bg-foreground flex items-center gap-x-4  md:gap-x-6 lg:gap-x-6 px-5 py-2 rounded-full">
