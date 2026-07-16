@@ -100,11 +100,14 @@ export default function Header(){
                             <li><a href="/#" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("home")}</a></li>
                             <li><a href="/order/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("order")}</a></li>
                             <li><a href="/products/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("products")}</a></li>
-                            <li><a href="/promotions/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("promotions")}</a></li>
-                            <li><a href="/blog/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("blog")}</a></li>
-                            <li><a href="/contact/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("contact")}</a></li>
+                            <li className="sm:hidden md:flex"><a href="/promotions/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("promotions")}</a></li>
+                            <li className="sm:hidden md:flex"><a href="/blog/" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("blog")}</a></li>
                             <li><a href="/#services" className="duration-400 text-sm hover:bg-foreground/80 hover:text-background hover:px-2 hover:py-0.5 rounded-2xl">{t("services")}</a></li>
-                        </ul>
+                        </ul>        
+                    </div>
+
+                    <div>
+                       <LanguageSwitcher /> 
                     </div>
 
                     <div className="border bg-foreground flex items-center gap-x-4  md:gap-x-6 lg:gap-x-6 px-5 py-2 rounded-full">
