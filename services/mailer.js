@@ -8,7 +8,7 @@ export default async function sendEmail({name, email, message}) {
   
   await transporter.sendMail({
     from: process.env.SMTP_USER,
-    to: "offlixsupport@gmail.com",
+    to: "abuhanifainstallation@gmail.com",
     subject: "Message from contact form",
     text: `Message from Abu Hanifa page, \nName: ${name}\nEmail: ${email}\nMessage: ${message}`,
   });
