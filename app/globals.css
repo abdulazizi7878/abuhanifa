@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #e2eeff;
+  --background: #f4f8ff;
   --foreground: #0c152af0;
   --border:#0000002c;
   --primary:#1ebef8e1;
@@ -24,7 +24,7 @@
 
 .dark {
     --background: #121217;
-    --foreground: #ededed;
+    --foreground: #e1e4ec;
     --border:#ffffff77;
     --primary: hsla(196, 90%, 54%, 0.882);
     --secondary:#5d3d91;
