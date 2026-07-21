@@ -1,19 +1,37 @@
 "use client"
 
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
+import { useTranslations } from "next-intl";
 
 export default function CommentSection({blog_id, OnClick}){
-
+    
+    const t = useTranslations("comment");
     const [comments, setComments] = useState(null);
-    const [isLoading, setLoading] = useState(true)
+    const [isLoading, setLoading] = useState(true);
+
+    function validate(id,message){
+        let value = document.getElementById(id).value;
+        if (!value) {
+            toast.error(message);
+            document.getElementById(id)?.focus();
+            return null;
+        }
+        return value;
+    }
 
     async function EnterComments() {
 
         
-        let userName = document.querySelector("#commentorName")
-        let userEmail = document.querySelector("#commentorEmail");
-        let userComment = document.querySelector("#comment");
+        let userName = validate("commentorName",t("Please enter your name"));
+        if (!userName) return
+        let userEmail = validate("commentorEmail",t("Please enter your email, Your email will never become visible to public"));
+        if(!userEmail) return;
+        let userComment = validate("comment",t("Please write some text!"));
+        if (!userComment) return;
+
+        const posting = toast.loading(t("Posting your comment!"));
         
         try {
                         
@@ -23,23 +41,23 @@ export default function CommentSection({blog_id, OnClick}){
                 },
                 method:"post",
                 body: JSON.stringify({
-                    name: userName.value,
-                    email: userEmail.value,
-                    comment: userComment.value,
+                    name: userName,
+                    email: userEmail,
+                    comment: userComment,
                     blogId: blog_id
                 })
             })
 
             
             if (response.ok) {
-                alert("Comment Posted successfully");
+                toast.success(t("Your comment successfully posted!"),{id:posting})
                 OnClick();
             } else {
-                alert("We couldn't post your comment!");
+                toast.error(t("Your comment couldn't be posted!"),{id:posting})
             }
                 
         } catch (err){
-            alert("We couldn't post your comment!");
+            toast.error(t("Your comment couldn't be posted!"),{id:posting})
         }
     }
 
@@ -82,11 +100,11 @@ export default function CommentSection({blog_id, OnClick}){
 
 
                 <div className="absolute  bottom-0 z-10 w-full bg-foreground  flex flex-col justify-center items-center py-2 gap-y-4">
-                    <input type="text" id="commentorName" autoComplete="name" className="border border-background py-1 px-4 rounded-full outline-(--primary) text-background" placeholder="Name" title="Name" />                    
-                    <input type="text" id="commentorEmail" autoComplete="email" className="border border-background py-1 px-4 rounded-full outline-(--primary) text-background" placeholder="Email" title="Email" />
-                    <textarea id="comment" className="border border-background py-1 px-4 rounded outline-0 text-background" title="comment">
+                    <input type="text" id="commentorName" autoComplete="name" className="border border-background py-1 px-4 rounded-full outline-(--primary) text-background" placeholder={t("Name")} title={t("Name")}/>                    
+                    <input type="text" id="commentorEmail" autoComplete="email" className="border border-background py-1 px-4 rounded-full outline-(--primary) text-background" placeholder={t("Email")} title={t("Email")} />
+                    <textarea id="comment" placeholder={t("Comment")} className="border border-background py-1 px-4 rounded outline-0 text-background" title={t("Comment")}>
                     </textarea>
-                    <input type="submit" className="py-1 px-4 rounded-full bg-(--primary) text-black cursor-pointer" onClick={()=>{
+                    <input type="submit" value={t("Submit")} className="py-1 px-4 rounded-full bg-(--primary) text-black cursor-pointer" onClick={()=>{
                         EnterComments();
                     }} />
                 </div>
@@ -109,7 +127,7 @@ function Comment({comment,name}){
         <div>
             <p className="font-black text-[11px]">{name}</p>
             <p>
-                     {comment}
+                {comment}
             </p>
             </div>
         </div>

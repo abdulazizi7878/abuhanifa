@@ -1,22 +1,38 @@
 "use client"
 
 import { useState } from "react";
-import Uploading from "./uploading";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function ContactPage(){
 
     const t = useTranslations("contact");
 
+
     const [uploading, setUploading] = useState(false);
+
+    function validater(id,message) {
+        let value = document.getElementById(id).value;
+        if (!value) {
+            toast.error(message);
+            document.getElementById(id)?.focus();
+            return null
+        }
+        return value;
+    }
 
     async function sendEmail() {
 
-        setUploading(true);
 
-        let name = document.querySelector("#name");
-        let email = document.querySelector("#email");
-        let message = document.querySelector("textarea")
+        let name = validater("name",t("Enter your name!"));
+        if(!name) return 
+        let email = validater("email",t("Please enter your email"));
+        if(!email) return
+        let message = validater("message",t("Please write some text!"));
+        if (!message) return
+
+        setUploading(true);
+        const sending = toast.loading(t("Sending your message"));
 
         try {
             const response = await fetch("/api/contact",{
@@ -32,15 +48,17 @@ export default function ContactPage(){
             })            
             const res = await response.json();
             if(res.success){ 
-                alert("email sent successfuly");  
-                location.reload();
+                toast.success(t("Your Message successfully sent!"),{id:sending}); 
+                setTimeout(()=>{
+                    location.reload()
+                },2000)
             } else {
-                alert(res.message);
+                toast.error(t("Your email couldn't be sent"),{id:sending})
             }
-            
             setUploading(false);
         } catch(err){
             setUploading(false);
+            toast.error(t("Your email couldn't be sent"),{id:sending})
         }
 
     }
@@ -58,12 +76,21 @@ export default function ContactPage(){
 
                         <input type="text" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder={t("Name")} title="Please Enter Your Name!" autoComplete="name" id="name" />
                         <input type="email" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder={t("Email")} title="Please Enter Your Email!" autoComplete="email" id="email" />
-                        <textarea  className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder={t("Leave Message")} title="Contact box, leave something comment, order, review, job, Advertisement..." >
+                        <textarea id="message"  className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder={t("Leave Message")} title="Contact box, leave something comment, order, review, job, Advertisement..." >
                         </textarea>
-                        {uploading && <Uploading uploadingItem="email" />}
-                        <button className="bg-foreground text-background px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl" onClick={sendEmail}>
-                            {t("Send")} 
-                        </button>
+                        {
+                            (uploading ? (
+                              <button className="bg-foreground/60 text-background/60 px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl">
+                                 {t("Send")} 
+                              </button>  
+                            ) : (
+
+                            <button className="bg-foreground text-background px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl" onClick={sendEmail}>
+                               {t("Send")} 
+                            </button>                                 
+                        ))
+                        }
+
                     </div>
                  </div>
 

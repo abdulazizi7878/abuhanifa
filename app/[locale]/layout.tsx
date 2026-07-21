@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -205,6 +206,7 @@ export default async function RootLayout({
         />
 
         {children}
+        <Toaster richColors position="top-center" />
         </NextIntlClientProvider>
       </body>
     </html>

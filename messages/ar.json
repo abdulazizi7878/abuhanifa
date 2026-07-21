@@ -83,7 +83,13 @@
         "YouTube": "يوتيوب",
         "Facebook": "فيسبوك",
         "Telegram": "تلغرام",
-        "Join our Telegram channel": "انضم إلى قناتنا على تلغرام"
+        "Join our Telegram channel": "انضم إلى قناتنا على تلغرام",
+        "Enter your name!": "أدخل اسمك!",
+        "Please enter your email": "الرجاء إدخال بريدك الإلكتروني",
+        "Please write some text!": "الرجاء كتابة بعض النصوص!",
+        "Sending your message": "جاري إرسال رسالتك",
+        "Your message successfully sent!": "تم إرسال رسالتك بنجاح!",
+        "Your email couldn't be sent": "تعذر إرسال بريدك الإلكتروني"
     },
     "order": {
         "Back to Home": "العودة إلى الرئيسية",
@@ -97,7 +103,7 @@
         "Buta Jira": "بوتاجرا",
         "Worabe": "ورابي",
         "Halaba": "هالابا",
-        "Select the Job": "اختر نوع العمل",
+        "Select the job": "اختر نوع العمل",
         "Electric": "كهرباء",
         "Plumbing": "سباكة",
         "New Installation": "تركيب جديد",
@@ -105,7 +111,10 @@
         "Finishing Work": "أعمال التشطيب",
         "If you have any idea": "إذا كان لديك أي فكرة",
         "You Are Almost Finished": "أوشكت على الانتهاء",
-        "Send": "إرسال"
+        "Send": "إرسال",
+        "Sending your order": "جاري إرسال طلبك...",
+        "Order successfully sent!": "تم إرسال طلبك بنجاح!",
+        "Your order couldn't be sent!": "تعذر إرسال طلبك!"
     },
     "orderProduct": {
         "title": "تحقق من السعر قبل طلب المنتج، لمعرفة السعر، أدخل كمية المنتج واضغط على الزر!",
@@ -131,6 +140,26 @@
         "birr": "بير",
         "Upload payment receiption image": "ارفع صورة إيصال الدفع",
         "Upload Image": "رفع الصورة",
-        "Send": "إرسال"
-}
+        "Send": "إرسال",
+        "Please enter your name!": "الرجاء إدخال اسمك!",
+        "Please enter your phone number!": "الرجاء إدخال رقم هاتفك!",
+        "Choose or write your location!": "اختر موقعك أو اكتبه!",
+        "Please enter your account number!": "الرجاء إدخال رقم حسابك!",
+        "Please upload receipt image!": "الرجاء رفع صورة الإيصال!",
+        "Sending your order!": "جاري إرسال طلبك!",
+        "Product successfully ordered": "تم طلب المنتج بنجاح",
+        "We couldn't order your product!": "تعذر طلب منتجك!"
+    },
+    "comment": {
+        "Name": "الاسم",
+        "Email": "البريد الإلكتروني",
+        "Comment": "التعليق",
+        "Submit": "إرسال",
+        "Please enter your name": "الرجاء إدخال اسمك",
+        "Please enter your email, Your email will never become visible to public": "الرجاء إدخال بريدك الإلكتروني. لن يظهر بريدك الإلكتروني للعامة أبداً.",
+        "Please write some text!": "الرجاء كتابة بعض النصوص!",
+        "Posting your comment!": "جاري نشر تعليقك!",
+        "Your comment successfully posted!": "تم نشر تعليقك بنجاح!",
+        "Your comment couldn't be posted!": "تعذر نشر تعليقك!"
+    }
 }

@@ -5,6 +5,7 @@ import Loading from "./loading";
 import Image from "next/image";
 import Uploading from "./uploading";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function OrderProduct({link}){
     return(
@@ -57,39 +58,47 @@ function CheckPriceAndOrder({link}){
         CheckPrice(1);
     },[]);
 
+    function validate(id,message){
+        let value = document.getElementById(id).value;
+        if (!value) {
+            toast.error(message);
+            document.getElementById(id)?.focus();
+            return null;
+        }
+        return value;
+    }
 
     async function SendOrder() {
 
-        let name = document.getElementById("name").value;
-        let phoneNumber = document.getElementById("phoneNumber").value;
-        let accountNumber = document.getElementById("accountNumber").value;
-        let amount = document.getElementById("amount2").value; 
+        let name = validate("name",t("Please enter your name!"));
+        if(!name) return;
 
-        if (!name) {
-            alert("please enter your name!");
-            return;
-        }
-        if (!phoneNumber) {
-            alert("please enter your phone number!");
-            return;
-        }
+        let phoneNumber = validate("phoneNumber",t("Please enter your phone number!"));
+        if(!phoneNumber) return;
+
         if (!location || location == "other" || location == null || location == "choose") {
-           alert("choose or write your location") ;
+           toast.error(t("Choose or write your location!"));
            return;
         } 
-        if (!accountNumber) {
-            alert("please enter your account number!");
-            return;
-        }
+
+        let accountNumber = validate("accountNumber",t("Please enter your account number!"))
+        if(!accountNumber) return;
+
+        let amount = document.getElementById("amount2").value; 
+
         if (!amount) {
             amount = 1;
         }
+
+
+
         if (!file) {
-            alert("please upload image");
+            toast.error(t("Please upload receipt image!"));
             return;
         }
         
         setUploading(true);
+        const sending = toast.loading(t("Sending your order!"));
 
         const imageData = new FormData();
         imageData.append("file",file);
@@ -124,24 +133,24 @@ function CheckPriceAndOrder({link}){
                     const data = await response.json();                    
                     
                     if (data.success) {
-                        alert("Product Successfully submitted");
+                        toast.success(t("Product successfully ordered"),{id:sending});
                         window.location.reload();
                         setUploading(false);
                     } else{
-                        alert("We couldn't order your product");
+                        toast.error(t("We couldn't order your product!"),{id:sending});
                         setUploading(false);
                     }
 
                 } catch(err){
-                    alert("We couldn't order your product");
+                    toast.error(t("We couldn't order your product!"),{id:sending});
                     setUploading(false);                    
                 }
             } else {
-                alert("We couldn't order your product");
+                toast.error(t("We couldn't order your product!"),{id:sending});
                 setUploading(false);
             }
         } catch(err){
-            alert("We couldn't order your product");
+            toast.error(t("We couldn't order your product!"),{id:sending});
             setUploading(false);
         }
     }
@@ -240,12 +249,13 @@ function CheckPriceAndOrder({link}){
                 <label htmlFor="file" className="ml-3 text-foreground/50" >{t("Upload payment receiption image")}</label>
                 <input type="file" id="file" title="File" hidden onChange={(e)=>setFile(e.target.files[0])} />
                 <button onClick={()=>{document.getElementById("file").click();}} className="bg-foreground/20 px-4 py-1 rounded-4xl shadow cursor-pointer text-foreground/70 transition-all duration-300 hover:pl-6">{t("Upload Image")}</button>         
-                <div>
-                    {
-                        (uploading && (<Uploading uploadingItem={"order"} />))
-                    }
-                </div>
-                <button onClick={()=>{SendOrder();}} className="bg-foreground mt-10 px-4 py-1 rounded-4xl shadow cursor-pointer text-background/80 transition-all duration-300 hover:pl-6">{t("Send")}</button>                
+                {
+                    (uploading ? (
+                         <button className="bg-foreground/60 mt-10 px-4 py-1 rounded-4xl shadow cursor-pointer text-background/80 transition-all duration-300 hover:pl-6">{t("Send")}</button>      
+                    ) : (
+                         <button onClick={()=>{SendOrder();}} className="bg-foreground mt-10 px-4 py-1 rounded-4xl shadow cursor-pointer text-background/80 transition-all duration-300 hover:pl-6">{t("Send")}</button>                
+                    ))
+                }
             </div>
         </div>           
         </>

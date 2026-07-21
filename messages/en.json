@@ -82,7 +82,13 @@
         "YouTube":"YouTube",
         "Facebook":"Facebook",
         "Telegram":"Telegram",
-        "Join our Telegram channel":"Join our Telegram channel"
+        "Join our Telegram channel":"Join our Telegram channel",
+        "Enter your name!": "Enter your name!",
+        "Please enter your email": "Please enter your email",
+        "Please write some text!": "Please write some text!",
+        "Sending your message": "Sending your message",
+        "Your message successfully sent!": "Your message successfully sent!",
+        "Your email couldn't be sent": "Your email couldn't be sent" 
     },
     "order":{
         "Back to Home":"Back to Home",
@@ -96,7 +102,7 @@
         "Buta Jira":"Buta Jira",
         "Worabe":"Worabe",
         "Halaba":"Halaba",
-        "Select the Job":"Select the Job",
+        "Select the job":"Select the Job",
         "Electric":"Electric",
         "Plumbing":"Plumbing",
         "New Installation":"New Installation",
@@ -104,7 +110,10 @@
         "Finishing Work":"Finishing Work",
         "If you have any idea":"If you have any idea",
         "You Are Almost Finished":"You Are Almost Finished",
-        "Send":"Send"
+        "Send":"Send",
+        "Sending your order":"Sending your order...",
+        "Order successfully sent!":"Order successfully sent!",
+        "Your order couldn't be sent!":"Your order couldn't be sent!"
     },
     "orderProduct":{
         "title":"Check The Price Before Ordering the Product, to check the price, enter the amount of product and click the button!",
@@ -130,6 +139,26 @@
         "birr":"birr",
         "Upload payment receiption image":"Upload payment receiption image",
         "Upload Image":"Upload Image",
-        "Send":"Send"     
+        "Send":"Send",
+        "Please enter your name!":"Please enter your name!",
+        "Please enter your phone number!":"Please enter your phone number!",
+        "Choose or write your location!":"Choose or write your location!",
+        "Please enter your account number!":"Please enter your account number!",
+        "Please upload receipt image!":"Please upload receipt image!",
+        "Sending your order!":"Sending your order!",
+        "Product successfully ordered":"Product successfully ordered",
+        "We couldn't order your product!":"We couldn't order your product!"
+    },
+    "comment": {
+        "Name": "Name",
+        "Email": "Email",
+        "Comment": "Comment",
+        "Submit": "Submit",
+        "Please enter your name": "Please enter your name",
+        "Please enter your email, Your email will never become visible to public": "Please enter your email. Your email will never become visible to the public.",
+        "Please write some text!": "Please write some text!",
+        "Posting your comment!": "Posting your comment!",
+        "Your comment successfully posted!": "Your comment successfully posted!",
+        "Your comment couldn't be posted!": "Your comment couldn't be posted!"
     }
 }

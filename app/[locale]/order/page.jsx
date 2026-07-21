@@ -4,6 +4,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer"
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function order(){
     const t = useTranslations("order");
@@ -44,6 +45,7 @@ export default function order(){
         let job_type =  document.getElementById("new").checked ? "New" :  (document.getElementById("maintenance").checked ? "Maintenance" : ( document.getElementById("finishing").checked ? "Finishing" : "Invalid"));
         let comment = document.getElementById("comment").value ?? "No comment";
 
+        const posting = toast.loading("Sending your order")
         try {
             const response = await fetch("/api/postorder",{
                 headers:{
@@ -62,15 +64,14 @@ export default function order(){
             });
 
             if(response.ok){
-                alert("ORDER SUCCESSFULLY SUBMITED!");
+                toast.success("Order successfully sent!",{id:posting});
                 window.location.href = "/";
             } else {
-                alert("ORDER COULDN'T BE POSTED RIGHT NOW");
+                toast.error("Your order couldn't be sent!",{id:posting});
             }
             const respData = await response.json();
-            
         } catch(err){
-            alert("ORDER COULDN'T BE POSTED RIGHT NOW");
+            toast.error("Your order couldn't be sent!",{id:posting});
         }
      }
 
@@ -231,7 +232,7 @@ function ChooseJob({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <span className="ml-3 text-foreground/55">{t("Select the Job")}</span>
+                <span className="ml-3 text-foreground/55">{t("Select the job")}</span>
                 
                 <div className="flex gap-2">
                     <input type="checkbox" value={"electric"} id="electric" title="electric" onChange={(e)=>{checker(e.target.checked)}} /> 
@@ -268,7 +269,7 @@ function ChooseJobType({makeItAvailable, makeItUnAvailable}) {
     return(
         <div className="rounded-4xl p-6 w-full shrink-0">
             <div className="flex flex-col justify-center items-start gap-y-4">
-                <span className="ml-3 text-foreground/55">{t("Select The Job Type")}</span>
+                <span className="ml-3 text-foreground/55">{t("Select the job")}</span>
                 
                 <div className="flex gap-2">
                     <input type="checkbox" value={"new"} id="new" title="New" onChange={(e)=>{checker(e.target.checked)}} /> 
@@ -308,7 +309,7 @@ function AddComment({makeItAvailable, makeItUnAvailable}) {
             <div className="flex flex-col justify-center items-start gap-y-4">
                 <span className="ml-3 text-foreground/55">{t("If you have any idea")}...</span>
 
-                <textarea  onChange={(e)=>{checker(e.target.value)}} id="comment" className="w-11/12 sm:w-100 md:w-120 lg:w-130 min-h-60 border border-(--border) px-6 py-4 duration-300 hover:px-8 outline-(--primary) rounded-4xl" placeholder="If you have anything you want to say about the work...">
+                <textarea  onChange={(e)=>{checker(e.target.value)}} id="comment" className="w-11/12 sm:w-100 md:w-120 lg:w-130 min-h-60 border border-(--border) px-6 py-4 duration-300 hover:px-8 outline-(--primary) rounded-4xl" placeholder="......">
                 </textarea>
             </div>
         </div>
