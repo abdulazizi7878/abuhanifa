@@ -29,8 +29,7 @@ function Cont(){
             <section className="w-11/12 my-10 flex flex-wrap gap-y-20 ">
 
                 <div className="md:w-1/2 lg:w-1/2 flex justify-center items-center">
-
-                    <div className=" flex flex-col">
+                    <div className=" flex flex-col">آ
                         <div>
                             <h1 className="text-4xl my-2 font-(family-name:--secondary-font) ">
                                 {t("title")} 

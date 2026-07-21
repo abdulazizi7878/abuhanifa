@@ -3,8 +3,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #e2eeff;
+  --foreground: #0c152af0;
   --border:#0000002c;
   --primary:#1ebef8e1;
   --third: #753aa0f6;
@@ -98,10 +98,5 @@ body {
 }
 
 ._LI::before{
-  content: "— ";
-}
-
-
-*{
-  outline: var(--foreground);
+  content: "• ";
 }
