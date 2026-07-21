@@ -27,7 +27,6 @@ function Cont(){
     return(
         <div className="flex flex-col justify-center items-center w-full">
             <section className="w-11/12 my-10 flex flex-wrap gap-y-20 ">
-
                 <div className="md:w-1/2 lg:w-1/2 flex justify-center items-center">
                     <div className=" flex flex-col">
                         <div>
