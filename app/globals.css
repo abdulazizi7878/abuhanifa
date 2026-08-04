@@ -1,6 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Menbere:wght@100..700&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&display=swap');
 @import "tailwindcss";
+
+
+@font-face {
+  font-family: 'Visual Geez Unicode';
+  src: url('fonts/VGU.ttf') format('truetype');
+}
 
 :root {
   --background: #f2f7ff;
@@ -9,9 +15,9 @@
   --primary:#1ebef8e1;
   --third: #753aa0f6;
   --secondary:#5d77ec;
-  --primary-font: 'Ubuntu', sans-serif;
+  --primary-font: "Times New Roman", Times, serif;
   --secondary-font: 'Changa One', arial;
-  --third-font: 'Menbere', sans-serif;
+  --third-font: 'Visual Geez Unicode', sans-serif;
   --arabic-font: 'IBM Plex Sans Arabic', sans-serif;
 }
 
