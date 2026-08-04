@@ -58,7 +58,7 @@ export default function Footer(){
                         </svg>    
                     </div> 
                     <span className="text-sm hidden code-aa">Telegram</span>           
-                    <a href="https://t.me/ahietjny" className="absolute inset-0"></a>                          
+                    <a href="https://t.me/abuhanifainstallation" className="absolute inset-0"></a>                          
                 </div>
                 
                 <div className="relative">

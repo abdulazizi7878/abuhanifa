@@ -173,7 +173,7 @@ export default function ContactPage(){
                                 </div>
 
                                 <div onClick={()=>{
-                                                    window.location.href = "https://t.me/ahietjny"
+                                                    window.location.href = "https://t.me/abuhanifainstallation"
                                                 }} 
                                 className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-blue-400 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
 

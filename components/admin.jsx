@@ -4,7 +4,7 @@
 export default function AdminPage(){
     return(
         <div className="flex justify-center items-start  w-full min-h-[70vh]">
-            <AdminMainSm />
+            <AdminMain />
         </div>
     )
 }
@@ -12,7 +12,7 @@ export default function AdminPage(){
 
 
 
-function AdminMainSm(){
+function AdminMain(){
     return(
         <div className="mt-25 w-full flex flex-col justify-center items-center gap-y-6">
             <div>
@@ -22,6 +22,7 @@ function AdminMainSm(){
                 <LinkDivs text={"Create Blog"} link={"/ahiadmin/create/blog"}  />
                 <LinkDivs text={"Create Promotion"} link={"/ahiadmin/create/promotion"}  />
                 <LinkDivs text={"Create Product"} link={"/ahiadmin/create/product"}  />
+                <LinkDivs text={"Create MAterial List"} link={"/ahiadmin/create/materiallist"} />
                 <LinkDivs text={"View Blogs"} link={"/ahiadmin/view/blogs"}  />
                 <LinkDivs text={"View Comments & messages"} link={"/ahiadmin/view/comments"}  />
                 <LinkDivs text={"View Job and Product Orders"} link={"/ahiadmin/view/orders"}  />

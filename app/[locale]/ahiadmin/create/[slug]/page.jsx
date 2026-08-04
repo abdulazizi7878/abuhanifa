@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import CreateProduct from "@/components/createProduct";
 import CreatePromotion from "@/components/createPromotion";
+import CreateMaterialList from "@/components/createMaterialList";
 import NotFound from "@/components/notfound";
 
 export default async function createLinked({params}) {
@@ -11,7 +12,8 @@ export default async function createLinked({params}) {
     const pages = {
         blog: <CreateBlog/>,
         product: <CreateProduct />,
-        promotion: <CreatePromotion/>
+        promotion: <CreatePromotion/>,
+        materiallist: <CreateMaterialList />
     }
 
     return(
