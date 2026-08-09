@@ -426,7 +426,7 @@ export default function EditMaterialPage({ params }) {
               <div className="flex items-center justify-end space-x-4 pt-4 border-t" style={{ borderColor: 'var(--border)' }}>
                 <button
                   type="button"
-                  onClick={() => router.push('/materials')}
+                  onClick={() => router.push('/material')}
                   disabled={updating}
                   className="px-6 py-2.5 rounded-lg text-sm font-medium border transition en cursor-pointer disabled:opacity-50"
                   style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
