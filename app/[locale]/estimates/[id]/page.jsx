@@ -95,7 +95,7 @@ export default function EstimateDetailPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 mt-20 bg-[var(--background)] text-[var(--foreground)]">
+      <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 mt-20 bg-background text-foreground">
         <div className="max-w-6xl mx-auto space-y-8">
 
           {/* Top Actions & Navigation Bar */}
@@ -154,7 +154,7 @@ export default function EstimateDetailPage() {
           {/* Main Estimate Content */}
           {!loading && !error && estimate && (
             <div
-              className="p-6 sm:p-8 rounded-2xl shadow-lg border bg-[var(--background)] space-y-8"
+              className="p-6 sm:p-8 rounded-2xl shadow-lg border bg-background space-y-8"
               style={{ borderColor: "var(--border)" }}
             >
               {/* Header Info: Title & Status */}
@@ -189,7 +189,7 @@ export default function EstimateDetailPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Customer Section */}
                 <div
-                  className="p-5 rounded-xl border bg-[var(--background)] space-y-3"
+                  className="p-5 rounded-xl border bg-background space-y-3"
                   style={{ borderColor: "var(--border)" }}
                 >
                   <h2 className="text-base font-semibold opacity-90 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
@@ -211,7 +211,7 @@ export default function EstimateDetailPage() {
 
                 {/* Project Section */}
                 <div
-                  className="p-5 rounded-xl border bg-[var(--background)] space-y-3"
+                  className="p-5 rounded-xl border bg-background space-y-3"
                   style={{ borderColor: "var(--border)" }}
                 >
                   <h2 className="text-base font-semibold opacity-90 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
@@ -321,7 +321,7 @@ export default function EstimateDetailPage() {
               onClick={() => !isDeleting && setShowDeleteModal(false)}
             >
               <div
-                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border space-y-4 bg-[var(--background)] text-[var(--foreground)]"
+                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border space-y-4 bg-background text-foreground"
                 style={{ borderColor: "var(--border)" }}
                 onClick={(e) => e.stopPropagation()}
               >

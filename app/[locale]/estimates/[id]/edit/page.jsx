@@ -249,7 +249,7 @@ export default function EditEstimateCompletePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen py-8 px-4 sm:px-6 mt-20 lg:px-8 bg-[var(--background)] text-[var(--foreground)]">
+      <main className="min-h-screen py-8 px-4 sm:px-6 mt-20 lg:px-8 bg-background text-foreground">
         <div className="max-w-6xl mx-auto space-y-8">
 
           {/* Top Bar Navigation */}
@@ -301,7 +301,7 @@ export default function EditEstimateCompletePage() {
 
               {/* Customer Information Section */}
               <section
-                className="p-6 rounded-xl shadow-md border bg-[var(--background)] space-y-4"
+                className="p-6 rounded-xl shadow-md border bg-background space-y-4"
                 style={{ borderColor: "var(--border)" }}
               >
                 <h2 className="text-lg font-semibold en pb-2 border-b" style={{ borderColor: "var(--border)" }}>
@@ -318,7 +318,7 @@ export default function EditEstimateCompletePage() {
                       onChange={(e) => setCustomerName(e.target.value)}
                       required
                       placeholder="e.g. Ahmed"
-                      className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-[var(--background)] text-[var(--foreground)]"
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
                       style={{ borderColor: "var(--border)" }}
                     />
                   </div>
@@ -331,7 +331,7 @@ export default function EditEstimateCompletePage() {
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       placeholder="e.g. 0912345678"
-                      className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-[var(--background)] text-[var(--foreground)]"
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
                       style={{ borderColor: "var(--border)" }}
                     />
                   </div>
@@ -340,7 +340,7 @@ export default function EditEstimateCompletePage() {
 
               {/* Project Information & Status Section */}
               <section
-                className="p-6 rounded-xl shadow-md border bg-[var(--background)] space-y-4"
+                className="p-6 rounded-xl shadow-md border bg-background space-y-4"
                 style={{ borderColor: "var(--border)" }}
               >
                 <h2 className="text-lg font-semibold en pb-2 border-b" style={{ borderColor: "var(--border)" }}>
@@ -356,7 +356,7 @@ export default function EditEstimateCompletePage() {
                       value={projectTitle}
                       onChange={(e) => setProjectTitle(e.target.value)}
                       placeholder="e.g. House Installation"
-                      className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-[var(--background)] text-[var(--foreground)]"
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
                       style={{ borderColor: "var(--border)" }}
                     />
                   </div>
@@ -367,7 +367,7 @@ export default function EditEstimateCompletePage() {
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-lg border text-sm en capitalize bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2"
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en capitalize bg-background text-foreground focus:outline-none focus:ring-2"
                       style={{ borderColor: "var(--border)" }}
                     >
                       <option value="draft">Draft</option>
@@ -385,7 +385,7 @@ export default function EditEstimateCompletePage() {
                     onChange={(e) => setProjectDescription(e.target.value)}
                     rows={3}
                     placeholder="e.g. Full plumbing installation details..."
-                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-[var(--background)] text-[var(--foreground)]"
+                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
                     style={{ borderColor: "var(--border)" }}
                   />
                 </div>
@@ -393,7 +393,7 @@ export default function EditEstimateCompletePage() {
 
               {/* Material Search & Add Section */}
               <section
-                className="p-6 rounded-xl shadow-md border bg-[var(--background)] space-y-4"
+                className="p-6 rounded-xl shadow-md border bg-background space-y-4"
                 style={{ borderColor: "var(--border)" }}
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-2 border-b" style={{ borderColor: "var(--border)" }}>
@@ -404,13 +404,13 @@ export default function EditEstimateCompletePage() {
                       placeholder="Search material..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="px-4 py-2 rounded-lg border text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2"
+                      className="px-4 py-2 rounded-lg border text-sm en bg-background text-foreground focus:outline-none focus:ring-2"
                       style={{ borderColor: "var(--border)" }}
                     />
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="px-4 py-2 rounded-lg border text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2"
+                      className="px-4 py-2 rounded-lg border text-sm en bg-background text-foreground focus:outline-none focus:ring-2"
                       style={{ borderColor: "var(--border)" }}
                     >
                       <option value="all">All Categories</option>
@@ -434,7 +434,7 @@ export default function EditEstimateCompletePage() {
                     {filteredMaterials.map((mat) => (
                       <div
                         key={mat.id}
-                        className="p-3 rounded-lg border flex flex-col justify-between transition hover:shadow-xs bg-[var(--background)]"
+                        className="p-3 rounded-lg border flex flex-col justify-between transition hover:shadow-xs bg-background"
                         style={{ borderColor: "var(--border)" }}
                       >
                         <div>
@@ -472,7 +472,7 @@ export default function EditEstimateCompletePage() {
 
               {/* Current Estimate Items Section */}
               <section
-                className="p-6 rounded-xl shadow-md border bg-[var(--background)] space-y-4"
+                className="p-6 rounded-xl shadow-md border bg-background space-y-4"
                 style={{ borderColor: "var(--border)" }}
               >
                 <h2 className="text-lg font-semibold en pb-2 border-b" style={{ borderColor: "var(--border)" }}>
@@ -533,7 +533,7 @@ export default function EditEstimateCompletePage() {
                                     min="1"
                                     value={item.quantity}
                                     onChange={(e) => handleQuantityInput(item.materialId, e.target.value)}
-                                    className="w-12 text-center rounded border text-xs py-1 bg-[var(--background)] text-[var(--foreground)]"
+                                    className="w-12 text-center rounded border text-xs py-1 bg-background text-foreground"
                                     style={{ borderColor: "var(--border)" }}
                                   />
                                   <button

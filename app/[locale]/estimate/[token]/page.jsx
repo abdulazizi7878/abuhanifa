@@ -467,7 +467,7 @@ export default function PublicEstimatePage() {
   return (
     <>
        <Header />
-        <div className="min-h-screen mt-26 py-10 px-4 sm:px-6 lg:px-8 bg-[var(--background)] text-[var(--foreground)]">
+        <div className="min-h-screen mt-26 py-10 px-4 sm:px-6 lg:px-8 bg-background text-foreground">
           <div className="max-w-4xl mx-auto space-y-8">
 
             {/* Download PDF Button */}
@@ -504,7 +504,7 @@ export default function PublicEstimatePage() {
             {/* Document Content (Screen View) */}
             {!loading && !error && estimate && (
               <div
-                className="p-6 sm:p-12 rounded-2xl shadow-xl border bg-[var(--background)] space-y-8"
+                className="p-6 sm:p-12 rounded-2xl shadow-xl border bg-background space-y-8"
                 style={{ borderColor: "var(--border)" }}
               >
                 {/* Document Header */}
@@ -545,7 +545,7 @@ export default function PublicEstimatePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Customer Information */}
                   <div
-                    className="p-5 rounded-xl border bg-[var(--background)] space-y-2"
+                    className="p-5 rounded-xl border bg-background space-y-2"
                     style={{ borderColor: "var(--border)" }}
                   >
                     <h2 className="text-sm font-bold uppercase tracking-wider opacity-60 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
@@ -568,7 +568,7 @@ export default function PublicEstimatePage() {
                   {/* Project Information */}
                   {(estimate.projectTitle || estimate.projectDescription) && (
                     <div
-                      className="p-5 rounded-xl border bg-[var(--background)] space-y-2"
+                      className="p-5 rounded-xl border bg-background space-y-2"
                       style={{ borderColor: "var(--border)" }}
                     >
                       <h2 className="text-sm font-bold uppercase tracking-wider opacity-60 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
@@ -659,7 +659,7 @@ export default function PublicEstimatePage() {
                     Total Line Items: <span className="font-semibold">{estimate.items?.length || 0}</span>
                   </div>
                   <div
-                    className="p-4 rounded-xl border flex items-center gap-6 bg-[var(--background)]"
+                    className="p-4 rounded-xl border flex items-center gap-6 bg-background"
                     style={{ borderColor: "var(--border)" }}
                   >
                     <span className="text-base font-bold uppercase tracking-wider en opacity-80">Grand Total:</span>

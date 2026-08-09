@@ -141,7 +141,7 @@ export default function EstimatesManagementPage() {
   return (
     <>
     <Header />
-      <div className="min-h-screen py-8 mt-26 px-4 sm:px-6 lg:px-8 bg-[var(--background)] text-[var(--foreground)]">
+      <div className="min-h-screen py-8 mt-26 px-4 sm:px-6 lg:px-8 bg-background text-foreground">
         <div className="max-w-7xl mx-auto space-y-8">
 
           {/* Top Header & Branding */}
@@ -168,7 +168,7 @@ export default function EstimatesManagementPage() {
               placeholder="Search by customer name or project..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-80 px-4 py-2.5 rounded-lg border text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2"
+              className="w-full sm:w-80 px-4 py-2.5 rounded-lg border text-sm en bg-background text-foreground focus:outline-none focus:ring-2"
               style={{ borderColor: "var(--border)" }}
             />
 
@@ -246,7 +246,7 @@ export default function EstimatesManagementPage() {
           {/* Estimates Table */}
           {!loading && !error && filteredEstimates.length > 0 && (
             <div
-              className="rounded-xl border overflow-hidden shadow-md bg-[var(--background)]"
+              className="rounded-xl border overflow-hidden shadow-md bg-background"
               style={{ borderColor: "var(--border)" }}
             >
               <div className="overflow-x-auto">
@@ -343,7 +343,7 @@ export default function EstimatesManagementPage() {
               onClick={() => !isDeleting && setDeleteModalOpen(false)}
             >
               <div
-                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border space-y-4 bg-[var(--background)] text-[var(--foreground)]"
+                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border space-y-4 bg-background text-foreground"
                 style={{ borderColor: "var(--border)" }}
                 onClick={(e) => e.stopPropagation()}
               >
