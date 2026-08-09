@@ -30,13 +30,10 @@ export default async function adminPage() {
         <>
         <Header />  
 
-           <main className="flex flex-col justify-start items-center p-2  md:w-screen md:h-screen lg:w-screen lg:h-screen">
+           <main className="flex flex-col justify-start items-center p-2 mt-20">
                  <AdminPage />
-           </main>
-           <div className="md:hidden lg:hidden">
-                <Footer/>
-           </div>
-           
+                 <Footer />
+           </main>           
         </>
     )
 }
