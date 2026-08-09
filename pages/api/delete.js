@@ -1,8 +1,17 @@
 import { DeleteItem } from "../../services/delete.services";
+import { requireAdmin } from "../../lib/auth";
 
 export default async function handler(req,res) {
     
     const {item, id} = req.body;
+    const auth = await requireAdmin(req);
+
+    if (!auth.authorized) {
+        return res.status(auth.status).json({
+            success: false,
+            message: auth.message,
+        });
+    }
 
     try {
         const response = await DeleteItem(item,id);

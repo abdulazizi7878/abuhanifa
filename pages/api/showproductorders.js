@@ -1,7 +1,16 @@
 import { ShowOrderedProducts } from "../../repositories/viewQu";
+import { requireAdmin } from "../../lib/auth";
 
 export default async function handler(req,res) {
-    
+     
+    const auth = await requireAdmin(req);
+
+    if (!auth.authorized) {
+        return res.status(auth.status).json({
+            success: false,
+            message: auth.message,
+        });
+    }
 
     try {
         const response = await ShowOrderedProducts();

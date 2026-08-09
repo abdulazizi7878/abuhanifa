@@ -4,8 +4,19 @@ import {
   deleteEstimateService,
 } from "../../../services/estimate.service";
 
+import { requireAdmin } from "../../../lib/auth";
+
 export default async function handler(req, res) {
   const { id } = req.query;
+
+  const auth = await requireAdmin(req);
+  
+  if (!auth.authorized) { 
+    return res.status(auth.status).json({
+       success: false, 
+       message: auth.message, 
+      }); 
+  }
 
   if (!id) {
     return res.status(400).json({

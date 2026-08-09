@@ -1,33 +1,40 @@
 import formidable from "formidable";
 import cloudinary from "cloudinary";
 
+import { requireAdmin } from "../../../lib/auth";
+
+
+    
 export const config = {
     api: {
         bodyParser: false,
     },
 };
-
+    
 cloudinary.v2.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
 
 export default async function handler(req, res) {
+
+      
+    const auth = await requireAdmin(req);
+
+    if (!auth.authorized) {
+        return res.status(auth.status).json({
+        success: false,
+        message: auth.message,
+        });
+    }
+
     if (req.method !== "POST") {
         return res.status(405).json({
             success: false,
             message: "Method not allowed",
         });
     }
-/*s
-    res.status(200).json({
-        success:true,
-        url:"/images/a.mp4"
-    })
-    return;
-
-    */
 
     try {
         const form = formidable({
