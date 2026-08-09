@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+
 import {
   Document,
   Page,
@@ -462,225 +465,231 @@ export default function PublicEstimatePage() {
   };
 
   return (
-    <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 bg-[var(--background)] text-[var(--foreground)]">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <>
+       <Header />
+        <div className="min-h-screen mt-26 py-10 px-4 sm:px-6 lg:px-8 bg-[var(--background)] text-[var(--foreground)]">
+          <div className="max-w-4xl mx-auto space-y-8">
 
-        {/* Download PDF Button */}
-        {!loading && !error && estimate && (
-          <div className="flex justify-end print:hidden">
-            <PDFDownloadLink
-              document={<EstimatePDF estimate={estimate} />}
-              fileName={`abu-hanifa-estimate-${estimate.id}.pdf`}
-              className="px-5 py-2.5 rounded-lg text-sm font-medium transition en cursor-pointer shadow-sm flex items-center gap-2 hover:opacity-90"
-              style={{ backgroundColor: "var(--primary)", color: "var(--foreground)" }}
-            >
-              {({ loading: pdfLoading }) => (pdfLoading ? "Preparing PDF..." : "📥 Download PDF")}
-            </PDFDownloadLink>
-          </div>
-        )}
-
-        {/* Loading State */}
-        {loading && (
-          <div className="text-center py-32">
-            <p className="text-base font-medium opacity-80 en">Loading estimate...</p>
-          </div>
-        )}
-
-        {/* Error State */}
-        {!loading && error && (
-          <div className="text-center py-24 p-8 rounded-2xl border border-red-500/30 bg-red-500/10 max-w-lg mx-auto shadow-lg">
-            <h2 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-3 en">
-              Estimate Not Found
-            </h2>
-            <p className="text-sm opacity-80 en leading-relaxed">{errorMessage}</p>
-          </div>
-        )}
-
-        {/* Document Content (Screen View) */}
-        {!loading && !error && estimate && (
-          <div
-            className="p-6 sm:p-12 rounded-2xl shadow-xl border bg-[var(--background)] space-y-8"
-            style={{ borderColor: "var(--border)" }}
-          >
-            {/* Document Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-8 border-b gap-4" style={{ borderColor: "var(--border)" }}>
-              <div>
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight en" style={{ color: "var(--secondary)" }}>
-                  Abu Hanifa Installation
-                </h1>
-                <p className="text-lg font-semibold opacity-80 mt-1 en tracking-wide uppercase">
-                  Material Estimate & Quotation
-                </p>
+            {/* Download PDF Button */}
+            {!loading && !error && estimate && (
+              <div className="flex justify-end print:hidden">
+                <PDFDownloadLink
+                  document={<EstimatePDF estimate={estimate} />}
+                  fileName={`abu-hanifa-estimate-${estimate.id}.pdf`}
+                  className="px-5 py-2.5 rounded-lg text-sm font-medium transition en cursor-pointer shadow-sm flex items-center gap-2 hover:opacity-90"
+                  style={{ backgroundColor: "var(--primary)", color: "var(--foreground)" }}
+                >
+                  {({ loading: pdfLoading }) => (pdfLoading ? "Preparing PDF..." : "📥 Download PDF")}
+                </PDFDownloadLink>
               </div>
+            )}
 
-              <div className="text-left sm:text-right space-y-1">
-                <div className="text-sm font-medium en">
-                  Estimate #{estimate.id}
-                </div>
-                {estimate.createdAt && (
-                  <div className="text-xs opacity-70 en">
-                    Date: {formatDate(estimate.createdAt)}
-                  </div>
-                )}
-                {estimate.status && (
-                  <div className="pt-1">
-                    <span
-                      className={`inline-block px-3 py-0.5 rounded-full text-xs font-bold border uppercase tracking-wider en ${getStatusBadgeStyle(
-                        estimate.status
-                      )}`}
-                    >
-                      {estimate.status}
-                    </span>
-                  </div>
-                )}
+            {/* Loading State */}
+            {loading && (
+              <div className="text-center py-32">
+                <p className="text-base font-medium opacity-80 en">Loading estimate...</p>
               </div>
-            </div>
+            )}
 
-            {/* Customer & Project Information Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Customer Information */}
+            {/* Error State */}
+            {!loading && error && (
+              <div className="text-center py-24 p-8 rounded-2xl border border-red-500/30 bg-red-500/10 max-w-lg mx-auto shadow-lg">
+                <h2 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-3 en">
+                  Estimate Not Found
+                </h2>
+                <p className="text-sm opacity-80 en leading-relaxed">{errorMessage}</p>
+              </div>
+            )}
+
+            {/* Document Content (Screen View) */}
+            {!loading && !error && estimate && (
               <div
-                className="p-5 rounded-xl border bg-[var(--background)] space-y-2"
+                className="p-6 sm:p-12 rounded-2xl shadow-xl border bg-[var(--background)] space-y-8"
                 style={{ borderColor: "var(--border)" }}
               >
-                <h2 className="text-sm font-bold uppercase tracking-wider opacity-60 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
-                  Customer Information
-                </h2>
-                <div className="space-y-1 text-sm en pt-1">
+                {/* Document Header */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-8 border-b gap-4" style={{ borderColor: "var(--border)" }}>
                   <div>
-                    <span className="text-xs opacity-70 block">Customer Name</span>
-                    <span className="font-semibold text-base">{estimate.customerName}</span>
+                    <h1 className="text-3xl sm:text-4xl font-bold tracking-tight en" style={{ color: "var(--secondary)" }}>
+                      Abu Hanifa Installation
+                    </h1>
+                    <p className="text-lg font-semibold opacity-80 mt-1 en tracking-wide uppercase">
+                      Material Estimate & Quotation
+                    </p>
                   </div>
-                  {estimate.customerPhone && (
-                    <div className="pt-1">
-                      <span className="text-xs opacity-70 block">Customer Phone</span>
-                      <span className="font-medium">{estimate.customerPhone}</span>
+
+                  <div className="text-left sm:text-right space-y-1">
+                    <div className="text-sm font-medium en">
+                      Estimate #{estimate.id}
+                    </div>
+                    {estimate.createdAt && (
+                      <div className="text-xs opacity-70 en">
+                        Date: {formatDate(estimate.createdAt)}
+                      </div>
+                    )}
+                    {estimate.status && (
+                      <div className="pt-1">
+                        <span
+                          className={`inline-block px-3 py-0.5 rounded-full text-xs font-bold border uppercase tracking-wider en ${getStatusBadgeStyle(
+                            estimate.status
+                          )}`}
+                        >
+                          {estimate.status}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Customer & Project Information Section */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Customer Information */}
+                  <div
+                    className="p-5 rounded-xl border bg-[var(--background)] space-y-2"
+                    style={{ borderColor: "var(--border)" }}
+                  >
+                    <h2 className="text-sm font-bold uppercase tracking-wider opacity-60 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
+                      Customer Information
+                    </h2>
+                    <div className="space-y-1 text-sm en pt-1">
+                      <div>
+                        <span className="text-xs opacity-70 block">Customer Name</span>
+                        <span className="font-semibold text-base">{estimate.customerName}</span>
+                      </div>
+                      {estimate.customerPhone && (
+                        <div className="pt-1">
+                          <span className="text-xs opacity-70 block">Customer Phone</span>
+                          <span className="font-medium">{estimate.customerPhone}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Project Information */}
+                  {(estimate.projectTitle || estimate.projectDescription) && (
+                    <div
+                      className="p-5 rounded-xl border bg-[var(--background)] space-y-2"
+                      style={{ borderColor: "var(--border)" }}
+                    >
+                      <h2 className="text-sm font-bold uppercase tracking-wider opacity-60 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
+                        Project Information
+                      </h2>
+                      <div className="space-y-1 text-sm en pt-1">
+                        {estimate.projectTitle && (
+                          <div>
+                            <span className="text-xs opacity-70 block">Project Title</span>
+                            <span className="font-semibold text-base">{estimate.projectTitle}</span>
+                          </div>
+                        )}
+                        {estimate.projectDescription && (
+                          <div className="pt-1">
+                            <span className="text-xs opacity-70 block">Project Description</span>
+                            <span className="opacity-90">{estimate.projectDescription}</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
-              </div>
 
-              {/* Project Information */}
-              {(estimate.projectTitle || estimate.projectDescription) && (
+                {/* Material Table Section */}
+                <div className="space-y-4">
+                  <h2 className="text-lg font-bold en">Estimate Items</h2>
+
+                  {!estimate.items || estimate.items.length === 0 ? (
+                    <div className="text-center py-10 border border-dashed rounded-xl" style={{ borderColor: "var(--border)" }}>
+                      <p className="text-sm opacity-75 en">No materials listed in this estimate.</p>
+                    </div>
+                  ) : (
+                    <div className="rounded-xl border overflow-hidden" style={{ borderColor: "var(--border)" }}>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse text-sm en">
+                          <thead>
+                            <tr
+                              className="border-b text-xs font-semibold uppercase tracking-wider opacity-80"
+                              style={{ borderColor: "var(--border)", backgroundColor: "var(--border)" }}
+                            >
+                              <th className="py-3 px-3">#</th>
+                              <th className="py-3 px-3">Material</th>
+                              <th className="py-3 px-3">Category</th>
+                              <th className="py-3 px-3">Type</th>
+                              <th className="py-3 px-3">Brand</th>
+                              <th className="py-3 px-3">Diameter</th>
+                              <th className="py-3 px-3">Specification</th>
+                              <th className="py-3 px-3">Qty</th>
+                              <th className="py-3 px-3">Price (ETB)</th>
+                              <th className="py-3 px-3 text-right">Total (ETB)</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
+                            {estimate.items.map((item, index) => (
+                              <tr key={index} className="transition">
+                                <td className="py-3 px-3 opacity-70">{index + 1}</td>
+                                <td className="py-3 px-3">
+                                  <div className="font-semibold en">{item.materialNameEnglish}</div>
+                                  {item.materialNameAmharic && (
+                                    <div className="text-xs am opacity-80">{item.materialNameAmharic}</div>
+                                  )}
+                                </td>
+                                <td className="py-3 px-3 opacity-90">{item.category || "-"}</td>
+                                <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
+                                <td className="py-3 px-3 opacity-90">{item.brand || "-"}</td>
+                                <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
+                                <td className="py-3 px-3 opacity-75 text-xs">{item.specification || "-"}</td>
+                                <td className="py-3 px-3 font-semibold">{item.quantity}</td>
+                                <td className="py-3 px-3 opacity-90">{formatCurrency(item.price)}</td>
+                                <td className="py-3 px-3 text-right font-semibold" style={{ color: "var(--secondary)" }}>
+                                  {formatCurrency(item.total)}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Grand Total Summary Section */}
                 <div
-                  className="p-5 rounded-xl border bg-[var(--background)] space-y-2"
+                  className="pt-6 border-t flex flex-col sm:flex-row justify-between items-center gap-4"
                   style={{ borderColor: "var(--border)" }}
                 >
-                  <h2 className="text-sm font-bold uppercase tracking-wider opacity-60 pb-2 border-b en" style={{ borderColor: "var(--border)" }}>
-                    Project Information
-                  </h2>
-                  <div className="space-y-1 text-sm en pt-1">
-                    {estimate.projectTitle && (
-                      <div>
-                        <span className="text-xs opacity-70 block">Project Title</span>
-                        <span className="font-semibold text-base">{estimate.projectTitle}</span>
-                      </div>
-                    )}
-                    {estimate.projectDescription && (
-                      <div className="pt-1">
-                        <span className="text-xs opacity-70 block">Project Description</span>
-                        <span className="opacity-90">{estimate.projectDescription}</span>
-                      </div>
-                    )}
+                  <div className="text-xs opacity-75 en">
+                    Total Line Items: <span className="font-semibold">{estimate.items?.length || 0}</span>
+                  </div>
+                  <div
+                    className="p-4 rounded-xl border flex items-center gap-6 bg-[var(--background)]"
+                    style={{ borderColor: "var(--border)" }}
+                  >
+                    <span className="text-base font-bold uppercase tracking-wider en opacity-80">Grand Total:</span>
+                    <span className="text-2xl sm:text-3xl font-extrabold en" style={{ color: "var(--secondary)" }}>
+                      {formatCurrency(estimate.grandTotal)} ETB
+                    </span>
                   </div>
                 </div>
-              )}
-            </div>
 
-            {/* Material Table Section */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold en">Estimate Items</h2>
-
-              {!estimate.items || estimate.items.length === 0 ? (
-                <div className="text-center py-10 border border-dashed rounded-xl" style={{ borderColor: "var(--border)" }}>
-                  <p className="text-sm opacity-75 en">No materials listed in this estimate.</p>
+                {/* Professional Footer */}
+                <div
+                  className="pt-10 mt-12 border-t text-center space-y-2"
+                  style={{ borderColor: "var(--border)" }}
+                >
+                  <h3 className="text-base font-bold en" style={{ color: "var(--secondary)" }}>
+                    Abu Hanifa Installation
+                  </h3>
+                  <p className="text-xs opacity-70 en">
+                    Thank you for choosing Abu Hanifa Installation.
+                  </p>
                 </div>
-              ) : (
-                <div className="rounded-xl border overflow-hidden" style={{ borderColor: "var(--border)" }}>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse text-sm en">
-                      <thead>
-                        <tr
-                          className="border-b text-xs font-semibold uppercase tracking-wider opacity-80"
-                          style={{ borderColor: "var(--border)", backgroundColor: "var(--border)" }}
-                        >
-                          <th className="py-3 px-3">#</th>
-                          <th className="py-3 px-3">Material</th>
-                          <th className="py-3 px-3">Category</th>
-                          <th className="py-3 px-3">Type</th>
-                          <th className="py-3 px-3">Brand</th>
-                          <th className="py-3 px-3">Diameter</th>
-                          <th className="py-3 px-3">Specification</th>
-                          <th className="py-3 px-3">Qty</th>
-                          <th className="py-3 px-3">Price (ETB)</th>
-                          <th className="py-3 px-3 text-right">Total (ETB)</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
-                        {estimate.items.map((item, index) => (
-                          <tr key={index} className="transition">
-                            <td className="py-3 px-3 opacity-70">{index + 1}</td>
-                            <td className="py-3 px-3">
-                              <div className="font-semibold en">{item.materialNameEnglish}</div>
-                              {item.materialNameAmharic && (
-                                <div className="text-xs am opacity-80">{item.materialNameAmharic}</div>
-                              )}
-                            </td>
-                            <td className="py-3 px-3 opacity-90">{item.category || "-"}</td>
-                            <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
-                            <td className="py-3 px-3 opacity-90">{item.brand || "-"}</td>
-                            <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
-                            <td className="py-3 px-3 opacity-75 text-xs">{item.specification || "-"}</td>
-                            <td className="py-3 px-3 font-semibold">{item.quantity}</td>
-                            <td className="py-3 px-3 opacity-90">{formatCurrency(item.price)}</td>
-                            <td className="py-3 px-3 text-right font-semibold" style={{ color: "var(--secondary)" }}>
-                              {formatCurrency(item.total)}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-            </div>
 
-            {/* Grand Total Summary Section */}
-            <div
-              className="pt-6 border-t flex flex-col sm:flex-row justify-between items-center gap-4"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <div className="text-xs opacity-75 en">
-                Total Line Items: <span className="font-semibold">{estimate.items?.length || 0}</span>
               </div>
-              <div
-                className="p-4 rounded-xl border flex items-center gap-6 bg-[var(--background)]"
-                style={{ borderColor: "var(--border)" }}
-              >
-                <span className="text-base font-bold uppercase tracking-wider en opacity-80">Grand Total:</span>
-                <span className="text-2xl sm:text-3xl font-extrabold en" style={{ color: "var(--secondary)" }}>
-                  {formatCurrency(estimate.grandTotal)} ETB
-                </span>
-              </div>
-            </div>
-
-            {/* Professional Footer */}
-            <div
-              className="pt-10 mt-12 border-t text-center space-y-2"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <h3 className="text-base font-bold en" style={{ color: "var(--secondary)" }}>
-                Abu Hanifa Installation
-              </h3>
-              <p className="text-xs opacity-70 en">
-                Thank you for choosing Abu Hanifa Installation.
-              </p>
-            </div>
+            )}
 
           </div>
-        )}
+        </div>
 
-      </div>
-    </div>
+        <Footer />    
+    </>
+
   );
 }
