@@ -1,7 +1,7 @@
 import formidable from "formidable";
 import cloudinary from "cloudinary";
 
-import { requireAdmin } from "../../../lib/auth";
+import { requireAdmin } from "../../lib/auth";
 
 
     
