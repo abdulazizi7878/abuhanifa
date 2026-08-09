@@ -8,7 +8,7 @@ export default function Footer(){
     return(
         <footer className="w-full pt-10 flex flex-col justify-center items-center gap-10 border-t border-t-(--border)">
 
-            <div className="w-11/12 lg:10/12 flex flex-wrap justify-center items-center mx-auto gap-y-10 border border-black">
+            <div className="w-11/12 lg:10/12 flex flex-wrap justify-center items-center mx-auto gap-y-10 ">
                <div className="">
                     <div className="w-fit flex flex-col gap-4 justify-center items-center">
                         <img src="/images/logo.jpg" alt="ABU_HANIFA_INSTALLATION" className="rounded-full size-35" />
