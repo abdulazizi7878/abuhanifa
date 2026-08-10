@@ -9,6 +9,10 @@ export async function createEstimate(connection, estimateData) {
   const {
     customerName,
     customerPhone,
+    workType,
+    workStage,
+    customerLocation,
+    customerSpecificLocation,
     projectTitle,
     projectDescription,
     status = "draft",
@@ -20,16 +24,24 @@ export async function createEstimate(connection, estimateData) {
       INSERT INTO estimates (
         customer_name,
         customer_phone,
+        customer_location,
+        customer_specific_location,
+        work_type,
+        work_stage,
         project_title,
         project_description,
         status,
         public_token
       )
-      VALUES (?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       customerName,
       customerPhone || null,
+      customerLocation || null,
+      customerSpecificLocation || null,
+      workType || null,
+      workStage || null,
       projectTitle || null,
       projectDescription || null,
       status,
@@ -53,6 +65,10 @@ export async function getEstimateById(id) {
         id,
         customer_name AS customerName,
         customer_phone AS customerPhone,
+        customer_location AS customerLocation,
+        customer_specific_location AS customerSpecificLocation,
+        work_type AS workType,
+        work_stage AS workStage,
         project_title AS projectTitle,
         project_description AS projectDescription,
         status,
@@ -79,7 +95,11 @@ export async function getEstimateWithItems(id) {
       SELECT
         id,
         customer_name AS customerName,
-        customer_phone AS customerPhone,
+        customer_phone AS customerPhone,        
+        customer_location AS customerLocation,
+        customer_specific_location AS customerSpecificLocation,
+        work_type AS workType,
+        work_stage AS workStage,
         project_title AS projectTitle,
         project_description AS projectDescription,
         status,
@@ -205,6 +225,10 @@ export async function updateEstimate(id, estimateData) {
   const {
     customerName,
     customerPhone,
+    customerLocation,
+    customerSpecificLocation,
+    workType,
+    workStage,
     projectTitle,
     projectDescription,
     status,
@@ -216,6 +240,10 @@ export async function updateEstimate(id, estimateData) {
       SET
         customer_name = ?,
         customer_phone = ?,
+        customer_location = ?,
+        customer_specific_location = ?,
+        work_type = ?,
+        work_stage = ?,
         project_title = ?,
         project_description = ?,
         status = ?
@@ -224,6 +252,10 @@ export async function updateEstimate(id, estimateData) {
     [
       customerName,
       customerPhone || null,
+      customerLocation || null,
+      customerSpecificLocation || null,
+      workType || null,
+      workStage || null,
       projectTitle || null,
       projectDescription || null,
       status,

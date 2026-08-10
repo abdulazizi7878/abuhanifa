@@ -1,3 +1,5 @@
+// app/[locale]/estimates/[id]/edit/page.jsx
+
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
@@ -14,6 +16,10 @@ export default function EditEstimateCompletePage() {
   // Form States
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [customerLocation, setCustomerLocation] = useState("");
+  const [customerSpecificLocation, setCustomerSpecificLocation] = useState("");
+  const [workType, setWorkType] = useState("");
+  const [workStage, setWorkStage] = useState("");
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [status, setStatus] = useState("draft");
@@ -57,22 +63,28 @@ export default function EditEstimateCompletePage() {
         const est = estimateData.data;
         setCustomerName(est.customerName || "");
         setCustomerPhone(est.customerPhone || "");
+        setCustomerLocation(est.customerLocation || "");
+        setCustomerSpecificLocation(est.customerSpecificLocation || "");
+        setWorkType(est.workType || "");
+        setWorkStage(est.workStage || "");
         setProjectTitle(est.projectTitle || "");
         setProjectDescription(est.projectDescription || "");
         setStatus(est.status || "draft");
 
         // Map existing items to local state structure (using materialId and quantity primarily, with catalog info)
         const mappedItems = (est.items || []).map((item) => ({
-          id: item.materialId || item.id,
-          materialId: item.materialId || item.id,
-          materialNameEnglish: item.materialNameEnglish || "Material",
-          materialNameAmharic: item.materialNameAmharic || "",
-          type: item.type || "",
-          brand: item.brand || "",
-          diameter: item.diameter || "",
-          price: Number(item.price || 0),
-          quantity: Number(item.quantity || 1),
-        }));
+            id: item.id, // IMPORTANT: estimate_items.id
+            materialId: item.materialId,
+            materialNameEnglish: item.materialNameEnglish || "Material",
+            materialNameAmharic: item.materialNameAmharic || "",
+            type: item.type || "",
+            brand: item.brand || "",
+            diameter: item.diameter || "",
+            specification: item.specification || "",
+            price: Number(item.price || 0),
+            quantity: Number(item.quantity || 1),
+          }));
+
         setItems(mappedItems);
 
         // Fetch Materials Catalog
@@ -131,12 +143,14 @@ export default function EditEstimateCompletePage() {
         return [
           ...prev,
           {
+            id: null,
             materialId: material.id,
             materialNameEnglish: material.materialNameEnglish,
             materialNameAmharic: material.materialNameAmharic,
             type: material.type,
             brand: material.brand,
             diameter: material.diameter,
+            specification: material.specification || "",
             price: Number(material.price || 0),
             quantity: 1,
           },
@@ -215,10 +229,17 @@ export default function EditEstimateCompletePage() {
         customerPhone: customerPhone.trim(),
         projectTitle: projectTitle.trim(),
         projectDescription: projectDescription.trim(),
+        customerLocation: customerLocation.trim(),
+        customerSpecificLocation: customerSpecificLocation.trim(),
+        workType: workType.trim(),
+        workStage: workStage.trim(),
         status: status,
         items: items.map((item) => ({
-          materialId: item.materialId,
-          quantity: item.quantity,
+              id: item.id,
+              materialId: item.materialId,
+              quantity: item.quantity,
+              price: Number(item.price || 0),
+              total: Number(item.price || 0) * Number(item.quantity || 0),
         })),
       };
 
@@ -334,6 +355,67 @@ export default function EditEstimateCompletePage() {
                       className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
                       style={{ borderColor: "var(--border)" }}
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2 en">
+                      Customer Location
+                    </label>
+                    <select
+                      value={customerLocation}
+                      onChange={(e) => setCustomerLocation(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en capitalize bg-background text-foreground focus:outline-none focus:ring-2"
+                      style={{ borderColor: "var(--border)" }}
+                    >
+                      <option value="Addis Ababa">Addis Ababa</option>
+                      <option value="Buta Jira">Buta Jira</option>
+                      <option value="Worabe">Worabe</option>
+                      <option value="Halaba">Halaba</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2 en">
+                      Specific Location
+                    </label>
+                    <input
+                      type="text"
+                      value={customerSpecificLocation}
+                      onChange={(e) => setCustomerSpecificLocation(e.target.value)}
+                      placeholder="e.g. Near the main road"
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
+                      style={{ borderColor: "var(--border)" }}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2 en">
+                      Work Type
+                    </label>
+                    <select
+                      value={workType}
+                      onChange={(e) => setWorkType(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en capitalize bg-background text-foreground focus:outline-none focus:ring-2"
+                      style={{ borderColor: "var(--border)" }}
+                    >                      
+                                     
+                    <option value="Electric">Electric</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Sanitary">Sanitary</option>
+                    <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2 en">
+                      Work Stage
+                    </label>
+                    <select
+                      value={workStage}
+                      onChange={(e) => setWorkStage(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-lg border text-sm en capitalize bg-background text-foreground focus:outline-none focus:ring-2"
+                      style={{ borderColor: "var(--border)" }}
+                    >
+                       <option value="First Installation">First Installation</option>
+                       <option value="Modification">Modification</option>
+                       <option value="Finishing">Finishing</option>
+                    </select>
                   </div>
                 </div>
               </section>

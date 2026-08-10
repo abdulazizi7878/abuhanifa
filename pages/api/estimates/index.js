@@ -37,6 +37,10 @@ export default async function handler(req, res) {
       const {
         customerName,
         customerPhone,
+        workType,
+        workStage,
+        customerLocation,
+        customerSpecificLocation,
         projectTitle,
         projectDescription,
         items,
@@ -46,6 +50,10 @@ export default async function handler(req, res) {
         await createEstimateService({
           customerName,
           customerPhone,
+          workType,
+          workStage,
+          customerLocation,
+          customerSpecificLocation,
           projectTitle,
           projectDescription,
           items,

@@ -205,7 +205,23 @@ export default function EstimateDetailPage() {
                         <span className="opacity-70 text-xs block">Customer Phone</span>
                         <span className="font-medium">{estimate.customerPhone}</span>
                       </div>
-                    )}
+                    )}                    
+                    <div>
+                      <span className="opacity-70 text-xs block">Customer Location</span>
+                      <span className="font-medium text-base">{estimate.customerLocation}</span>
+                    </div>
+                    <div>
+                      <span className="opacity-70 text-xs block">Customer Specific Location</span>
+                      <span className="font-medium text-base">{estimate.customerSpecificLocation}</span>
+                    </div>
+                    <div>
+                      <span className="opacity-70 text-xs block">Job Type</span>
+                      <span className="font-medium text-base">{estimate.workType}</span>
+                    </div>
+                    <div>
+                      <span className="opacity-70 text-xs block">Job Stage</span>
+                      <span className="font-medium text-base">{estimate.workStage}</span>
+                    </div>
                   </div>
                 </div>
 

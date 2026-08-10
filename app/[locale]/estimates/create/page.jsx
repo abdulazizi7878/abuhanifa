@@ -12,6 +12,10 @@ export default function CreateEstimatePage() {
   // Form & UI States
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [workType, setWorkType] = useState("");
+  const [workStage, setWorkStage] = useState("");
+  const [customerLocation, setCustomerLocation] = useState("");
+  const [customerSpecificLocation, setCustomerSpecificLocation] = useState("");
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
 
@@ -137,6 +141,22 @@ export default function CreateEstimatePage() {
       toast.error("Customer name is required.");
       return;
     }
+    if (!workType.trim()) {
+      toast.error("Work type is required.");
+      return;
+    }
+    if (!workStage.trim()) {
+      toast.error("Work stage is required.");
+      return;
+    }
+    if (!customerLocation.trim()) {
+      toast.error("Customer location is required.");
+      return;
+    }
+    if (!customerSpecificLocation.trim()) {
+      toast.error("Customer specific location is required.");
+      return;
+    }
 
     if (selectedItems.length === 0) {
       toast.error("Please add at least one material to the estimate.");
@@ -150,6 +170,10 @@ export default function CreateEstimatePage() {
       const payload = {
         customerName: customerName.trim(),
         customerPhone: customerPhone.trim(),
+        workType: workType.trim(),
+        workStage: workStage.trim(),
+        customerLocation: customerLocation.trim(),
+        customerSpecificLocation: customerSpecificLocation.trim(),
         projectTitle: projectTitle.trim(),
         projectDescription: projectDescription.trim(),
         items: selectedItems.map((item) => ({
@@ -232,14 +256,92 @@ export default function CreateEstimatePage() {
                   />
                 </div>
 
+
                 <div>
                   <label className="block text-sm font-medium mb-2 en">
-                    Customer Phone
+                    Work Type <span className="text-red-500">*</span>
+                  </label>
+
+                  <select
+                    value={workType}
+                    onChange={(e) => setWorkType(e.target.value)}
+                    required
+                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
+                    style={{ borderColor: "var(--border)" }}
+                  >
+                    <option value="">Select Work Type</option>
+                    <option value="Electric">Electric</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Sanitary">Sanitary</option>
+                    <option value="other">Other</option>
+                  </select>
+
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2 en">
+                    Work Stage <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={workStage}
+                    onChange={(e) => setWorkStage(e.target.value)}
+                    required
+                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
+                    style={{ borderColor: "var(--border)" }}
+                  >
+                    <option value="">Select Work Stage</option>
+                    <option value="First Installation">First Installation</option>
+                    <option value="Modification">Modification</option>
+                    <option value="Finishing">Finishing</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2 en">
+                    Customer Location <span className="text-red-500">*</span>
+                  </label>
+                  
+                  <select
+                    value={customerLocation}
+                    onChange={(e) => setCustomerLocation(e.target.value)}
+                    required
+                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
+                    style={{ borderColor: "var(--border)" }}
+                  >
+                    <option value="">Select Customer Location</option>
+                      <option value="Addis Ababa">Addis Ababa</option>
+                      <option value="Buta Jira">Buta Jira</option>
+                      <option value="Worabe">Worabe</option>
+                      <option value="Halaba">Halaba</option>
+                  </select>
+
+                </div> 
+
+                <div> 
+                  <label className="block text-sm font-medium mb-2 en">
+                    Customer Specific Location <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={customerSpecificLocation}
+                    onChange={(e) => setCustomerSpecificLocation(e.target.value)}
+                    required
+                    placeholder="e.g. Downtown"
+                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
+                    style={{ borderColor: "var(--border)" }}
+                  />
+                </div>
+
+
+                <div>
+                  <label className="block text-sm font-medium mb-2 en">
+                    Customer Phone <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
+                    required  
                     placeholder="e.g. 0912345678"
                     className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground"
                     style={{ borderColor: "var(--border)" }}
@@ -273,6 +375,7 @@ export default function CreateEstimatePage() {
                     style={{ borderColor: "var(--border)" }}
                   />
                 </div>
+
               </div>
             </section>
 
