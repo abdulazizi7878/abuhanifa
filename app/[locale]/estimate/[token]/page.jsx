@@ -189,7 +189,11 @@ export default function PublicEstimatePage() {
                       </div>
                       <div>
                         <span className="text-xs opacity-70 block">Project Name</span>
-                        <span className="font-semibold">{estimate.projectName || "-"}</span>  
+                        <span className="font-semibold">{estimate.projectTitle || "-"}</span>  
+                      </div>
+                      <div>
+                        <span className="text-xs opacity-70 block">Project Description</span>
+                        <span className="font-semibold">{estimate.projectDescription || "-"}</span>
                       </div>
                       <div>
                         <span className="text-xs opacity-70 block">Specific Location</span>
