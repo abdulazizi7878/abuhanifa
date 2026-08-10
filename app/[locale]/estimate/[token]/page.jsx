@@ -193,11 +193,11 @@ export default function PublicEstimatePage() {
                       </div>
                       <div>
                         <span className="text-xs opacity-70 block">Job Type</span>
-                        <span className="font-semibold">{estimate.jobType || "-"}</span>
+                        <span className="font-semibold">{estimate.workType || "-"}</span>
                       </div>
                       <div>
                         <span className="text-xs opacity-70 block">Job Stage</span>
-                        <span className="font-semibold uppercase">{estimate.jobStage || "-"}</span>
+                        <span className="font-semibold uppercase">{estimate.workStage || "-"}</span>
                       </div>
                     </div>
                   </div>

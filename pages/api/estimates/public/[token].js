@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       success: false,
       message: "Public token is required",
     });
-  }
+  } 
 
   try {
     // ==========================================
@@ -36,6 +36,18 @@ export default async function handler(req, res) {
 
         customerPhone:
           estimate.customerPhone,
+
+        customerLocation:
+          estimate.customerLocation,
+
+        customerSpecificLocation:
+          estimate.customerSpecificLocation,
+
+        workType:
+          estimate.workType,
+
+        workStage:
+          estimate.workStage,
 
         projectTitle:
           estimate.projectTitle,
