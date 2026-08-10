@@ -52,7 +52,7 @@ function Sss(){
                 <input type="text" id="username" autoComplete="username" placeholder="username" title="Username" className="border border-(--border) duration-300 hover:px-8 px-6 py-2 rounded-4xl shadow-lg " />
                 <input type="password" id="password" autoComplete="current-password webauthn" placeholder="password" title="Password" className="border border-(--border) duration-300 hover:px-8 px-6 py-2 rounded-4xl shadow-lg " />
                 <input onClick={()=>{LogIn()}} type="submit" className="bg-foreground text-background w-fit duration-300 hover:px-3 px-4 py-1 rounded-4xl cursor-pointer shadow-lg" />
-            </div>
+            </div> 
         </div>         
     )
 }

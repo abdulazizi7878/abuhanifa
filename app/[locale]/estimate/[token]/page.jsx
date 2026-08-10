@@ -188,8 +188,12 @@ export default function PublicEstimatePage() {
                         <span className="font-semibold">{estimate.customerLocation || "-"}</span>
                       </div>
                       <div>
+                        <span className="text-xs opacity-70 block">Project Name</span>
+                        <span className="font-semibold">{estimate.projectName || "-"}</span>  
+                      </div>
+                      <div>
                         <span className="text-xs opacity-70 block">Specific Location</span>
-                        <span className="font-semibold">{estimate.specificLocation || "-"}</span>
+                        <span className="font-semibold">{estimate.customerSpecificLocation || "-"}</span>
                       </div>
                       <div>
                         <span className="text-xs opacity-70 block">Job Type</span>
