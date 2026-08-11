@@ -325,13 +325,6 @@ export default function AdminLayout({ children }) {
 
             {/* Admin Avatar & Quick Exit */}
             <div className="flex items-center gap-2 pl-2 border-l border-[var(--border)]">
-              <div className="w-8 h-8 rounded-lg bg-[var(--background)] border border-[var(--border)] flex items-center justify-center font-bold text-xs shadow-inner text-[var(--primary)] overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" 
-                  alt="Admin user profile placeholder" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
               <Link 
                 href="/" 
                 aria-label="Exit admin console and return to main application" 
