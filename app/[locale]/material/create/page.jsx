@@ -152,9 +152,13 @@ export default function MaterialMasterManagementPage() {
     if (!formData.brand) errors.brand = 'Brand is required.';
     if (!formData.diameter) errors.diameter = 'Diameter is required.';
     if (!formData.specification.trim()) errors.specification = 'Specification is required.';
-    if (!formData.price || Number(formData.price) <= 0) {
+    // price validation erased bcz he didn't want it for now
+    /*
+    if (!formData.price || Number(formData.price || 1) <= 0) {
       errors.price = 'Price must be a valid positive number.';
-    }
+    }    
+    */
+
 
     setValidationErrors(errors);
     if (Object.keys(errors).length > 0) {
@@ -181,7 +185,7 @@ export default function MaterialMasterManagementPage() {
         brand: formData.brand,
         diameter: formData.diameter,
         specification: formData.specification,
-        price: Number(formData.price)
+        price: Number(formData.price) || 1,
       };
 
       const response = await fetch('/api/materials', {

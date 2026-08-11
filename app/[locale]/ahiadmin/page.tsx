@@ -1,39 +1,10 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import AdminPage from "@/components/admin";
-import {VeriifyToken} from "../../../lib/jwt";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-
-export default async function adminPage() {
-
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
-
-    if(!token){
-        redirect("/signin");
-    }
-
-    let user;
-
-    try{
-        user = await VeriifyToken(token)
-    } catch{
-        redirect("/signin")
-    }
-
-    if(user.role !== "admin"){
-        redirect("/403");
-    }
-
+export default function(){
     return(
-        <>
-        <Header />  
-
-           <main className="flex flex-col justify-start items-center p-2 mt-20">
-                 <AdminPage />
-                 <Footer />
-           </main>           
-        </>
+        <div className="w-screen h-screen flex justify-center items-center bg-background/50 backdrop-blur-xl saturate-200">    
+            <div className="flex flex-col justify-center items-center gap-3 my-10">    
+                <div className="size-20 border-2 border-b-(--primary) rounded-full animate-spin"></div>
+                <p className="font-mono">Loading...</p>
+            </div>            
+        </div>
     )
 }

@@ -1,4 +1,4 @@
-export default async function view() {
+export default async function create(params) {
 
     return(
         <div className="w-full h-screen flex justify-center items-center">
