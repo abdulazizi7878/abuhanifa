@@ -33,38 +33,38 @@ export async function ShowAllPromotions() {
 }
 
 export async function GetBlogById(id) {
-        
-    const [result] = await db.query(
+    const [rows] = await db.query(
         "SELECT media_public_id, media_resource_type, id FROM blog WHERE id = ?",
         [id]
     );
-    
-    if (!result) return null;
 
-    return result;
+    if (rows.length === 0) return null;
+
+    return rows[0];
 }
 
 export async function GetProductById(id) {
-        const [result] = await db.query(
+    const [rows] = await db.query(
         "SELECT media_public_id, media_resource_type, id FROM products WHERE id = ?",
         [id]
     );
-    
-    if (!result) return null;
 
-    return result;
+    if (rows.length === 0) return null;
+
+    return rows[0];
 }
 
 export async function GetPromotionById(id) {
-        const [result] = await db.query(
+    const [rows] = await db.query(
         "SELECT media_public_id, media_resource_type, id FROM promotions WHERE id = ?",
         [id]
     );
-    
-    if (!result) return null;
 
-    return result;
+    if (rows.length === 0) return null;
+
+    return rows[0];
 }
+
 
 export async function ShowAllProducts() {
     const [products] = await db.query(
