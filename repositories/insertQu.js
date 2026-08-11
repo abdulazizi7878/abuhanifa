@@ -18,18 +18,18 @@ export async function InsertMessage(name,email,message) {
     return result;
 }
 
-export async function InsertPromotion(name,email,phone_number, title, description, image,link,owner_link) {
+export async function InsertPromotion(name,email,phone_number, title, description, image,link,owner_link, publicId, resourceType) {
     const [result] = await db.query(
-        "INSERT INTO promotions (name,email,phone_number,title, description,image,link,owner_link) VALUES (?,?,?,?,?,?,?,?);",
-        [name,email,phone_number,title,description,image,link,owner_link]
+        "INSERT INTO promotions (name,email,phone_number,title, description,image,link,owner_link, media_public_id, media_resource_type) VALUES (?,?,?,?,?,?,?,?,?,?);",
+        [name,email,phone_number,title,description,image,link,owner_link,publicId,resourceType]
     )
     return result;
 }
 
-export async function InsertProduct(name,price,description,image,link) {
+export async function InsertProduct(name,price,description,image,link,publicId,resourceType) {
     const [result] = await db.query(
-        "INSERT INTO products(name,price,description,image,link) VALUES(?,?,?,?,?)",
-        [name,price,description,image,link]
+        "INSERT INTO products(name,price,description,image,link, media_public_id,media_resource_type) VALUES(?,?,?,?,?,?,?)",
+        [name,price,description,image,link,publicId,resourceType]
     )
 
     return result;

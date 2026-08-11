@@ -22,7 +22,7 @@ export async function EnterMessage(name,email,message) {
     return response;
 }
 
-export async function EnterPromotion(name,email,phone_number,title,description,image,owner_link) {
+export async function EnterPromotion(name,email,phone_number,title,description,image,owner_link,publicId,resourceType) {
     if(!name) throw new Error("Enter a valid Name");
     if (!email) throw new Error("Enter a valid Email");
     if(!phone_number) throw new Error("Enter a valid Phone Number");
@@ -30,21 +30,26 @@ export async function EnterPromotion(name,email,phone_number,title,description,i
     if(!description) throw new Error("Enter a valid Description");
     if(!image) throw new Error("Enter a valid image");
     if(!owner_link) throw new Error("Enter a valid Owner's Link");
+    if(!publicId) throw new Error("Something went wrong");
+    if(!resourceType) throw new Error("Something went wrong");
 
     const link = await randomUUID(); 
 
-    const response = await InsertPromotion(name,email,phone_number,title,description,image,link,owner_link);
+    const response = await InsertPromotion(name,email,phone_number,title,description,image,link,owner_link,publicId,resourceType);
     return response;
 }
 
-export async function EnterProduct(name,price,description,image) {
+export async function EnterProduct(name,price,description,image,publicId,resourceType) {
     if(!name) throw new Error("Enter a valid Name");
     if (!price) throw new Error("Enter a valid Price");
     if(!description) throw new Error("Enter a valid Description");
     if(!image) throw new Error("Enter a valid image");
+    if(!publicId) throw new Error("Something went wrong");
+    if(!resourceType) throw new Error("Something went wrong");
+    
     let link = await randomUUID();
 
-    const response = await InsertProduct(name,price,description,image,link);
+    const response = await InsertProduct(name,price,description,image,link,publicId,resourceType);
 
     return response;
 }

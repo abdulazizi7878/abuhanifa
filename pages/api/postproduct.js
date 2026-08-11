@@ -22,8 +22,8 @@ export default async function handler(req, res) {
     }
 
     try{
-        const {name,price, description,image} = req.body;
-        const reponse = await EnterProduct(name,price,description,image);
+        const {name,price, description,image, publicId, resourceType} = req.body;
+        const reponse = await EnterProduct(name,price,description,image,publicId,resourceType);
 
         res.status(200).json({
             success:true,

@@ -39,12 +39,15 @@ export async function GetComments(blogId) {
     }
 }
 
-export async function PostBlog(title, description,image) {
+export async function PostBlog(title, description,image, publicId, resourceType) {
     if(!title) throw new Error("Title Required");
     if(!description) throw new Error("DEscription Required");
+    if(!image) throw new Error("Image Required");
+    if(!publicId) throw new Error("Something gong wrong");
+    if(!resourceType) throw new Error("Something gong wrong");
 
     const link = randomUUID();
 
-    const Rblog = await InserBlog(title,description,image,link);
+    const Rblog = await InserBlog(title,description,image,link,publicId,resourceType);
     return Rblog;
 }

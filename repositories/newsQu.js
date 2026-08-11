@@ -25,6 +25,18 @@ export async function ShowBlog(link) {
     };
 }
 
+export async function GetBlogById(id) {
+        
+    const [result] = await db.query(
+        "SELECT media_public_id, media_resource_type, id FROM blog WHERE id = ?",
+        [id]
+    );
+    
+    if (!result) throw new Error("We couldn't fint the blog");
+
+    return result;
+}
+
 export async function InsertComment(name,email,comment,blogId) {
     const [result] = await db.query(
         "INSERT INTO comments (name,email,comment,blog_id) VALUES (?,?,?,?);",
@@ -51,9 +63,10 @@ export async function ShowComments(blogId) {
     }
 }
 
-export async function InserBlog(title,description,image,link) {
+export async function InserBlog(title,description,image,link,publicId,resourceType) {
     const [result] = await db.query(
-        "INSERT INTO blog (title, description, image, link) VALUE(?,?,?,?)",
-        [title,description,image,link]
+        "INSERT INTO blog (title, description, image, link, media_public_id, media_resource_type) VALUE(?,?,?,?,?,?)",
+        [title,description,image,link,publicId,resourceType]
     )
+    return result;
 }

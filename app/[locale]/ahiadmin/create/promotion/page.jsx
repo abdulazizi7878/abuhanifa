@@ -67,6 +67,8 @@ export default function CreatePromotion() {
 
             if (data.success === true) {
                 let fileUrl = data.url;
+                let publicId = data.publicId;
+                let resourceType = data.resourceType;
 
                 try {
                     const response2 = await fetch("/api/postpromotion", {
@@ -82,7 +84,9 @@ export default function CreatePromotion() {
                             title: formData.title,
                             description: formData.description,
                             image: fileUrl,
-                            owner_link: formData.link
+                            owner_link: formData.link,
+                            publicId: publicId,
+                            resourceType: resourceType
                         })
                     });
 

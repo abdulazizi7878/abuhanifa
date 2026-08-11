@@ -60,7 +60,10 @@ export default function CreateProduct() {
             const data = await response.json();            
 
             if (data.success === true) {
+
                 let image = data.url;
+                let publicId = data.publicId;
+                let resourceType = data.resourceType;
 
                 try {
                     await fetch("/api/postproduct", {
@@ -73,7 +76,9 @@ export default function CreateProduct() {
                             name: formData.name,
                             price: formData.price,
                             description: formData.description,
-                            image: image
+                            image: image,
+                            publicId: publicId,
+                            resourceType: resourceType
                         })
                     });
 

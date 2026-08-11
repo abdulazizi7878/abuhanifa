@@ -1,23 +1,104 @@
-import {DeleteBlog,DeleteProduct,DeletePromotion} from "../repositories/deleteQu";
 
-export async function DeleteItem(item,id) {
+import cloudinary from "cloudinary";
 
-    if(!item) throw new Error("Item can't be empty");
-    if(!id) throw new Error("Id can't be empty");
+import {
+    DeleteBlog,
+    DeleteProduct,
+    DeletePromotion,
+} from "../repositories/deleteQu";
 
-    if (item == "blog") {
-        const res = await DeleteBlog(id);
-        return res
+import {
+    GetBlogById,
+    GetProductById,
+    GetPromotionById,
+} from "../repositories/viewQu";
+
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+async function DeleteCloudinaryMedia(publicId, resourceType = "image") {
+    if (!publicId) {
+        return;
     }
-    else if (item == "product") {
-        const res = await DeleteProduct(id);
-        return res
+
+    const allowedResourceTypes = ["image", "video"];
+
+    if (!allowedResourceTypes.includes(resourceType)) {
+        throw new Error("Invalid media resource type");
     }
-    else if (item == "promotion") {
-        const res = await DeletePromotion(id);
-        return res
-    } else {
-        throw new Error("Invalid command");
+
+    const result = await cloudinary.v2.uploader.destroy(publicId, {
+        resource_type: resourceType,
+        type: "upload",
+        invalidate: true,
+    });
+
+    // Cloudinary can return "not found" if the asset
+    // was already deleted. We don't need to treat that
+    // as a fatal error.
+    if (result.result !== "ok" && result.result !== "not found") {
+        throw new Error("Failed to delete media!");
     }
-    
+
+    return result;
+}
+
+export async function DeleteItem(item, id) {
+    if (!item) {
+        throw new Error("Item can't be empty");
+    }
+
+    if (!id) {
+        throw new Error("Id can't be empty");
+    }
+
+    if (item === "blog") {
+        const blog = await GetBlogById(id);
+
+        if (!blog) {
+            throw new Error("Blog not found");
+        }
+
+        await DeleteCloudinaryMedia(
+            blog.media_public_id,
+            blog.media_resource_type
+        );
+
+        return await DeleteBlog(id);
+    }
+
+    if (item === "product") {
+        const product = await GetProductById(id);
+
+        if (!product) {
+            throw new Error("Product not found");
+        }
+
+        await DeleteCloudinaryMedia(
+            product.media_public_id,
+            product.media_resource_type
+        );
+
+        return await DeleteProduct(id);
+    }
+
+    if (item === "promotion") {
+        const promotion = await GetPromotionById(id);
+
+        if (!promotion) {
+            throw new Error("Promotion not found");
+        }
+
+        await DeleteCloudinaryMedia(
+            promotion.media_public_id,
+            promotion.media_resource_type
+        );
+
+        return await DeletePromotion(id);
+    }
+
+    throw new Error("Invalid command");
 }

@@ -1,5 +1,6 @@
 import { DeleteItem } from "../../services/delete.services";
 import { requireAdmin } from "../../lib/auth";
+import { log } from "node:console";
 
 export default async function handler(req,res) {
     
@@ -21,6 +22,8 @@ export default async function handler(req,res) {
         })
 
     } catch(err){
+        console.log("The error is: ", err);
+        
         res.status(500).json({
             success:false,
             message:"We couldn't delete the item",

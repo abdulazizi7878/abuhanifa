@@ -22,8 +22,9 @@ export default async function handler(req, res) {
     }
 
     try {
-    const {name,email,phone_number, title, description, image, owner_link} = req.body;
-    const response = await EnterPromotion(name,email,phone_number,title,description,image,owner_link);
+    const {name,email,phone_number, title, description, image, owner_link, publicId, resourceType} = req.body;
+    
+    const response = await EnterPromotion(name,email,phone_number,title,description,image,owner_link,publicId,resourceType);
 
     res.status(200).json({
         success:true,
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
     } catch (err){
         res.status(500).json({
             success:false,
-            message:"error while fetching",
+            message:"error while uploading!",
             error:err.message
         })
     }

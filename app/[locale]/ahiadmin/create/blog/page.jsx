@@ -58,7 +58,10 @@ export default function CreateBlog() {
             const data = await response.json();            
 
             if (data.success === true) {
+
                 let image = data.url;
+                let publicId = data.publicId;
+                let resourceType = data.resourceType;
 
                 try {
                     await fetch("/api/postblog", {
@@ -70,7 +73,9 @@ export default function CreateBlog() {
                         body: JSON.stringify({
                             title: formData.title,
                             description: formData.description,
-                            image: image
+                            image: image,
+                            publicId: publicId,
+                            resourceType: resourceType
                         })
                     });
 
