@@ -66,7 +66,7 @@ export default function CreateProduct() {
                 let resourceType = data.resourceType;
 
                 try {
-                    await fetch("/api/postproduct", {
+                    const productResponse = await fetch("/api/postproduct", {
                         headers: {
                             "Content-Type": "application/json"
                         },
@@ -76,11 +76,19 @@ export default function CreateProduct() {
                             name: formData.name,
                             price: formData.price,
                             description: formData.description,
-                            image: image,
-                            publicId: publicId,
-                            resourceType: resourceType
+                            image,
+                            publicId,
+                            resourceType
                         })
                     });
+
+                    const productData = await productResponse.json();
+
+                    if (!productResponse.ok || !productData.success) {
+                        throw new Error(
+                            productData.message || "Failed to create product"
+                        );
+                    }
 
                     toast.success("Product successfully posted!", { id: toastId });
                     setFormData({ name: '', price: '', description: '' });
