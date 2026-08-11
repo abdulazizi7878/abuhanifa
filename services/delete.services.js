@@ -21,14 +21,19 @@ cloudinary.v2.config({
 
 async function DeleteCloudinaryMedia(publicId, resourceType = "image") {
     if (!publicId) {
-        return;
+        throw new Error("Media public ID is missing");
     }
 
     const allowedResourceTypes = ["image", "video"];
 
     if (!allowedResourceTypes.includes(resourceType)) {
-        throw new Error("Invalid media resource type");
+        throw new Error(`Invalid media resource type: ${resourceType}`);
     }
+
+    console.log("Deleting Cloudinary media:", {
+        publicId,
+        resourceType,
+    });
 
     const result = await cloudinary.v2.uploader.destroy(publicId, {
         resource_type: resourceType,
@@ -36,11 +41,12 @@ async function DeleteCloudinaryMedia(publicId, resourceType = "image") {
         invalidate: true,
     });
 
-    // Cloudinary can return "not found" if the asset
-    // was already deleted. We don't need to treat that
-    // as a fatal error.
+    console.log("Cloudinary destroy result:", result);
+
     if (result.result !== "ok" && result.result !== "not found") {
-        throw new Error("Failed to delete media!");
+        throw new Error(
+            `Cloudinary deletion failed: ${result.result}`
+        );
     }
 
     return result;
