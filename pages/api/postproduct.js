@@ -1,8 +1,7 @@
 import { EnterProduct } from "../../services/insert.service";
-import { requireAdmin } from "../../lib/auth";  
+import { requireAdmin } from "../../lib/auth";
 
 export default async function handler(req, res) {
-    
     const auth = await requireAdmin(req);
 
     if (!auth.authorized) {
@@ -12,30 +11,42 @@ export default async function handler(req, res) {
         });
     }
 
-    if(req.method != "POST"){
-        res.status(405).json({
-            success:false,
-            message:"Method Not Allowed"
-        })
-
-        return;
+    if (req.method !== "POST") {
+        return res.status(405).json({
+            success: false,
+            message: "Method Not Allowed",
+        });
     }
 
-    try{
-        const {name,price, description,image, publicId, resourceType} = req.body;
-        const reponse = await EnterProduct(name,price,description,image,publicId,resourceType);
+    try {
+        const {
+            name,
+            price,
+            description,
+            image,
+            publicId,
+            resourceType,
+        } = req.body;
 
-        res.status(200).json({
-            success:true,
-            response: response
-        })
-    } catch(err){
+        const response = await EnterProduct(
+            name,
+            price,
+            description,
+            image,
+            publicId,
+            resourceType
+        );
 
-        res.status(500).json({
-            success:false,
-            message: "error while posting the product"
-        })
+        return res.status(200).json({
+            success: true,
+            response,
+        });
+    } catch (err) {
+        console.error("POST PRODUCT ERROR:", err);
+
+        return res.status(500).json({
+            success: false,
+            message: err.message || "Error while posting the product",
+        });
     }
-
-
 }
