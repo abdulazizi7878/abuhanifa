@@ -120,7 +120,7 @@ export default function PublicEstimatePage() {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-8 border-b gap-4" style={{ borderColor: "var(--border)" }}>
                   <div>
                     <h1 className="text-3xl sm:text-4xl font-bold tracking-tight en" style={{ color: "var(--secondary)" }}>
-                      Abu Hanifa Installation
+                      Abuhanifa Installation
                     </h1>
                     <p className="text-lg font-semibold opacity-80 mt-1 en tracking-wide uppercase">
                       Material Estimate & Quotation

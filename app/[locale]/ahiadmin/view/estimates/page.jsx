@@ -285,13 +285,6 @@ export default function EstimatesManagementPage() {
                         <td className="py-4 px-4 text-right">
                           <div className="flex items-center justify-end gap-2 relative">
                             <button
-                              onClick={() => router.push(`/estimates/${est.id}`)}
-                              className="px-3 py-1 rounded border text-xs font-medium transition cursor-pointer hover:opacity-80"
-                              style={{ borderColor: "var(--border)" }}
-                            >
-                              View
-                            </button>
-                            <button
                               onClick={() => router.push(`/ahiadmin/edit/estimate/${est.id}`)}
                               className="px-3 py-1 rounded border text-xs font-medium transition cursor-pointer hover:opacity-80"
                               style={{ borderColor: "var(--border)" }}
