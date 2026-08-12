@@ -16,11 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hanifa.offlix.app"),
+  metadataBase: new URL("https://abuhanifainstallation.com"),
 
   title: {
-    default: "Abu-Hanifa Installation",
-    template: "%s | Abu-Hanifa Installation",
+    default: "Abuhanifa Installation",
+    template: "%s | Abuhanifa Installation",
   },
   
   verification: {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Abu-Hanifa Installation provides professional electrical installation, plumbing, maintenance, wiring, and general installation services across Ethiopia, especially Addis Ababa, Worabe, Halaba, Butajira, and Central Ethiopia.",
+    "Abuhanifa Installation provides professional electrical installation, plumbing, maintenance, wiring, and general installation services across Ethiopia, especially Addis Ababa, Worabe, Halaba, Butajira, and Central Ethiopia.",
 
   keywords: [
     "Abu Hanifa",
@@ -36,7 +36,9 @@ export const metadata: Metadata = {
     "Abu-Hanifa",
     "Abu Hanifa Installation",
     "Hanifa Installation",
-
+    "abuhanifainstallation.com",
+    "abuhanifainstallation",
+    "abuhanifa installation",
     "Electrical installation",
     "Electrical installation Ethiopia",
     "Electrician",
