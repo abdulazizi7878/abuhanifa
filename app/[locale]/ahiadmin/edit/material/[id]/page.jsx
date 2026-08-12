@@ -133,7 +133,7 @@ export default function EditMaterialPage({ params }) {
           brand: data.brand || '',
           diameter: data.diameter || '',
           specification: data.specification || '',
-          price: data.price !== undefined ? data.price : '',
+          price: data.price !== undefined ? data.price :  '',
         });
       } catch (err) {
         console.error(err);
@@ -178,18 +178,17 @@ export default function EditMaterialPage({ params }) {
       !formData.type ||
       !formData.brand ||
       !formData.diameter ||
-      !formData.specification ||
-      formData.price === ''
+      !formData.specification
     ) {
       toast.error('Please fill in all required fields.');
       return;
     }
 
-    if (Number(formData.price) < 0) {
-      toast.error('Price must be a valid non-negative number.');
-      return;
+    // this validation is temporary
+    if (Number(formData.price) < 0 || isNaN(Number(formData.price))) {
+      formData.price = 1;
     }
-
+      
     setUpdating(true);
     const toastId = toast.loading('Updating material...');
 
