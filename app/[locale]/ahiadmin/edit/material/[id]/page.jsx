@@ -458,13 +458,10 @@ export default function EditMaterialPage({ params }) {
                   </label>
                   <input
                     type="number"
-                    step="0.01"
-                    min="0"
                     name="price"
                     value={formData.price}
                     onChange={handleChange}
                     onWheel={(e) => e.target.blur()}
-                    required
                     placeholder="500"
                     className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     style={{ borderColor: 'var(--border)', backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
