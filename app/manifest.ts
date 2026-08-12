@@ -2,9 +2,9 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Your App Name",
-    short_name: "YourApp",
-    description: "Your app description",
+    name: "Abuhanifa Installation",
+    short_name: "Abuhanifa",
+    description: "Abuhanifa Installation provides professional plumbing, sanitary, and electrical installation services for residential and commercial projects.",
     start_url: "/",
     scope: "/",
     display: "standalone",
