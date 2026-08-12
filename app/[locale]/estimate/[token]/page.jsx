@@ -12,6 +12,13 @@ const EstimatePdfDownloader = dynamic(
   { ssr: false }
 );
 
+// Category to Brands mapping configuration with brandname/brandname format
+const CATEGORY_BRANDS = {
+  plumbing: "Aquapa/Lesso/RAK/Teflo/Any",
+  sanitary: "Era/Lesso/Teflo/Any",
+  electrical: "Rhino/Euro/UF/BMET/Any",
+};
+
 export default function PublicEstimatePage() {
   const params = useParams();
   const token = params?.token;
@@ -78,6 +85,27 @@ export default function PublicEstimatePage() {
       default:
         return "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-500/30";
     }
+  };
+
+  // Helper function to format quantity (removes trailing .00)
+  const formatQuantity = (qty) => {
+    if (!qty) return "0";
+    const num = parseFloat(qty);
+    return isNaN(num) ? qty : num.toString();
+  };
+
+  // Helper function for price/total logic (makes 1 or 1.00 into 0)
+  const formatPriceOrTotal = (val) => {
+    if (!val && val !== 0) return "0";
+    const num = parseFloat(val);
+    if (num === 1) return "0";
+    return isNaN(num) ? val : num.toString();
+  };
+
+  // Helper function to get all brands separated by slashes for a category
+  const getAllBrandsForCategory = (item) => {
+    const cat = item.category?.toLowerCase();
+    return CATEGORY_BRANDS[cat] || item.brand || "-";
   };
 
   return (
@@ -228,14 +256,16 @@ export default function PublicEstimatePage() {
                               className="border-b text-xs font-semibold uppercase tracking-wider opacity-80"
                               style={{ borderColor: "var(--border)", backgroundColor: "var(--border)" }}
                             >
-                              <th className="py-3 px-3">#</th>
+                              <th className="py-3 px-3">S.no</th>
                               <th className="py-3 px-3">Material</th>
                               <th className="py-3 px-3">Category</th>
                               <th className="py-3 px-3">Type</th>
                               <th className="py-3 px-3">Brand</th>
                               <th className="py-3 px-3">Diameter</th>
                               <th className="py-3 px-3">Specification</th>
-                              <th className="py-3 px-3">Qty</th>
+                              <th className="py-3 px-3">Quantity</th>
+                              <th className="py-3 px-3">Price</th>
+                              <th className="py-3 px-3">Total</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
@@ -250,10 +280,12 @@ export default function PublicEstimatePage() {
                                 </td>
                                 <td className="py-3 px-3 opacity-90">{item.category || "-"}</td>
                                 <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
-                                <td className="py-3 px-3 opacity-90">{item.brand || "-"}</td>
+                                <td className="py-3 px-3 opacity-90">{getAllBrandsForCategory(item)}</td>
                                 <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
                                 <td className="py-3 px-3 opacity-75 text-xs">{item.specification || "-"}</td>
-                                <td className="py-3 px-3 font-semibold">{item.quantity}</td>
+                                <td className="py-3 px-3 font-semibold">{formatQuantity(item.quantity)}</td>
+                                <td className="py-3 px-3 font-semibold">{formatPriceOrTotal(item.price)}</td>
+                                <td className="py-3 px-3 font-semibold">{formatPriceOrTotal(item.total)}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -269,7 +301,7 @@ export default function PublicEstimatePage() {
                   style={{ borderColor: "var(--border)" }}
                 >
                   <h3 className="text-base font-bold en" style={{ color: "var(--secondary)" }}>
-                    Abu Hanifa Installation
+                    Abuhanifa Installation
                   </h3>
                   <div className="text-xs opacity-80 flex flex-wrap justify-center gap-x-4 gap-y-1">
                     <span>Phone/ስልክ: +251936489696 / +251705489696</span>

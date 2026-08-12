@@ -19,6 +19,13 @@ Font.register({
   src: "https://cdn.flexmonster.com/fonts/NotoSansEthiopic-Regular.ttf",
 });
 
+// Category to Brands mapping configuration with brandname/brandname format
+const CATEGORY_BRANDS = {
+  plumbing: "Aquapa/Lesso/RAK/Teflo/Any",
+  sanitary: "Era/Lesso/Teflo/Any",
+  electrical: "Rhino/Euro/UF/BMET/Any",
+};
+
 const pdfStyles = StyleSheet.create({
   portraitPage: {
     fontFamily: "Helvetica",
@@ -283,6 +290,12 @@ function EstimatePDF({ estimate }) {
     return num % 1 === 0 ? num.toString() : num.toFixed(2);
   };
 
+  // Helper function to resolve category-mapped brands separated by slashes
+  const getAllBrandsForCategory = (item) => {
+    const cat = item.category?.toLowerCase();
+    return CATEGORY_BRANDS[cat] || item.brand || "-";
+  };
+
   const isMatchLoc = (target) => loc.includes(target);
   const isMatchWork = (target) => workType.includes(target);
 
@@ -463,6 +476,7 @@ function EstimatePDF({ estimate }) {
             const displayPrice = formatPrice(rawPrice);
             const displayTotal = formatPrice(rawTotal);
             const displayQty = formatNumber(item.quantity);
+            const displayBrand = getAllBrandsForCategory(item);
 
             return (
               <View key={index} style={pdfStyles.tableRow} wrap={false}>
@@ -475,7 +489,7 @@ function EstimatePDF({ estimate }) {
                 </View>
                 <View style={pdfStyles.colCategory}><Text style={pdfStyles.tdSpecText}>{item.category || "-"}</Text></View>
                 <View style={pdfStyles.colType}><Text style={pdfStyles.tdSpecText}>{item.type || "-"}</Text></View>
-                <View style={pdfStyles.colBrand}><Text style={pdfStyles.tdSpecText}>{item.brand || "-"}</Text></View>
+                <View style={pdfStyles.colBrand}><Text style={pdfStyles.tdSpecText}>{displayBrand}</Text></View>
                 <View style={pdfStyles.colDiameter}><Text style={pdfStyles.tdSpecText}>{item.diameter || "-"}</Text></View>
                 <View style={pdfStyles.colSpec}><Text style={pdfStyles.tdSpecText}>{item.specification || "-"}</Text></View>
                 <View style={pdfStyles.colQty}><Text style={[pdfStyles.tdText, { fontWeight: "bold", textAlign: "center" }]}>{displayQty}</Text></View>
@@ -495,7 +509,7 @@ function EstimatePDF({ estimate }) {
           <Text style={pdfStyles.amharicText}>
             አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
-          <Text style={pdfStyles.footerText}>Phone / ስልክ: +251936489696 </Text>
+          <Text style={pdfStyles.amharicText}>Phone / ስልክ: +251936489696 </Text>
           <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink}>
             Telegram / ቴሌግራም: t.me/abuhanifainstallation
           </Link>
