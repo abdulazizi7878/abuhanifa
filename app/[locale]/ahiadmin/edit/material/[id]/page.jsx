@@ -7,19 +7,77 @@ import { toast } from 'sonner';
 // Centralized material options (Exact match with Add Material page)
 const materialOptions = {
   plumbing: {
-    types: ['PPR', 'PVC', 'HDPE', 'Galvanized Steel', 'CPVC', 'PEX'],
-    brands: ['Aquapa', 'Firat', 'Pimtas', 'Manuli', 'Geberit', 'Other'],
-    diameters: ['15 mm', '20 mm', '25 mm', '32 mm', '40 mm', '50 mm', '63 mm', '75 mm', '90 mm', '110 mm'],
+    types: [
+      'CI',
+      'Copper',
+      'DI',
+      'GI',
+      'HDP/HDPE',
+      'MS',
+      'PEX',
+      'PEX-AL-PEX',
+      'Stainless Steel',
+      'PPR'
+    ],
+    brands: ['Aquapa', 'Lesso', 'RAK', 'Teflo', 'Any'],
+    diameters: [
+      '1/2" (20mm)',
+      '3/4" (25mm)',
+      '1" (32mm)',
+      '1 1/4" (40mm)',
+      '1 1/2" (50mm)',
+      '2" (63mm)',
+      '2 1/2" (75mm)',
+      '3" (90mm)',
+      '4" (110mm)',
+      '5" (140mm)',
+      '6" (160mm)',
+      '8" (200mm)',
+      '10" (250mm)',
+      '12" (315mm)'
+    ]
   },
   sanitary: {
-    types: ['Ceramic', 'Stainless Steel', 'Brass', 'Chrome Plated', 'Plastic'],
-    brands: ['Kohler', 'Grohe', 'TOTO', 'Ideal Standard', 'Viega', 'Other'],
-    diameters: ['32 mm', '40 mm', '50 mm', '110 mm', '1/2 inch', '3/4 inch', '1 inch'],
+    types: ['PVC', 'CPVC', 'RCC', 'UPVC'],
+    brands: ['Era', 'Lesso', 'Teflo', 'Any'],
+    diameters: [
+      '1 1/2" (50mm)',
+      '2" (63mm)',
+      '2 1/2" (75mm)',
+      '3" (90mm)',
+      '4" (110mm)',
+      '5" (140mm)',
+      '6" (160mm)',
+      '8" (200mm)',
+      '10" (250mm)',
+      '12" (315mm)'
+    ]
   },
   electrical: {
-    types: ['Copper Wire', 'Aluminum Cable', 'Flexible Conduit', 'Rigid PVC Conduit', 'Armored Cable'],
-    brands: ['Elsewedy', 'Nile', 'Aber', 'Prysmian', 'Schneider', 'Other'],
-    diameters: ['1.5 mm2', '2.5 mm2', '4 mm2', '6 mm2', '10 mm2', '16 mm2', '20 mm', '25 mm', '32 mm'],
+    types: [
+      'Solid',
+      'Stranded',
+      'Flexible armoured',
+      'Mineral-insulated cable'
+    ],
+    brands: ['Rhino', 'Euro', 'UF', 'BMET', 'Any'],
+    diameters: [
+      '1x1.5 mm2', '2x1.5 mm2', '3x1.5 mm2', '4x1.5 mm2', '5x1.5 mm2', '6x1.5 mm2',
+      '1x2.5 mm2', '2x2.5 mm2', '3x2.5 mm2', '4x2.5 mm2', '5x2.5 mm2', '6x2.5 mm2',
+      '1x4 mm2', '2x4 mm2', '3x4 mm2', '4x4 mm2', '5x4 mm2', '6x4 mm2',
+      '1x6 mm2', '2x6 mm2', '3x6 mm2', '4x6 mm2', '5x6 mm2', '6x6 mm2',
+      '1x10 mm2', '2x10 mm2', '3x10 mm2', '4x10 mm2', '5x10 mm2', '6x10 mm2',
+      '1x16 mm2', '2x16 mm2', '3x16 mm2', '4x16 mm2', '5x16 mm2', '6x16 mm2',
+      '1x25 mm2', '2x25 mm2', '3x25 mm2', '4x25 mm2', '5x25 mm2', '6x25 mm2',
+      '1x35 mm2', '2x35 mm2', '3x35 mm2', '4x35 mm2', '5x35 mm2', '6x35 mm2',
+      '1x50 mm2', '2x50 mm2', '3x50 mm2', '4x50 mm2', '5x50 mm2', '6x50 mm2',
+      '1x70 mm2', '2x70 mm2', '3x70 mm2', '4x70 mm2', '5x70 mm2', '6x70 mm2',
+      '1x95 mm2', '2x95 mm2', '3x95 mm2', '4x95 mm2', '5x95 mm2', '6x95 mm2',
+      '1x120 mm2', '2x120 mm2', '3x120 mm2', '4x120 mm2', '5x120 mm2', '6x120 mm2',
+      '1x150 mm2', '2x150 mm2', '3x150 mm2', '4x150 mm2', '5x150 mm2', '6x150 mm2',
+      '1x185 mm2', '2x185 mm2', '3x185 mm2', '4x185 mm2', '5x185 mm2', '6x185 mm2',
+      '1x240 mm2', '2x240 mm2', '3x240 mm2', '4x240 mm2', '5x240 mm2', '6x240 mm2'
+    ]
   },
 };
 
