@@ -145,7 +145,7 @@ export default function ViewCommentsMessages() {
                                 {errorComments ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
                                         <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load comments.</p>
-                                        <button onClick={fetchComments} className="px-4 py-2 rounded-lg text-xs font-medium bg-[var(--primary)] text-[var(--foreground)]">Try Again</button>
+                                        <button onClick={fetchComments} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
                                     </div>
                                 ) : filteredComments.length === 0 ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>
@@ -192,7 +192,7 @@ export default function ViewCommentsMessages() {
                                 {errorMessages ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
                                         <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load messages.</p>
-                                        <button onClick={fetchMessages} className="px-4 py-2 rounded-lg text-xs font-medium bg-[var(--primary)] text-[var(--foreground)]">Try Again</button>
+                                        <button onClick={fetchMessages} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
                                     </div>
                                 ) : filteredMessages.length === 0 ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>

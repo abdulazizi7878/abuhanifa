@@ -54,7 +54,7 @@ function Products() {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-20 text-[var(--foreground)] opacity-60 font-medium">
+                    <div className="text-center py-20 text-foreground opacity-60 font-medium">
                         Products not found.
                     </div>
                 )
@@ -110,9 +110,9 @@ function Product({ name, description, image, resourceType, link }) {
     const isVideo = resourceType === "video";
 
     return (
-        <Link href={`/products/${link}`} className="group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg overflow-hidden border border-[var(--border)]/50 rounded-4xl flex flex-col relative bg-[var(--background)]">
+        <Link href={`/products/${link}`} className="group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg overflow-hidden border border-(--border)/50 rounded-4xl flex flex-col relative bg-background">
             
-            <div className="w-full h-44 sm:h-48 flex justify-center items-center overflow-hidden bg-[var(--foreground)]/25 relative group/video">
+            <div className="w-full h-44 sm:h-48 flex justify-center items-center overflow-hidden bg-(--foreground)/25 relative group/video">
                 {image ? (
                     isVideo ? (
                         <div className="w-full h-full relative">
@@ -129,14 +129,14 @@ function Product({ name, description, image, resourceType, link }) {
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/video:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
                                 <button 
                                     onClick={togglePlay}
-                                    className="w-10 h-10 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
+                                    className="w-10 h-10 rounded-full bg-(--primary) text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
                                     aria-label="Play video"
                                 >
                                     {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                                 </button>
                                 <button 
                                     onClick={toggleMute}
-                                    className="w-9 h-9 rounded-full bg-[var(--background)] text-[var(--foreground)] flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
+                                    className="w-9 h-9 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
                                     aria-label="Mute video"
                                 >
                                     {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -147,7 +147,7 @@ function Product({ name, description, image, resourceType, link }) {
                         <img src={image} alt={`${name}-image`} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" />
                     )
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[var(--foreground)] opacity-50 font-semibold text-xs">
+                    <div className="w-full h-full flex items-center justify-center text-foreground opacity-50 font-semibold text-xs">
                         No Media
                     </div>
                 )}
@@ -162,15 +162,15 @@ function Product({ name, description, image, resourceType, link }) {
                 </p>
                 {/* price currently removed */}
                 {
-                    /* <p className="text-sm font-bold mt-2 text-[var(--primary)]" title={`${price} Ethiopian Birr`}>
+                    /* <p className="text-sm font-bold mt-2 text-(--primary)" title={`${price} Ethiopian Birr`}>
                         {price} ETB
                     </p> */
                 }
             </div>
 
             <div className="absolute bottom-3 right-3">
-                <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); Share(); }} className="p-2.5 rounded-full bg-[var(--foreground)]/10 transition-transform cursor-pointer duration-300 hover:bg-[var(--foreground)]/20" aria-label="Share product">
-                    <Share2 className="w-4 h-4 text-[var(--foreground)]" />
+                <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); Share(); }} className="p-2.5 rounded-full bg-(--foreground)/10 transition-transform cursor-pointer duration-300 hover:bg-(--foreground)/20" aria-label="Share product">
+                    <Share2 className="w-4 h-4 " />
                 </button>
             </div>
         </Link>

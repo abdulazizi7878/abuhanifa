@@ -163,7 +163,7 @@ export default function ViewOrders() {
                                 {errorJobs ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
                                         <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load job orders.</p>
-                                        <button onClick={fetchJobOrders} className="px-4 py-2 rounded-lg text-xs font-medium bg-[var(--primary)] text-[var(--foreground)]">Try Again</button>
+                                        <button onClick={fetchJobOrders} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
                                     </div>
                                 ) : filteredJobOrders.length === 0 ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>
@@ -197,7 +197,7 @@ export default function ViewOrders() {
                                                             </td>
                                                             <td className="py-4 px-6 align-top text-sm en opacity-90" style={{ color: 'var(--foreground)' }}>
                                                                 {or.comment ? (
-                                                                    <div className="p-3 rounded-lg border border-[var(--border)] bg-background/50 text-xs">
+                                                                    <div className="p-3 rounded-lg border border-() bg-background/50 text-xs">
                                                                         {or.comment}
                                                                     </div>
                                                                 ) : (
@@ -222,7 +222,7 @@ export default function ViewOrders() {
                                 {errorProducts ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
                                         <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load product orders.</p>
-                                        <button onClick={fetchProductOrders} className="px-4 py-2 rounded-lg text-xs font-medium bg-[var(--primary)] text-[var(--foreground)]">Try Again</button>
+                                        <button onClick={fetchProductOrders} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
                                     </div>
                                 ) : filteredProductOrders.length === 0 ? (
                                     <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>

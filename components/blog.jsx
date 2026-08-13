@@ -53,7 +53,7 @@ export default function Blog({ link }) {
                             />
                         ))
                     ) : (
-                        <div className="text-center py-20 text-[var(--foreground)] opacity-60 font-medium">
+                        <div className="text-center py-20 text-(--foreground) opacity-60 font-medium">
                             Blog post not found.
                         </div>
                     )
@@ -133,16 +133,16 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
     const isVideo = resourceType === "video";
 
     return (
-        <div className="w-full border-b border-[var(--border)] pb-12 mb-10 flex flex-wrap gap-10 justify-center">
+        <div className="w-full border-b border-(--border) pb-12 mb-10 flex flex-wrap gap-10 justify-center">
 
             <div className={`flex duration-500 flex-col gap-y-6 transition-all ${isCommentSectionShown ? "w-full md:w-[55%]" : "w-full max-w-3xl"}`}>
                 
                 {/* Title & Date Area */}
                 <div className="flex flex-col gap-y-2.5 px-2">
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--foreground)] leading-tight">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-(--foreground) leading-tight">
                         {title}
                     </h1>
-                    <div className="text-sm font-semibold text-[var(--primary)] opacity-95 flex items-center gap-2">
+                    <div className="text-sm font-semibold text-(--primary) opacity-95 flex items-center gap-2">
                         {created_at ? (
                             <>
                                 <span>{new Date(created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -154,7 +154,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
                 </div>
 
                 {/* Media Container */}
-                <div className="w-full h-80 sm:h-96 rounded-3xl overflow-hidden bg-[var(--foreground)]/10 border border-[var(--border)] relative shadow-lg">
+                <div className="w-full h-80 sm:h-96 rounded-3xl overflow-hidden bg-(--foreground)/10 border border-(--border) relative shadow-lg">
                     {image ? (
                         isVideo ? (
                             <div className="w-full h-full relative group/video">
@@ -172,7 +172,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/video:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                                     <button 
                                         onClick={togglePlay}
-                                        className="w-14 h-14 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 cursor-pointer"
+                                        className="w-14 h-14 rounded-full bg-(--primary) text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 cursor-pointer"
                                         aria-label={isPlaying ? "Pause video" : "Play video"}
                                     >
                                         {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
@@ -180,7 +180,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
 
                                     <button 
                                         onClick={toggleMute}
-                                        className="w-11 h-11 rounded-full bg-[var(--background)] text-[var(--foreground)] flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 cursor-pointer"
+                                        className="w-11 h-11 rounded-full bg-(--background) text-(--foreground) flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 cursor-pointer"
                                         aria-label={isMuted ? "Unmute video" : "Mute video"}
                                     >
                                         {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
@@ -191,7 +191,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
                             <img src={image} alt={title || "Blog Image"} className="w-full h-full object-cover" />
                         )
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[var(--foreground)] opacity-50 font-semibold text-sm">
+                        <div className="w-full h-full flex items-center justify-center text-(--foreground) opacity-50 font-semibold text-sm">
                             No Media Preview
                         </div>
                     )}
@@ -199,7 +199,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
 
                 {/* Description Content Area */}
                 <div className="flex flex-col gap-y-4 px-2">
-                    <p className="text-base sm:text-lg text-[var(--foreground)] opacity-90 leading-relaxed whitespace-pre-line">
+                    <p className="text-base sm:text-lg text-(--foreground) opacity-90 leading-relaxed whitespace-pre-line">
                         {description}
                     </p>
                 </div>
@@ -208,17 +208,17 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
                 <div className="flex items-center gap-4 px-2 pt-2">
                     <button 
                         onClick={() => setCommentSectionShown(!isCommentSectionShown)} 
-                        className="flex items-center gap-2 duration-300 cursor-pointer bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 border border-[var(--border)] px-5 py-2.5 rounded-full text-sm font-medium text-[var(--foreground)] transition-all shadow-sm"
+                        className="flex items-center gap-2 duration-300 cursor-pointer bg-(--foreground)/5 hover:bg-(--foreground)/10 border border-(--border) px-5 py-2.5 rounded-full text-sm font-medium text-(--foreground) transition-all shadow-sm"
                     >
-                        <MessageSquare className="w-4 h-4 text-[var(--primary)]" />
+                        <MessageSquare className="w-4 h-4 text-(--primary)" />
                         <span>Comments</span>
                     </button>
 
                     <button 
                         onClick={shareBlog} 
-                        className="flex items-center gap-2 duration-300 cursor-pointer bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 border border-[var(--border)] px-5 py-2.5 rounded-full text-sm font-medium text-[var(--foreground)] transition-all shadow-sm"
+                        className="flex items-center gap-2 duration-300 cursor-pointer bg-(--foreground)/5 hover:bg-(--foreground)/10 border border-(--border) px-5 py-2.5 rounded-full text-sm font-medium text-(--foreground) transition-all shadow-sm"
                     >
-                        <Share2 className="w-4 h-4 text-[var(--primary)]" />
+                        <Share2 className="w-4 h-4 text-(--primary)" />
                         <span>Share</span>
                     </button>
                 </div>

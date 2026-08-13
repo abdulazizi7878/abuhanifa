@@ -46,7 +46,7 @@ export default function Blogs(){
                                 />
                             ))
                         ) : (
-                            <div className="col-span-full text-center py-16 text-[var(--foreground)] opacity-60 font-medium">
+                            <div className="col-span-full text-center py-16 text-(--foreground) opacity-60 font-medium">
                                 No blogs available right now.
                             </div>
                         )
@@ -88,10 +88,10 @@ function Blog({title, description, image, created_at, link}) {
     };
 
     return (
-        <article className="group w-full max-w-sm bg-[var(--background)] backdrop-blur-xl border border-[var(--border)] rounded-3xl overflow-hidden flex flex-col shadow-xl hover:shadow-2xl transition-all duration-500 relative">
+        <article className="group w-full max-w-sm bg-(--background) backdrop-blur-xl border border-(--border) rounded-3xl overflow-hidden flex flex-col shadow-xl hover:shadow-2xl transition-all duration-500 relative">
             
             {/* Media Container */}
-            <div className="w-full h-52 relative overflow-hidden bg-[var(--foreground)]/10 z-20">
+            <div className="w-full h-52 relative overflow-hidden bg-(--foreground)/10 z-20">
                 {
                     image ? (
                         isVideo ? (
@@ -109,7 +109,7 @@ function Blog({title, description, image, created_at, link}) {
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/video:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                                     <button 
                                         onClick={togglePlay}
-                                        className="w-12 h-12 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
+                                        className="w-12 h-12 rounded-full bg-(--primary) text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
                                         aria-label={isPlaying ? "Pause video" : "Play video"}
                                     >
                                         {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
@@ -117,7 +117,7 @@ function Blog({title, description, image, created_at, link}) {
 
                                     <button 
                                         onClick={toggleMute}
-                                        className="w-10 h-10 rounded-full bg-[var(--background)] text-[var(--foreground)] flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
+                                        className="w-10 h-10 rounded-full bg-(--background) text-(--foreground) flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
                                         aria-label={isMuted ? "Unmute video" : "Mute video"}
                                     >
                                         {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -128,16 +128,16 @@ function Blog({title, description, image, created_at, link}) {
                             <img src={image} alt={title || "Blog cover"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                         )
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[var(--foreground)] opacity-50 font-semibold text-sm">
+                        <div className="w-full h-full flex items-center justify-center text-(--foreground) opacity-50 font-semibold text-sm">
                             No Media Preview
                         </div>
                     )
                 }
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-60 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-(--background) via-transparent to-transparent opacity-60 pointer-events-none" />
                 
                 {created_at && (
-                    <div className="absolute top-4 left-4 bg-[var(--background)]/80 backdrop-blur-md border border-[var(--border)] px-3 py-1.5 rounded-full flex items-center gap-2 text-xs font-medium text-[var(--foreground)] pointer-events-none">
-                        <Calendar className="w-3.5 h-3.5 text-[var(--primary)]" />
+                    <div className="absolute top-4 left-4 bg-(--background)/80 backdrop-blur-md border border-(--border) px-3 py-1.5 rounded-full flex items-center gap-2 text-xs font-medium text-(--foreground) pointer-events-none">
+                        <Calendar className="w-3.5 h-3.5 text-(--primary)" />
                         <span>{new Date(created_at).toLocaleDateString()}</span>
                     </div>
                 )}
@@ -146,22 +146,22 @@ function Blog({title, description, image, created_at, link}) {
             {/* Content Container */}
             <div className="p-6 flex flex-col flex-grow justify-between gap-y-4">
                 <div className="flex flex-col gap-y-2.5">
-                    <h2 className="text-xl font-bold tracking-tight text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors line-clamp-2">
+                    <h2 className="text-xl font-bold tracking-tight text-(--foreground) group-hover:text-(--primary) transition-colors line-clamp-2">
                         {title}
                     </h2>
-                    <p className="text-sm text-[var(--foreground)] opacity-80 line-clamp-3 leading-relaxed">
+                    <p className="text-sm text-(--foreground) opacity-80 line-clamp-3 leading-relaxed">
                         {description}
                     </p>
                 </div>
 
-                <div className="pt-2 flex items-center gap-2 text-xs font-semibold text-[var(--primary)] group-hover:translate-x-1 transition-transform duration-300">
+                <div className="pt-2 flex items-center gap-2 text-xs font-semibold text-(--primary) group-hover:translate-x-1 transition-transform duration-300">
                     <span>Read Article</span>
                     <ArrowRight className="w-4 h-4" />
                 </div>
             </div>
 
             {/* Absolute Link Covering Card */}
-            <a href={`/blog/${link}`} className="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] rounded-3xl" aria-label={`Read more about ${title}`} />
+            <a href={`/blog/${link}`} className="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-(--primary) rounded-3xl" aria-label={`Read more about ${title}`} />
         </article>
     );
 }

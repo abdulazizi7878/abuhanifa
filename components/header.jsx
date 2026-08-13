@@ -80,33 +80,33 @@ export default function Header() {
 
     return (
         <div className="py-4 flex flex-col justify-center items-center w-[96%] max-w-7xl h-fit fixed top-0 left-[50%] -translate-x-[50%] z-40 transition-transform duration-500" id="header">
-            <header className="w-full border border-[var(--border)] p-3 px-4 md:px-6 dark:bg-background/60 bg-background/80 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15">
+            <header className="w-full border border-(--border) p-3 px-4 md:px-6 dark:bg-background/60 bg-background/80 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15">
                 <div className="hd w-full flex justify-between items-center">
 
                     {/* Logo & Title */}
                     <div className="logo flex justify-start items-center gap-x-2 md:gap-x-4">
                         <img src="/images/logo.jpg" alt="ABUHANIFA_INSTALLATION_LOGO" width={42} height={42} className="rounded-full object-cover" />  
-                        <p className=" w-[40%] text-xs md:text-sm font-bold text-left sm:flex tracking-tight text-[var(--foreground)]">{t("title")}</p>
+                        <p className=" w-[40%] text-xs md:text-sm font-bold text-left sm:flex tracking-tight text-(--foreground)">{t("title")}</p>
                     </div>
 
                     {/* Medium Screens Navs */}
                     <div className="navs hidden md:flex lg:hidden items-center">
                         <ul className="flex items-center gap-x-1">
-                            <li><a href="/#" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("home")}</a></li>
-                            <li><a href="/order/" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("order")}</a></li>
-                            <li><a href="/#services" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("services")}</a></li>
+                            <li><a href="/#" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("home")}</a></li>
+                            <li><a href="/order/" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("order")}</a></li>
+                            <li><a href="/#services" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("services")}</a></li>
                         </ul>       
                     </div>
 
                     {/* Large Screens Navs */}
                     <div className="navs hidden lg:flex items-center">
                         <ul className="flex items-center gap-x-1">
-                            <li><a href="/#" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("home")}</a></li>
-                            <li><a href="/order/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("order")}</a></li>
-                            <li><a href="/products/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("products")}</a></li>
-                            <li><a href="/promotions/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("promotions")}</a></li>
-                            <li><a href="/blog/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("blog")}</a></li>
-                            <li><a href="/#services" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full">{t("services")}</a></li>
+                            <li><a href="/#" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("home")}</a></li>
+                            <li><a href="/order/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("order")}</a></li>
+                            <li><a href="/products/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("products")}</a></li>
+                            <li><a href="/promotions/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("promotions")}</a></li>
+                            <li><a href="/blog/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("blog")}</a></li>
+                            <li><a href="/#services" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("services")}</a></li>
                         </ul>       
                     </div>
 
@@ -117,7 +117,7 @@ export default function Header() {
 
                     {/* Menu and Theme Toggles */}
                     <div className="flex items-center gap-x-3 px-3 ">
-                        <div className="border bg-[var(--foreground)] flex items-center p-1.5 px-3 rounded-full shadow-sm gap-x-2">
+                        <div className="border bg-(--foreground) flex items-center p-1.5 px-3 rounded-full shadow-sm gap-x-2">
                             <div className="menu cursor-pointer p-1 rounded-full hover:opacity-80 transition-opacity lg:hidden" onClick={() => { setNavvisible(!isNavVisible) }}>
                                 {isNavVisible ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="var(--background)">
@@ -156,31 +156,31 @@ function Nav({ isNavVisible, onClick }) {
 
             {/* Strictly Centered Menu */}
             <div className={`fixed top-24 left-0 right-0 mx-auto z-40 w-[90%] max-w-sm flex justify-center min-h-40 transition-all duration-500 transform ${isNavVisible ? "translate-y-0 opacity-100 scale-100 pointer-events-auto" : "-translate-y-6 opacity-0 scale-95 pointer-events-none"}`} id="nav">
-                <div className="relative w-full bg-[var(--background)]/90 border border-[var(--border)] backdrop-blur-2xl backdrop-saturate-200 rounded-3xl flex flex-col gap-5 justify-start items-center py-8 px-6 sm:px-10 shadow-2xl shadow-black/20">
+                <div className="relative w-full bg-(--background)/90 border border-(--border) backdrop-blur-2xl backdrop-saturate-200 rounded-3xl flex flex-col gap-5 justify-start items-center py-8 px-6 sm:px-10 shadow-2xl shadow-black/20">
                     <div className="w-full text-center">
-                        <h1 className="font-extrabold text-base tracking-tight text-[var(--foreground)]">{t("title")}</h1>    
-                        <hr className="w-full my-2 border-[var(--border)]" />            
+                        <h1 className="font-extrabold text-base tracking-tight text-(--foreground)">{t("title")}</h1>    
+                        <hr className="w-full my-2 border-(--border)" />            
                     </div>
                 
                     <div className="flex flex-col gap-5 justify-center items-center w-full">
                         <ul className="flex flex-col gap-2 justify-center items-center w-full">
-                            <li className="w-full text-center"><a href="/" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full transition-colors">{t("home")}</a></li>
-                            <li className="w-full text-center"><a href="/blog" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full transition-colors">{t("blog")}</a></li>
-                            <li className="w-full text-center"><a href="/products" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full transition-colors">{t("products")}</a></li>
-                            <li className="w-full text-center"><a href="/promotions" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full transition-colors">{t("promotions")}</a></li>
-                            <li className="w-full text-center"><a href="/contact" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full transition-colors">{t("contact")}</a></li>
-                            <li className="w-full text-center"><a href="/order" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full transition-colors">{t("order")}</a></li>
-                            <li className="w-full text-center"><a href="/#services" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full transition-colors">{t("services")}</a></li>
+                            <li className="w-full text-center"><a href="/" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("home")}</a></li>
+                            <li className="w-full text-center"><a href="/blog" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("blog")}</a></li>
+                            <li className="w-full text-center"><a href="/products" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("products")}</a></li>
+                            <li className="w-full text-center"><a href="/promotions" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("promotions")}</a></li>
+                            <li className="w-full text-center"><a href="/contact" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("contact")}</a></li>
+                            <li className="w-full text-center"><a href="/order" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("order")}</a></li>
+                            <li className="w-full text-center"><a href="/#services" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("services")}</a></li>
                         </ul>
                         
-                        <div className="w-full flex justify-center pt-2 border-t border-[var(--border)]">
+                        <div className="w-full flex justify-center pt-2 border-t border-(--border)">
                             <LanguageSwitcher display={true} />
                         </div>
 
                         <span className="text-[11px] text-center opacity-60 font-medium leading-tight">Abu-Hanifa Installation <br /> &copy; All Right Reserved</span>
                     </div>
 
-                    <div className="absolute top-4 right-4 bg-[var(--foreground)]/10 hover:bg-[var(--foreground)]/20 rounded-full p-2 cursor-pointer transition-colors" onClick={onClick}>
+                    <div className="absolute top-4 right-4 bg-(--foreground)/10 hover:bg-(--foreground)/20 rounded-full p-2 cursor-pointer transition-colors" onClick={onClick}>
                         <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="var(--foreground)">
                             <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
                         </svg>

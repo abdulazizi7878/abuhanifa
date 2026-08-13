@@ -85,16 +85,16 @@ export default function CommentSection({ blog_id, OnClick }) {
 
     return (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-center items-center p-4 animate-fadeIn">
-            <div className="border border-[var(--border)] overflow-hidden rounded-3xl p-5 sm:p-6 w-full max-w-lg h-[85vh] max-h-[650px] relative flex flex-col justify-between bg-[var(--background)] shadow-2xl">
+            <div className="border border-(--border) overflow-hidden rounded-3xl p-5 sm:p-6 w-full max-w-lg h-[85vh] max-h-[650px] relative flex flex-col justify-between bg-(--background) shadow-2xl">
                 
                 {/* Header */}
-                <div className="flex items-center justify-between pb-4 border-b border-[var(--border)] z-20">
-                    <h3 className="text-xl font-extrabold text-[var(--foreground)] tracking-tight">
+                <div className="flex items-center justify-between pb-4 border-b border-(--border) z-20">
+                    <h3 className="text-xl font-extrabold text-(--foreground) tracking-tight">
                         Comments
                     </h3>
                     <button 
                         onClick={OnClick}
-                        className="w-9 h-9 rounded-full bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/15 flex items-center justify-center transition-all duration-200 cursor-pointer text-[var(--foreground)]"
+                        className="w-9 h-9 rounded-full bg-(--foreground)/5 hover:bg-(--foreground)/15 flex items-center justify-center transition-all duration-200 cursor-pointer text-(--foreground)"
                         aria-label="Close comments"
                     >
                         <X className="w-5 h-5" />
@@ -112,20 +112,20 @@ export default function CommentSection({ blog_id, OnClick }) {
                             <Comment key={index} comment={cm.comment} name={cm.name} />
                         ))
                     ) : (
-                        <div className="flex flex-col items-center justify-center h-full text-center text-[var(--foreground)] opacity-50 text-sm font-medium px-4">
+                        <div className="flex flex-col items-center justify-center h-full text-center text-(--foreground) opacity-50 text-sm font-medium px-4">
                             No comments yet. Be the first to share your thoughts!
                         </div>
                     )}
                 </div>
 
                 {/* Input Form Section */}
-                <div className="pt-4 border-t border-[var(--border)] flex flex-col gap-y-3 z-20 bg-[var(--background)]">
+                <div className="pt-4 border-t border-(--border) flex flex-col gap-y-3 z-20 bg-(--background)">
                     <div className="flex gap-2">
                         <input 
                             type="text" 
                             id="commentorName" 
                             autoComplete="name" 
-                            className="w-1/2 border border-[var(--border)] bg-[var(--foreground)]/5 py-2.5 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-[var(--primary)] text-[var(--foreground)] transition-all placeholder:text-[var(--foreground)]/40" 
+                            className="w-1/2 border border-(--border) bg-(--foreground)/5 py-2.5 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-(--primary) text-(--foreground) transition-all placeholder:text-(--foreground)/40" 
                             placeholder={t("Name")} 
                             title={t("Name")}
                         />
@@ -133,7 +133,7 @@ export default function CommentSection({ blog_id, OnClick }) {
                             type="text" 
                             id="commentorEmail" 
                             autoComplete="email" 
-                            className="w-1/2 border border-[var(--border)] bg-[var(--foreground)]/5 py-2.5 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-[var(--primary)] text-[var(--foreground)] transition-all placeholder:text-[var(--foreground)]/40" 
+                            className="w-1/2 border border-(--border) bg-(--foreground)/5 py-2.5 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-(--primary) text-(--foreground) transition-all placeholder:text-(--foreground)/40" 
                             placeholder={t("Email")} 
                             title={t("Email")} 
                         />
@@ -141,12 +141,12 @@ export default function CommentSection({ blog_id, OnClick }) {
                     <textarea 
                         id="comment" 
                         placeholder={t("Comment")} 
-                        className="w-full h-20 border border-[var(--border)] bg-[var(--foreground)]/5 py-2 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-[var(--primary)] text-[var(--foreground)] transition-all resize-none placeholder:text-[var(--foreground)]/40" 
+                        className="w-full h-20 border border-(--border) bg-(--foreground)/5 py-2 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-(--primary) text-(--foreground) transition-all resize-none placeholder:text-(--foreground)/40" 
                         title={t("Comment")}
                     />
                     <button 
                         type="button" 
-                        className="w-full py-3 rounded-xl bg-[var(--primary)] text-white text-sm font-bold tracking-wide cursor-pointer shadow-lg hover:opacity-90 transition-all duration-200" 
+                        className="w-full py-3 rounded-xl bg-(--primary) text-white text-sm font-bold tracking-wide cursor-pointer shadow-lg hover:opacity-90 transition-all duration-200" 
                         onClick={EnterComments}
                     >
                         {t("Submit")}
@@ -160,9 +160,9 @@ export default function CommentSection({ blog_id, OnClick }) {
 
 function Comment({ comment, name }) {
     return (
-        <div className="border border-[var(--border)] bg-[var(--foreground)]/5 rounded-2xl p-4 w-full shrink-0 flex flex-col gap-1 transition-all">
-            <span className="font-extrabold text-xs text-[var(--primary)] tracking-wide">{name}</span>
-            <p className="text-sm text-[var(--foreground)] opacity-90 leading-relaxed break-words">
+        <div className="border border-(--border) bg-(--foreground)/5 rounded-2xl p-4 w-full shrink-0 flex flex-col gap-1 transition-all">
+            <span className="font-extrabold text-xs text-(--primary) tracking-wide">{name}</span>
+            <p className="text-sm text-(--foreground) opacity-90 leading-relaxed break-words">
                 {comment}
             </p>
         </div>
