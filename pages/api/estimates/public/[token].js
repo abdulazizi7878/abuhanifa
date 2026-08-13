@@ -58,6 +58,9 @@ export default async function handler(req, res) {
         status:
           estimate.status,
 
+        link:
+          estimate.publicToken,
+
         grandTotal:
           estimate.grandTotal,
 
