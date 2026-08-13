@@ -279,7 +279,7 @@ function EstimatePDF({ estimate }) {
 
    const getAllBrandsForCategory = (item) => {
     const cat = item.category?.toLowerCase();
-    if(item.brand == "N/A" || item.brand == "ANY"){
+    if(item.brand == "N/A" || item.brand == "ANY" || item.brand == "n/a" || item.brand == "Any"){
       return item.brand;
     }
     return CATEGORY_BRANDS[cat] || item.brand || "-";
