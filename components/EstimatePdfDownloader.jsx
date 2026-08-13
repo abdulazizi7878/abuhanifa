@@ -13,11 +13,13 @@ import {
   Link,
 } from "@react-pdf/renderer";
 
-// Register Noto Sans Ethiopic for Amharic script support
-Font.register({
-  family: "NotoSansEthiopic",
-  src: "https://cdn.flexmonster.com/fonts/NotoSansEthiopic-Regular.ttf",
-});
+// Register Visual Ge'ez with full dynamic origin URL to fix 404
+if (typeof window !== "undefined") {
+  Font.register({
+    family: "VisualGeez",
+    src: `${window.location.origin}/fonts/VGU.ttf`,
+  });
+}
 
 // Category to Brands mapping configuration with brandname/brandname format
 const CATEGORY_BRANDS = {
@@ -28,17 +30,17 @@ const CATEGORY_BRANDS = {
 
 const pdfStyles = StyleSheet.create({
   portraitPage: {
-    fontFamily: "Helvetica",
-    fontSize: 9,
+    fontFamily: "Times-Roman",
+    fontSize: 10,
     color: "#0c152a",
     backgroundColor: "#ffffff",
-    padding: 20,
+    padding: 24,
     flexDirection: "column",
     justifyContent: "space-between",
     height: "100%",
   },
   landscapePage: {
-    fontFamily: "Helvetica",
+    fontFamily: "Times-Roman",
     fontSize: 8,
     color: "#0c152a",
     backgroundColor: "#ffffff",
@@ -55,60 +57,67 @@ const pdfStyles = StyleSheet.create({
   },
   brandHeaderCenter: {
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 14,
     borderBottomWidth: 1,
     borderBottomColor: "#00000022",
-    paddingBottom: 8,
+    paddingBottom: 10,
   },
   logo: {
-    width: 72,
-    height: 72,
+    width: 80,
+    height: 80,
     objectFit: "contain",
-    marginBottom: 6,
-    borderRadius: 36,
+    marginBottom: 8,
+    borderRadius: 40,
   },
   brandTextContainerCenter: {
     alignItems: "center",
   },
   brandTitleEn: {
-    fontSize: 12,
+    fontFamily: "Times-Roman",
+    fontSize: 14,
     fontWeight: "bold",
     color: "#0c152a",
     letterSpacing: 0.5,
     textAlign: "center",
   },
   brandTitleAm: {
-    fontFamily: "NotoSansEthiopic",
-    fontSize: 9,
+    fontFamily: "VisualGeez",
+    fontSize: 11,
     fontWeight: "bold",
     color: "#0c152a",
     textAlign: "center",
-    marginTop: 2,
+    marginTop: 3,
   },
-  formRowCenter: {
+  formRowRight: {
     flexDirection: "row",
-    marginBottom: 5,
+    marginBottom: 6,
     alignItems: "center",
     justifyContent: "flex-end",
   },
+  formRowLeft: {
+    flexDirection: "row",
+    marginBottom: 6,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
   formLabel: {
-    fontFamily: "NotoSansEthiopic",
-    fontSize: 7.5,
+    fontSize: 9.5,
     fontWeight: "bold",
     color: "#0c152a",
-    marginRight: 6,
+    marginRight: 8,
   },
   formValueCenter: {
-    fontSize: 7.5,
+    fontFamily: "Times-Roman",
+    fontSize: 9.5,
     color: "#0c152a",
     fontWeight: "bold",
     textAlign: "center",
   },
   contactBoxCentered: {
-    marginTop: 10,
-    marginBottom: 5,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
+    marginTop: 15,
+    marginBottom: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     backgroundColor: "#f9fbff",
     borderWidth: 1,
     borderColor: "#00000015",
@@ -116,43 +125,33 @@ const pdfStyles = StyleSheet.create({
     alignItems: "center",
   },
   contactRowCenter: {
-    fontSize: 8,
+    fontFamily: "Times-Roman",
+    fontSize: 9,
     color: "#0c152a",
-    marginBottom: 3.5,
+    marginBottom: 4,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
   },
-  contactLabelAm: {
-    fontFamily: "NotoSansEthiopic",
-  },
-  contactLink: {
-    fontSize: 7,
-    fontWeight: "bold",
-    color: "#5d77ec",
-    textDecoration: "underline",
-  },
   sectionHeaderAmCenter: {
-    fontFamily: "NotoSansEthiopic",
-    fontSize: 7.5,
+    fontSize: 9.5,
     fontWeight: "bold",
     color: "#0c152a",
-    marginTop: 8,
-    marginBottom: 4,
+    marginTop: 10,
+    marginBottom: 6,
     textAlign: "center",
   },
   checkboxGridCentered: {
     flexDirection: "column",
-    alignItems: "center",
-    marginBottom: 4,
+    alignItems: "flex-start",
+    marginBottom: 6,
+    paddingLeft: 20,
   },
   checkboxText: {
-    fontFamily: "NotoSansEthiopic",
-    fontSize: 7.5,
+    fontSize: 9,
     color: "#0c152a",
-    marginBottom: 3,
-    textAlign: "center",
+    marginBottom: 4,
   },
   filledBlackBox: {
     backgroundColor: "#0c152a",
@@ -166,7 +165,7 @@ const pdfStyles = StyleSheet.create({
     marginTop: "auto",
     borderTopWidth: 1,
     borderTopColor: "#00000022",
-    paddingTop: 5,
+    paddingTop: 8,
     alignItems: "center",
   },
   brandHeaderBox: {
@@ -219,10 +218,10 @@ const pdfStyles = StyleSheet.create({
   colQty: { width: "6%", paddingHorizontal: 2, textAlign: "center" },
   colPrice: { width: "9%", paddingHorizontal: 2, textAlign: "right" },
   colTotal: { width: "9%", paddingHorizontal: 2, textAlign: "right" },
-  thText: { fontSize: 6.5, fontWeight: "bold", textTransform: "uppercase", color: "#0c152a88" },
-  tdText: { fontSize: 6, color: "#0c152a" },
-  tdSpecText: { fontSize: 5, color: "#0c152a" },
-  amharicText: { fontFamily: "NotoSansEthiopic", fontSize: 5.5, color: "#0c152a88" },
+  thText: { fontFamily: "Times-Roman", fontSize: 6.5, fontWeight: "bold", textTransform: "uppercase", color: "#0c152a88" },
+  tdText: { fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a" },
+  tdSpecText: { fontFamily: "Times-Roman", fontSize: 5, color: "#0c152a" },
+  amharicText: { fontFamily: "VisualGeez", fontSize: 5.5, color: "#0c152a88" },
   footerContainer: {
     borderTopWidth: 1,
     borderTopColor: "#00000022",
@@ -233,21 +232,8 @@ const pdfStyles = StyleSheet.create({
     borderRadius: 4,
     marginTop: 10,
   },
-  footerBioText: {
-    fontFamily: "NotoSansEthiopic",
-    fontSize: 8,
-    fontWeight: "bold",
-    color: "#5d77ec",
-    marginBottom: 4,
-    textAlign: "center",
-  },
-  footerText: {
-    fontSize: 6.5,
-    color: "#000000",
-    marginBottom: 2,
-    textAlign: "center",
-  },
   footerLink: {
+    fontFamily: "Times-Roman",
     fontSize: 6.5,
     fontWeight: "bold",
     color: "#5d77ec",
@@ -290,7 +276,6 @@ function EstimatePDF({ estimate }) {
     return num % 1 === 0 ? num.toString() : num.toFixed(2);
   };
 
-  // Helper function to resolve category-mapped brands separated by slashes
   const getAllBrandsForCategory = (item) => {
     const cat = item.category?.toLowerCase();
     return CATEGORY_BRANDS[cat] || item.brand || "-";
@@ -305,7 +290,6 @@ function EstimatePDF({ estimate }) {
       <Page size="A4" orientation="portrait" style={pdfStyles.portraitPage}>
         <View style={pdfStyles.coverContainer}>
           
-          {/* Centered Brand Header with Much Larger Logo */}
           <View style={pdfStyles.brandHeaderCenter}>
             <Image src="/images/logo.jpg" style={pdfStyles.logo} />
             <View style={pdfStyles.brandTextContainerCenter}>
@@ -314,114 +298,137 @@ function EstimatePDF({ estimate }) {
             </View>
           </View>
 
-          {/* Centered Customer Details */}
-
-          <View style={pdfStyles.formRowCenter,{flexDirection:"column"}}>
-
-            <View style={pdfStyles.formRowCenter}>
-              <Text style={pdfStyles.formLabel}>ቀን / Date:</Text>
-              <Text style={pdfStyles.formValueCenter}>{formatDate(data.createdAt) || "-"}</Text> 
-            </View>
-            <View style={pdfStyles.formRowCenter}>
-              <Text style={pdfStyles.formLabel}>የደንበኛ ስም / Client Name:</Text>
-              <Text style={pdfStyles.formValueCenter}>{data.customerName || "-"}</Text>
-            </View>
+          {/* Right-aligned: Date and Order Number */}
+          <View style={pdfStyles.formRowRight}>
+            <Text style={pdfStyles.formLabel}>
+              <Text style={{ fontFamily: "Times-Roman" }}>Date</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ቀን:</Text>
+            </Text>
+            <Text style={pdfStyles.formValueCenter}>{formatDate(data.createdAt) || "-"}</Text> 
+          </View>
           
-            <View style={pdfStyles.formRowCenter}>
-              <Text style={pdfStyles.formLabel}>የትዕዛዝ ቁጥር / Order Number:</Text>
-              <Text style={pdfStyles.formValueCenter}>{data.id ? `#${data.id}` : "-"}</Text>    
-            </View>
-        
+          <View style={pdfStyles.formRowRight}>
+            <Text style={pdfStyles.formLabel}>
+              <Text style={{ fontFamily: "Times-Roman" }}>Order Number</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / የትዕዛዝ ቁጥር:</Text>
+            </Text>
+            <Text style={pdfStyles.formValueCenter}>{data.id ? `#${data.id}` : "-"}</Text>    
           </View>
 
+          {/* Left-aligned: Client Name */}
+          <View style={pdfStyles.formRowLeft}>
+            <Text style={pdfStyles.formLabel}>
+              <Text style={{ fontFamily: "Times-Roman" }}>Client Name</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / የደንበኛ ስም:</Text>
+            </Text>
+            <Text style={pdfStyles.formValueCenter}>{data.customerName || "-"}</Text>
+          </View>
 
-          {/* Work Type Checkboxes (Centered with Gaps) */}
+          {/* Left-aligned: Work Type Checkboxes */}
           <View style={pdfStyles.checkboxGridCentered}>
-            <Text style={pdfStyles.sectionHeaderAmCenter}>የስራው ዓይነት / Work Type</Text>
+            <Text style={pdfStyles.sectionHeaderAmCenter}>
+              <Text style={{ fontFamily: "Times-Roman" }}>Work Type</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / የስራው ዓይነት</Text>
+            </Text>
             <Text style={pdfStyles.checkboxText}>
-              Electric / መብራት{" "}
+              <Text style={{ fontFamily: "Times-Roman" }}>Electric</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / መብራት </Text>
               <Text style={isMatchWork("electric") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
                 {isMatchWork("electric") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
             <Text style={pdfStyles.checkboxText}>
-              Plumbing / ውሃ{" "}
+              <Text style={{ fontFamily: "Times-Roman" }}>Plumbing</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ውሃ </Text>
               <Text style={(isMatchWork("plumb") || isMatchWork("sanitary")) ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
                 {(isMatchWork("plumb") || isMatchWork("sanitary")) ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
             <Text style={pdfStyles.checkboxText}>
-              Other / ሌላ{" "}
+              <Text style={{ fontFamily: "Times-Roman" }}>Other</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ሌላ </Text>
               <Text style={(!isMatchWork("electric") && !isMatchWork("plumb") && !isMatchWork("sanitary") && workType !== "") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
                 {(!isMatchWork("electric") && !isMatchWork("plumb") && !isMatchWork("sanitary") && workType !== "") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
           </View>
 
-          {/* Work Place Checkboxes (Centered with Gaps) */}
+          {/* Left-aligned: Work Place Checkboxes */}
           <View style={pdfStyles.checkboxGridCentered}>
-            <Text style={pdfStyles.sectionHeaderAmCenter}>የስራው ቦታ / Work Place</Text>
+            <Text style={pdfStyles.sectionHeaderAmCenter}>
+              <Text style={{ fontFamily: "Times-Roman" }}>Work Place</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / የስራው ቦታ</Text>
+            </Text>
             <Text style={pdfStyles.checkboxText}>
-              Addis Ababa / አዲስ አበባ{" "}
+              <Text style={{ fontFamily: "Times-Roman" }}>Addis Ababa</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / አዲስ አበባ </Text>
               <Text style={isMatchLoc("addis") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
                 {isMatchLoc("addis") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
             <Text style={pdfStyles.checkboxText}>
-              Butajira / ቡታጀራ{" "}
+              <Text style={{ fontFamily: "Times-Roman" }}>Butajira</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ቡታጀራ </Text>
               <Text style={isMatchLoc("buta") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
                 {isMatchLoc("buta") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
             <Text style={pdfStyles.checkboxText}>
-              Halaba / ሀላባ{" "}
+              <Text style={{ fontFamily: "Times-Roman" }}>Halaba</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ሀላባ </Text>
               <Text style={isMatchLoc("halaba") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
                 {isMatchLoc("halaba") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
             <Text style={pdfStyles.checkboxText}>
-              Worabe / ወራቤ{" "}
+              <Text style={{ fontFamily: "Times-Roman" }}>Worabe</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ወራቤ </Text>
               <Text style={isMatchLoc("worabe") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
                 {isMatchLoc("worabe") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
                       
-            <View style={[pdfStyles.formRowCenter, { marginTop: 4 }]}>
-                <Text style={pdfStyles.formLabel}>ልዩ ቦታው / Specific Place:</Text>
+            <View style={[pdfStyles.formRowLeft, { marginTop: 6 }]}>
+                <Text style={pdfStyles.formLabel}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Specific Place</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ልዩ ቦታው:</Text>
+                </Text>
                 <Text style={pdfStyles.formValueCenter}>{data.customerSpecificLocation || data.specificLocation || "-"}</Text>
             </View>
           </View>
 
-
-
-          {/* Centered Contacts Box placed at the end of cover page with more gap */}
+          {/* Contact Information Box */}
           <View style={pdfStyles.contactBoxCentered}>
-            <Text style={{ fontFamily: "NotoSansEthiopic", fontSize: 7, fontWeight: "bold", marginBottom: 4, textAlign: "center" }}>
-              የመገናኛ መረጃዎች / Contact Information:
+            <Text style={{ fontSize: 9, fontWeight: "bold", marginBottom: 6, textAlign: "center" }}>
+              <Text style={{ fontFamily: "Times-Roman" }}>Contact Information</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / የመገናኛ መረጃዎች:</Text>
             </Text>
             <View style={pdfStyles.contactRowCenter}>
-              <Text style={pdfStyles.contactLabelAm}>Phone / ስልክ: </Text>
-              <Text>+251936489696 / +251705489696</Text>
+              <Text style={{ fontFamily: "Times-Roman" }}>Phone</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ስልክ: </Text>
+              <Text style={{ fontFamily: "Times-Roman" }}>+251936489696 / +251705489696</Text>
             </View>
             <View style={pdfStyles.contactRowCenter}>
-              <Text style={pdfStyles.contactLabelAm}>Telegram / ቴሌግራም: </Text>
+              <Text style={{ fontFamily: "Times-Roman" }}>Telegram</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ቴሌግራም: </Text>
               <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.contactLink}>t.me/abuhanifainstallation</Link>
             </View>
             <View style={pdfStyles.contactRowCenter}>
-              <Text style={pdfStyles.contactLabelAm}>E-mail / ኢሜይል: </Text>
-              <Text>abuhanifainstallation@gmail.com</Text>
+              <Text style={{ fontFamily: "Times-Roman" }}>E-mail</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ኢሜይል: </Text>
+              <Text style={{ fontFamily: "Times-Roman" }}>abuhanifainstallation@gmail.com</Text>
             </View>
             <View style={[pdfStyles.contactRowCenter, { marginBottom: 0 }]}>
-              <Text style={pdfStyles.contactLabelAm}>Website / ዌብሳይት: </Text>
+              <Text style={{ fontFamily: "Times-Roman" }}>Website</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / ዌብሳይት: </Text>
               <Link src="https://www.abuhanifainstallation.com" style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
             </View>
           </View>
 
         </View>
 
-        {/* Minimalist Bottom Note */}
         <View style={pdfStyles.bottomNote}>
-          <Text style={{ fontFamily: "NotoSansEthiopic", fontSize: 6.5, color: "#0c152a88", textAlign: "center" }}>
+          <Text style={{ fontFamily: "VisualGeez", fontSize: 7.5, color: "#0c152a88", textAlign: "center" }}>
             አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
         </View>
@@ -432,26 +439,26 @@ function EstimatePDF({ estimate }) {
         <View>
           <View style={pdfStyles.brandHeaderBox}>
             <Image src="/images/logo.jpg" style={pdfStyles.logoSmall} />
-            <Text style={{ fontSize: 11, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>Abuhanifa Installation Ethiopia</Text>
-            <Text style={{ fontFamily: "NotoSansEthiopic", fontSize: 6, fontWeight: "bold", color: "#", marginTop: 2, textAlign: "center" }}>
+            <Text style={{ fontFamily: "Times-Roman", fontSize: 11, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>Abuhanifa Installation Ethiopia</Text>
+            <Text style={{ fontFamily: "VisualGeez", fontSize: 6, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
               አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!
             </Text>
-            <Text style={{ fontSize: 5.5, fontWeight: "bold", color: "#000000", marginTop: 1, letterSpacing: 0.5, textTransform: "uppercase", textAlign: "center" }}>Electrical • Plumbing • Sanitary Installation</Text>
+            <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, fontWeight: "bold", color: "#000000", marginTop: 1, letterSpacing: 0.5, textTransform: "uppercase", textAlign: "center" }}>Electrical • Plumbing • Sanitary Installation</Text>
           </View>
 
           <View style={pdfStyles.materialHeader}>
             <View>
-              <Text style={{ fontSize: 7.5, fontWeight: "bold", color: "#5d77ec" }}>Material Estimate & Pricing Schedule</Text>
+              <Text style={{ fontFamily: "Times-Roman", fontSize: 7.5, fontWeight: "bold", color: "#5d77ec" }}>Material Estimate & Pricing Schedule</Text>
               {data.customerName && (
-                <Text style={{ fontSize: 6, color: "#0c152a99", marginTop: 1 }}>
+                <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a99", marginTop: 1 }}>
                   Customer: {data.customerName}
                 </Text>
               )}
             </View>
             <View style={{ textAlign: "right" }}>
-              <Text style={{ fontSize: 6, color: "#0c152a88" }}>Order #{data.id}</Text>
+              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a88" }}>Order #{data.id}</Text>
               {data.createdAt && (
-                <Text style={{ fontSize: 5.5, color: "#0c152a66" }}>{formatDate(data.createdAt)}</Text>
+                <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, color: "#0c152a66" }}>{formatDate(data.createdAt)}</Text>
               )}
             </View>
           </View>
@@ -504,7 +511,6 @@ function EstimatePDF({ estimate }) {
           })}
         </View>
 
-        {/* Custom Styled Footer for Material Pages */}
         <View style={pdfStyles.footerContainer}>
           <Text style={pdfStyles.amharicText}>
             አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!

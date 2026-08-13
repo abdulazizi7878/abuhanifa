@@ -12,7 +12,7 @@
   --background: #f2f7ff;
   --foreground: #0c152af0;
   --border:#0000002c;
-  --primary:#1ebef8e1;
+  --primary:#017fee;
   --third: #753aa0f6;
   --secondary:#5d77ec;
   --primary-font: "Times New Roman", Times, serif;
@@ -32,7 +32,7 @@
     --background: #121217;
     --foreground: #e1e4ec;
     --border:#ffffff77;
-    --primary: hsla(196, 90%, 54%, 0.882);
+    --primary: #017fee;
     --secondary:#5d3d91;
   }
 
