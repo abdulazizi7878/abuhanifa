@@ -207,6 +207,7 @@ export default async function RootLayout({
           }}
         />
 
+
         {children}
         <Toaster richColors position="top-center" />
         </NextIntlClientProvider>

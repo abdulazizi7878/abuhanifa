@@ -2,7 +2,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Reviews from "@/components/reviews";
 import { useTranslations } from "next-intl";
-import Telegram from "./telegram";
+import FloatingButtons from "./floatingButtons";
 
 export default function FullPage(){
     return(
@@ -10,7 +10,7 @@ export default function FullPage(){
             <Header />
             <main className="mt-25 flex justify-center items-center w-full" >
                  <Cont />
-                 <Telegram />
+                 <FloatingButtons />
             </main>
             <Footer />
         </>
