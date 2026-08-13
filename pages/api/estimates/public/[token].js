@@ -85,6 +85,9 @@ export default async function handler(req, res) {
               diameter:
                 item.diameter,
 
+              unit:
+                item.unit,
+                
               specification:
                 item.specification,
 

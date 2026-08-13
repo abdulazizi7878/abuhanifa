@@ -14,10 +14,11 @@ export async function createMaterial(material) {
       type,
       brand,
       diameter,
+      unit,
       specification,
       price
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const values = [
@@ -28,6 +29,7 @@ export async function createMaterial(material) {
     material.type,
     material.brand,
     material.diameter,
+    material.unit,
     material.specification,
     material.price,
   ];
@@ -55,6 +57,7 @@ export async function getMaterialById(id) {
       type,
       brand,
       diameter,
+      unit,
       specification,
       price,
       created_at AS createdAt,
@@ -84,6 +87,7 @@ export async function getMaterials() {
       type,
       brand,
       diameter,
+      unit,
       specification,
       price,
       created_at AS createdAt,
@@ -112,6 +116,7 @@ export async function updateMaterial(id, material) {
       type = ?,
       brand = ?,
       diameter = ?,
+      unit = ?,
       specification = ?,
       price = ?
     WHERE id = ?
@@ -125,6 +130,7 @@ export async function updateMaterial(id, material) {
     material.type,
     material.brand,
     material.diameter,
+    material.unit,
     material.specification,
     material.price,
     id,

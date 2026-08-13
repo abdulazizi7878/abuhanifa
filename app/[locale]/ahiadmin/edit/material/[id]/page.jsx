@@ -17,10 +17,12 @@ const materialOptions = {
       'PEX',
       'PEX-AL-PEX',
       'Stainless Steel',
-      'PPR'
+      'PPR',
+      'ANY'
     ],
     brands: ['Aquapa', 'Lesso', 'RAK', 'Teflo', 'Any'],
     diameters: [
+      'N/A',
       '1/2" (20mm)',
       '3/4" (25mm)',
       '1" (32mm)',
@@ -34,13 +36,14 @@ const materialOptions = {
       '6" (160mm)',
       '8" (200mm)',
       '10" (250mm)',
-      '12" (315mm)'
+      '12" (315mm)',
     ]
   },
   sanitary: {
-    types: ['PVC', 'CPVC', 'RCC', 'UPVC'],
-    brands: ['Era', 'Lesso', 'Teflo', 'Any'],
+    types: ['PVC', 'CPVC', 'RCC', 'UPVC','N/A','ANY'],
+    brands: ['Era', 'Lesso', 'Teflo', 'Any','N/A'],
     diameters: [
+      'N/A',
       '1 1/2" (50mm)',
       '2" (63mm)',
       '2 1/2" (75mm)',
@@ -50,7 +53,7 @@ const materialOptions = {
       '6" (160mm)',
       '8" (200mm)',
       '10" (250mm)',
-      '12" (315mm)'
+      '12" (315mm)',
     ]
   },
   electrical: {
@@ -58,10 +61,19 @@ const materialOptions = {
       'Solid',
       'Stranded',
       'Flexible armoured',
-      'Mineral-insulated cable'
+      'Mineral-insulated cable',
+      'Flexible',
+      'Semi-Flexible',
+      'Semi-Rigid',
+      'Rigid',
+      'Rollo',
+      'Guroro',
+      'ANY',
+      'N/A'
     ],
-    brands: ['Rhino', 'Euro', 'UF', 'BMET', 'Any'],
+    brands: ['Rhino', 'Euro', 'UF', 'BMET', 'Any', 'N/A'],
     diameters: [
+      'N/A',
       '1x1.5 mm2', '2x1.5 mm2', '3x1.5 mm2', '4x1.5 mm2', '5x1.5 mm2', '6x1.5 mm2',
       '1x2.5 mm2', '2x2.5 mm2', '3x2.5 mm2', '4x2.5 mm2', '5x2.5 mm2', '6x2.5 mm2',
       '1x4 mm2', '2x4 mm2', '3x4 mm2', '4x4 mm2', '5x4 mm2', '6x4 mm2',
@@ -76,9 +88,9 @@ const materialOptions = {
       '1x120 mm2', '2x120 mm2', '3x120 mm2', '4x120 mm2', '5x120 mm2', '6x120 mm2',
       '1x150 mm2', '2x150 mm2', '3x150 mm2', '4x150 mm2', '5x150 mm2', '6x150 mm2',
       '1x185 mm2', '2x185 mm2', '3x185 mm2', '4x185 mm2', '5x185 mm2', '6x185 mm2',
-      '1x240 mm2', '2x240 mm2', '3x240 mm2', '4x240 mm2', '5x240 mm2', '6x240 mm2'
+      '1x240 mm2', '2x240 mm2', '3x240 mm2', '4x240 mm2', '5x240 mm2', '6x240 mm2',
     ]
-  },
+  }
 };
 
 export default function EditMaterialPage({ params }) {
@@ -102,6 +114,7 @@ export default function EditMaterialPage({ params }) {
     type: '',
     brand: '',
     diameter: '',
+    unit:'',
     specification: '',
     price: '',
   });
@@ -132,6 +145,7 @@ export default function EditMaterialPage({ params }) {
           type: data.type || '',
           brand: data.brand || '',
           diameter: data.diameter || '',
+          unit: data.unit || '',
           specification: data.specification || '',
           price: data.price !== undefined ? data.price :  '',
         });
@@ -178,7 +192,8 @@ export default function EditMaterialPage({ params }) {
       !formData.type ||
       !formData.brand ||
       !formData.diameter ||
-      !formData.specification
+      !formData.specification ||
+      !formData.unit
     ) {
       toast.error('Please fill in all required fields.');
       return;
@@ -424,6 +439,24 @@ export default function EditMaterialPage({ params }) {
                       </option>
                     ))}
                   </select>
+                </div>
+
+                {/* unit */}
+
+                <div>
+                  <label className="block text-sm font-medium mb-2 en" style={{ color: 'var(--foreground)' }}>
+                    Unit <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="unit"
+                    value={formData.unit}
+                    onChange={handleChange}
+                    required
+                    placeholder="e.g. Meter"
+                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2"
+                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
+                  />
                 </div>
 
                 {/* Specification */}

@@ -151,7 +151,7 @@ export default function EstimatesManagementPage() {
               <p className="text-2xl sm:text-3xl font-extrabold en mt-1">Estimates</p>
             </div>
             <button
-              onClick={() => router.push("/estimates/create")}
+              onClick={() => router.push("/ahiadmin/create/estimate")}
               className="px-5 py-2.5 rounded-lg text-sm font-medium transition en cursor-pointer shadow-md flex items-center gap-2 hover:opacity-90"
               style={{ backgroundColor: "var(--primary)", color: "var(--foreground)" }}
             >

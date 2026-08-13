@@ -228,6 +228,7 @@ export default function MaterialsListPage() {
                       <th className="py-4 px-6 font-semibold text-sm en">Category</th>
                       <th className="py-4 px-6 font-semibold text-sm en">Price</th>
                       <th className="py-4 px-6 font-semibold text-sm en">Diameter</th>
+                      <th className="py-4 px-6 font-semibold text-sm en">Unit</th>
                       <th className="py-4 px-6 font-semibold text-sm text-right en">Actions</th>
                     </tr>
                   </thead>
@@ -259,6 +260,11 @@ export default function MaterialsListPage() {
                         {/* Diameter */}
                         <td className="py-4 px-6 en" style={{ color: 'var(--foreground)' }}>
                           {item.diameter}
+                        </td>
+
+                        {/* Unit */}
+                        <td className="py-4 px-6 en" style={{ color: 'var(--foreground)' }}>
+                          {item.unit || 'Not Defined'}
                         </td>
 
                         {/* Actions */}

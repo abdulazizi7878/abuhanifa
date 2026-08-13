@@ -200,9 +200,9 @@ export default function CreateEstimatePage() {
       toast.success("Estimate created successfully", { id: toastId });
 
       if (newEstimateId) {
-        router.push(`/estimates/${newEstimateId}`);
+        router.push(`/ahiadmin/view/estimates`);
       } else {
-        router.push("/estimates");
+        router.push("/ahiadmin/view/estimates");
       }
     } catch (err) {
       console.error(err);

@@ -105,6 +105,9 @@ export default function PublicEstimatePage() {
   // Helper function to get all brands separated by slashes for a category
   const getAllBrandsForCategory = (item) => {
     const cat = item.category?.toLowerCase();
+    if(item.brand == "N/A" || item.brand == "ANY"){
+      return item.brand;
+    }
     return CATEGORY_BRANDS[cat] || item.brand || "-";
   };
 
@@ -262,6 +265,7 @@ export default function PublicEstimatePage() {
                               <th className="py-3 px-3">Type</th>
                               <th className="py-3 px-3">Brand</th>
                               <th className="py-3 px-3">Diameter</th>
+                              <th className="py-3 px-3">Unit</th>
                               <th className="py-3 px-3">Specification</th>
                               <th className="py-3 px-3">Quantity</th>
                               <th className="py-3 px-3">Price</th>
@@ -282,6 +286,7 @@ export default function PublicEstimatePage() {
                                 <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
                                 <td className="py-3 px-3 opacity-90">{getAllBrandsForCategory(item)}</td>
                                 <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
+                                <td className="py-3 px-3 opacity-90">{item.unit || "-"}</td>
                                 <td className="py-3 px-3 opacity-75 text-xs">{item.specification || "-"}</td>
                                 <td className="py-3 px-3 font-semibold">{formatQuantity(item.quantity)}</td>
                                 <td className="py-3 px-3 font-semibold">{formatPriceOrTotal(item.price)}</td>

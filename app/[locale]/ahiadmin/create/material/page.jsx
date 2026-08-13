@@ -20,10 +20,12 @@ const materialOptions = {
       'PEX',
       'PEX-AL-PEX',
       'Stainless Steel',
-      'PPR'
+      'PPR',
+      'ANY'
     ],
     brands: ['Aquapa', 'Lesso', 'RAK', 'Teflo', 'Any'],
     diameters: [
+      'N/A',
       '1/2" (20mm)',
       '3/4" (25mm)',
       '1" (32mm)',
@@ -37,13 +39,14 @@ const materialOptions = {
       '6" (160mm)',
       '8" (200mm)',
       '10" (250mm)',
-      '12" (315mm)'
+      '12" (315mm)',
     ]
   },
   sanitary: {
-    types: ['PVC', 'CPVC', 'RCC', 'UPVC'],
-    brands: ['Era', 'Lesso', 'Teflo', 'Any'],
+    types: ['PVC', 'CPVC', 'RCC', 'UPVC','N/A','ANY'],
+    brands: ['Era', 'Lesso', 'Teflo', 'Any','N/A'],
     diameters: [
+      'N/A',
       '1 1/2" (50mm)',
       '2" (63mm)',
       '2 1/2" (75mm)',
@@ -53,7 +56,7 @@ const materialOptions = {
       '6" (160mm)',
       '8" (200mm)',
       '10" (250mm)',
-      '12" (315mm)'
+      '12" (315mm)',
     ]
   },
   electrical: {
@@ -61,10 +64,19 @@ const materialOptions = {
       'Solid',
       'Stranded',
       'Flexible armoured',
-      'Mineral-insulated cable'
+      'Mineral-insulated cable',
+      'Flexible',
+      'Semi-Flexible',
+      'Semi-Rigid',
+      'Rigid',
+      'Rollo',
+      'Guroro',
+      'ANY',
+      'N/A'
     ],
-    brands: ['Rhino', 'Euro', 'UF', 'BMET', 'Any'],
+    brands: ['Rhino', 'Euro', 'UF', 'BMET', 'Any', 'N/A'],
     diameters: [
+      'N/A',
       '1x1.5 mm2', '2x1.5 mm2', '3x1.5 mm2', '4x1.5 mm2', '5x1.5 mm2', '6x1.5 mm2',
       '1x2.5 mm2', '2x2.5 mm2', '3x2.5 mm2', '4x2.5 mm2', '5x2.5 mm2', '6x2.5 mm2',
       '1x4 mm2', '2x4 mm2', '3x4 mm2', '4x4 mm2', '5x4 mm2', '6x4 mm2',
@@ -79,7 +91,7 @@ const materialOptions = {
       '1x120 mm2', '2x120 mm2', '3x120 mm2', '4x120 mm2', '5x120 mm2', '6x120 mm2',
       '1x150 mm2', '2x150 mm2', '3x150 mm2', '4x150 mm2', '5x150 mm2', '6x150 mm2',
       '1x185 mm2', '2x185 mm2', '3x185 mm2', '4x185 mm2', '5x185 mm2', '6x185 mm2',
-      '1x240 mm2', '2x240 mm2', '3x240 mm2', '4x240 mm2', '5x240 mm2', '6x240 mm2'
+      '1x240 mm2', '2x240 mm2', '3x240 mm2', '4x240 mm2', '5x240 mm2', '6x240 mm2',
     ]
   }
 };
@@ -104,6 +116,7 @@ export default function MaterialMasterManagementPage() {
     type: '',
     brand: '',
     diameter: '',
+    unit: '',
     specification: '',
     price: ''
   });
@@ -150,6 +163,7 @@ export default function MaterialMasterManagementPage() {
     if (!formData.type) errors.type = 'Type is required.';
     if (!formData.brand) errors.brand = 'Brand is required.';
     if (!formData.diameter) errors.diameter = 'Diameter is required.';
+    if (!formData.unit) errors.unit = 'Unit is required.';
     if (!formData.specification.trim()) errors.specification = 'Specification is required.';
 
     setValidationErrors(errors);
@@ -176,6 +190,7 @@ export default function MaterialMasterManagementPage() {
         type: formData.type,
         brand: formData.brand,
         diameter: formData.diameter,
+        unit: formData.unit,
         specification: formData.specification,
         price: Number(formData.price) || 1,
       };
@@ -202,6 +217,7 @@ export default function MaterialMasterManagementPage() {
         type: '',
         brand: '',
         diameter: '',
+        unit: '',
         specification: '',
         price: ''
       });
@@ -430,6 +446,26 @@ export default function MaterialMasterManagementPage() {
               </select>
               {validationErrors.diameter && (
                 <p className="mt-1 text-xs text-red-500">{validationErrors.diameter}</p>
+              )}
+            </div>
+
+            {/* Unit */}
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="unit">
+                Unit <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="unit"
+                name="unit"
+                placeholder="e.g., MM..."
+                value={formData.unit}
+                onChange={handleChange}
+                className="w-full rounded-lg px-3.5 py-3 border text-sm outline-none transition"
+                style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', color: 'var(--foreground)' }}
+              />
+              {validationErrors.unit && (
+                <p className="mt-1 text-xs text-red-500">{validationErrors.unit}</p>
               )}
             </div>
 

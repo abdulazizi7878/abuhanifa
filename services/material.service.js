@@ -19,6 +19,7 @@ function validateMaterial(data) {
     "type",
     "brand",
     "diameter",
+    "unit",
     "specification",
     "price",
   ];
@@ -55,6 +56,7 @@ function prepareMaterial(data) {
     type: data.type.trim(),
     brand: data.brand.trim(),
     diameter: data.diameter.trim(),
+    unit: data.unit.trim(),
     specification: data.specification.trim(),
     price: Number(data.price),
   };

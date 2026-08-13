@@ -218,6 +218,7 @@ const pdfStyles = StyleSheet.create({
   colQty: { width: "6%", paddingHorizontal: 2, textAlign: "center" },
   colPrice: { width: "9%", paddingHorizontal: 2, textAlign: "right" },
   colTotal: { width: "9%", paddingHorizontal: 2, textAlign: "right" },
+  colUnit: { width: "6%", paddingHorizontal: 2, textAlign: "center" },
   thText: { fontFamily: "Times-Roman", fontSize: 6.5, fontWeight: "bold", textTransform: "uppercase", color: "#0c152a88" },
   tdText: { fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a" },
   tdSpecText: { fontFamily: "Times-Roman", fontSize: 5, color: "#0c152a" },
@@ -276,8 +277,11 @@ function EstimatePDF({ estimate }) {
     return num % 1 === 0 ? num.toString() : num.toFixed(2);
   };
 
-  const getAllBrandsForCategory = (item) => {
+   const getAllBrandsForCategory = (item) => {
     const cat = item.category?.toLowerCase();
+    if(item.brand == "N/A" || item.brand == "ANY"){
+      return item.brand;
+    }
     return CATEGORY_BRANDS[cat] || item.brand || "-";
   };
 
@@ -470,6 +474,7 @@ function EstimatePDF({ estimate }) {
             <View style={pdfStyles.colType}><Text style={pdfStyles.thText}>Type</Text></View>
             <View style={pdfStyles.colBrand}><Text style={pdfStyles.thText}>Brand</Text></View>
             <View style={pdfStyles.colDiameter}><Text style={pdfStyles.thText}>Diameter</Text></View>
+            <View style={pdfStyles.colUnit}><Text style={pdfStyles.thText}>Unit</Text></View>
             <View style={pdfStyles.colSpec}><Text style={pdfStyles.thText}>Specification</Text></View>
             <View style={pdfStyles.colQty}><Text style={[pdfStyles.thText, { textAlign: "center" }]}>Quantity</Text></View>
             <View style={pdfStyles.colPrice}><Text style={[pdfStyles.thText, { textAlign: "right" }]}>Price</Text></View>
@@ -498,6 +503,7 @@ function EstimatePDF({ estimate }) {
                 <View style={pdfStyles.colType}><Text style={pdfStyles.tdSpecText}>{item.type || "-"}</Text></View>
                 <View style={pdfStyles.colBrand}><Text style={pdfStyles.tdSpecText}>{displayBrand}</Text></View>
                 <View style={pdfStyles.colDiameter}><Text style={pdfStyles.tdSpecText}>{item.diameter || "-"}</Text></View>
+                <View style={pdfStyles.colUnit}><Text style={pdfStyles.tdSpecText}>{item.unit || "-"}</Text></View>
                 <View style={pdfStyles.colSpec}><Text style={pdfStyles.tdSpecText}>{item.specification || "-"}</Text></View>
                 <View style={pdfStyles.colQty}><Text style={[pdfStyles.tdText, { fontWeight: "bold", textAlign: "center" }]}>{displayQty}</Text></View>
                 <View style={pdfStyles.colPrice}>

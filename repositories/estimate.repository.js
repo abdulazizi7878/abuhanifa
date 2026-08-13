@@ -133,6 +133,7 @@ export async function getEstimateWithItems(id) {
         m.type,
         m.brand,
         m.diameter,
+        m.unit,
         m.specification,
         m.category
 
@@ -201,6 +202,7 @@ export async function getEstimateByPublicToken(publicToken) {
         m.type,
         m.brand,
         m.diameter,
+        m.unit,
         m.specification,
         m.category
 
@@ -413,6 +415,7 @@ export async function getEstimateItems(estimateId) {
         m.type,
         m.brand,
         m.diameter,
+        m.unit,
         m.specification,
         m.category
 
