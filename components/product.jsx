@@ -47,7 +47,6 @@ export default function OneProduct({ link }) {
                             <Product 
                                 key={index} 
                                 name={pr.name} 
-                                price={pr.price} 
                                 description={pr.description} 
                                 image={pr.image} 
                                 resourceType={pr.media_resource_type}
@@ -65,7 +64,7 @@ export default function OneProduct({ link }) {
     );
 }
 
-function Product({ name, price, description, image, resourceType, link }) {
+function Product({ name, description, image, resourceType, link }) {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
@@ -121,9 +120,16 @@ function Product({ name, price, description, image, resourceType, link }) {
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--foreground)] leading-tight capitalize">
                         {name}
                     </h1>
-                    <div className="text-lg font-bold text-[var(--primary)]">
-                        Price: <span className="font-black">{price}</span> ETB
-                    </div>
+                    {
+                        /* price currently removed */
+                    }
+                    {
+                        /*
+                        <div className="text-lg font-bold text-[var(--primary)]">
+                            Price: <span className="font-black">{price}</span> ETB
+                        </div>
+                        */
+                    }
                 </div>
 
                 {/* Media Container (Supports both Image and Video based on resourceType) */}

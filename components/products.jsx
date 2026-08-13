@@ -46,7 +46,6 @@ function Products() {
                             <Product 
                                 key={index}
                                 name={pr.name}
-                                price={pr.price}
                                 description={pr.description}
                                 image={pr.image}
                                 resourceType={pr.media_resource_type}
@@ -64,7 +63,7 @@ function Products() {
     );
 }
 
-function Product({ name, price, description, image, resourceType, link }) {
+function Product({ name, description, image, resourceType, link }) {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
@@ -161,9 +160,12 @@ function Product({ name, price, description, image, resourceType, link }) {
                 <p className="line-clamp-1 text-xs opacity-80 mt-1">
                    {description} 
                 </p>
-                <p className="text-sm font-bold mt-2 text-[var(--primary)]" title={`${price} Ethiopian Birr`}>
-                    {price} ETB
-                </p>
+                {/* price currently removed */}
+                {
+                    /* <p className="text-sm font-bold mt-2 text-[var(--primary)]" title={`${price} Ethiopian Birr`}>
+                        {price} ETB
+                    </p> */
+                }
             </div>
 
             <div className="absolute bottom-3 right-3">

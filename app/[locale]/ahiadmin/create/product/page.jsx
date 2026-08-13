@@ -30,7 +30,8 @@ export default function CreateProduct() {
     const validateForm = () => {
         const errors = {};
         if (!formData.name.trim()) errors.name = 'Product name is required.';
-        if (!formData.price.trim()) errors.price = 'Product price is required.';
+        // validation for price currently removed
+        //if (!formData.price.trim()) errors.price = 'Product price is required.';
         if (!formData.description.trim()) errors.description = 'Product description is required.';
         if (!file) errors.file = 'Product image is required.';
 
@@ -74,7 +75,7 @@ export default function CreateProduct() {
                         credentials: "include",
                         body: JSON.stringify({
                             name: formData.name,
-                            price: formData.price,
+                            price: formData.price || 1,
                             description: formData.description,
                             image,
                             publicId,

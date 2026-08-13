@@ -78,10 +78,12 @@ export default function EditProducts({ params }) {
             return;
         }
 
+        // validation for price currently removed
+        /*
         if (!price) {
             toast.error("Product price is required.");
             return;
-        }
+        }*/
 
         setUpdating(true);
         const toastId = toast.loading("Updating product...");
@@ -95,7 +97,7 @@ export default function EditProducts({ params }) {
                 body: JSON.stringify({
                     link: link,
                     name: name.trim(),
-                    price: price,
+                    price: price || 1,
                     description: description.trim()
                 })
             });

@@ -54,27 +54,28 @@ const pdfStyles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "flex-start",
     flex: 1,
+    backgroundColor:"#f9fbff",
   },
   brandHeaderCenter: {
     alignItems: "center",
-    marginBottom: 14,
+    marginBottom: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#00000022",
     paddingBottom: 10,
   },
   logo: {
-    width: 80,
-    height: 80,
+    width: 83,
+    height: 83,
     objectFit: "contain",
     marginBottom: 8,
-    borderRadius: 40,
+    borderRadius: 41.5,
   },
   brandTextContainerCenter: {
     alignItems: "center",
   },
   brandTitleEn: {
     fontFamily: "Times-Roman",
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#0c152a",
     letterSpacing: 0.5,
@@ -82,7 +83,7 @@ const pdfStyles = StyleSheet.create({
   },
   brandTitleAm: {
     fontFamily: "VisualGeez",
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "bold",
     color: "#0c152a",
     textAlign: "center",
@@ -135,12 +136,13 @@ const pdfStyles = StyleSheet.create({
     textAlign: "center",
   },
   sectionHeaderAmCenter: {
-    fontSize: 9.5,
+    fontSize: 10,
     fontWeight: "bold",
     color: "#0c152a",
     marginTop: 10,
     marginBottom: 6,
-    textAlign: "center",
+    textAlign: "left",
+    textDecoration:"underline"
   },
   checkboxGridCentered: {
     flexDirection: "column",
@@ -149,9 +151,14 @@ const pdfStyles = StyleSheet.create({
     paddingLeft: 20,
   },
   checkboxText: {
-    fontSize: 9,
+    fontSize: 11,
     color: "#0c152a",
     marginBottom: 4,
+    marginLeft: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    textAlign: "left",
   },
   filledBlackBox: {
     backgroundColor: "#0c152a",
@@ -221,7 +228,7 @@ const pdfStyles = StyleSheet.create({
   colUnit: { width: "6%", paddingHorizontal: 2, textAlign: "center" },
   thText: { fontFamily: "Times-Roman", fontSize: 6.5, fontWeight: "bold", textTransform: "uppercase", color: "#0c152a88" },
   tdText: { fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a" },
-  tdSpecText: { fontFamily: "Times-Roman", fontSize: 5, color: "#0c152a" },
+  tdSpecText: { fontFamily: "VisualGeez", fontSize: 5, color: "#0c152a",textTransform:"capitalize" },
   amharicText: { fontFamily: "VisualGeez", fontSize: 5.5, color: "#0c152a88" },
   footerContainer: {
     borderTopWidth: 1,
@@ -303,29 +310,32 @@ function EstimatePDF({ estimate }) {
           </View>
 
           {/* Right-aligned: Date and Order Number */}
-          <View style={pdfStyles.formRowRight}>
-            <Text style={pdfStyles.formLabel}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Date</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / ቀን:</Text>
-            </Text>
-            <Text style={pdfStyles.formValueCenter}>{formatDate(data.createdAt) || "-"}</Text> 
-          </View>
-          
-          <View style={pdfStyles.formRowRight}>
-            <Text style={pdfStyles.formLabel}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Order Number</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / የትዕዛዝ ቁጥር:</Text>
-            </Text>
-            <Text style={pdfStyles.formValueCenter}>{data.id ? `#${data.id}` : "-"}</Text>    
+          <View style={{position:"absolute", top:5, right:6}}>
+            <View style={pdfStyles.formRowRight}>
+              <Text style={pdfStyles.formLabel}>
+                <Text style={{ fontFamily: "Times-Roman" }}>Date</Text>
+                <Text style={{ fontFamily: "VisualGeez" }}> / ቀን:</Text>
+              </Text>
+              <Text style={pdfStyles.formValueCenter}>{formatDate(data.createdAt) || "-"}</Text> 
+            </View>
+            
+            <View style={pdfStyles.formRowRight}>
+              <Text style={pdfStyles.formLabel}>
+                <Text style={{ fontFamily: "Times-Roman" }}>Order Number</Text>
+                <Text style={{ fontFamily: "VisualGeez" }}> / የትዕዛዝ ቁጥር:</Text>
+              </Text>
+              <Text style={pdfStyles.formValueCenter}>{data.id ? `#${data.id}` : "-"}</Text>    
+            </View>            
           </View>
 
+
           {/* Left-aligned: Client Name */}
-          <View style={pdfStyles.formRowLeft}>
-            <Text style={pdfStyles.formLabel}>
+          <View style={pdfStyles.checkboxGridCentered}>
+            <Text style={pdfStyles.sectionHeaderAmCenter}>
               <Text style={{ fontFamily: "Times-Roman" }}>Client Name</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / የደንበኛ ስም:</Text>
+              <Text style={{ fontFamily: "VisualGeez" }}> / የደንበኛው ስም:</Text>
             </Text>
-            <Text style={pdfStyles.formValueCenter}>{data.customerName || "-"}</Text>
+            <Text style={pdfStyles.checkboxText}>{data.customerName || "-"}</Text>
           </View>
 
           {/* Left-aligned: Work Type Checkboxes */}
@@ -334,27 +344,31 @@ function EstimatePDF({ estimate }) {
               <Text style={{ fontFamily: "Times-Roman" }}>Work Type</Text>
               <Text style={{ fontFamily: "VisualGeez" }}> / የስራው ዓይነት</Text>
             </Text>
-            <Text style={pdfStyles.checkboxText}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Electric</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / መብራት </Text>
-              <Text style={isMatchWork("electric") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
-                {isMatchWork("electric") ? "[ ■ ]" : "[   ]"}
-              </Text>
-            </Text>
-            <Text style={pdfStyles.checkboxText}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Plumbing</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / ውሃ </Text>
-              <Text style={(isMatchWork("plumb") || isMatchWork("sanitary")) ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
-                {(isMatchWork("plumb") || isMatchWork("sanitary")) ? "[ ■ ]" : "[   ]"}
-              </Text>
-            </Text>
-            <Text style={pdfStyles.checkboxText}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Other</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / ሌላ </Text>
-              <Text style={(!isMatchWork("electric") && !isMatchWork("plumb") && !isMatchWork("sanitary") && workType !== "") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
-                {(!isMatchWork("electric") && !isMatchWork("plumb") && !isMatchWork("sanitary") && workType !== "") ? "[ ■ ]" : "[   ]"}
-              </Text>
-            </Text>
+            <View>
+                <Text style={pdfStyles.checkboxText}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Electric</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / መብራት </Text>
+                  <Text style={isMatchWork("electric") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
+                    {isMatchWork("electric") ? "[ ■ ]" : "[   ]"}
+                  </Text>
+                </Text>
+                <Text style={pdfStyles.checkboxText}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Plumbing</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ውሃ </Text>
+                  <Text style={(isMatchWork("plumb") || isMatchWork("sanitary")) ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
+                    {(isMatchWork("plumb") || isMatchWork("sanitary")) ? "[ ■ ]" : "[   ]"}
+                  </Text>
+                </Text>
+                <Text style={pdfStyles.checkboxText}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Other</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ሌላ </Text>
+                  <Text style={(!isMatchWork("electric") && !isMatchWork("plumb") && !isMatchWork("sanitary") && workType !== "") ? pdfStyles.filledBlackBox : pdfStyles.emptyBox}>
+                    {(!isMatchWork("electric") && !isMatchWork("plumb") && !isMatchWork("sanitary") && workType !== "") ? "[ ■ ]" : "[   ]"}
+                  </Text>
+                </Text>
+
+            </View>
+
           </View>
 
           {/* Left-aligned: Work Place Checkboxes */}
@@ -391,42 +405,65 @@ function EstimatePDF({ estimate }) {
                 {isMatchLoc("worabe") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
+
+          </View>
                       
-            <View style={[pdfStyles.formRowLeft, { marginTop: 6 }]}>
-                <Text style={pdfStyles.formLabel}>
+            <View style={pdfStyles.checkboxGridCentered}>
+                <Text style={pdfStyles.sectionHeaderAmCenter}>
                   <Text style={{ fontFamily: "Times-Roman" }}>Specific Place</Text>
                   <Text style={{ fontFamily: "VisualGeez" }}> / ልዩ ቦታው:</Text>
                 </Text>
-                <Text style={pdfStyles.formValueCenter}>{data.customerSpecificLocation || data.specificLocation || "-"}</Text>
+                <Text style={pdfStyles.checkboxText}>{data.customerSpecificLocation || data.specificLocation || "-"}</Text>
             </View>
-          </View>
 
           {/* Contact Information Box */}
-          <View style={pdfStyles.contactBoxCentered}>
+          <View style={pdfStyles.checkboxGridCentered}>
             <Text style={{ fontSize: 9, fontWeight: "bold", marginBottom: 6, textAlign: "center" }}>
               <Text style={{ fontFamily: "Times-Roman" }}>Contact Information</Text>
               <Text style={{ fontFamily: "VisualGeez" }}> / የመገናኛ መረጃዎች:</Text>
             </Text>
             <View style={pdfStyles.contactRowCenter}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Phone</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / ስልክ: </Text>
-              <Text style={{ fontFamily: "Times-Roman" }}>+251936489696 / +251705489696</Text>
+              <Text style={pdfStyles.sectionHeaderAmCenter}>
+                <Text style={{ fontFamily: "Times-Roman" }}>Phone</Text>
+                <Text style={{ fontFamily: "VisualGeez" }}> / ስልክ: </Text>                
+              </Text>
+              <Link src="tel:+251936489696"  style={pdfStyles.checkboxText, { fontFamily: "Times-Roman" }}>+251936489696 / +251705489696</Link>
             </View>
             <View style={pdfStyles.contactRowCenter}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Telegram</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / ቴሌግራም: </Text>
+              <Text  style={pdfStyles.sectionHeaderAmCenter}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Telegram</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ቴሌግራም: </Text>                
+              </Text>
+
               <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.contactLink}>t.me/abuhanifainstallation</Link>
             </View>
             <View style={pdfStyles.contactRowCenter}>
-              <Text style={{ fontFamily: "Times-Roman" }}>E-mail</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / ኢሜይል: </Text>
-              <Text style={{ fontFamily: "Times-Roman" }}>abuhanifainstallation@gmail.com</Text>
+              <Text style={pdfStyles.sectionHeaderAmCenter}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>E-mail</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ኢሜይል: </Text>                
+              </Text>
+              <Link src="mailto:abuhanifainstallation@gmail.com" style={pdfStyles.contactLink}>abuhanifainstallation@gmail.com</Link> 
             </View>
             <View style={[pdfStyles.contactRowCenter, { marginBottom: 0 }]}>
-              <Text style={{ fontFamily: "Times-Roman" }}>Website</Text>
-              <Text style={{ fontFamily: "VisualGeez" }}> / ዌብሳይት: </Text>
+              <Text style={pdfStyles.sectionHeaderAmCenter}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Website</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ዌብሳይት: </Text>
+              </Text>
+
               <Link src="https://www.abuhanifainstallation.com" style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
             </View>
+          </View>
+
+          <View style={pdfStyles.coverContainer,{marginTop:30}}>
+
+            <Text style={{fontSize:12, fontWeight:"bold", fontFamily:"Times-Roman", textAlign:"center"}}>
+              Estimated By: Jemal Nurye Yimam
+            </Text>
+            <Text style={{fontSize:10, fontWeight:"bold", fontFamily:"Times-Roman", textAlign:"center"}}>
+              Project Manager | Certified Electrician & Plumber
+            </Text>
+
+            <Image src={"/images/signature.jpg"} style={{width: 100, height: 50, alignSelf: "center", marginTop: 20}} />
           </View>
 
         </View>
@@ -494,7 +531,7 @@ function EstimatePDF({ estimate }) {
               <View key={index} style={pdfStyles.tableRow} wrap={false}>
                 <View style={pdfStyles.colNum}><Text style={pdfStyles.tdText}>{index + 1}</Text></View>
                 <View style={pdfStyles.colMaterial}>
-                  <Text style={[pdfStyles.tdText, { fontWeight: "bold" }]}>{item.materialNameEnglish}</Text>
+                  <Text style={[pdfStyles.tdText, { fontWeight: "bold" },{textTransform:"capitalize"}]}>{item.materialNameEnglish}</Text>
                   {item.materialNameAmharic && (
                     <Text style={pdfStyles.amharicText}>{item.materialNameAmharic}</Text>
                   )}
@@ -522,7 +559,7 @@ function EstimatePDF({ estimate }) {
             አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
           <Text style={pdfStyles.amharicText}>Phone / ስልክ: +251936489696 </Text>
-          <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink}>
+          <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink,{fontFamily: "Times-Roman"}}>
             Telegram / ቴሌግራም: t.me/abuhanifainstallation
           </Link>
         </View>

@@ -68,7 +68,7 @@ export async function GetPromotionById(id) {
 
 export async function ShowAllProducts() {
     const [products] = await db.query(
-        "SELECT * FROM products;"
+        "SELECT id, name, description, image, link, media_resource_type FROM products;"
     );
 
     return products;
@@ -76,7 +76,7 @@ export async function ShowAllProducts() {
 
 export async function ShowOneProduct(link) {
     const [product] = await db.query(
-        "SELECT * FROM products WHERE link = ?",
+        "SELECT id, name, description, image, link, media_resource_type FROM products WHERE link = ?",
         [link]
     )
 
