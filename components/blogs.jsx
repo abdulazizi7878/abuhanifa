@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import Loading from "./loading";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Calendar, ArrowRight, Play, Pause, Volume2, VolumeX } from "lucide-react";
 
 export default function Blogs(){
     const [blogs, setBlogs] = useState(null);
@@ -20,58 +21,147 @@ export default function Blogs(){
         }
     }
     
-    
     useEffect(()=>{
         GetBlogs();
     },[]);
 
     return(
-        <div className="flex flex-wrap justify-center items-center gap-10 w-24/25 ">
-
-            {
-                (isLoading ? (<Loading loadingItem={"Blogs"} />) : (blogs && (blogs?.map((bl,index)=>(
-                    <Blog 
-                    key={index} 
-                    title={bl.title} 
-                    description={bl.description} 
-                    link={bl.link}
-                    image={bl.image}
-                    created_at={bl.created_at} 
-                    />
-                )) )))
-            }
-            
+        <div className="w-full py-12 flex justify-center items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-[92%] max-w-7xl justify-items-center">
+                {
+                    (isLoading ? (
+                        <div className="col-span-full flex justify-center py-20">
+                            <Loading loadingItem={"Blogs"} />
+                        </div>
+                    ) : (
+                        blogs && blogs.length > 0 ? (
+                            blogs.map((bl, index) => (
+                                <Blog 
+                                    key={index} 
+                                    title={bl.title} 
+                                    description={bl.description} 
+                                    link={bl.link}
+                                    image={bl.image}
+                                    created_at={bl.created_at} 
+                                />
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-16 text-[var(--foreground)] opacity-60 font-medium">
+                                No blogs available right now.
+                            </div>
+                        )
+                    ))
+                }
+            </div>
         </div>
-        
     )
 }
 
-function Blog({title,description,image,created_at,link}){
-
+function Blog({title, description, image, created_at, link}) {
     const isVideo = /\.(mp4|mov|avi|wmv|flv|mkv|webm|m4v|3gp|mpeg)$/i.test(image);
+    
+    const videoRef = useRef(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isMuted, setIsMuted] = useState(true);
 
-    return(
-        <div className="pb-6 w-full sm:w-82 md:w-82 lg:w-82 overflow-hidden border border-(--border) rounded-2xl flex flex-col justify-center items-center gap-y-4 relative">
+    const togglePlay = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (videoRef.current) {
+            if (isPlaying) {
+                videoRef.current.pause();
+                setIsPlaying(false);
+            } else {
+                videoRef.current.play();
+                setIsPlaying(true);
+            }
+        }
+    };
+
+    const toggleMute = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (videoRef.current) {
+            videoRef.current.muted = !isMuted;
+            setIsMuted(!isMuted);
+        }
+    };
+
+    return (
+        <article className="group w-full max-w-sm bg-[var(--background)] backdrop-blur-xl border border-[var(--border)] rounded-3xl overflow-hidden flex flex-col shadow-xl hover:shadow-2xl transition-all duration-500 relative">
             
-            <div className="w-full h-[35%] flex justify-center items-center overflow-hidden bg-foreground/20">
+            {/* Media Container */}
+            <div className="w-full h-52 relative overflow-hidden bg-[var(--foreground)]/10 z-20">
                 {
-                    isVideo ? (
-                        <video controls  src={image} className="h-full max-h-50" width="100%" />
+                    image ? (
+                        isVideo ? (
+                            <div className="w-full h-full relative group/video">
+                                <video 
+                                    ref={videoRef}
+                                    src={image} 
+                                    muted={isMuted}
+                                    playsInline
+                                    onEnded={() => setIsPlaying(false)}
+                                    className="w-full h-full object-cover" 
+                                />
+                                
+                                {/* Custom Video Controls Overlay */}
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/video:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                                    <button 
+                                        onClick={togglePlay}
+                                        className="w-12 h-12 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
+                                        aria-label={isPlaying ? "Pause video" : "Play video"}
+                                    >
+                                        {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                                    </button>
+
+                                    <button 
+                                        onClick={toggleMute}
+                                        className="w-10 h-10 rounded-full bg-[var(--background)] text-[var(--foreground)] flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer"
+                                        aria-label={isMuted ? "Unmute video" : "Mute video"}
+                                    >
+                                        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <img src={image} alt={title || "Blog cover"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                        )
                     ) : (
-                        <img src={image} alt="NEWS_IMAGE" className="h-full max-h-50" />
+                        <div className="w-full h-full flex items-center justify-center text-[var(--foreground)] opacity-50 font-semibold text-sm">
+                            No Media Preview
+                        </div>
                     )
                 }
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-60 pointer-events-none" />
+                
+                {created_at && (
+                    <div className="absolute top-4 left-4 bg-[var(--background)]/80 backdrop-blur-md border border-[var(--border)] px-3 py-1.5 rounded-full flex items-center gap-2 text-xs font-medium text-[var(--foreground)] pointer-events-none">
+                        <Calendar className="w-3.5 h-3.5 text-[var(--primary)]" />
+                        <span>{new Date(created_at).toLocaleDateString()}</span>
+                    </div>
+                )}
             </div>
 
-            <div className="gap-y-2 flex flex-col justify-center items-center">
-                <h2 className="text-xl font-bold w-11/12">
-                    {title}
-                </h2>
-                <p className="line-clamp-4 w-40/41 px-2">
-                   {description}
-                </p>
+            {/* Content Container */}
+            <div className="p-6 flex flex-col flex-grow justify-between gap-y-4">
+                <div className="flex flex-col gap-y-2.5">
+                    <h2 className="text-xl font-bold tracking-tight text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors line-clamp-2">
+                        {title}
+                    </h2>
+                    <p className="text-sm text-[var(--foreground)] opacity-80 line-clamp-3 leading-relaxed">
+                        {description}
+                    </p>
+                </div>
+
+                <div className="pt-2 flex items-center gap-2 text-xs font-semibold text-[var(--primary)] group-hover:translate-x-1 transition-transform duration-300">
+                    <span>Read Article</span>
+                    <ArrowRight className="w-4 h-4" />
+                </div>
             </div>
-            <a href={`/blog/${link}`} className="absolute inset-0"></a>
-        </div>
-    )
+
+            {/* Absolute Link Covering Card */}
+            <a href={`/blog/${link}`} className="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] rounded-3xl" aria-label={`Read more about ${title}`} />
+        </article>
+    );
 }

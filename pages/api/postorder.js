@@ -1,38 +1,50 @@
-import { EnterOrder } from "../../services/insert.service"
+import { EnterOrder } from "../../services/insert.service";
 
 export default async function handler(req, res) {
-
-  if(req.method != "POST"){
-        res.status(405).json({
-            success:false,
-            message:"Method Not Allowed"
-        })
-
-        return;
+    if (req.method !== "POST") {
+        return res.status(405).json({
+            success: false,
+            message: "Method Not Allowed"
+        });
     }
-    
-    const {name,phone_number, location, job, job_type, comment} = req.body;
-    
-    try {    
 
-        const response = await EnterOrder(name,phone_number,location,job,job_type,comment);
+    const {
+        name,
+        phone_number,
+        location,
+        jobs,
+        job_types,
+        comment
+    } = req.body;
 
-        res.status(200).json({
-            success:true,
-            message: "Order Successfully Sent!" 
+    try {
+        const response = await EnterOrder(
+            name,
+            phone_number,
+            location,
+            jobs,
+            job_types,
+            comment
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Order Successfully Sent!"
         });
 
     } catch (err) {
-        res.status(500).json({
-            success:false,
-            message:err,
+        console.log(err);
+
+        return res.status(500).json({
+            success: false,
+            message: err.message || err,
             sentData: {
-                name: name,
-                phone_number: phone_number,
-                location:location,
-                job:job,
-                job_type:job_type,
-                comment:comment
+                name,
+                phone_number,
+                location,
+                jobs,
+                job_types,
+                comment
             }
         });
     }

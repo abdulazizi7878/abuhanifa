@@ -8,59 +8,59 @@ export default function ContactPage(){
 
     const t = useTranslations("contact");
 
-
     const [uploading, setUploading] = useState(false);
 
-    function validater(id,message) {
-        let value = document.getElementById(id).value;
+    function validater(id, message) {
+        let element = document.getElementById(id);
+        let value = element?.value;
         if (!value) {
             toast.error(message);
-            document.getElementById(id)?.focus();
-            return null
+            element?.focus();
+            return null;
         }
         return value;
     }
 
     async function sendEmail() {
-
-
-        let name = validater("name",t("Enter your name!"));
-        if(!name) return 
-        let email = validater("email",t("Please enter your email"));
-        if(!email) return
-        let message = validater("message",t("Please write some text!"));
-        if (!message) return
+        let name = validater("name", t("Enter your name!"));
+        if (!name) return; 
+        
+        let email = validater("email", t("Please enter your email"));
+        if (!email) return;
+        
+        let message = validater("message", t("Please write some text!"));
+        if (!message) return;
 
         setUploading(true);
         const sending = toast.loading(t("Sending your message"));
 
         try {
-            const response = await fetch("/api/contact",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    name: name.value,
-                    email: email.value,
-                    message: message.value
+                    name: name,
+                    email: email,
+                    message: message
                 })
-            })            
+            });            
+            
             const res = await response.json();
-            if(res.success){ 
-                toast.success(t("Your Message successfully sent!"),{id:sending}); 
-                setTimeout(()=>{
-                    location.reload()
-                },2000)
+            if (res.success) { 
+                toast.success(t("Your Message successfully sent!"), { id: sending }); 
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             } else {
-                toast.error(t("Your email couldn't be sent"),{id:sending})
+                toast.error(t("Your email couldn't be sent"), { id: sending });
             }
             setUploading(false);
-        } catch(err){
+        } catch (err) {
             setUploading(false);
-            toast.error(t("Your email couldn't be sent"),{id:sending})
+            toast.error(t("Your email couldn't be sent"), { id: sending });
         }
-
     }
 
     return(
@@ -76,25 +76,22 @@ export default function ContactPage(){
 
                         <input type="text" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder={t("Name")} title="Please Enter Your Name!" autoComplete="name" id="name" />
                         <input type="email" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) max-w-11/12" placeholder={t("Email")} title="Please Enter Your Email!" autoComplete="email" id="email" />
-                        <textarea id="message"  className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder={t("Leave Message")} title="Contact box, leave something comment, order, review, job, Advertisement..." >
+                        <textarea id="message" className="border border-(--border) duration-300 hover:px-12 hover:shadow-xl px-10 py-4 rounded-4xl outline-(--primary) h-70 w-full sm:w-full md:w-10/12" placeholder={t("Leave Message")} title="Contact box, leave something comment, order, review, job, Advertisement...">
                         </textarea>
                         {
                             (uploading ? (
-                              <button className="bg-foreground/60 text-background/60 px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl">
-                                 {t("Send")} 
+                              <button className="bg-foreground/60 text-background/60 px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl" disabled>
+                                   {t("Send")} 
                               </button>  
                             ) : (
-
                             <button className="bg-foreground text-background px-10 py-4 rounded-4xl cursor-pointer duration-300 hover:px-11 hover:shadow-xl" onClick={sendEmail}>
-                               {t("Send")} 
+                                   {t("Send")} 
                             </button>                                 
                         ))
                         }
 
                     </div>
                  </div>
-
-
 
                  <div className="w-full flex flex-col gap-10">
                     <div>
@@ -104,7 +101,7 @@ export default function ContactPage(){
 
                         <div className="flex justify-center gap-x-6 w-full overflow-scroll pl-20 md:p-0 sm:p-0">
 
-                            <div onClick={()=>{
+                            <div onClick={() => {
                                 window.location.href = "https://www.instagram.com/nurye3107?igsh=aHFncm13YnVwNDMz"
                             }} 
                             className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-orange-600 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
@@ -119,12 +116,12 @@ export default function ContactPage(){
                                         <span className="text-sm">{t("Instagram")}</span>
                                     </div>
                                     
-                                </div>
+                            </div>
 
-                                <div onClick={()=>{
-                                                    window.location.href = "https://tiktok.com/@ahieth"
-                                                }} 
-                                className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-black hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
+                            <div onClick={() => {
+                                window.location.href = "https://tiktok.com/@ahieth"
+                            }} 
+                            className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-black hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
 
                                     <div className="rounded-full  py-1.5 px-2 duration-300 pr-6 bg-black">
                                         <svg width="20" height="20" viewBox="0 0 32 32" fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -136,12 +133,12 @@ export default function ContactPage(){
                                         <span className="text-sm">{t("TikTok")}</span>
                                     </div>
                                     
-                                </div>
+                            </div>
 
-                                <div onClick={()=>{
-                                                    window.location.href = "https://youtube.com/@ahieth"
-                                                }} 
-                                className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-red-600 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
+                            <div onClick={() => {
+                                window.location.href = "https://youtube.com/@ahieth"
+                            }} 
+                            className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-red-600 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
 
                                     <div className="rounded-full  py-1.5 px-2 duration-300 pr-6 bg-red-600">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -153,12 +150,12 @@ export default function ContactPage(){
                                         <span className="text-sm">{t("YouTube")}</span>
                                     </div>
                                     
-                                </div>
+                            </div>
 
-                                <div onClick={()=>{
-                                                    window.location.href = "https://www.facebook.com/profile.php?id=61587213729895"
-                                                }} 
-                                className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-blue-500 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
+                            <div onClick={() => {
+                                window.location.href = "https://www.facebook.com/profile.php?id=61587213729895"
+                            }} 
+                            className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-blue-500 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
 
                                     <div className="rounded-full  py-1.5 px-2 duration-300 pr-6 bg-blue-500">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -170,36 +167,36 @@ export default function ContactPage(){
                                         <span className="text-sm">{t("Facebook")}</span>
                                     </div>
                                     
-                                </div>
+                            </div>
 
-                                <div onClick={()=>{
-                                                    window.location.href = "https://t.me/abuhanifainstallation"
-                                                }} 
-                                className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-blue-400 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
+                            <div onClick={() => {
+                                window.location.href = "https://t.me/ahieth"
+                            }} 
+                            className="relative flex flex-col justify-center items-center gap-4 w-20 h-24 cursor-pointer duration-300 hover:*:not-first:top-0 hover:*:not-first:bg-blue-400 hover:*:not-first:text-white hover:*:not-last:px-10 hover:*:not-last:pr-2">
 
                                     <div className="rounded-full  py-1.5 px-2 duration-300 pr-6 bg-blue-400">
                                         <svg width="24" height="24" viewBox="0 0 128 128" fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                                             <path d="M28.9700376,63.3244248 C47.6273373,55.1957357 60.0684594,49.8368063 66.2934036,47.2476366 C84.0668845,39.855031 87.7600616,38.5708563 90.1672227,38.528 C90.6966555,38.5191258 91.8804274,38.6503351 92.6472251,39.2725385 C93.294694,39.7979149 93.4728387,40.5076237 93.5580865,41.0057381 C93.6433345,41.5038525 93.7494885,42.63857 93.6651041,43.5252052 C92.7019529,53.6451182 88.5344133,78.2034783 86.4142057,89.5379542 C85.5170662,94.3339958 83.750571,95.9420841 82.0403991,96.0994568 C78.3237996,96.4414641 75.5015827,93.6432685 71.9018743,91.2836143 C66.2690414,87.5912212 63.0868492,85.2926952 57.6192095,81.6896017 C51.3004058,77.5256038 55.3966232,75.2369981 58.9976911,71.4967761 C59.9401076,70.5179421 76.3155302,55.6232293 76.6324771,54.2720454 C76.6721165,54.1030573 76.7089039,53.4731496 76.3346867,53.1405352 C75.9604695,52.8079208 75.4081573,52.921662 75.0095933,53.0121213 C74.444641,53.1403447 65.4461175,59.0880351 48.0140228,70.8551922 C45.4598218,72.6091037 43.1463059,73.4636682 41.0734751,73.4188859 C38.7883453,73.3695169 34.3926725,72.1268388 31.1249416,71.0646282 C27.1169366,69.7617838 23.931454,69.0729605 24.208838,66.8603276 C24.3533167,65.7078514 25.9403832,64.5292172 28.9700376,63.3244248 Z"></path>
-                                        </svg>    
+                                        </svg>   
                                     </div> 
 
                                     <div className="transition-all duration-300 absolute bottom-0 h-fit px-4 rounded-2xl">
                                         <span className="text-sm">{t("Telegram")}</span>
                                     </div>
                                     
-                                </div>                            
+                            </div>            
                         </div>
 
-                        <div className="flex px-6 py-2 duration-300 hover:px-8 rounded-4xl bg-blue-400 cursor-pointer" onClick={()=>{window.location.href ="https://t.me/ahieth";}} >
+                        <div className="flex px-6 py-2 duration-300 hover:px-8 rounded-4xl bg-blue-400 cursor-pointer" onClick={() => { window.location.href = "https://t.me/ahieth"; }} >
                             <span className="text-background">
-                               {t("Join our Telegram channel")}  
+                                {t("Join our Telegram channel")}  
                             </span>
                             <div className="px-2 rounded-2xl">
                                 <svg width="24" height="24" viewBox="0 0 128 128" fill="blue" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                                     <path d="M28.9700376,63.3244248 C47.6273373,55.1957357 60.0684594,49.8368063 66.2934036,47.2476366 C84.0668845,39.855031 87.7600616,38.5708563 90.1672227,38.528 C90.6966555,38.5191258 91.8804274,38.6503351 92.6472251,39.2725385 C93.294694,39.7979149 93.4728387,40.5076237 93.5580865,41.0057381 C93.6433345,41.5038525 93.7494885,42.63857 93.6651041,43.5252052 C92.7019529,53.6451182 88.5344133,78.2034783 86.4142057,89.5379542 C85.5170662,94.3339958 83.750571,95.9420841 82.0403991,96.0994568 C78.3237996,96.4414641 75.5015827,93.6432685 71.9018743,91.2836143 C66.2690414,87.5912212 63.0868492,85.2926952 57.6192095,81.6896017 C51.3004058,77.5256038 55.3966232,75.2369981 58.9976911,71.4967761 C59.9401076,70.5179421 76.3155302,55.6232293 76.6324771,54.2720454 C76.6721165,54.1030573 76.7089039,53.4731496 76.3346867,53.1405352 C75.9604695,52.8079208 75.4081573,52.921662 75.0095933,53.0121213 C74.444641,53.1403447 65.4461175,59.0880351 48.0140228,70.8551922 C45.4598218,72.6091037 43.1463059,73.4636682 41.0734751,73.4188859 C38.7883453,73.3695169 34.3926725,72.1268388 31.1249416,71.0646282 C27.1169366,69.7617838 23.931454,69.0729605 24.208838,66.8603276 C24.3533167,65.7078514 25.9403832,64.5292172 28.9700376,63.3244248 Z"></path>
                                 </svg> 
                             </div>  
-                        </div>                        
+                        </div> 
                     </div>
 
                     <div className="w-full flex flex-col items-center justify-center gap-4 my-6">
@@ -207,8 +204,8 @@ export default function ContactPage(){
                         <div className="flex justify-center items-center gap-2 relative w-full">
                             <div className="px-4 py-1 bg-foreground text-background rounded-2xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="bg-foreground rounded-2xl" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--background)">
-                                    <path  d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z"/>
-                                </svg>                                
+                                    <path d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z"/>
+                                </svg>            
                             </div>
                             <span className="px-4 py-1 bg-foreground text-background rounded-2xl">
                                 +2519 - 3648 - 9696
@@ -219,8 +216,8 @@ export default function ContactPage(){
                         <div className="flex justify-center gap-2 relative w-full">
                             <div className="px-4 py-1 bg-foreground text-background rounded-2xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="bg-foreground rounded-2xl" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--background)">
-                                    <path  d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z"/>
-                                </svg>                                
+                                    <path d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z"/>
+                                </svg>            
                             </div>
 
                             <span className="px-4 py-1 bg-foreground text-background rounded-2xl">
@@ -230,10 +227,7 @@ export default function ContactPage(){
                         </div>
 
                     </div>
-
                  </div>
-
-
 
             </div>
         </div>

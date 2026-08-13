@@ -1,15 +1,52 @@
 import {InsertMessage, InsertOrder, InsertOrderProduct, InsertProduct, InsertPromotion} from "../repositories/insertQu";
 import { randomUUID } from "crypto";
 
-export async function EnterOrder(name,phone_number,location,job,job_type,comment) {
+export async function EnterOrder(
+    name,
+    phone_number,
+    location,
+    jobs,
+    job_types,
+    comment
+) {
+    if (!name || typeof name !== "string") {
+        throw new Error("Enter a valid Name!");
+    }
 
-    if(!name) throw new Error("Enter a valid Name!");
-    if(phone_number.length > 12 || phone_number.length < 10) throw new Error("Enter a valid Phone Number!");
-    if(!location) throw new Error("Enter a valid Location!");
-    if(!job) throw new Error("Enter a valid Job Name!");
-    if(!job_type) throw new Error("Enter a valid Job Type!");
+    if (
+        !phone_number ||
+        phone_number.length > 12 ||
+        phone_number.length < 10
+    ) {
+        throw new Error("Enter a valid Phone Number!");
+    }
 
-    const response = await InsertOrder(name,phone_number,location,job,job_type,comment);
+    if (!location || typeof location !== "string") {
+        throw new Error("Enter a valid Location!");
+    }
+
+    if (!Array.isArray(jobs) || jobs.length === 0) {
+        throw new Error("Enter at least one Job!");
+    }
+
+    if (!Array.isArray(job_types) || job_types.length === 0) {
+        throw new Error("Enter at least one Job Type!");
+    }
+
+    // Convert arrays to normal text
+    const job = jobs.join(", ");
+    const job_type = job_types.join(", ");
+
+    // Repo stays completely unchanged
+    const response = await InsertOrder(
+        name,
+        phone_number,
+        location,
+        job,
+        job_type,
+        comment
+    );
+
     return response;
 }
 

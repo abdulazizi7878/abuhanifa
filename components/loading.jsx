@@ -1,8 +1,13 @@
-export default function Loading({loadingItem}){
-    return(
-        <div className="flex flex-col justify-center items-center gap-3 my-10">
-            <div className="size-20 border-2 border-b-(--primary) rounded-full animate-spin"></div>
-            <p className="font-mono">Loading {loadingItem}...</p>
+export default function Loading({ loadingItem }) {
+    return (
+        <div className="flex flex-col justify-center items-center gap-4 my-16 w-full">
+            <div className="relative flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full border-2 border-[var(--border)] border-t-[var(--primary)] animate-spin" />
+                <div className="absolute w-8 h-8 rounded-full bg-[var(--primary)]/10 blur-sm animate-pulse" />
+            </div>
+            <p className="text-sm font-medium tracking-wide text-[var(--foreground)] opacity-70 animate-pulse">
+                Loading {loadingItem || "data"}...
+            </p>
         </div>
-    )
+    );
 }

@@ -1,106 +1,176 @@
-"use client"
+"use client";
 
 import Link from "next/link";
+import Loading from "./loading";
+import { useEffect, useState, useRef } from "react";
+import { Play, Pause, Volume2, VolumeX, Share2 } from "lucide-react";
 
-export default function ProductsPage(){
-    return(
-        <>
-           <Products />
-        </>
-    )
+export default function ProductsPage() {
+    return (
+        <div className="w-full flex justify-center py-10">
+            <Products />
+        </div>
+    );
 }
 
-
-
-import Loading from "./loading";
-import { useEffect, useState } from "react";
-
-function Products(){
+function Products() {
     const [products, setProducts] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
     async function GetProducts() {
-        try{
-            const response = await fetch("/api/showproducts",{
-                method:"POST"
+        try {
+            const response = await fetch("/api/showproducts", {
+                method: "POST"
             });
             const data = await response.json();            
             setProducts(data?.data);
-            setLoading(false);                                    
+            setLoading(false);                                            
         } catch (err) {
             alert("ERROR, WHILE FETCHING");
             setLoading(false);
         }
     }
     
-    
-    useEffect(()=>{
+    useEffect(() => {
         GetProducts();
-    },[]);
+    }, []);
 
-    return(
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-24/25">
-
-            {
-                (isLoading ? (<Loading loadingItem={"Products"} />) : (products && (products?.map((pr,index)=>(
-                    <Product 
-                      key={index}
-                      name={pr.name}
-                      price={pr.price}
-                      description={pr.description}
-                      image={pr.image}
-                      link={pr.link}
-                    />
-                )) )))
-            }
-            
+    return (
+        <div className="w-[92%] max-w-7xl flex justify-center">
+            {isLoading ? (
+                <Loading loadingItem={"Products"} />
+            ) : (
+                products && products.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full">
+                        {products.map((pr, index) => (
+                            <Product 
+                                key={index}
+                                name={pr.name}
+                                price={pr.price}
+                                description={pr.description}
+                                image={pr.image}
+                                resourceType={pr.media_resource_type}
+                                link={pr.link}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-20 text-[var(--foreground)] opacity-60 font-medium">
+                        Products not found.
+                    </div>
+                )
+            )}
         </div>
-        
-    )
+    );
 }
 
-function Product({name,price,description,image,link}){
+function Product({ name, price, description, image, resourceType, link }) {
+    const videoRef = useRef(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isMuted, setIsMuted] = useState(true);
+
+    const togglePlay = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (videoRef.current) {
+            if (isPlaying) {
+                videoRef.current.pause();
+                setIsPlaying(false);
+            } else {
+                videoRef.current.play();
+                setIsPlaying(true);
+            }
+        }
+    };
+
+    const toggleMute = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (videoRef.current) {
+            videoRef.current.muted = !isMuted;
+            setIsMuted(!isMuted);
+        }
+    };
 
     async function Share() {
-        try{
-            if(navigator.share){
+        try {
+            if (navigator.share) {
                 await navigator.share({
-                    title:name,
+                    title: name,
                     text: name + " - " + description,
-                    url:window.location.origin + `/products/${link}`
+                    url: window.location.origin + `/products/${link}`
                 });
             }
         } catch (err) {
             console.error("Error sharing:", err);
             await navigator.clipboard.writeText(window.location.origin + `/products/${link}`);
+            alert("Link has been copied!");
         }
     }
 
-    return(
-        <Link href={`/products/${link}`} className="group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg overflow-hidden border border-(--border)/50 rounded-4xl flex flex-col relative">
+    const isVideo = resourceType === "video";
+
+    return (
+        <Link href={`/products/${link}`} className="group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg overflow-hidden border border-[var(--border)]/50 rounded-4xl flex flex-col relative bg-[var(--background)]">
             
-            <div className="w-full h-[55%] flex justify-center items-center overflow-hidden bg-foreground/20">
-                <img src={image} alt={`${name}-image`} className="h-full w-auto transition-transform duration-300 group-hover:scale-110 " />
+            <div className="w-full h-44 sm:h-48 flex justify-center items-center overflow-hidden bg-[var(--foreground)]/25 relative group/video">
+                {image ? (
+                    isVideo ? (
+                        <div className="w-full h-full relative">
+                            <video 
+                                ref={videoRef}
+                                src={image} 
+                                muted={isMuted}
+                                playsInline
+                                loop
+                                onEnded={() => setIsPlaying(false)}
+                                className="w-full h-full object-cover" 
+                            />
+                            
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/video:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+                                <button 
+                                    onClick={togglePlay}
+                                    className="w-10 h-10 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
+                                    aria-label="Play video"
+                                >
+                                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+                                </button>
+                                <button 
+                                    onClick={toggleMute}
+                                    className="w-9 h-9 rounded-full bg-[var(--background)] text-[var(--foreground)] flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
+                                    aria-label="Mute video"
+                                >
+                                    {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <img src={image} alt={`${name}-image`} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                    )
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[var(--foreground)] opacity-50 font-semibold text-xs">
+                        No Media
+                    </div>
+                )}
             </div>
 
-            <div className="mt-2 flex flex-col mx-2">
-                <p className="text-sm font-bold capitalize">
+            <div className="mt-3 flex flex-col mx-3 mb-12">
+                <p className="text-sm font-bold capitalize line-clamp-1">
                     {name}
                 </p>
-                <p className="line-clamp-1 text-sm">
+                <p className="line-clamp-1 text-xs opacity-80 mt-1">
                    {description} 
                 </p>
-                <p className="text-sm font-bold mt-2" title={`${price} Ethiopian Birr`}>
+                <p className="text-sm font-bold mt-2 text-[var(--primary)]" title={`${price} Ethiopian Birr`}>
                     {price} ETB
                 </p>
             </div>
-            <div className="absolute bottom-4 right-4">
-                <button onClick={(e)=>{e.preventDefault(); e.stopPropagation(); Share()}} className="p-2 rounded-full bg-foreground/10 transition-transform cursor-pointer duration-300 hover:bg-foreground/20 ">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill={`var(--foreground)`}>
-                         <path d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm508.5-291.5Q720-743 720-760t-11.5-28.5Q697-800 680-800t-28.5 11.5Q640-777 640-760t11.5 28.5Q663-720 680-720t28.5-11.5ZM680-200ZM200-480Zm480-280Z"/>
-                    </svg>
+
+            <div className="absolute bottom-3 right-3">
+                <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); Share(); }} className="p-2.5 rounded-full bg-[var(--foreground)]/10 transition-transform cursor-pointer duration-300 hover:bg-[var(--foreground)]/20" aria-label="Share product">
+                    <Share2 className="w-4 h-4 text-[var(--foreground)]" />
                 </button>
             </div>
         </Link>
-    )
+    );
 }

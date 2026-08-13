@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
 import { useTranslations } from "next-intl";
+import { X } from "lucide-react";
 
-export default function CommentSection({blog_id, OnClick}){
-    
+export default function CommentSection({ blog_id, OnClick }) {
     const t = useTranslations("comment");
     const [comments, setComments] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
-    function validate(id,message){
+    function validate(id, message) {
         let value = document.getElementById(id).value;
         if (!value) {
             toast.error(message);
@@ -22,114 +22,149 @@ export default function CommentSection({blog_id, OnClick}){
     }
 
     async function EnterComments() {
-
-        
-        let userName = validate("commentorName",t("Please enter your name"));
-        if (!userName) return
-        let userEmail = validate("commentorEmail",t("Please enter your email, Your email will never become visible to public"));
-        if(!userEmail) return;
-        let userComment = validate("comment",t("Please write some text!"));
+        let userName = validate("commentorName", t("Please enter your name"));
+        if (!userName) return;
+        let userEmail = validate("commentorEmail", t("Please enter your email, Your email will never become visible to public"));
+        if (!userEmail) return;
+        let userComment = validate("comment", t("Please write some text!"));
         if (!userComment) return;
 
         const posting = toast.loading(t("Posting your comment!"));
-        
+
         try {
-                        
-            const response = await fetch("/api/postcomment",{
-                headers:{
-                    "Content-Type":"application/json"
+            const response = await fetch("/api/postcomment", {
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                method:"post",
+                method: "post",
                 body: JSON.stringify({
                     name: userName,
                     email: userEmail,
                     comment: userComment,
                     blogId: blog_id
                 })
-            })
+            });
 
-            
             if (response.ok) {
-                toast.success(t("Your comment successfully posted!"),{id:posting})
-                OnClick();
+                toast.success(t("Your comment successfully posted!"), { id: posting });
+                document.getElementById("commentorName").value = "";
+                document.getElementById("commentorEmail").value = "";
+                document.getElementById("comment").value = "";
+                GetComments();
             } else {
-                toast.error(t("Your comment couldn't be posted!"),{id:posting})
+                toast.error(t("Your comment couldn't be posted!"), { id: posting });
             }
-                
-        } catch (err){
-            toast.error(t("Your comment couldn't be posted!"),{id:posting})
+        } catch (err) {
+            toast.error(t("Your comment couldn't be posted!"), { id: posting });
         }
     }
 
     async function GetComments() {
-        const response = await fetch("/api/showcomments",{
-            headers:{
-                "Content-Type":"application/json"
-            },
-            method:"POST",
-            body: JSON.stringify({
-                blog_id:blog_id
-            })
-        })
+        try {
+            const response = await fetch("/api/showcomments", {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    blog_id: blog_id
+                })
+            });
 
-        const comments = await response.json();
-        setComments(comments?.data?.comments?.result);
-        setLoading(false);
+            const data = await response.json();
+            setComments(data?.data?.comments?.result);
+            setLoading(false);
+        } catch (err) {
+            setLoading(false);
+        }
     }
 
-
-
-    useEffect(()=>{
+    useEffect(() => {
         GetComments();
-    },[]);
+    }, []);
 
-    return(
-        <div className="w-full sm:w-full min-h-[90vh] md:w-1/2 flex justify-center items-center">
-
-            <div className="border z-1 border-(--border)  overflow-hidden rounded-4xl  p-6 w-[90%] h-full relative flex flex-col justify-start items-center">
+    return (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-center items-center p-4 animate-fadeIn">
+            <div className="border border-[var(--border)] overflow-hidden rounded-3xl p-5 sm:p-6 w-full max-w-lg h-[85vh] max-h-[650px] relative flex flex-col justify-between bg-[var(--background)] shadow-2xl">
                 
+                {/* Header */}
+                <div className="flex items-center justify-between pb-4 border-b border-[var(--border)] z-20">
+                    <h3 className="text-xl font-extrabold text-[var(--foreground)] tracking-tight">
+                        Comments
+                    </h3>
+                    <button 
+                        onClick={OnClick}
+                        className="w-9 h-9 rounded-full bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/15 flex items-center justify-center transition-all duration-200 cursor-pointer text-[var(--foreground)]"
+                        aria-label="Close comments"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
 
-                <div className="flex flex-col gap-2 w-full h-full z-10  pt-6 overflow-y-scroll pb-40">
-                    {
-                        (isLoading ? (<Loading loadingItem={"comments"} />) : ( comments && comments?.map((cm,index)=>(
+                {/* Comments List Section */}
+                <div className="flex flex-col gap-3 w-full flex-1 overflow-y-auto py-4 pr-1">
+                    {isLoading ? (
+                        <div className="flex justify-center items-center h-full">
+                            <Loading loadingItem={"comments"} />
+                        </div>
+                    ) : comments && comments.length > 0 ? (
+                        comments.map((cm, index) => (
                             <Comment key={index} comment={cm.comment} name={cm.name} />
-                        )) ))
-                    }
+                        ))
+                    ) : (
+                        <div className="flex flex-col items-center justify-center h-full text-center text-[var(--foreground)] opacity-50 text-sm font-medium px-4">
+                            No comments yet. Be the first to share your thoughts!
+                        </div>
+                    )}
                 </div>
 
-
-
-                <div className="absolute  bottom-0 z-10 w-full bg-foreground  flex flex-col justify-center items-center py-2 gap-y-4">
-                    <input type="text" id="commentorName" autoComplete="name" className="border border-background py-1 px-4 rounded-full outline-(--primary) text-background" placeholder={t("Name")} title={t("Name")}/>                    
-                    <input type="text" id="commentorEmail" autoComplete="email" className="border border-background py-1 px-4 rounded-full outline-(--primary) text-background" placeholder={t("Email")} title={t("Email")} />
-                    <textarea id="comment" placeholder={t("Comment")} className="border border-background py-1 px-4 rounded outline-0 text-background" title={t("Comment")}>
-                    </textarea>
-                    <input type="submit" value={t("Submit")} className="py-1 px-4 rounded-full bg-(--primary) text-black cursor-pointer" onClick={()=>{
-                        EnterComments();
-                    }} />
+                {/* Input Form Section */}
+                <div className="pt-4 border-t border-[var(--border)] flex flex-col gap-y-3 z-20 bg-[var(--background)]">
+                    <div className="flex gap-2">
+                        <input 
+                            type="text" 
+                            id="commentorName" 
+                            autoComplete="name" 
+                            className="w-1/2 border border-[var(--border)] bg-[var(--foreground)]/5 py-2.5 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-[var(--primary)] text-[var(--foreground)] transition-all placeholder:text-[var(--foreground)]/40" 
+                            placeholder={t("Name")} 
+                            title={t("Name")}
+                        />
+                        <input 
+                            type="text" 
+                            id="commentorEmail" 
+                            autoComplete="email" 
+                            className="w-1/2 border border-[var(--border)] bg-[var(--foreground)]/5 py-2.5 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-[var(--primary)] text-[var(--foreground)] transition-all placeholder:text-[var(--foreground)]/40" 
+                            placeholder={t("Email")} 
+                            title={t("Email")} 
+                        />
+                    </div>
+                    <textarea 
+                        id="comment" 
+                        placeholder={t("Comment")} 
+                        className="w-full h-20 border border-[var(--border)] bg-[var(--foreground)]/5 py-2 px-3.5 rounded-xl text-xs sm:text-sm outline-none focus:border-[var(--primary)] text-[var(--foreground)] transition-all resize-none placeholder:text-[var(--foreground)]/40" 
+                        title={t("Comment")}
+                    />
+                    <button 
+                        type="button" 
+                        className="w-full py-3 rounded-xl bg-[var(--primary)] text-white text-sm font-bold tracking-wide cursor-pointer shadow-lg hover:opacity-90 transition-all duration-200" 
+                        onClick={EnterComments}
+                    >
+                        {t("Submit")}
+                    </button>
                 </div>
 
-
-                <div className="absolute top-4 right-6 z-10"  onClick={OnClick}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--foreground)">
-                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-                    </svg>
-                </div>          
             </div>
-            
         </div>
-    )
+    );
 }
 
-function Comment({comment,name}){
-    return(
-        <div className="border border-(--border)/50 rounded-2xl mx-auto p-4 w-11/12 shrink-0">
-        <div>
-            <p className="font-black text-[11px]">{name}</p>
-            <p>
+function Comment({ comment, name }) {
+    return (
+        <div className="border border-[var(--border)] bg-[var(--foreground)]/5 rounded-2xl p-4 w-full shrink-0 flex flex-col gap-1 transition-all">
+            <span className="font-extrabold text-xs text-[var(--primary)] tracking-wide">{name}</span>
+            <p className="text-sm text-[var(--foreground)] opacity-90 leading-relaxed break-words">
                 {comment}
             </p>
-            </div>
         </div>
-    )
+    );
 }
