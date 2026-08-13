@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import ExcelExport from "@/components/ExcelExport";
 
 // Dynamic import for PDF Downloader with SSR disabled to prevent rendering issues / stuck state
 const EstimatePdfDownloader = dynamic(
@@ -119,8 +120,10 @@ export default function PublicEstimatePage() {
 
             {/* Download PDF Button using Dynamic Component */}
             {!loading && !error && estimate && (
-              <div className="flex justify-end print:hidden">
+              <div className="flex flex-col gap-2 justify-end items-end print:hidden">
                 <EstimatePdfDownloader estimate={estimate} />
+                <br />
+                <ExcelExport estimate={estimate} />
               </div>
             )}
 

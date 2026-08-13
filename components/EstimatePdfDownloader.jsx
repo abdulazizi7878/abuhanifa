@@ -451,6 +451,14 @@ function EstimatePDF({ estimate }) {
               </Text>
 
               <Link src="https://www.abuhanifainstallation.com" style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
+           </View>
+           <View style={[pdfStyles.contactRowCenter, { marginBottom: 0 }]}>
+              <Text style={pdfStyles.sectionHeaderAmCenter}>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Link</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ድር: </Text>
+              </Text>
+
+              <Link src={`https://www.abuhanifainstallation.com/estimate/${estimate.link}`} style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
             </View>
           </View>
 
