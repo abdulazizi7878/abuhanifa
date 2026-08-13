@@ -268,8 +268,8 @@ export default function PublicEstimatePage() {
                               <th className="py-3 px-3">Type</th>
                               <th className="py-3 px-3">Brand</th>
                               <th className="py-3 px-3">Diameter</th>
-                              <th className="py-3 px-3">Unit</th>
                               <th className="py-3 px-3">Specification</th>
+                              <th className="py-3 px-3">Unit</th>
                               <th className="py-3 px-3">Quantity</th>
                               <th className="py-3 px-3">Price</th>
                               <th className="py-3 px-3">Total</th>
@@ -289,8 +289,8 @@ export default function PublicEstimatePage() {
                                 <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
                                 <td className="py-3 px-3 opacity-90">{getAllBrandsForCategory(item)}</td>
                                 <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
-                                <td className="py-3 px-3 opacity-90">{item.unit || "-"}</td>
                                 <td className="py-3 px-3 opacity-75 text-xs">{item.specification || "-"}</td>
+                                <td className="py-3 px-3 opacity-90">{item.unit || "-"}</td>
                                 <td className="py-3 px-3 font-semibold">{formatQuantity(item.quantity)}</td>
                                 <td className="py-3 px-3 font-semibold">{formatPriceOrTotal(item.price)}</td>
                                 <td className="py-3 px-3 font-semibold">{formatPriceOrTotal(item.total)}</td>

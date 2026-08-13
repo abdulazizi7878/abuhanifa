@@ -218,17 +218,17 @@ const pdfStyles = StyleSheet.create({
   colNum: { width: "4%", paddingHorizontal: 2, textAlign: "center" },
   colMaterial: { width: "18%", paddingHorizontal: 2 },
   colCategory: { width: "10%", paddingHorizontal: 2 },
-  colType: { width: "10%", paddingHorizontal: 2 },
-  colBrand: { width: "10%", paddingHorizontal: 2 },
+  colType: { width: "18%", paddingHorizontal: 2 },
+  colBrand: { width: "18%", paddingHorizontal: 2 },
   colDiameter: { width: "10%", paddingHorizontal: 2 },
-  colSpec: { width: "14%", paddingHorizontal: 2 },
-  colQty: { width: "6%", paddingHorizontal: 2, textAlign: "center" },
-  colPrice: { width: "9%", paddingHorizontal: 2, textAlign: "right" },
-  colTotal: { width: "9%", paddingHorizontal: 2, textAlign: "right" },
-  colUnit: { width: "6%", paddingHorizontal: 2, textAlign: "center" },
-  thText: { fontFamily: "Times-Roman", fontSize: 6.5, fontWeight: "bold", textTransform: "uppercase", color: "#0c152a88" },
+  colSpec: { width: "20%", paddingHorizontal: 2 },
+  colQty: { width: "8%", paddingHorizontal: 2, textAlign: "center" },
+  colPrice: { width: "8%", paddingHorizontal: 2, textAlign: "right" },
+  colTotal: { width: "8%", paddingHorizontal: 2, textAlign: "right" },
+  colUnit: { width: "9%", paddingHorizontal: 2, textAlign: "center" },
+  thText: { fontFamily: "Times-Roman", fontSize: 8.3, fontWeight: "bold", textTransform: "uppercase", color: "#000000" },
   tdText: { fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a" },
-  tdSpecText: { fontFamily: "VisualGeez", fontSize: 5, color: "#0c152a",textTransform:"capitalize" },
+  tdSpecText: { fontFamily: "VisualGeez", fontSize: 8.3, color: "#0c152a",textTransform:"capitalize" },
   amharicText: { fontFamily: "VisualGeez", fontSize: 5.5, color: "#0c152a88" },
   footerContainer: {
     borderTopWidth: 1,
@@ -447,15 +447,15 @@ function EstimatePDF({ estimate }) {
             <View style={[pdfStyles.contactRowCenter, { marginBottom: 0 }]}>
               <Text style={pdfStyles.sectionHeaderAmCenter}>
                   <Text style={{ fontFamily: "Times-Roman" }}>Website</Text>
-                  <Text style={{ fontFamily: "VisualGeez" }}> / ዌብሳይት: </Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / ድህረ-ገጽ: </Text>
               </Text>
 
               <Link src="https://www.abuhanifainstallation.com" style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
            </View>
            <View style={[pdfStyles.contactRowCenter, { marginBottom: 0 }]}>
               <Text style={pdfStyles.sectionHeaderAmCenter}>
-                  <Text style={{ fontFamily: "Times-Roman" }}>Link</Text>
-                  <Text style={{ fontFamily: "VisualGeez" }}> / ድር: </Text>
+                  <Text style={{ fontFamily: "Times-Roman" }}>Order Link</Text>
+                  <Text style={{ fontFamily: "VisualGeez" }}> / የማዘዢያ ሊንክ: </Text>
               </Text>
 
               <Link src={`https://www.abuhanifainstallation.com/estimate/${estimate.link}`} style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
@@ -519,8 +519,8 @@ function EstimatePDF({ estimate }) {
             <View style={pdfStyles.colType}><Text style={pdfStyles.thText}>Type</Text></View>
             <View style={pdfStyles.colBrand}><Text style={pdfStyles.thText}>Brand</Text></View>
             <View style={pdfStyles.colDiameter}><Text style={pdfStyles.thText}>Diameter</Text></View>
-            <View style={pdfStyles.colUnit}><Text style={pdfStyles.thText}>Unit</Text></View>
             <View style={pdfStyles.colSpec}><Text style={pdfStyles.thText}>Specification</Text></View>
+            <View style={pdfStyles.colUnit}><Text style={pdfStyles.thText}>Unit</Text></View>
             <View style={pdfStyles.colQty}><Text style={[pdfStyles.thText, { textAlign: "center" }]}>Quantity</Text></View>
             <View style={pdfStyles.colPrice}><Text style={[pdfStyles.thText, { textAlign: "right" }]}>Price</Text></View>
             <View style={pdfStyles.colTotal}><Text style={[pdfStyles.thText, { textAlign: "right" }]}>Total</Text></View>
@@ -548,15 +548,11 @@ function EstimatePDF({ estimate }) {
                 <View style={pdfStyles.colType}><Text style={pdfStyles.tdSpecText}>{item.type || "-"}</Text></View>
                 <View style={pdfStyles.colBrand}><Text style={pdfStyles.tdSpecText}>{displayBrand}</Text></View>
                 <View style={pdfStyles.colDiameter}><Text style={pdfStyles.tdSpecText}>{item.diameter || "-"}</Text></View>
-                <View style={pdfStyles.colUnit}><Text style={pdfStyles.tdSpecText}>{item.unit || "-"}</Text></View>
                 <View style={pdfStyles.colSpec}><Text style={pdfStyles.tdSpecText}>{item.specification || "-"}</Text></View>
-                <View style={pdfStyles.colQty}><Text style={[pdfStyles.tdText, { fontWeight: "bold", textAlign: "center" }]}>{displayQty}</Text></View>
-                <View style={pdfStyles.colPrice}>
-                  <Text style={[pdfStyles.tdText, { textAlign: "right" }]}>{displayPrice}</Text>
-                </View>
-                <View style={pdfStyles.colTotal}>
-                  <Text style={[pdfStyles.tdText, { fontWeight: "bold", textAlign: "right" }]}>{displayTotal}</Text>
-                </View>
+                <View style={pdfStyles.colUnit}><Text style={pdfStyles.tdSpecText}>{item.unit || "-"}</Text></View>
+                <View style={pdfStyles.colQty}><Text style={pdfStyles.tdSpecText}>{displayQty}</Text></View>
+                <View style={pdfStyles.colPrice}><Text style={pdfStyles.tdSpecText}>{displayPrice}</Text></View>
+                <View style={pdfStyles.colTotal}><Text style={pdfStyles.tdSpecText}>{displayTotal}</Text></View>
               </View>
             );
           })}
