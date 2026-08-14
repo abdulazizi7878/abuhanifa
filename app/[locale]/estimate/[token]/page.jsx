@@ -15,9 +15,9 @@ const EstimatePdfDownloader = dynamic(
 
 // Category to Brands mapping configuration with brandname/brandname format
 const CATEGORY_BRANDS = {
-  plumbing: "Aquapa/Lesso/RAK/Teflo/Any",
-  sanitary: "Era/Lesso/Teflo/Any",
-  electrical: "Rhino/Euro/UF/BMET/Any",
+  plumbing: "Aquapa/Lesso/RAK/Teflo",
+  sanitary: "Era/Lesso/Teflo",
+  electrical: "Rhino/Euro/UF/BMET",
 };
 
 export default function PublicEstimatePage() {
@@ -106,7 +106,7 @@ export default function PublicEstimatePage() {
   // Helper function to get all brands separated by slashes for a category
   const getAllBrandsForCategory = (item) => {
     const cat = item.category?.toLowerCase();
-    if(item.brand == "N/A" || item.brand == "ANY"){
+    if(item.brand == "N/A" || item.brand == "ANY" || item.brand == "Any"){
       return item.brand;
     }
     return CATEGORY_BRANDS[cat] || item.brand || "-";
