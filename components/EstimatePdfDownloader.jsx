@@ -23,9 +23,9 @@ if (typeof window !== "undefined") {
 
 // Category to Brands mapping configuration with brandname/brandname format
 const CATEGORY_BRANDS = {
-  plumbing: "Aquapa/Lesso/RAK/Teflo/Any",
-  sanitary: "Era/Lesso/Teflo/Any",
-  electrical: "Rhino/Euro/UF/BMET/Any",
+  plumbing: "Aquapa/Lesso/RAK/Teflo",
+  sanitary: "Era/Lesso/Teflo",
+  electrical: "Rhino/Euro/UF/BMET",
 };
 
 const pdfStyles = StyleSheet.create({
