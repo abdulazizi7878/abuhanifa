@@ -4,15 +4,25 @@ import React from "react";
 import * as XLSX from "xlsx";
 
 const CATEGORY_BRANDS = {
-  plumbing: "Aquapa/Lesso/RAK/Teflo/Any",
-  sanitary: "Era/Lesso/Teflo/Any",
-  electrical: "Rhino/Euro/UF/BMET/Any",
+  plumbing: "Aquapa/Lesso/RAK/Teflo",
+  sanitary: "Era/Lesso/Teflo",
+  electrical: "Rhino/Euro/UF/BMET",
 };
 
 export default function ExcelExport({ estimate }) {
   const handleExport = () => {
     const data = estimate?.data || estimate || {};
     const items = data.items || [];
+
+    // Helper logic for brands matching the PDF implementation
+    const getAllBrandsForCategory = (item) => {
+      const cat = item.category?.toLowerCase();
+      const b = item.brand;
+      if (b === "N/A" || b === "ANY" || b === "n/a" || b === "Any") {
+        return b;
+      }
+      return CATEGORY_BRANDS[cat] || b || "-";
+    };
 
     // 1. Header Information (Metadata)
     const headerInfo = [
@@ -40,11 +50,7 @@ export default function ExcelExport({ estimate }) {
 
     // 3. Map Items Data
     const itemRows = items.map((item, index) => {
-      const categoryKey = (item.category || "").toLowerCase();
-      let brand = item.brand;
-      if (!brand || brand === "N/A" || brand === "ANY") {
-        brand = CATEGORY_BRANDS[categoryKey] || item.brand || "Any";
-      }
+      const brand = getAllBrandsForCategory(item);
 
       const rowNum = headerInfo.length + 2 + index; // Excel row index calculation (1-based)
       // Columns: S.No(A), Material(B), Category(C), Type(D), Brand(E), Diameter(F), Unit(G), Spec(H), Qty(I), Price(J), Total(K)

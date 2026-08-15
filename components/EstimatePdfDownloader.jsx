@@ -54,7 +54,7 @@ const pdfStyles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "flex-start",
     flex: 1,
-    backgroundColor:"#f9fbff",
+    backgroundColor:"#ffffff",
   },
   brandHeaderCenter: {
     alignItems: "center",
@@ -119,7 +119,7 @@ const pdfStyles = StyleSheet.create({
     marginBottom: 8,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    backgroundColor: "#f9fbff",
+    backgroundColor: "#ffffff",
     borderWidth: 1,
     borderColor: "#00000015",
     borderRadius: 4,
@@ -200,7 +200,7 @@ const pdfStyles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: "row",
-    backgroundColor: "#f2f7ff",
+    backgroundColor: "#ffffff",
     borderBottomWidth: 1,
     borderBottomColor: "#0000002c",
     borderTopWidth: 1,
@@ -227,15 +227,15 @@ const pdfStyles = StyleSheet.create({
   colTotal: { width: "8%", paddingHorizontal: 2, textAlign: "right" },
   colUnit: { width: "9%", paddingHorizontal: 2, textAlign: "center" },
   thText: { fontFamily: "Times-Roman", fontSize: 8.3, fontWeight: "bold", textTransform: "uppercase", color: "#000000" },
-  tdText: { fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a" },
-  tdSpecText: { fontFamily: "VisualGeez", fontSize: 8.3, color: "#0c152a",textTransform:"capitalize" },
-  amharicText: { fontFamily: "VisualGeez", fontSize: 5.5, color: "#0c152a88" },
+  tdTextEnglish: { fontFamily: "Times-Roman", fontSize: 8.3, color: "#0c152a" },
+  tdTextAmharic: { fontFamily: "VisualGeez", fontSize: 8.3, color: "#0c152a" },
+  amharicText: { fontFamily: "VisualGeez", fontSize: 7.5, color: "#0c152a88" },
   footerContainer: {
     borderTopWidth: 1,
     borderTopColor: "#00000022",
     paddingTop: 6,
     alignItems: "center",
-    backgroundColor: "#f9fbff",
+    backgroundColor: "#ffffff",
     paddingVertical: 5,
     borderRadius: 4,
     marginTop: 10,
@@ -478,7 +478,7 @@ function EstimatePDF({ estimate }) {
 
         <View style={pdfStyles.bottomNote}>
           <Text style={{ fontFamily: "VisualGeez", fontSize: 7.5, color: "#0c152a88", textAlign: "center" }}>
-            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!
+            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነትና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
         </View>
       </Page>
@@ -490,7 +490,7 @@ function EstimatePDF({ estimate }) {
             <Image src="/images/logo.jpg" style={pdfStyles.logoSmall} />
             <Text style={{ fontFamily: "Times-Roman", fontSize: 11, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>Abuhanifa Installation Ethiopia</Text>
             <Text style={{ fontFamily: "VisualGeez", fontSize: 6, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
-              አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!
+              አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነትና ለላቀ ጥራት ሁሌም ከፊት!
             </Text>
             <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, fontWeight: "bold", color: "#000000", marginTop: 1, letterSpacing: 0.5, textTransform: "uppercase", textAlign: "center" }}>Electrical • Plumbing • Sanitary Installation</Text>
           </View>
@@ -502,12 +502,6 @@ function EstimatePDF({ estimate }) {
                 <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a99", marginTop: 1 }}>
                   Customer: {data.customerName}
                 </Text>
-              )}
-            </View>
-            <View style={{ textAlign: "right" }}>
-              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a88" }}>Order #{data.id}</Text>
-              {data.createdAt && (
-                <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, color: "#0c152a66" }}>{formatDate(data.createdAt)}</Text>
               )}
             </View>
           </View>
@@ -537,22 +531,24 @@ function EstimatePDF({ estimate }) {
 
             return (
               <View key={index} style={pdfStyles.tableRow} wrap={false}>
-                <View style={pdfStyles.colNum}><Text style={pdfStyles.tdText}>{index + 1}</Text></View>
+                <View style={pdfStyles.colNum}><Text style={pdfStyles.tdTextEnglish}>{index + 1}</Text></View>
                 <View style={pdfStyles.colMaterial}>
-                  <Text style={[pdfStyles.tdText, { fontWeight: "bold" },{textTransform:"capitalize"}]}>{item.materialNameEnglish}</Text>
+                  <Text style={[pdfStyles.tdTextEnglish, { fontWeight: "bold", textTransform: "capitalize" }]}>{item.materialNameEnglish}</Text>
                   {item.materialNameAmharic && (
-                    <Text style={pdfStyles.amharicText}>{item.materialNameAmharic}</Text>
+                    <Text style={pdfStyles.tdTextAmharic}>{item.materialNameAmharic}</Text>
                   )}
                 </View>
-                <View style={pdfStyles.colCategory}><Text style={pdfStyles.tdSpecText}>{item.category || "-"}</Text></View>
-                <View style={pdfStyles.colType}><Text style={pdfStyles.tdSpecText}>{item.type || "-"}</Text></View>
-                <View style={pdfStyles.colBrand}><Text style={pdfStyles.tdSpecText}>{displayBrand}</Text></View>
-                <View style={pdfStyles.colDiameter}><Text style={pdfStyles.tdSpecText}>{item.diameter || "-"}</Text></View>
-                <View style={pdfStyles.colSpec}><Text style={pdfStyles.tdSpecText}>{item.specification || "-"}</Text></View>
-                <View style={pdfStyles.colUnit}><Text style={pdfStyles.tdSpecText}>{item.unit || "-"}</Text></View>
-                <View style={pdfStyles.colQty}><Text style={pdfStyles.tdSpecText}>{displayQty}</Text></View>
-                <View style={pdfStyles.colPrice}><Text style={pdfStyles.tdSpecText}>{displayPrice}</Text></View>
-                <View style={pdfStyles.colTotal}><Text style={pdfStyles.tdSpecText}>{displayTotal}</Text></View>
+                <View style={pdfStyles.colCategory}><Text style={pdfStyles.tdTextEnglish}>{item.category || "-"}</Text></View>
+                <View style={pdfStyles.colType}><Text style={pdfStyles.tdTextEnglish}>{item.type || "-"}</Text></View>
+                <View style={pdfStyles.colBrand}><Text style={pdfStyles.tdTextEnglish}>{displayBrand}</Text></View>
+                <View style={pdfStyles.colDiameter}><Text style={pdfStyles.tdTextEnglish}>{item.diameter || "-"}</Text></View>
+                <View style={pdfStyles.colSpec}>
+                  <Text style={pdfStyles.tdTextEnglish}>{item.specification || "-"}</Text>
+                </View>
+                <View style={pdfStyles.colUnit}><Text style={pdfStyles.tdTextEnglish}>{item.unit || "-"}</Text></View>
+                <View style={pdfStyles.colQty}><Text style={pdfStyles.tdTextEnglish}>{displayQty}</Text></View>
+                <View style={pdfStyles.colPrice}><Text style={pdfStyles.tdTextEnglish}>{displayPrice}</Text></View>
+                <View style={pdfStyles.colTotal}><Text style={pdfStyles.tdTextEnglish}>{displayTotal}</Text></View>
               </View>
             );
           })}
@@ -560,7 +556,7 @@ function EstimatePDF({ estimate }) {
 
         <View style={pdfStyles.footerContainer}>
           <Text style={pdfStyles.amharicText}>
-            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነት እና ለላቀ ጥራት ሁሌም ከፊት!
+            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነትና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
           <Text style={pdfStyles.amharicText}>Phone / ስልክ: +251936489696 </Text>
           <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink,{fontFamily: "Times-Roman"}}>
