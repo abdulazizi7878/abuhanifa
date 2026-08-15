@@ -14,7 +14,11 @@ export default function ExcelExport({ estimate }) {
     const data = estimate?.data || estimate || {};
     const items = data.items || [];
 
-    // Helper logic for brands matching the PDF implementation
+    const capitalizeFirstLetter = (val) => {
+      if (!val) return "-";
+      return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+    };
+
     const getAllBrandsForCategory = (item) => {
       const cat = item.category?.toLowerCase();
       const b = item.brand;
@@ -51,6 +55,7 @@ export default function ExcelExport({ estimate }) {
     // 3. Map Items Data
     const itemRows = items.map((item, index) => {
       const brand = getAllBrandsForCategory(item);
+      const category = capitalizeFirstLetter(item.category);
 
       const rowNum = headerInfo.length + 2 + index; // Excel row index calculation (1-based)
       // Columns: S.No(A), Material(B), Category(C), Type(D), Brand(E), Diameter(F), Unit(G), Spec(H), Qty(I), Price(J), Total(K)
@@ -59,7 +64,7 @@ export default function ExcelExport({ estimate }) {
       return [
         index + 1,
         item.materialNameEnglish || item.name || "",
-        item.category || "",
+        category,
         item.type || "",
         brand,
         item.diameter || "",

@@ -284,9 +284,14 @@ function EstimatePDF({ estimate }) {
     return num % 1 === 0 ? num.toString() : num.toFixed(2);
   };
 
-   const getAllBrandsForCategory = (item) => {
+  const capitalizeFirstLetter = (val) => {
+    if (!val) return "-";
+    return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+  };
+
+  const getAllBrandsForCategory = (item) => {
     const cat = item.category?.toLowerCase();
-    if(item.brand == "N/A" || item.brand == "ANY" || item.brand == "n/a" || item.brand == "Any"){
+    if (item.brand == "N/A" || item.brand == "ANY" || item.brand == "n/a" || item.brand == "Any") {
       return item.brand;
     }
     return CATEGORY_BRANDS[cat] || item.brand || "-";
@@ -328,7 +333,6 @@ function EstimatePDF({ estimate }) {
             </View>            
           </View>
 
-
           {/* Left-aligned: Client Name */}
           <View style={pdfStyles.checkboxGridCentered}>
             <Text style={pdfStyles.sectionHeaderAmCenter}>
@@ -366,9 +370,7 @@ function EstimatePDF({ estimate }) {
                     {(!isMatchWork("electric") && !isMatchWork("plumb") && !isMatchWork("sanitary") && workType !== "") ? "[ ■ ]" : "[   ]"}
                   </Text>
                 </Text>
-
             </View>
-
           </View>
 
           {/* Left-aligned: Work Place Checkboxes */}
@@ -405,16 +407,15 @@ function EstimatePDF({ estimate }) {
                 {isMatchLoc("worabe") ? "[ ■ ]" : "[   ]"}
               </Text>
             </Text>
-
           </View>
                       
-            <View style={pdfStyles.checkboxGridCentered}>
-                <Text style={pdfStyles.sectionHeaderAmCenter}>
-                  <Text style={{ fontFamily: "Times-Roman" }}>Specific Place</Text>
-                  <Text style={{ fontFamily: "VisualGeez" }}> / ልዩ ቦታው:</Text>
-                </Text>
-                <Text style={pdfStyles.checkboxText}>{data.customerSpecificLocation || data.specificLocation || "-"}</Text>
-            </View>
+          <View style={pdfStyles.checkboxGridCentered}>
+              <Text style={pdfStyles.sectionHeaderAmCenter}>
+                <Text style={{ fontFamily: "Times-Roman" }}>Specific Place</Text>
+                <Text style={{ fontFamily: "VisualGeez" }}> / ልዩ ቦታው:</Text>
+              </Text>
+              <Text style={pdfStyles.checkboxText}>{data.customerSpecificLocation || data.specificLocation || "-"}</Text>
+          </View>
 
           {/* Contact Information Box */}
           <View style={pdfStyles.checkboxGridCentered}>
@@ -427,50 +428,45 @@ function EstimatePDF({ estimate }) {
                 <Text style={{ fontFamily: "Times-Roman" }}>Phone</Text>
                 <Text style={{ fontFamily: "VisualGeez" }}> / ስልክ: </Text>                
               </Text>
-              <Link src="tel:+251936489696"  style={pdfStyles.checkboxText, { fontFamily: "Times-Roman" }}>+251936489696 / +251705489696</Link>
+              <Link src="tel:+251936489696" style={{ fontFamily: "Times-Roman" }}>+251936489696 / +251705489696</Link>
             </View>
             <View style={pdfStyles.contactRowCenter}>
-              <Text  style={pdfStyles.sectionHeaderAmCenter}>
+              <Text style={pdfStyles.sectionHeaderAmCenter}>
                   <Text style={{ fontFamily: "Times-Roman" }}>Telegram</Text>
                   <Text style={{ fontFamily: "VisualGeez" }}> / ቴሌግራም: </Text>                
               </Text>
-
-              <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.contactLink}>t.me/abuhanifainstallation</Link>
+              <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink}>t.me/abuhanifainstallation</Link>
             </View>
             <View style={pdfStyles.contactRowCenter}>
               <Text style={pdfStyles.sectionHeaderAmCenter}>
                   <Text style={{ fontFamily: "Times-Roman" }}>E-mail</Text>
                   <Text style={{ fontFamily: "VisualGeez" }}> / ኢሜይል: </Text>                
               </Text>
-              <Link src="mailto:abuhanifainstallation@gmail.com" style={pdfStyles.contactLink}>abuhanifainstallation@gmail.com</Link> 
+              <Link src="mailto:abuhanifainstallation@gmail.com" style={pdfStyles.footerLink}>abuhanifainstallation@gmail.com</Link> 
             </View>
             <View style={[pdfStyles.contactRowCenter, { marginBottom: 0 }]}>
               <Text style={pdfStyles.sectionHeaderAmCenter}>
                   <Text style={{ fontFamily: "Times-Roman" }}>Website</Text>
                   <Text style={{ fontFamily: "VisualGeez" }}> / ድህረ-ገጽ: </Text>
               </Text>
-
-              <Link src="https://www.abuhanifainstallation.com" style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
+              <Link src="https://www.abuhanifainstallation.com" style={pdfStyles.footerLink}>https/www.abuhanifainstallation.com</Link>
            </View>
            <View style={[pdfStyles.contactRowCenter, { marginBottom: 0 }]}>
               <Text style={pdfStyles.sectionHeaderAmCenter}>
                   <Text style={{ fontFamily: "Times-Roman" }}>Order Link</Text>
                   <Text style={{ fontFamily: "VisualGeez" }}> / የማዘዢያ ሊንክ: </Text>
               </Text>
-
-              <Link src={`https://www.abuhanifainstallation.com/estimate/${estimate.link}`} style={pdfStyles.contactLink}>https/www.abuhanifainstallation.com</Link>
+              <Link src={`https://www.abuhanifainstallation.com/estimate/${estimate.link}`} style={pdfStyles.footerLink}>https/www.abuhanifainstallation.com</Link>
             </View>
           </View>
 
-          <View style={pdfStyles.coverContainer,{marginTop:30}}>
-
+          <View style={{ marginTop: 30 }}>
             <Text style={{fontSize:12, fontWeight:"bold", fontFamily:"Times-Roman", textAlign:"center"}}>
               Estimated By: Jemal Nurye Yimam
             </Text>
             <Text style={{fontSize:10, fontWeight:"bold", fontFamily:"Times-Roman", textAlign:"center"}}>
               Project Manager | Certified Electrician & Plumber
             </Text>
-
             <Image src={"/images/signature.jpg"} style={{width: 100, height: 50, alignSelf: "center", marginTop: 20}} />
           </View>
 
@@ -478,7 +474,7 @@ function EstimatePDF({ estimate }) {
 
         <View style={pdfStyles.bottomNote}>
           <Text style={{ fontFamily: "VisualGeez", fontSize: 7.5, color: "#0c152a88", textAlign: "center" }}>
-            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነትና ለላቀ ጥራት ሁሌም ከፊት!
+            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
         </View>
       </Page>
@@ -490,7 +486,7 @@ function EstimatePDF({ estimate }) {
             <Image src="/images/logo.jpg" style={pdfStyles.logoSmall} />
             <Text style={{ fontFamily: "Times-Roman", fontSize: 11, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>Abuhanifa Installation Ethiopia</Text>
             <Text style={{ fontFamily: "VisualGeez", fontSize: 6, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
-              አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነትና ለላቀ ጥራት ሁሌም ከፊት!
+              አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነና ለላቀ ጥራት ሁሌም ከፊት!
             </Text>
             <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, fontWeight: "bold", color: "#000000", marginTop: 1, letterSpacing: 0.5, textTransform: "uppercase", textAlign: "center" }}>Electrical • Plumbing • Sanitary Installation</Text>
           </View>
@@ -502,6 +498,12 @@ function EstimatePDF({ estimate }) {
                 <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a99", marginTop: 1 }}>
                   Customer: {data.customerName}
                 </Text>
+              )}
+            </View>
+            <View style={{ textAlign: "right" }}>
+              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a88" }}>Order #{data.id}</Text>
+              {data.createdAt && (
+                <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, color: "#0c152a66" }}>{formatDate(data.createdAt)}</Text>
               )}
             </View>
           </View>
@@ -528,6 +530,7 @@ function EstimatePDF({ estimate }) {
             const displayTotal = formatPrice(rawTotal);
             const displayQty = formatNumber(item.quantity);
             const displayBrand = getAllBrandsForCategory(item);
+            const displayCategory = capitalizeFirstLetter(item.category);
 
             return (
               <View key={index} style={pdfStyles.tableRow} wrap={false}>
@@ -538,7 +541,7 @@ function EstimatePDF({ estimate }) {
                     <Text style={pdfStyles.tdTextAmharic}>{item.materialNameAmharic}</Text>
                   )}
                 </View>
-                <View style={pdfStyles.colCategory}><Text style={pdfStyles.tdTextEnglish}>{item.category || "-"}</Text></View>
+                <View style={pdfStyles.colCategory}><Text style={pdfStyles.tdTextEnglish}>{displayCategory}</Text></View>
                 <View style={pdfStyles.colType}><Text style={pdfStyles.tdTextEnglish}>{item.type || "-"}</Text></View>
                 <View style={pdfStyles.colBrand}><Text style={pdfStyles.tdTextEnglish}>{displayBrand}</Text></View>
                 <View style={pdfStyles.colDiameter}><Text style={pdfStyles.tdTextEnglish}>{item.diameter || "-"}</Text></View>
@@ -556,10 +559,10 @@ function EstimatePDF({ estimate }) {
 
         <View style={pdfStyles.footerContainer}>
           <Text style={pdfStyles.amharicText}>
-            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነትና ለላቀ ጥራት ሁሌም ከፊት!
+            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
           <Text style={pdfStyles.amharicText}>Phone / ስልክ: +251936489696 </Text>
-          <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink,{fontFamily: "Times-Roman"}}>
+          <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink}>
             Telegram / ቴሌግራም: t.me/abuhanifainstallation
           </Link>
         </View>
