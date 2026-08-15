@@ -5,6 +5,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -74,25 +75,25 @@ export const metadata: Metadata = {
     "Ethiopia",
   ],
 
-  authors: [{ name: "Abu-Hanifa Installation" }],
-  creator: "Abu-Hanifa Installation",
-  publisher: "Abu-Hanifa Installation",
+  authors: [{ name: "Abuhanifa Installation" }],
+  creator: "Abuhanifa Installation",
+  publisher: "Abuhanifa Installation",
 
   alternates: {
-    canonical: "https://hanifa.offlix.app",
+    canonical: "https://abuhanifainstallation.com",
   },
 
   openGraph: {
-    title: "Abu-Hanifa Installation",
+    title: "Abuhanifa Installation",
     description:
       "Professional electrical installation and plumbing services across Ethiopia.",
-    url: "https://hanifa.offlix.app",
-    siteName: "Abu-Hanifa Installation",
+    url: "https://abuhanifainstallation.com",
+    siteName: "Abuhanifa Installation",
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: "https://hanifa.offlix.app/images/logo.jpg",
+        url: "https://abuhanifainstallation.com/images/logo.jpg",
         width: 512,
         height: 512,
         alt: "Abu-Hanifa Installation Logo",
@@ -102,10 +103,10 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Abu-Hanifa Installation",
+    title: "Abuhanifa Installation",
     description:
       "Professional electrical installation and plumbing services across Ethiopia.",
-    images: ["https://hanifa.offlix.app/images/logo.jpg"],
+    images: ["https://abuhanifainstallation.com/images/logo.jpg"],
   },
 
   robots: {
@@ -134,15 +135,15 @@ export default async function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Abu-Hanifa Installation",
+    name: "Abuhanifa Installation",
     alternateName: [
       "Hanifa Installation",
-      "Abu Hanifa",
+      "Abuhanifa",
       "Hanifa",
     ],
-    url: "https://hanifa.offlix.app",
-    logo: "https://hanifa.offlix.app/images/logo.jpg",
-    image: "https://hanifa.offlix.app/images/logo.jpg",
+    url: "https://abuhanifainstallation.com",
+    logo: "https://abuhanifainstallation.com/images/logo.jpg",
+    image: "https://abuhanifainstallation.com/images/logo.jpg",
     email: "abuhanifainstallation@gmail.com",
     telephone: [
       "+251936489696",
@@ -210,6 +211,8 @@ export default async function RootLayout({
 
 
         {children}
+        <Analytics />
+        <SpeedInsights />
         <Toaster richColors position="top-center" />
         </NextIntlClientProvider>
       </body>
