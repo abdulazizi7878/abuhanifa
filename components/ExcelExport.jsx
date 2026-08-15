@@ -84,15 +84,15 @@ export default function ExcelExport({ estimate }) {
 
     const grandTotalRow = [
       "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
       "Grand Total",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
       { t: "n", f: grandTotalFormula },
     ];
 

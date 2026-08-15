@@ -103,6 +103,12 @@ export default function PublicEstimatePage() {
     return isNaN(num) ? val : num.toString();
   };
 
+  // Helper function to capitalize the first letter of category
+  const capitalizeFirstLetter = (val) => {
+    if (!val) return "-";
+    return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+  };
+
   // Helper function to get all brands separated by slashes for a category
   const getAllBrandsForCategory = (item) => {
     const cat = item.category?.toLowerCase();
@@ -285,7 +291,7 @@ export default function PublicEstimatePage() {
                                     <div className="text-xs am opacity-80">{item.materialNameAmharic}</div>
                                   )}
                                 </td>
-                                <td className="py-3 px-3 opacity-90">{item.category || "-"}</td>
+                                <td className="py-3 px-3 opacity-90">{capitalizeFirstLetter(item.category)}</td>
                                 <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
                                 <td className="py-3 px-3 opacity-90">{getAllBrandsForCategory(item)}</td>
                                 <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
