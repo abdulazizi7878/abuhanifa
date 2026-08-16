@@ -309,8 +309,12 @@ function EstimatePDF({ estimate }) {
           <View style={pdfStyles.brandHeaderCenter}>
             <Image src="/images/logo.jpg" style={pdfStyles.logo} />
             <View style={pdfStyles.brandTextContainerCenter}>
-              <Text style={pdfStyles.brandTitleEn}>Abuhanifa Installation Ethiopia</Text>
-              <Text style={pdfStyles.brandTitleAm}>አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ</Text>
+              <Text style={pdfStyles.brandTitleEn}>
+                <Text style={{ color: "#ec0800" }}>Abuhanifa</Text> <Text style={{ color: "#007fef" }}>Installation Ethiopia</Text> 
+              </Text>
+              <Text style={pdfStyles.brandTitleAm}>
+                <Text style={{ color: "#ec0800" }}>አቡሐኒፋ</Text> <Text style={{ color: "#007fef" }}>ኢንስታሌሽን ኢትዮጵያ</Text> 
+              </Text>
             </View>
           </View>
 
@@ -484,26 +488,28 @@ function EstimatePDF({ estimate }) {
         <View>
           <View style={pdfStyles.brandHeaderBox}>
             <Image src="/images/logo.jpg" style={pdfStyles.logoSmall} />
-            <Text style={{ fontFamily: "Times-Roman", fontSize: 11, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>Abuhanifa Installation Ethiopia</Text>
-            <Text style={{ fontFamily: "VisualGeez", fontSize: 6, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
-              አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነና ለላቀ ጥራት ሁሌም ከፊት!
+            <Text style={{ fontFamily: "Times-Roman", fontSize: 11, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>
+              <Text style={{ color: "#ec0800" }}>Abuhanifa</Text> <Text style={{ color: "#007fef" }}>Installation Ethiopia</Text> 
             </Text>
-            <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, fontWeight: "bold", color: "#000000", marginTop: 1, letterSpacing: 0.5, textTransform: "uppercase", textAlign: "center" }}>Electrical • Plumbing • Sanitary Installation</Text>
+            <Text style={{ fontFamily: "VisualGeez", fontSize: 6, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
+              <Text style={{ color: "#ec0800" }}>አቡሐኒፋ</Text> <Text style={{ color: "#007fef" }}>ኢንስታሌሽን ኢትዮጵያ።</Text> 
+            </Text>
           </View>
 
           <View style={pdfStyles.materialHeader}>
             <View>
-              <Text style={{ fontFamily: "Times-Roman", fontSize: 7.5, fontWeight: "bold", color: "#5d77ec" }}>Material Estimate & Pricing Schedule</Text>
+              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#007fef" }}>Material Estimate & Pricing Schedule</Text>
+
               {data.customerName && (
-                <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a99", marginTop: 1 }}>
+                <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#007fef", marginTop: 1 }}>
                   Customer: {data.customerName}
                 </Text>
               )}
             </View>
             <View style={{ textAlign: "right" }}>
-              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#0c152a88" }}>Order #{data.id}</Text>
+              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#007fef" }}>Order #{data.id}</Text>
               {data.createdAt && (
-                <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, color: "#0c152a66" }}>{formatDate(data.createdAt)}</Text>
+                <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, color: "#007fef" }}>{formatDate(data.createdAt)}</Text>
               )}
             </View>
           </View>
@@ -526,8 +532,9 @@ function EstimatePDF({ estimate }) {
             const rawPrice = item.price || 0;
             const rawTotal = item.total || (Number(item.quantity) * Number(rawPrice)) || 0;
             
-            const displayPrice = formatPrice(rawPrice);
-            const displayTotal = formatPrice(rawTotal);
+            const isPriceOne = Number(rawPrice) === 1;
+            const displayPrice = isPriceOne ? "0" : formatPrice(rawPrice);
+            const displayTotal = isPriceOne ? "0" : formatPrice(rawTotal);
             const displayQty = formatNumber(item.quantity);
             const displayBrand = getAllBrandsForCategory(item);
             const displayCategory = capitalizeFirstLetter(item.category);
@@ -555,16 +562,6 @@ function EstimatePDF({ estimate }) {
               </View>
             );
           })}
-        </View>
-
-        <View style={pdfStyles.footerContainer}>
-          <Text style={pdfStyles.amharicText}>
-            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነና ለላቀ ጥራት ሁሌም ከፊት!
-          </Text>
-          <Text style={pdfStyles.amharicText}>Phone / ስልክ: +251936489696 </Text>
-          <Link src="https://t.me/abuhanifainstallation" style={pdfStyles.footerLink}>
-            Telegram / ቴሌግራም: t.me/abuhanifainstallation
-          </Link>
         </View>
       </Page>
     </Document>

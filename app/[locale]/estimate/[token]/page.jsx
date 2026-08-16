@@ -95,11 +95,15 @@ export default function PublicEstimatePage() {
     return isNaN(num) ? qty : num.toString();
   };
 
-  // Helper function for price/total logic (makes 1 or 1.00 into 0)
-  const formatPriceOrTotal = (val) => {
+  // Helper function for price/total logic (makes 0, 1, 0.00, 1.00 into 0)
+  const formatPriceOrTotal = (val, priceVal) => {
+    if (priceVal !== undefined && priceVal !== null) {
+      const pNum = parseFloat(priceVal);
+      if (pNum === 0 || pNum === 1) return "0";
+    }
     if (!val && val !== 0) return "0";
     const num = parseFloat(val);
-    if (num === 1) return "0";
+    if (num === 0 || num === 1) return "0";
     return isNaN(num) ? val : num.toString();
   };
 
@@ -282,26 +286,32 @@ export default function PublicEstimatePage() {
                             </tr>
                           </thead>
                           <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
-                            {estimate.items.map((item, index) => (
-                              <tr key={index} className="transition">
-                                <td className="py-3 px-3 opacity-70">{index + 1}</td>
-                                <td className="py-3 px-3">
-                                  <div className="font-semibold en">{item.materialNameEnglish}</div>
-                                  {item.materialNameAmharic && (
-                                    <div className="text-xs am opacity-80">{item.materialNameAmharic}</div>
-                                  )}
-                                </td>
-                                <td className="py-3 px-3 opacity-90">{capitalizeFirstLetter(item.category)}</td>
-                                <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
-                                <td className="py-3 px-3 opacity-90">{getAllBrandsForCategory(item)}</td>
-                                <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
-                                <td className="py-3 px-3 opacity-75 text-xs">{item.specification || "-"}</td>
-                                <td className="py-3 px-3 opacity-90">{item.unit || "-"}</td>
-                                <td className="py-3 px-3 font-semibold">{formatQuantity(item.quantity)}</td>
-                                <td className="py-3 px-3 font-semibold">{formatPriceOrTotal(item.price)}</td>
-                                <td className="py-3 px-3 font-semibold">{formatPriceOrTotal(item.total)}</td>
-                              </tr>
-                            ))}
+                            {estimate.items.map((item, index) => {
+                              const calculatedTotal = item.total !== undefined && item.total !== null ? item.total : (Number(item.quantity) * Number(item.price || 0));
+                              const displayPrice = formatPriceOrTotal(item.price, item.price);
+                              const displayTotal = formatPriceOrTotal(calculatedTotal, item.price);
+
+                              return (
+                                <tr key={index} className="transition">
+                                  <td className="py-3 px-3 opacity-70">{index + 1}</td>
+                                  <td className="py-3 px-3">
+                                    <div className="font-semibold en">{item.materialNameEnglish}</div>
+                                    {item.materialNameAmharic && (
+                                      <div className="text-xs am opacity-80">{item.materialNameAmharic}</div>
+                                    )}
+                                  </td>
+                                  <td className="py-3 px-3 opacity-90">{capitalizeFirstLetter(item.category)}</td>
+                                  <td className="py-3 px-3 opacity-90">{item.type || "-"}</td>
+                                  <td className="py-3 px-3 opacity-90">{getAllBrandsForCategory(item)}</td>
+                                  <td className="py-3 px-3 opacity-90">{item.diameter || "-"}</td>
+                                  <td className="py-3 px-3 opacity-75 text-xs">{item.specification || "-"}</td>
+                                  <td className="py-3 px-3 opacity-90">{item.unit || "-"}</td>
+                                  <td className="py-3 px-3 font-semibold">{formatQuantity(item.quantity)}</td>
+                                  <td className="py-3 px-3 font-semibold">{displayPrice}</td>
+                                  <td className="py-3 px-3 font-semibold">{displayTotal}</td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
