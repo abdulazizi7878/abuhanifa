@@ -488,28 +488,28 @@ function EstimatePDF({ estimate }) {
         <View>
           <View style={pdfStyles.brandHeaderBox}>
             <Image src="/images/logo.jpg" style={pdfStyles.logoSmall} />
-            <Text style={{ fontFamily: "Times-Roman", fontSize: 11, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>
+            <Text style={{ fontFamily: "Times-Roman", fontSize: 13, fontWeight: "bold", color: "#0c152a", textAlign: "center" }}>
               <Text style={{ color: "#ec0800" }}>Abuhanifa</Text> <Text style={{ color: "#007fef" }}>Installation Ethiopia</Text> 
             </Text>
-            <Text style={{ fontFamily: "VisualGeez", fontSize: 6, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
+            <Text style={{ fontFamily: "VisualGeez", fontSize: 11, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
               <Text style={{ color: "#ec0800" }}>አቡሐኒፋ</Text> <Text style={{ color: "#007fef" }}>ኢንስታሌሽን ኢትዮጵያ።</Text> 
             </Text>
           </View>
 
           <View style={pdfStyles.materialHeader}>
             <View>
-              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#007fef" }}>Material Estimate & Pricing Schedule</Text>
+              <Text style={{ fontFamily: "Times-Roman", fontSize: 10, color: "#007fef" }}>Material Estimate & Pricing Schedule</Text>
 
               {data.customerName && (
-                <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#007fef", marginTop: 1 }}>
+                <Text style={{ fontFamily: "Times-Roman", fontSize: 10, color: "#007fef", marginTop: 1 }}>
                   Customer: {data.customerName}
                 </Text>
               )}
             </View>
             <View style={{ textAlign: "right" }}>
-              <Text style={{ fontFamily: "Times-Roman", fontSize: 6, color: "#007fef" }}>Order #{data.id}</Text>
+              <Text style={{ fontFamily: "Times-Roman", fontSize: 10, color: "#007fef" }}>Order #{data.id}</Text>
               {data.createdAt && (
-                <Text style={{ fontFamily: "Times-Roman", fontSize: 5.5, color: "#007fef" }}>{formatDate(data.createdAt)}</Text>
+                <Text style={{ fontFamily: "Times-Roman", fontSize: 7, color: "#007fef" }}>{formatDate(data.createdAt)}</Text>
               )}
             </View>
           </View>

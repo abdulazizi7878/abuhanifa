@@ -197,7 +197,6 @@ function Cont(){
                         </p>
                         <ul className="my-2">
                             <li className="_LI _AY text-sm">{t("p1")}</li>
-                            <li className="_LI _AY text-sm">{t("p2")}</li>
                             <li className="_LI _AY text-sm">{t("p3")}</li>
                             <li className="_LI _AY text-sm">{t("p4")}</li>
                             <li className="_LI _AY text-sm">{t("p5")}</li>
