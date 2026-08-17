@@ -105,7 +105,8 @@
         "Select the job": "ስራውን ይምረጡ",
         "Electric": "ኤሌክትሪክ",
         "Plumbing": "ቧንቧ",
-        "New Installation": "አዲስ ተከላ",
+        "Sanitary": "ሳኒታሪ",
+        "New Installation": "አዲስ ዝርጋታ",
         "Renovation and Maintenance": "ማደሻ እና ጥገና",
         "Finishing Work": "የፊኒሺንግ ስራ",
         "If you have any idea": "ያለዎትን ሃሳብ እዚህ ይግለጹ",
@@ -113,7 +114,13 @@
         "Send": "ይላኩ",
         "Sending your order": "ትዕዛዝዎ በመላክ ላይ ነው...",
         "Order successfully sent!": "ትዕዛዝዎ በተሳካ ሁኔታ ተልኳል!",
-        "Your order couldn't be sent!": "ትዕዛዝዎ ሊላክ አልቻለም!"
+        "Your order couldn't be sent!": "ትዕዛዝዎ ሊላክ አልቻለም!",
+        "Please enter your name!": "እባክዎ ስምዎን ያስገቡ!",
+        "Please enter your phone number!": "እባክዎ ስልክ ቁጥርዎን ያስገቡ!",
+        "Please enter your location!": "እባክዎ አድራሻዎን ያስገቡ!",
+        "Please choose the job!": "እባክዎ ስራውን ይምረጡ!",
+        "Select the job type!": "የስራውን አይነት ይምረጡ!",
+        "Select the job stage!": "የስራውን ምዕራፍ ይምረጡ!"
     },
     "orderProduct": {
         "title": "ምርቱን ከማዘዝዎ በፊት ዋጋውን ያረጋግጡ። ዋጋውን ለማየት የምርቱን መጠን ያስገቡና በተኑን ይጫኑ!",

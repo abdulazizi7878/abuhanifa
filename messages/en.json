@@ -105,6 +105,7 @@
         "Select the job":"Select the Job",
         "Electric":"Electric",
         "Plumbing":"Plumbing",
+        "Sanitary":"Sanitary",
         "New Installation":"New Installation",
         "Renovation and Maintenance":"Renovation and Maintenance",
         "Finishing Work":"Finishing Work",
@@ -113,7 +114,13 @@
         "Send":"Send",
         "Sending your order":"Sending your order...",
         "Order successfully sent!":"Order successfully sent!",
-        "Your order couldn't be sent!":"Your order couldn't be sent!"
+        "Your order couldn't be sent!":"Your order couldn't be sent!",
+        "Please enter your name!": "Please enter your name!",
+        "Please enter your phone number!": "Please enter your phone number!",
+        "Please enter your location!": "Please enter your location!",
+        "Please choose the job!": "Please choose the job!",
+        "Select the job type!": "Select the job type!",
+        "Select the job stage!":"Select the job stage!"
     },
     "orderProduct":{
         "title":"Check The Price Before Ordering the Product, to check the price, enter the amount of product and click the button!",
@@ -147,7 +154,9 @@
         "Please upload receipt image!":"Please upload receipt image!",
         "Sending your order!":"Sending your order!",
         "Product successfully ordered":"Product successfully ordered",
-        "We couldn't order your product!":"We couldn't order your product!"
+        "We couldn't order your product!":"We couldn't order your product!",
+        "Order successfully sent!":"Order successfully sent!",
+        "Your order couldn't be sent!":"Your order couldn't be sent!"
     },
     "comment": {
         "Name": "Name",

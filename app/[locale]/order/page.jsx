@@ -54,7 +54,7 @@ export default function Order(){
     };
 
     async function SendData() {
-        const posting = toast.loading("Sending your order...");
+        const posting = toast.loading(t("Sending your order"));
         try {
             const response = await fetch("/api/postorder", {
                 headers: { "Content-Type": "application/json" },
@@ -67,13 +67,13 @@ export default function Order(){
             });
 
             if(response.ok){
-                toast.success("Order successfully sent!", { id: posting });
+                toast.success(t("Order successfully sent!"), { id: posting });
                 window.location.href = "/";
             } else {
-                toast.error("Your order couldn't be sent!", { id: posting });
+                toast.error(t("Your order couldn't be sent!"), { id: posting });
             }
         } catch(err){
-            toast.error("Your order couldn't be sent!", { id: posting });
+            toast.error(t("Your order couldn't be sent!"), { id: posting });
         }
     }
 
@@ -100,8 +100,8 @@ export default function Order(){
                     {step === 1 && (
                         <div className="space-y-4 animate-fadeIn">
                             <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 1 of 6</span>
-                            <h2 className="text-2xl font-black text-foreground">{t("What is your name?")}</h2>
-                            <p className="text-sm text-foreground/60">{t("Please enter your full name so we know who to contact.")}</p>
+                            <h2 className="text-2xl font-black text-foreground">{t("Name")}?</h2>
+                            <p className="text-sm text-foreground/60">{t("Please enter your name!")}</p>
                             <input 
                                 type="text" 
                                 placeholder={t("Name")} 
@@ -116,8 +116,8 @@ export default function Order(){
                     {step === 2 && (
                         <div className="space-y-4 animate-fadeIn">
                             <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 2 of 6</span>
-                            <h2 className="text-2xl font-black text-foreground">{t("Enter your phone number")}</h2>
-                            <p className="text-sm text-foreground/60">{t("We will use this to call you regarding your appointment schedule.")}</p>
+                            <h2 className="text-2xl font-black text-foreground">{t("Phone Number")}</h2>
+                            <p className="text-sm text-foreground/60">{t("Please enter your phone number!")}</p>
                             {/* type="number" with onWheel prevention to stop scrolling changes */}
                             <input 
                                 type="number" 
@@ -134,8 +134,8 @@ export default function Order(){
                     {step === 3 && (
                         <div className="space-y-4 animate-fadeIn">
                             <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 3 of 6</span>
-                            <h2 className="text-2xl font-black text-foreground">{t("Select your location")}</h2>
-                            <p className="text-sm text-foreground/60">{t("Choose the city where our service team needs to arrive.")}</p>
+                            <h2 className="text-2xl font-black text-foreground">{t("Location")}</h2>
+                            <p className="text-sm text-foreground/60">{t("Please enter your location!")}</p>
                             <select 
                                 value={formData.location}
                                 onChange={(e) => handleChange("location", e.target.value)}
@@ -154,13 +154,13 @@ export default function Order(){
                         <div className="space-y-4 animate-fadeIn">
                             <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 4 of 6</span>
                             <h2 className="text-2xl font-black text-foreground">{t("Select the job")}</h2>
-                            <p className="text-sm text-foreground/60">{t("Choose the primary service category you require (multiple allowed).")}</p>
+                            <p className="text-sm text-foreground/60">{t("Select the job type!")}</p>
                             
                             <div className="grid grid-cols-2 gap-4 mt-2">
                                 {[
                                     { id: "electric", label: t("Electric") },
                                     { id: "plumbing", label: t("Plumbing") },
-                                    { id: "sanitary", label: t("Sanitary") }
+                                    { id: "sanitary", label: t("Sanitary") },
                                 ].map((item) => {
                                     const isSelected = formData.jobs.includes(item.id);
                                     return (
@@ -183,8 +183,8 @@ export default function Order(){
                     {step === 5 && (
                         <div className="space-y-4 animate-fadeIn">
                             <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 5 of 6</span>
-                            <h2 className="text-2xl font-black text-foreground">{t("Select the job type")}</h2>
-                            <p className="text-sm text-foreground/60">{t("What specific stage or type of work is this? (Multiple options selectable)")}</p>
+                            <h2 className="text-2xl font-black text-foreground">{t("Select the job")}</h2>
+                            <p className="text-sm text-foreground/60">{t("Select the job stage!")}</p>
                             
                             <div className="flex flex-col gap-2 mt-2">
                                 {[
@@ -214,7 +214,7 @@ export default function Order(){
                         <div className="space-y-4 animate-fadeIn">
                             <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 6 of 6</span>
                             <h2 className="text-2xl font-black text-foreground">{t("If you have any idea")}... <span className="text-xs font-normal text-foreground/40">(Optional)</span></h2>
-                            <p className="text-sm text-foreground/60">{t("Provide any further instructions, specifications, or notes.")}</p>
+                            <p className="text-sm text-foreground/60">{t("If you have any idea")}</p>
                             <textarea 
                                 value={formData.comment}
                                 onChange={(e) => handleChange("comment", e.target.value)}

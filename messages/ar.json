@@ -106,6 +106,7 @@
         "Select the job": "اختر نوع العمل",
         "Electric": "كهرباء",
         "Plumbing": "سباكة",
+        "Sanitary": "صحي",
         "New Installation": "تركيب جديد",
         "Renovation and Maintenance": "ترميم وصيانة",
         "Finishing Work": "أعمال التشطيب",
@@ -114,7 +115,13 @@
         "Send": "إرسال",
         "Sending your order": "جاري إرسال طلبك...",
         "Order successfully sent!": "تم إرسال طلبك بنجاح!",
-        "Your order couldn't be sent!": "تعذر إرسال طلبك!"
+        "Your order couldn't be sent!": "تعذر إرسال طلبك!",
+        "Please enter your name!": "الرجاء إدخال اسمك!",
+        "Please enter your phone number!": "الرجاء إدخال رقم هاتفك!",
+        "Please enter your location!": "الرجاء إدخال موقعك!",
+        "Please choose the job!": "الرجاء اختيار العمل!",
+        "Select the job type!": "حدد نوع العمل!",
+        "Select the job stage!": "حدد مرحلة العمل!"
     },
     "orderProduct": {
         "title": "تحقق من السعر قبل طلب المنتج، لمعرفة السعر، أدخل كمية المنتج واضغط على الزر!",
