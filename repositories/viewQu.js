@@ -99,3 +99,11 @@ export async function ShowPromotion(link) {
 
     return promotion;
 }
+
+export async function ShowProductPreview(){
+    const [products] = await db.query(
+        "SELECT id, name, description, image, link FROM products ORDER BY id DESC LIMIT 10;"
+    )
+
+    return products;
+}

@@ -8,6 +8,7 @@ const languages = [
   { code: "en", name: "English" },
   { code: "am", name: "አማርኛ" },
   { code: "ar", name: "العربية" },
+  { code: "om", name: "Oromifa" },
 ];
 
 export default function LanguageSwitcher({ display }) {

@@ -1,7 +1,7 @@
 "use client"
 
 import Header from "@/components/header";
-import Footer from "@/components/footer"
+import Footer from "@/components/footer";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -12,8 +12,9 @@ export default function Order(){
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         name: "",
-        phone_number: "",
+        contact_info: "",
         location: "",
+        custom_location: "",
         jobs: [],      
         job_types: [], 
         comment: ""
@@ -41,20 +42,35 @@ export default function Order(){
     // Validation checks for each individual step
     const isStepValid = () => {
         switch(step) {
-            case 1: return formData.name.trim().length > 3;
+            case 1: 
+                return formData.name.trim().length >= 1;
             case 2: 
-                const cleanPhone = formData.phone_number.replaceAll(" ", "");
-                return cleanPhone.length >= 10 && cleanPhone.length <= 12;
-            case 3: return ["addis_ababa", "buta_jira", "worabe", "halaba"].includes(formData.location);
-            case 4: return formData.jobs.length > 0;
-            case 5: return formData.job_types.length > 0;
-            case 6: return true; // Comment is optional
-            default: return false;
+                return formData.contact_info.trim().length > 0;
+            case 3: 
+                if (["addis_ababa", "buta_jira", "worabe", "halaba"].includes(formData.location)) {
+                    return true;
+                }
+                if (formData.location === "other") {
+                    return formData.custom_location.trim().length > 0;
+                }
+                return false;
+            case 4: 
+                return formData.jobs.length > 0;
+            case 5: 
+                return formData.job_types.length > 0;
+            case 6: 
+                return true; // Comment is optional
+            default: 
+                return false;
         }
     };
 
     async function SendData() {
         const posting = toast.loading(t("Sending your order"));
+        
+        // Resolve final location value if custom option was selected
+        const finalLocation = formData.location === "other" ? formData.custom_location.trim() : formData.location;
+
         try {
             const response = await fetch("/api/postorder", {
                 headers: { "Content-Type": "application/json" },
@@ -62,6 +78,7 @@ export default function Order(){
                 credentials: "include",
                 body: JSON.stringify({
                     ...formData,
+                    location: finalLocation,
                     comment: formData.comment.trim() === "" ? "No comment" : formData.comment
                 })
             });
@@ -79,7 +96,6 @@ export default function Order(){
 
     return (
         <>
-        {/* Header is now actively used at the top */}
         <Header />
 
         <main className="min-h-screen bg-background flex flex-col justify-between items-center py-10 px-4 relative mt-20">
@@ -99,7 +115,7 @@ export default function Order(){
                 <div className="min-h-[220px] flex flex-col justify-center">
                     {step === 1 && (
                         <div className="space-y-4 animate-fadeIn">
-                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 1 of 6</span>
+                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">{t("Step 1 of 6")}</span>
                             <h2 className="text-2xl font-black text-foreground">{t("Name")}?</h2>
                             <p className="text-sm text-foreground/60">{t("Please enter your name!")}</p>
                             <input 
@@ -115,17 +131,15 @@ export default function Order(){
 
                     {step === 2 && (
                         <div className="space-y-4 animate-fadeIn">
-                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 2 of 6</span>
-                            <h2 className="text-2xl font-black text-foreground">{t("Phone Number")}</h2>
-                            <p className="text-sm text-foreground/60">{t("Please enter your phone number!")}</p>
-                            {/* type="number" with onWheel prevention to stop scrolling changes */}
+                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">{t("Step 2 of 6")}</span>
+                            <h2 className="text-2xl font-black text-foreground">{t("Contact Method")}</h2>
+                            <p className="text-sm text-foreground/60">{t("contact_method_subtitle")}</p>
                             <input 
-                                type="number" 
-                                placeholder={t("Phone Number")} 
-                                value={formData.phone_number}
-                                onChange={(e) => handleChange("phone_number", e.target.value)}
-                                onWheel={(e) => e.target.blur()}
-                                className="w-full mt-2 border border-(--border) bg-background rounded-2xl px-5 py-4 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/20 transition-all shadow-inner [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                type="text" 
+                                placeholder={t("contact_method_placeholder")} 
+                                value={formData.contact_info}
+                                onChange={(e) => handleChange("contact_info", e.target.value)}
+                                className="w-full mt-2 border border-(--border) bg-background rounded-2xl px-5 py-4 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/20 transition-all shadow-inner"
                                 autoFocus
                             />
                         </div>
@@ -133,7 +147,7 @@ export default function Order(){
 
                     {step === 3 && (
                         <div className="space-y-4 animate-fadeIn">
-                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 3 of 6</span>
+                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">{t("Step 3 of 6")}</span>
                             <h2 className="text-2xl font-black text-foreground">{t("Location")}</h2>
                             <p className="text-sm text-foreground/60">{t("Please enter your location!")}</p>
                             <select 
@@ -146,13 +160,25 @@ export default function Order(){
                                 <option value="buta_jira">{t("Buta Jira")}</option>
                                 <option value="worabe">{t("Worabe")}</option>
                                 <option value="halaba">{t("Halaba")}</option>
+                                <option value="other">{t("Other")}</option>
                             </select>
+
+                            {formData.location === "other" && (
+                                <input 
+                                    type="text" 
+                                    placeholder={t("custom_location_placeholder")} 
+                                    value={formData.custom_location}
+                                    onChange={(e) => handleChange("custom_location", e.target.value)}
+                                    className="w-full mt-3 border border-(--border) bg-background rounded-2xl px-5 py-4 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/20 transition-all shadow-inner animate-fadeIn"
+                                    autoFocus
+                                />
+                            )}
                         </div>
                     )}
 
                     {step === 4 && (
                         <div className="space-y-4 animate-fadeIn">
-                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 4 of 6</span>
+                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">{t("Step 4 of 6")}</span>
                             <h2 className="text-2xl font-black text-foreground">{t("Select the job")}</h2>
                             <p className="text-sm text-foreground/60">{t("Select the job type!")}</p>
                             
@@ -161,6 +187,8 @@ export default function Order(){
                                     { id: "electric", label: t("Electric") },
                                     { id: "plumbing", label: t("Plumbing") },
                                     { id: "sanitary", label: t("Sanitary") },
+                                    { id: "mobile_maintenance", label: t("Mobile Maintenance") },
+                                    { id: "computer_maintenance", label: t("Computer Maintenance") }
                                 ].map((item) => {
                                     const isSelected = formData.jobs.includes(item.id);
                                     return (
@@ -182,7 +210,7 @@ export default function Order(){
 
                     {step === 5 && (
                         <div className="space-y-4 animate-fadeIn">
-                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 5 of 6</span>
+                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">{t("Step 5 of 6")}</span>
                             <h2 className="text-2xl font-black text-foreground">{t("Select the job")}</h2>
                             <p className="text-sm text-foreground/60">{t("Select the job stage!")}</p>
                             
@@ -212,13 +240,13 @@ export default function Order(){
 
                     {step === 6 && (
                         <div className="space-y-4 animate-fadeIn">
-                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">Step 6 of 6</span>
-                            <h2 className="text-2xl font-black text-foreground">{t("If you have any idea")}... <span className="text-xs font-normal text-foreground/40">(Optional)</span></h2>
+                            <span className="text-xs uppercase tracking-wider text-(--primary) font-bold">{t("Step 6 of 6")}</span>
+                            <h2 className="text-2xl font-black text-foreground">{t("If you have any idea")}... <span className="text-xs font-normal text-foreground/40">({t("Optional")})</span></h2>
                             <p className="text-sm text-foreground/60">{t("If you have any idea")}</p>
                             <textarea 
                                 value={formData.comment}
                                 onChange={(e) => handleChange("comment", e.target.value)}
-                                placeholder="Describe details here..."
+                                placeholder={t("comment_placeholder")}
                                 className="w-full mt-2 border border-(--border) bg-background rounded-2xl p-4 h-32 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/20 transition-all shadow-inner resize-none"
                                 autoFocus
                             />
@@ -265,7 +293,6 @@ export default function Order(){
             </div>
         </main>
 
-        {/* Footer is now actively used at the bottom */}
         <Footer />
         </>
     );

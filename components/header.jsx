@@ -1,192 +1,189 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
-import LanguageSwitcher from "./lannguageSwitcher";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from './lannguageSwitcher';
+
+const NAV_ITEMS = [
+  { key: "home", href: "/" },
+  { key: "order", href: "/order" },
+  { key: "products", href: "/products" },
+  { key: "promotions", href: "/promotions" },
+  { key: "blog", href: "/blog" },
+  { key: "services", href: "/#services" },
+  { key: "contact", href: "/contact" },
+];
 
 export default function Header() {
-    const t = useTranslations("header");
-    const [isNavVisible, setNavvisible] = useState(false);
-    const [screenPosition, setScreenPosition] = useState(0);
-    const [lastScreenPosition, setLastScreenPosition] = useState(0);
+  const t = useTranslations("header");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
-    function ChangeTheme() {
-        let themeContainer = document.getElementById("theme");
-        let root = document.documentElement;
-        root.classList.toggle("dark");
+  // Sync dark mode state with document element on mount
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'));
+  }, []);
 
-        let theme = (localStorage.getItem("theme") == "dark") ? "dark" : "light";
+  // Toggle dark mode class on html/root tag
+  const toggleTheme = () => {
+    const newDark = !isDark;
+    setIsDark(newDark);
+    document.documentElement.classList.toggle('dark', newDark);
+  };
 
-        if (theme === "dark") {
-            document.documentElement.classList.remove("dark");
-            if (themeContainer) {
-                themeContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="20px" fill="var(--background)"><path d="M484-80q-84 0-157.5-32t-128-86.5Q144-253 112-326.5T80-484q0-146 93-257.5T410-880q-18 99 11 193.5T521-521q71 71 165.5 100T880-410q-26 144-138 237T484-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T464-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T160-484q0 135 94.5 229.5T484-160Zm-20-305Z"/></svg>';
-                themeContainer.style.rotate = "360deg";
-            }
-            localStorage.setItem("theme", "light");
-        } else {
-            document.documentElement.classList.add("dark");
-            if (themeContainer) {
-                themeContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="20px" fill="var(--background)"><path d="M440-760v-160h80v160h-80Zm266 110-55-55 112-115 56 57-113 113Zm54 210v-80h160v80H760ZM440-40v-160h80v160h-80ZM254-652 140-763l57-56 113 113-56 54Zm508 512L651-255l54-54 114 110-57 59ZM40-440v-80h160v80H40Zm157 300-56-57 112-112 29 27 29 28-114 114Zm113-170q-70-70-70-170t70-170q70-70 170-70t170 70q70 70 70 170t-70 170q-70 70-170 70t-170-70Zm283-57q47-47 47-113t-47-113q-47-47-113-47t-113 47q-47 47-47 113t47 113q47 47 113 47t113-47ZM480-480Z"/></svg>';
-                themeContainer.style.rotate = "-360deg";
-            }
-            localStorage.setItem("theme", "dark");
-        }
+  // Close mobile menu on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
+  }, [isOpen]);
 
-    useEffect(() => {
-        let themeContainer = document.getElementById("theme");
-        if (!themeContainer) return;
-        let theme = localStorage.getItem("theme") == "dark" ? "dark" : "light";
-        let root = document.documentElement;
+  return (
+    <header 
+      className="sticky top-0 z-50 w-full border-b transition-colors"
+      style={{
+        backgroundColor: 'var(--background)',
+        borderColor: 'var(--border)',
+        color: 'var(--foreground)'
+      }}
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Brand / Logo */}
+        <Link 
+          href="/" 
+          className="flex items-center gap-2.5 text-lg font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded-md"
+          style={{ color: 'var(--foreground)' }}
+        >
+          {/* SVG Placeholder replacing external image */}
+          <div 
+            className="flex  size-10 items-center justify-center"
+            style={{ borderColor: 'var(--border)', backgroundColor: 'var(--background)' }}
+          >
+            <img src="/images/logo.jpg" alt="Abuhanifa Logo" className='rounded-full' />
+          </div>
+          <span className="hidden sm:inline-block">{t("title")}</span>
+        </Link>
 
-        if (theme === "dark") {
-            root.classList.add("dark");
-            themeContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="20px" fill="var(--background)"><path d="M440-760v-160h80v160h-80Zm266 110-55-55 112-115 56 57-113 113Zm54 210v-80h160v80H760ZM440-40v-160h80v160h-80ZM254-652 140-763l57-56 113 113-56 54Zm508 512L651-255l54-54 114 110-57 59ZM40-440v-80h160v80H40Zm157 300-56-57 112-112 29 27 29 28-114 114Zm113-170q-70-70-70-170t70-170q70-70 170-70t170 70q70 70 70 170t-70 170q-70 70-170 70t-170-70Zm283-57q47-47 47-113t-47-113q-47-47-113-47t-113 47q-47 47-47 113t47 113q47 47 113 47t113-47ZM480-480Z"/></svg>';
-            themeContainer.style.rotate = "720deg";
-            localStorage.setItem("theme", "dark");
-        } else {
-            root.classList.remove("dark");
-            themeContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="20px" fill="var(--background)"><path d="M484-80q-84 0-157.5-32t-128-86.5Q144-253 112-326.5T80-484q0-146 93-257.5T410-880q-18 99 11 193.5T521-521q71 71 165.5 100T880-410q-26 144-138 237T484-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T464-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T160-484q0 135 94.5 229.5T484-160Zm-20-305Z"/></svg>';
-            themeContainer.style.rotate = "-720deg";
-            localStorage.setItem("theme", "light");
-        }
-    }, []);
+        {/* Desktop Navigation */}
+        <nav aria-label="Main Navigation" className="hidden md:flex md:items-center md:gap-x-6">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.key}
+              href={item.href}
+              className="text-sm font-medium transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded-md px-1 py-0.5"
+              style={{ color: 'var(--foreground)' }}
+            >
+              {t(item.key)}
+            </Link>
+          ))}
+        </nav>
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScreenPosition(window.scrollY);
-        };
+        {/* Action Controls */}
+        <div className="flex items-center gap-x-3">
+          {/* Desktop Theme Switcher */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="hidden md:inline-flex items-center justify-center rounded-2xl border p-2 text-sm font-medium transition-colors hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
+            style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
+          >
+            {isDark ? (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
 
-        window.addEventListener("scroll", handleScroll);
+          {/* Mobile Menu Button (Positioned before Language Switcher) */}
+          <button
+            type="button"
+            aria-controls="mobile-menu"
+            aria-expanded={isOpen}
+            onClick={() => setIsOpen(!isOpen)}
+            className="inline-flex items-center justify-center rounded-md p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current md:hidden"
+            style={{ color: 'var(--foreground)' }}
+          >
+            <span className="sr-only">{isOpen ? 'Close main menu' : 'Open main menu'}</span>
+            {isOpen ? (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            )}
+          </button>
 
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
-    useEffect(() => {
-        const header = document.getElementById("header");
-        if (!header) return;
-
-        if (screenPosition > lastScreenPosition) {
-            header.style.transform = "translateY(-100%)";
-        } else if (screenPosition < lastScreenPosition) {
-            header.style.transform = "translateY(0)";
-        }
-
-        setLastScreenPosition(screenPosition);
-    }, [screenPosition, lastScreenPosition]);
-
-    return (
-        <div className="py-4 flex flex-col justify-center items-center w-[96%] max-w-7xl h-fit fixed top-0 left-[50%] -translate-x-[50%] z-40 transition-transform duration-500" id="header">
-            <header className="w-full border border-(--border) p-3 px-4 md:px-6 dark:bg-background/60 bg-background/80 backdrop-blur-2xl backdrop-saturate-250 rounded-full shadow-xl shadow-black/15">
-                <div className="hd w-full flex justify-between items-center">
-
-                    {/* Logo & Title */}
-                    <div className="logo flex justify-start items-center gap-x-2 md:gap-x-4">
-                        <img src="/images/logo.jpg" alt="ABUHANIFA_INSTALLATION_LOGO" width={42} height={42} className="rounded-full object-cover" />  
-                        <p className=" w-[40%] text-xs md:text-sm font-bold text-left sm:flex tracking-tight text-(--foreground)">{t("title")}</p>
-                    </div>
-
-                    {/* Medium Screens Navs */}
-                    <div className="navs hidden md:flex lg:hidden items-center">
-                        <ul className="flex items-center gap-x-1">
-                            <li><a href="/#" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("home")}</a></li>
-                            <li><a href="/order/" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("order")}</a></li>
-                            <li><a href="/#services" className="duration-300 text-xs font-medium px-3 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("services")}</a></li>
-                        </ul>       
-                    </div>
-
-                    {/* Large Screens Navs */}
-                    <div className="navs hidden lg:flex items-center">
-                        <ul className="flex items-center gap-x-1">
-                            <li><a href="/#" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("home")}</a></li>
-                            <li><a href="/order/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("order")}</a></li>
-                            <li><a href="/products/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("products")}</a></li>
-                            <li><a href="/promotions/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("promotions")}</a></li>
-                            <li><a href="/blog/" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("blog")}</a></li>
-                            <li><a href="/#services" className="duration-300 text-sm font-medium px-4 py-1.5 hover:bg-(--foreground) hover:text-(--background) rounded-full">{t("services")}</a></li>
-                        </ul>       
-                    </div>
-
-                    {/* Language Switcher - Always Visible */}
-                    <div className="flex items-center">
-                       <LanguageSwitcher display={false} /> 
-                    </div>
-
-                    {/* Menu and Theme Toggles */}
-                    <div className="flex items-center gap-x-3 px-3 ">
-                        <div className="border bg-(--foreground) flex items-center p-1.5 px-3 rounded-full shadow-sm gap-x-2">
-                            <div className="menu cursor-pointer p-1 rounded-full hover:opacity-80 transition-opacity lg:hidden" onClick={() => { setNavvisible(!isNavVisible) }}>
-                                {isNavVisible ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="var(--background)">
-                                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-                                    </svg>
-                                ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="var(--background)">
-                                        <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
-                                    </svg>            
-                                )}
-                            </div>
-
-                            <div className="theme transition-all duration-300 border border-background/15 rounded-full bg-background/25 hover:bg-background/40 cursor-pointer p-1.5" onClick={() => { ChangeTheme(); }}>
-                                <div id="theme" className="transition-all duration-700 flex items-center justify-center"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>      
-            </header>
-
-            <Nav isNavVisible={isNavVisible} onClick={() => setNavvisible(false)} /> 
+          {/* Language Switcher */}
+          <LanguageSwitcher display={false} />
         </div>
-    );
-}
+      </div>
 
-function Nav({ isNavVisible, onClick }) {
-    const t = useTranslations("header");
+      {/* Mobile Navigation Drawer */}
+      <div
+        id="mobile-menu"
+        className={`fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col justify-between px-6 py-6 transition-all duration-200 ease-in-out md:hidden ${
+          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        }`}
+        style={{
+          backgroundColor: 'var(--background)',
+          color: 'var(--foreground)'
+        }}
+      >
+        <nav aria-label="Mobile Navigation" className="flex flex-col space-y-4">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.key}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+              className="text-base font-semibold transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded-md py-1"
+              style={{ color: 'var(--foreground)' }}
+            >
+              {t(item.key)}
+            </Link>
+          ))}
+        </nav>
 
-    return (
-        <>
-            {/* Backdrop */}
-            <div 
-                className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-30 transition-opacity duration-300 lg:hidden ${isNavVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`} 
-                onClick={onClick}
-            />
-
-            {/* Strictly Centered Menu */}
-            <div className={`fixed top-24 left-0 right-0 mx-auto z-40 w-[90%] max-w-sm flex justify-center min-h-40 transition-all duration-500 transform ${isNavVisible ? "translate-y-0 opacity-100 scale-100 pointer-events-auto" : "-translate-y-6 opacity-0 scale-95 pointer-events-none"}`} id="nav">
-                <div className="relative w-full bg-(--background)/90 border border-(--border) backdrop-blur-2xl backdrop-saturate-200 rounded-3xl flex flex-col gap-5 justify-start items-center py-8 px-6 sm:px-10 shadow-2xl shadow-black/20">
-                    <div className="w-full text-center">
-                        <h1 className="font-extrabold text-base tracking-tight text-(--foreground)">{t("title")}</h1>    
-                        <hr className="w-full my-2 border-(--border)" />            
-                    </div>
-                
-                    <div className="flex flex-col gap-5 justify-center items-center w-full">
-                        <ul className="flex flex-col gap-2 justify-center items-center w-full">
-                            <li className="w-full text-center"><a href="/" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("home")}</a></li>
-                            <li className="w-full text-center"><a href="/blog" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("blog")}</a></li>
-                            <li className="w-full text-center"><a href="/products" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("products")}</a></li>
-                            <li className="w-full text-center"><a href="/promotions" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("promotions")}</a></li>
-                            <li className="w-full text-center"><a href="/contact" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("contact")}</a></li>
-                            <li className="w-full text-center"><a href="/order" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("order")}</a></li>
-                            <li className="w-full text-center"><a href="/#services" onClick={onClick} className="block text-sm font-medium duration-200 px-6 py-2 hover:bg-(--foreground) hover:text-(--background) rounded-full transition-colors">{t("services")}</a></li>
-                        </ul>
-                        
-                        <div className="w-full flex justify-center pt-2 border-t border-(--border)">
-                            <LanguageSwitcher display={true} />
-                        </div>
-
-                        <span className="text-[11px] text-center opacity-60 font-medium leading-tight">Abu-Hanifa Installation <br /> &copy; All Right Reserved</span>
-                    </div>
-
-                    <div className="absolute top-4 right-4 bg-(--foreground)/10 hover:bg-(--foreground)/20 rounded-full p-2 cursor-pointer transition-colors" onClick={onClick}>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="var(--foreground)">
-                            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+        {/* Mobile Theme Switcher */}
+        <div className="border-t pt-4 flex items-center justify-between" style={{ borderColor: 'var(--border)' }}>
+          <span className="text-sm font-medium">Theme</span>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="flex items-center gap-2 rounded-2xl border px-3 py-1.5 text-xs font-semibold"
+            style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
+          >
+            {isDark ? 'Dark Mode' : 'Light Mode'}
+            {isDark ? (
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
 }

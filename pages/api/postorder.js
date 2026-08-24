@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     const {
         name,
-        phone_number,
+        contact_info,
         location,
         jobs,
         job_types,
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     try {
         const response = await EnterOrder(
             name,
-            phone_number,
+            contact_info,
             location,
             jobs,
             job_types,
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             message: err.message || err,
             sentData: {
                 name,
-                phone_number,
+                contact_info,
                 location,
                 jobs,
                 job_types,

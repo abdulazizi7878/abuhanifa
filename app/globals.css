@@ -46,6 +46,9 @@ html{
 .am{
   font-family: var(--third-font);
 }
+.om{
+  font-family: var(--third-font);
+}
 .ar{
   font-family: var(--arabic-font);
 }

@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 
 export async function EnterOrder(
     name,
-    phone_number,
+    contact_info,
     location,
     jobs,
     job_types,
@@ -13,16 +13,12 @@ export async function EnterOrder(
         throw new Error("Enter a valid Name!");
     }
 
-    if (
-        !phone_number ||
-        phone_number.length > 12 ||
-        phone_number.length < 10
-    ) {
-        throw new Error("Enter a valid Phone Number!");
+    if (!contact_info) {
+        throw new Error("Enter a valid contact information!");
     }
 
-    if (!location || typeof location !== "string") {
-        throw new Error("Enter a valid Location!");
+    if (!location) {
+        throw new Error("Enter a valid location!");
     }
 
     if (!Array.isArray(jobs) || jobs.length === 0) {
@@ -40,7 +36,7 @@ export async function EnterOrder(
     // Repo stays completely unchanged
     const response = await InsertOrder(
         name,
-        phone_number,
+        contact_info,
         location,
         job,
         job_type,
