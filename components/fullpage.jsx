@@ -11,55 +11,89 @@ import FloatingButtons from "./floatingButtons";
 const HERO_GALLERY_IMAGES = [
   {
     id: 1,
-    url: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop",
+    url: "/images/hero/hero.jpeg",
     alt: "Electrical Installation Work",
   },
   {
     id: 2,
-    url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop",
-    alt: "Plumbing and Pipe Assembly",
+    url: "/images/hero/electrical-1.jpg",
+    alt: "Electrical Installation Work",
   },
   {
     id: 3,
-    url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop",
-    alt: "Engineering Construction Site",
+    url: "/images/hero/plumbing-1.jpg",
+    alt: "Plumbing Installation Work",
   },
   {
     id: 4,
-    url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
-    alt: "Circuit Breaker Maintenance",
+    url: "/images/hero/plumbing-2.jpg",
+    alt: "Plumbing Installation Work",
   },
   {
     id: 5,
-    url: "https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=800&auto=format&fit=crop",
-    alt: "Building Architectural Wiring",
+    url: "/images/hero/electrical-2.jpg",
+    alt: "Electrical Installation Work",
   },
+  {
+    id: 6,
+    url: "/images/hero/plumbing-3.jpg",
+    alt: "Plumbing Installation Work",
+  },
+  {
+    id: 7,
+    url: "/images/hero/plumbing-4.jpg",
+    alt: "Plumbing Installation Work",
+  },
+  {
+    id: 8,
+    url: "/images/hero/plumbing-5.jpeg",
+    alt: "Plumbing Installation Work",
+  },
+
 ];
 
 const FINISHED_WORKS_IMAGES = [
   {
     id: 1,
-    url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800&auto=format&fit=crop",
+    url: "/images/finished_works/electrical-1.jpg",
     titleKey: "work_1_title",
-    alt: "Modern Interior Lighting Project",
+    alt: "Industrial Electrical Breaker Box",
   },
   {
     id: 2,
-    url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
+    url: "/images/finished_works/electrical-11.jpg",
     titleKey: "work_2_title",
     alt: "Industrial Electrical Breaker Box",
   },
   {
     id: 3,
-    url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop",
+    url: "/images/finished_works/plumbing-1.jpg",
     titleKey: "work_3_title",
     alt: "Sanitary & Water Line Installation",
   },
   {
     id: 4,
-    url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800&auto=format&fit=crop",
+    url: "/images/finished_works/electrical-13.jpg",
     titleKey: "work_4_title",
     alt: "Commercial Infrastructure Wiring",
+  },
+  {
+    id: 5,
+    url: "/images/finished_works/plan.jpg",
+    titleKey: "work_5_title",
+    alt: "Industrial Electrical Breaker Box",
+  },
+  {
+    id: 6,
+    url: "/images/finished_works/plumbing-2.jpg",
+    titleKey: "work_6_title",
+    alt: "Industrial Electrical Breaker Box",
+  },
+  {
+    id: 7,
+    url: "/images/finished_works/electrical-6.jpg",
+    titleKey: "work_7_title",
+    alt: "Industrial Electrical Breaker Box",
   },
 ];
 
