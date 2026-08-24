@@ -98,7 +98,7 @@ export default function Order(){
         <>
         <Header />
 
-        <main className="min-h-screen bg-background flex flex-col justify-between items-center py-10 px-4 relative mt-20">
+        <main className="min-h-screen bg-background flex flex-col justify-between items-center py-10 px-4 relative ">
 
             {/* Main Interactive Card Container */}
             <div className="w-full max-w-xl bg-foreground/[0.02] border border-(--border) backdrop-blur-md rounded-3xl p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden">
@@ -187,8 +187,8 @@ export default function Order(){
                                     { id: "electric", label: t("Electric") },
                                     { id: "plumbing", label: t("Plumbing") },
                                     { id: "sanitary", label: t("Sanitary") },
-                                    { id: "mobile_maintenance", label: t("Mobile Maintenance") },
-                                    { id: "computer_maintenance", label: t("Computer Maintenance") }
+                                    { id: "computer_maintenance", label: t("Computer Maintenance") },
+                                    { id: "security_camera", label: t("Security Camera") },
                                 ].map((item) => {
                                     const isSelected = formData.jobs.includes(item.id);
                                     return (
