@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-
 export default function EstimatesManagementPage() {
   const router = useRouter();
 
@@ -18,6 +17,10 @@ export default function EstimatesManagementPage() {
 
   // Copy link feedback state
   const [copiedToken, setCopiedToken] = useState(null);
+
+  // Active Dropdown Menu State
+  const [activeMenuId, setActiveMenuId] = useState(null);
+  const [duplicatingId, setDuplicatingId] = useState(null);
 
   // Delete Modal State
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -48,6 +51,13 @@ export default function EstimatesManagementPage() {
     };
 
     fetchEstimates();
+  }, []);
+
+  // Close dropdown menu when clicking anywhere outside
+  useEffect(() => {
+    const handleOutsideClick = () => setActiveMenuId(null);
+    window.addEventListener("click", handleOutsideClick);
+    return () => window.removeEventListener("click", handleOutsideClick);
   }, []);
 
   const filteredEstimates = useMemo(() => {
@@ -107,9 +117,36 @@ export default function EstimatesManagementPage() {
     }, 2500);
   };
 
+  const handleDuplicate = async (id) => {
+    setDuplicatingId(id);
+    setActiveMenuId(null);
+    try {
+      const response = await fetch(`/api/estimates/${id}/duplicate`, {
+        method: "POST",
+      });
+
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to duplicate estimate.");
+      }
+
+      if (result.data) {
+        setEstimates((prev) => [result.data, ...prev]);
+      } else {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Failed to duplicate estimate.");
+    } finally {
+      setDuplicatingId(null);
+    }
+  };
+
   const openDeleteModal = (est) => {
     setEstimateToDelete(est);
     setDeleteModalOpen(true);
+    setActiveMenuId(null);
   };
 
   const handleDeleteConfirm = async () => {
@@ -139,14 +176,14 @@ export default function EstimatesManagementPage() {
 
   return (
     <>
-      <div className=" bg-background text-foreground">
+      <div className="bg-background text-foreground">
         <div className="max-w-7xl mx-auto space-y-8">
 
           {/* Top Header & Branding */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
             <div>
               <h1 className="text-xl font-bold tracking-tight en" style={{ color: "var(--secondary)" }}>
-                Abu Hanifa Installation
+                Abuhanifa Installation
               </h1>
               <p className="text-2xl sm:text-3xl font-extrabold en mt-1">Estimates</p>
             </div>
@@ -244,10 +281,10 @@ export default function EstimatesManagementPage() {
           {/* Estimates Table */}
           {!loading && !error && filteredEstimates.length > 0 && (
             <div
-              className="rounded-xl border overflow-hidden shadow-md bg-background"
+              className="rounded-xl border shadow-md bg-background"
               style={{ borderColor: "var(--border)" }}
             >
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto min-h-[300px]">
                 <table className="w-full text-left border-collapse text-sm en">
                   <thead>
                     <tr
@@ -265,7 +302,7 @@ export default function EstimatesManagementPage() {
                   </thead>
                   <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
                     {filteredEstimates.map((est, index) => (
-                      <tr key={est.id} className="transition hover:opacity-95">
+                      <tr key={est.id}>
                         <td className="py-4 px-4 opacity-70 font-medium">{index + 1}</td>
                         <td className="py-4 px-4 font-semibold">{est.customerName || "N/A"}</td>
                         <td className="py-4 px-4 opacity-90">{est.projectTitle || "No project title"}</td>
@@ -283,40 +320,83 @@ export default function EstimatesManagementPage() {
                         </td>
                         <td className="py-4 px-4 text-xs opacity-75">{formatDate(est.createdAt)}</td>
                         <td className="py-4 px-4 text-right">
-                          <div className="flex items-center justify-end gap-2 relative">
+                          <div
+                            className="relative inline-block text-left"
+                            onClick={(e) => e.stopPropagation()}
+                          >
                             <button
-                              onClick={() => router.push(`/ahiadmin/edit/estimate/${est.id}`)}
-                              className="px-3 py-1 rounded border text-xs font-medium transition cursor-pointer hover:opacity-80"
+                              type="button"
+                              onClick={() => setActiveMenuId(activeMenuId === est.id ? null : est.id)}
+                              className="p-2 rounded-lg border cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                               style={{ borderColor: "var(--border)" }}
+                              title="Actions"
                             >
-                              Edit
+                              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <circle cx="12" cy="5" r="2" />
+                                <circle cx="12" cy="12" r="2" />
+                                <circle cx="12" cy="19" r="2" />
+                              </svg>
                             </button>
-                            {est.publicToken && (
-                              <>
-                                <div className="relative inline-block">
+
+                            {activeMenuId === est.id && (
+                              <div
+                                className="absolute right-0 top-full mt-1 w-44 rounded-xl shadow-2xl border z-50 overflow-hidden bg-background text-foreground"
+                                style={{ borderColor: "var(--border)" }}
+                              >
+                                <div className="py-1">
                                   <button
-                                    onClick={() => handleCopyPublicLink(est.publicToken)}
-                                    className="px-3 py-1 rounded border text-xs font-medium transition cursor-pointer hover:opacity-80"
-                                    style={{ borderColor: "var(--border)" }}
+                                    onClick={() => {
+                                      setActiveMenuId(null);
+                                      router.push(`/ahiadmin/edit/estimate/${est.id}`);
+                                    }}
+                                    className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                                   >
-                                    {copiedToken === est.publicToken ? "Link copied" : "Copy Link"}
+                                    Edit
+                                  </button>
+
+                                  <button
+                                    onClick={() => handleDuplicate(est.id)}
+                                    disabled={duplicatingId === est.id}
+                                    className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer disabled:opacity-50 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                  >
+                                    {duplicatingId === est.id ? "Duplicating..." : "Duplicate"}
+                                  </button>
+
+                                  {est.publicToken && (
+                                    <>
+                                      <button
+                                        onClick={() => {
+                                          handleCopyPublicLink(est.publicToken);
+                                          setActiveMenuId(null);
+                                        }}
+                                        className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                      >
+                                        {copiedToken === est.publicToken ? "Link Copied!" : "Copy Link"}
+                                      </button>
+
+                                      <button
+                                        onClick={() => {
+                                          setActiveMenuId(null);
+                                          router.push(`/estimate/${est.publicToken}`);
+                                        }}
+                                        className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                      >
+                                        Public Link
+                                      </button>
+                                    </>
+                                  )}
+
+                                  <div className="border-t my-1" style={{ borderColor: "var(--border)" }}></div>
+
+                                  <button
+                                    onClick={() => openDeleteModal(est)}
+                                    className="w-full text-left px-4 py-2 text-xs font-medium text-red-500 cursor-pointer hover:bg-red-500/10 transition-colors"
+                                  >
+                                    Delete
                                   </button>
                                 </div>
-                                <button
-                                  onClick={() => router.push(`/estimate/${est.publicToken}`)}
-                                  className="px-3 py-1 rounded border text-xs font-medium transition cursor-pointer hover:opacity-80"
-                                  style={{ borderColor: "var(--border)" }}
-                                >
-                                  Public Link
-                                </button>
-                              </>
+                              </div>
                             )}
-                            <button
-                              onClick={() => openDeleteModal(est)}
-                              className="px-3 py-1 rounded bg-red-500 text-white text-xs font-medium hover:bg-red-600 transition cursor-pointer shadow-xs"
-                            >
-                              Delete
-                            </button>
                           </div>
                         </td>
                       </tr>
@@ -369,6 +449,5 @@ export default function EstimatesManagementPage() {
         </div>
       </div>    
     </>
-
   );
 }
