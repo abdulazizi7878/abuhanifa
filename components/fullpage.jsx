@@ -214,11 +214,10 @@ function Cont() {
 
       {/* SERVICES SECTION */}
       <section id="services" className="w-11/12">
-        <div className="w-full">
+        <div className="w-full my-6">
           <p className="text-sm font-semibold">{t("OUR SERVICES")}</p>
-          <hr className="mt-2 border-(--border)" />
         </div>
-        <div className="flex flex-wrap my-10 gap-x-16 gap-y-10 justify-center items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Service
             imgSource={"a.webp"}
             title={t("Full Installations")}
@@ -439,29 +438,29 @@ function Cont() {
             </div>
             </div>
 
-          <div className="flex flex-col sm:flex-wrap md:flex-wrap lg:flex-wrap justify-around items-center gap-4">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-fit px-6 py-4 bg-(--primary) shadow-xl shadow-foreground/40 rounded-4xl cursor-pointer relative duration-300"
-            >
-              <span className="text-white text-sm font-medium">
-                {t("join")}
-              </span>
-              <a href="https://t.me/ahieth" className="absolute inset-0"></a>
-            </motion.div>
+           <div className="flex flex-wrap justify-center items-center gap-6 mt-4">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-fit px-8 py-4 bg-(--primary) shadow-xl rounded-full cursor-pointer relative transition-all"
+              >
+                <span className="text-white text-sm font-bold tracking-wide">
+                  {t("join")}
+                </span>
+                <a href="https://t.me/ahieth" className="absolute inset-0"><span className="sr-only">{t("join")}</span></a>
+              </motion.div>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-fit px-6 py-4 bg-(--primary) shadow-xl shadow-foreground/40 rounded-4xl cursor-pointer relative duration-300"
-            >
-              <span className="text-white text-sm font-medium">
-                {t("order")}
-              </span>
-              <a href="/order" className="absolute inset-0"></a>
-            </motion.div>
-          </div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-fit px-8 py-4 bg-background border border-(--border) shadow-lg rounded-full cursor-pointer relative transition-all"
+              >
+                <span className="text-foreground text-sm font-bold tracking-wide">
+                  {t("order")}
+                </span>
+                <a href="/order" className="absolute inset-0"><span className="sr-only">{t("order")}</span></a>
+              </motion.div>
+            </div>
         </div>
       </section>
 
@@ -703,50 +702,33 @@ function HeroSection() {
     </section>
   );
 }
-
 function Service({ imgSource, title, description }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -8 }}
       transition={{ duration: 0.4 }}
-      className="_AY border border-(--border) w-96 overflow-hidden rounded-4xl px-8 py-6 relative z-6 flex flex-col justify-center items-start hover:shadow-lg hover:shadow-black/10"
+      className="border border-(--border) w-full overflow-hidden rounded-4xl p-8 relative z-10 flex flex-col justify-between bg-background/60 backdrop-blur-lg hover:shadow-2xl hover:border-(--primary)/40 transition-all duration-300 group"
     >
-      <div className="mb-4 w-full">
+      <div className="mb-6 w-full flex items-center justify-between">
         <img
           src={`/images/demo-1-${imgSource}`}
           alt="SERVICE_PHOTO"
-          className="size-16 rounded-2xl object-cover"
+          className="w-16 h-16 rounded-2xl object-cover border border-(--border) shadow-md group-hover:scale-105 transition-transform duration-300"
         />
-
-        <div className="absolute -top-4 right-[-15%] -z-1">
-          <img
-            src={`/images/demo-1-${imgSource}`}
-            className="w-60 h-30 z-2 rounded-4xl object-cover"
-            alt=""
-          />
-          <div className="bg-background/75 absolute inset-0 rounded-4xl"></div>
-        </div>
-
-        <hr className="border-(--border) my-2" />
+        <div className="w-2 h-2 rounded-full bg-(--primary)" />
       </div>
-      <div className="relative">
-        <h2 className="font-bold mb-2">{title}</h2>
-        <p className="font-extralight text-muted-foreground">{description}</p>
-        <div className="absolute -bottom-20 left-[-15%] -z-1">
-          <img
-            src={`/images/demo-1-${imgSource}`}
-            className="w-60 h-30 z-2 rounded-4xl object-cover"
-            alt=""
-          />
-          <div className="bg-background/75 absolute inset-0 rounded-4xl"></div>
-        </div>
+      <div>
+        <h2 className="font-bold text-xl mb-3 text-foreground group-hover:text-(--primary) transition-colors">{title}</h2>
+        <p className="font-normal text-muted-foreground text-sm leading-relaxed">{description}</p>
       </div>
     </motion.div>
   );
 }
+
+
 
 function Why({ text, index }) {
   return (
