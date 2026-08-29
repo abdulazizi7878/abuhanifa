@@ -208,5 +208,18 @@
         "Posting your comment!": "Yaadni keessan maxxansamaa jira!",
         "Your comment successfully posted!": "Yaadni keessan milkaa'inaan maxxansameera!",
         "Your comment couldn't be posted!": "Yaadni keessan maxxansamuu hin dandeenye!"
+    },
+    "imageSlider": {
+        "title-1": "Injinaringii fi Ijaarsa Sirrii",
+        "subtitle-1": "Mootummaa fi riqicha humna ibsaa fi ujummoo bishaanii yeroo dheeraaf tajaajilu.",
+        "title-2": "Sirna Siirootaa fi Raabsa Humna Ibsaa Ammayyaa",
+        "title-3": "Furmaata Ujummoo Bishaanii Geessituu",
+        "subtitle-3": "Sirna teeknoolojii saaniitaarii, ho'isaa bishaanii fi hidha ujummoolee bishaanii.",
+        "title-4": "Furmaata Saaniitaarii Ogummaa",
+        "subtitle-4": "Sirna saaniitaarii amansiisaa qulqullina, mijuu fi tajaajila yeroo dheeraaf qophaa'e.",
+        "title-5": "Sirna Dhiyeessii Bishaanii Amansiisaa",
+        "subtitle-5": "Raabsa bishaanii fi hojii ujummoo bishaanii caasaa mana jireenyaa fi daldalaaf ta'u.",
+        "title-6": "Sirna Ibsaa Nageenya Qabu fi Saffisaa",
+        "subtitle-6": "Hojii sarara ibsaa, raabsa humnaa fi diriirsa sararaa sadarkaa ammayyaatiin qophaa'e."
     }
 }

@@ -209,5 +209,19 @@
         "Posting your comment!": "Posting your comment!",
         "Your comment successfully posted!": "Your comment successfully posted!",
         "Your comment couldn't be posted!": "Your comment couldn't be posted!"
+    },
+    "imageSlider": {
+        "title-1": "Precision Engineering & Installation",
+        "subtitle-1": "High-standard electrical and plumbing infrastructure built to last.",
+        "title-2": "Modern Circuit & Power Distribution",
+        "subtitle-2": "Safe, compliant, and efficient commercial power setups.",
+        "title-3": "Advanced Plumbing Solutions",
+        "subtitle-3": "Sanitary, water heater, and pipe network installations.",
+        "title-4": "Professional Sanitary Solutions",
+        "subtitle-4": "Reliable sanitary systems designed for comfort, hygiene, and long-term performance.",
+        "title-5": "Reliable Water Supply Systems",
+        "subtitle-5": "Efficient water distribution and plumbing networks built for residential and commercial projects.",
+        "title-6": "Safe & Efficient Electrical Systems",
+        "subtitle-6": "Professional wiring, power distribution, and electrical installations built to modern standards."
     }
 }
