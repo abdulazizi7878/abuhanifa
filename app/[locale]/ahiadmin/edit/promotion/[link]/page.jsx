@@ -17,11 +17,8 @@ export default function EditPromotions({ params }) {
 
     // Form fields state
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [ownerLink, setOwnerLink] = useState("");
 
     async function GetPromotion() {
         if (!link) {
@@ -51,11 +48,8 @@ export default function EditPromotions({ params }) {
                 const promoData = resData.data[0];
                 setPromotion(promoData);
                 setName(promoData?.name || "");
-                setEmail(promoData?.email || "");
-                setPhoneNumber(promoData?.phone_number || "");
                 setTitle(promoData?.title || "");
                 setDescription(promoData?.description || "");
-                setOwnerLink(promoData?.owner_link || "");
             } else {
                 setError(true);
                 setErrorMessage("We couldn't get the Promotion");
@@ -83,11 +77,6 @@ export default function EditPromotions({ params }) {
             return;
         }
 
-        if (!email.trim()) {
-            toast.error("Promotion email is required.");
-            return;
-        }
-
         setUpdating(true);
         const toastId = toast.loading("Updating promotion...");
 
@@ -99,11 +88,8 @@ export default function EditPromotions({ params }) {
                 method: "POST",
                 body: JSON.stringify({
                     name: name.trim(),
-                    email: email.trim(),
-                    phone_number: phoneNumber,
                     title: title.trim(),
                     description: description.trim(),
-                    owner_link: ownerLink.trim(),
                     link: link,
                 })
             });
@@ -212,40 +198,6 @@ export default function EditPromotions({ params }) {
 
                             <div>
                                 <label className="block text-sm font-medium mb-2 en" style={{ color: 'var(--foreground)' }}>
-                                    Promotion Email <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    title="Promotion Email"
-                                    placeholder="Promotion Email"
-                                    required
-                                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground shadow-sm"
-                                    style={{ borderColor: 'var(--border)' }}
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-2 en" style={{ color: 'var(--foreground)' }}>
-                                    Phone Number <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="phoneNumber"
-                                    value={phoneNumber}
-                                    onChange={(e) => setPhoneNumber(e.target.value)}
-                                    title="Promotion Phone Number"
-                                    placeholder="Promotion Phone Number"
-                                    required
-                                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground shadow-sm"
-                                    style={{ borderColor: 'var(--border)' }}
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-2 en" style={{ color: 'var(--foreground)' }}>
                                     Promotion Title <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -275,23 +227,6 @@ export default function EditPromotions({ params }) {
                                     className="w-full px-4 py-3 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground shadow-sm resize-y"
                                     style={{ borderColor: 'var(--border)' }}
                                 ></textarea>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-2 en" style={{ color: 'var(--foreground)' }}>
-                                    Owner Link <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="ownerLink"
-                                    value={ownerLink}
-                                    onChange={(e) => setOwnerLink(e.target.value)}
-                                    title="Promotion Owner Link"
-                                    placeholder="Promotion owner link"
-                                    required
-                                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground shadow-sm"
-                                    style={{ borderColor: 'var(--border)' }}
-                                />
                             </div>
                         </div>
 

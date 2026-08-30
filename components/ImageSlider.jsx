@@ -33,20 +33,6 @@ const DEFAULT_SLIDES = [
     titleKey: "title-4",
     subtitleKey: "subtitle-4",
   },
-  {
-    id: 5,
-    url: "/images/hero/sec-5.jpg",
-    alt: "Water Supply and Plumbing Installation",
-    titleKey: "title-5",
-    subtitleKey: "subtitle-5",
-  },
-  {
-    id: 6,
-    url: "/images/hero/sec-6.jfif",
-    alt: "Electrical Wiring and Power Systems",
-    titleKey: "title-6",
-    subtitleKey: "subtitle-6",
-  },
 ];
 
 const variants = {

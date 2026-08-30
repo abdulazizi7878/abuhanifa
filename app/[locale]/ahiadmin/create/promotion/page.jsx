@@ -7,11 +7,8 @@ import { Megaphone, Image as ImageIcon, UploadCloud, Sparkles, Send } from "luci
 export default function CreatePromotion() {
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
-        phoneNumber: '',
         title: '',
         description: '',
-        link: ''
     });
     const [file, setFile] = useState(null);
     const [submitting, setSubmitting] = useState(false);
@@ -33,11 +30,8 @@ export default function CreatePromotion() {
     const validateForm = () => {
         const errors = {};
         if (!formData.name.trim()) errors.name = 'Name is required.';
-        if (!formData.email.trim()) errors.email = 'Email is required.';
-        if (!formData.phoneNumber.trim()) errors.phoneNumber = 'Phone number is required.';
         if (!formData.title.trim()) errors.title = 'Promotion title is required.';
         if (!formData.description.trim()) errors.description = 'Description is required.';
-        if (!formData.link.trim()) errors.link = 'Owner link is required.';
         if (!file) errors.file = 'Media file is required.';
 
         setValidationErrors(errors);
@@ -79,12 +73,9 @@ export default function CreatePromotion() {
                         credentials: "include",
                         body: JSON.stringify({
                             name: formData.name,
-                            email: formData.email,
-                            phone_number: formData.phoneNumber,
                             title: formData.title,
                             description: formData.description,
                             image: fileUrl,
-                            owner_link: formData.link,
                             publicId: publicId,
                             resourceType: resourceType
                         })
@@ -95,11 +86,8 @@ export default function CreatePromotion() {
                         toast.success("Promotion posted successfully!", { id: toastId });
                         setFormData({
                             name: '',
-                            email: '',
-                            phoneNumber: '',
                             title: '',
                             description: '',
-                            link: ''
                         });
                         setFile(null);
                     } else {
@@ -181,48 +169,6 @@ export default function CreatePromotion() {
                             )}
                         </div>
 
-                        {/* Email Input */}
-                        <div>
-                            <label className="block text-sm font-medium mb-2" htmlFor="email">
-                                Email <span className="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email"
-                                title="Email" 
-                                placeholder="Email" 
-                                value={formData.email}
-                                onChange={handleChange}
-                                className="w-full rounded-lg px-3.5 py-3 border text-sm outline-none transition" 
-                                style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', color: 'var(--foreground)' }}
-                            />
-                            {validationErrors.email && (
-                                <p className="mt-1 text-xs text-red-500">{validationErrors.email}</p>
-                            )}
-                        </div>
-
-                        {/* Phone Number Input (Changed type to "tel" to prevent scrolling value changes) */}
-                        <div>
-                            <label className="block text-sm font-medium mb-2" htmlFor="phoneNumber">
-                                Phone Number <span className="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="tel" 
-                                id="phoneNumber" 
-                                name="phoneNumber"
-                                title="Phone Number" 
-                                placeholder="Phone Number" 
-                                value={formData.phoneNumber}
-                                onChange={handleChange}
-                                className="w-full rounded-lg px-3.5 py-3 border text-sm outline-none transition" 
-                                style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', color: 'var(--foreground)' }}
-                            />
-                            {validationErrors.phoneNumber && (
-                                <p className="mt-1 text-xs text-red-500">{validationErrors.phoneNumber}</p>
-                            )}
-                        </div>
-
                         {/* Title Input */}
                         <div>
                             <label className="block text-sm font-medium mb-2" htmlFor="title">
@@ -262,27 +208,6 @@ export default function CreatePromotion() {
                         ></textarea>
                         {validationErrors.description && (
                             <p className="mt-1 text-xs text-red-500">{validationErrors.description}</p>
-                        )}
-                    </div>
-
-                    {/* Owner Link Input */}
-                    <div>
-                        <label className="block text-sm font-medium mb-2" htmlFor="link">
-                            Owner link <span className="text-red-500">*</span>
-                        </label>
-                        <input 
-                            type="text" 
-                            id="link" 
-                            name="link"
-                            title="Owner link" 
-                            placeholder="Owner Link... Telegram" 
-                            value={formData.link}
-                            onChange={handleChange}
-                            className="w-full rounded-lg px-3.5 py-3 border text-sm outline-none transition" 
-                            style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', color: 'var(--foreground)' }}
-                        />
-                        {validationErrors.link && (
-                            <p className="mt-1 text-xs text-red-500">{validationErrors.link}</p>
                         )}
                     </div>
 

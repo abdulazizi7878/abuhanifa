@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://abuhanifainstallation.com"),
 
   title: {
-    default: "Abuhanifa Installation",
+    default: "Professional Electrical, Plumbing Installation Services and Products",
     template: "%s | Abuhanifa Installation",
   },
   

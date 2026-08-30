@@ -193,10 +193,10 @@ function Product({ name, description, image, resourceType, link }) {
                     </button>
 
                     <a 
-                        href={`/products/${link}/order`} 
+                        href={`tel:+251936489696`} 
                         className="flex items-center justify-center duration-300 cursor-pointer bg-(--foreground) text-(--background) hover:opacity-90 px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-md"
                     >
-                        Order Now
+                        Call now
                     </a>
                 </div>
             </div>

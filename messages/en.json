@@ -1,8 +1,8 @@
 { 
     "home":{
-        "title": "Abuhanifa Installation",
+        "title": "Professional Electrical, Plumbing Installation Services and Products",
         "sub-title":"General Electric and plumbing work.",
-        "description": "We are a team of highly skilled and experienced electricians and plumbers, dedicated to providing top-notch electrical and plumbing services to our clients.",
+        "description": "We provide professional electrical installation, plumbing, maintenance and repair services for residential, commercial and institutional projects. Our experienced technicians focus on quality workmanship, safety and reliable service.",
         "Get In touch":"Get In touch",
         "Learn More":"Learn More",
         "Our Mission":"Our Mission",
@@ -160,7 +160,8 @@
         "Computer Maintenance": "Computer Maintenance and Networking",
         "Security Camera":"Security Camera Installation",
         "Optional": "Optional",
-        "comment_placeholder": "Describe details here..."
+        "comment_placeholder": "Describe details here...",
+        "custom_job_placeholder":"Describe your job here..."
     },
     "orderProduct":{
         "title":"Check The Price Before Ordering the Product, to check the price, enter the amount of product and click the button!",

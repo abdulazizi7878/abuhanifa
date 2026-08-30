@@ -18,10 +18,10 @@ export async function InsertMessage(name,email,message) {
     return result;
 }
 
-export async function InsertPromotion(name,email,phone_number, title, description, image,link,owner_link, publicId, resourceType) {
+export async function InsertPromotion(name, title, description, image,link, publicId, resourceType) {
     const [result] = await db.query(
-        "INSERT INTO promotions (name,email,phone_number,title, description,image,link,owner_link, media_public_id, media_resource_type) VALUES (?,?,?,?,?,?,?,?,?,?);",
-        [name,email,phone_number,title,description,image,link,owner_link,publicId,resourceType]
+        "INSERT INTO promotions (name,title, description,image,link, media_public_id, media_resource_type) VALUES (?,?,?,?,?,?,?);",
+        [name,title,description,image,link,publicId,resourceType]
     )
     return result;
 }

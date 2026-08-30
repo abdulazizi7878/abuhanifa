@@ -22,15 +22,16 @@ export default async function handler(req, res) {
     }
 
     try {
-    const {name,email,phone_number, title, description, image, owner_link, publicId, resourceType} = req.body;
+    const {name, title, description, image, publicId, resourceType} = req.body;
     
-    const response = await EnterPromotion(name,email,phone_number,title,description,image,owner_link,publicId,resourceType);
+    const response = await EnterPromotion(name,title,description,image,publicId,resourceType);
 
     res.status(200).json({
         success:true,
         response: response
     })        
     } catch (err){
+        console.error(err);
         res.status(500).json({
             success:false,
             message:"error while uploading!",

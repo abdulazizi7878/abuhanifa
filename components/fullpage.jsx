@@ -13,8 +13,8 @@ import { motion } from "motion/react";
 const HERO_GALLERY_IMAGES = [
   {
     id: 1,
-    url: "/images/hero/hero.jpeg",
-    alt: "Electrical Installation Work",
+    url: "/images/hero/sec-1.jpg",
+    alt: "Electrical Engineering and Installation",
   },
   {
     id: 2,
@@ -43,12 +43,12 @@ const HERO_GALLERY_IMAGES = [
   },
   {
     id: 7,
-    url: "/images/hero/plumbing-4.jpg",
+    url: "/images/finished_works/electrical-8.jpg",
     alt: "Plumbing Installation Work",
   },
   {
     id: 8,
-    url: "/images/hero/plumbing-5.jpeg",
+    url: "/images/finished_works/electrical-13.jpg",
     alt: "Plumbing Installation Work",
   },
 ];
@@ -98,7 +98,7 @@ const FINISHED_WORKS_IMAGES = [
   },
 ];
 
-const HERO_CTA_BG_IMAGE = "/images/hero/cta.avif";
+const HERO_CTA_BG_IMAGE = "/images/finished_works/electrical-3.jpg";
 //"https://img.magnific.com/premium-photo/man-repairing-electrical-system-house-office-electrician-checking-electric-scheme_106035-1624.jpg?ga=GA1.1.1344955290.1778578455&semt=ais_hybrid&w=740&q=80";
 //"https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1600&auto=format&fit=crop";
 
@@ -239,12 +239,12 @@ function Cont() {
             description={t("service 4")}
           />
           <Service
-            imgSource={"g.jpg"}
+            imgSource={"f.jpg"}
             title={t("Sanitary & Layout Design")}
             description={t("service 5")}
           />
           <Service
-            imgSource={"f.jpeg"}
+            imgSource={"i.jpg"}
             title={t("Plumbing Services")}
             description={t("service 6")}
           />
@@ -591,7 +591,7 @@ function HeroSection() {
   const t = useTranslations("home");
 
   return (
-    <section className="relative w-full min-h-[60vh] lg:max-h-[92vh]  flex items-center justify-center overflow-hidden py-16 mb-10 text-white">
+    <section className="relative w-full min-h-[60vh] flex items-center justify-center overflow-hidden py-16 mb-10 text-white">
       {/* Background Image Layer */}
       <div
         className="absolute  inset-0 bg-cover bg-center bg-no-repeat transition-all duration-500 scale-105"
@@ -610,27 +610,30 @@ function HeroSection() {
         
         {/* Left Column: Text & CTAs */}
         <div className="w-full md:w-1/2 flex flex-col items-start text-left">
+          
+          <motion.img
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}  
+            transition={{ duration: 0.5, delay: 0.2 }}
+            src="/images/logo.jpg"
+            alt="Logo"
+            className="size-46 my-6 mx-auto rounded-full object-cover border border-(--border) shadow-md"
+          />
+        
           <motion.h1
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-6xl lg:text-5xl font-bold tracking-tight text-white font-(family-name:--secondary-font) drop-shadow-md leading-tight"
+            className="text-3xl sm:text-4xl lg:text-4xl font-bold tracking-tight text-(--primary) drop-shadow-md leading-tight"
           >
             {t("title")}
           </motion.h1>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-20 h-1 bg-(--primary) my-6 rounded-full origin-left"
-          />
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-lg sm:text-2xl font-medium text-white"
+            className="text-lg sm:text-2xl font-medium text-white my-3"
           >
             {t("sub-title")}
           </motion.h2>

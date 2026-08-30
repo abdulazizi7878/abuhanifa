@@ -6,7 +6,7 @@ export default function blogpage(){
     return(
         <>
         <Heaader />
-        <main className="flex flex-col justify-start items-center py-20 mt-4 min-h-[70vh]">
+        <main className="flex flex-col justify-start items-center min-h-[70vh]">
             <Promotions />
         </main>
         <Footer />

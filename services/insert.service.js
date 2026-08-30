@@ -55,20 +55,17 @@ export async function EnterMessage(name,email,message) {
     return response;
 }
 
-export async function EnterPromotion(name,email,phone_number,title,description,image,owner_link,publicId,resourceType) {
+export async function EnterPromotion(name,title,description,image,publicId,resourceType) {
     if(!name) throw new Error("Enter a valid Name");
-    if (!email) throw new Error("Enter a valid Email");
-    if(!phone_number) throw new Error("Enter a valid Phone Number");
     if(!title) throw new Error("Enter a valid Title");
     if(!description) throw new Error("Enter a valid Description");
     if(!image) throw new Error("Enter a valid image");
-    if(!owner_link) throw new Error("Enter a valid Owner's Link");
     if(!publicId) throw new Error("Something went wrong");
     if(!resourceType) throw new Error("Something went wrong");
 
     const link = await randomUUID(); 
 
-    const response = await InsertPromotion(name,email,phone_number,title,description,image,link,owner_link,publicId,resourceType);
+    const response = await InsertPromotion(name,title,description,image,link,publicId,resourceType);
     return response;
 }
 

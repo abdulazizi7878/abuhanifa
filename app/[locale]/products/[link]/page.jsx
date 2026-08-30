@@ -11,7 +11,7 @@ export default async function product({params}){
     return(
         <>
         <Heaader />
-        <main className="flex flex-col justify-center items-center py-20 mt-6 min-h-[70vh]">
+        <main className="flex flex-col justify-center items-center min-h-[70vh]">
             <OneProduct link={link} />
             <hr />
             <ProductsPage />

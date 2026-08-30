@@ -16,6 +16,7 @@ export default function Order(){
         location: "",
         custom_location: "",
         jobs: [],      
+        custom_job: "",
         job_types: [], 
         comment: ""
     });
@@ -55,7 +56,11 @@ export default function Order(){
                 }
                 return false;
             case 4: 
-                return formData.jobs.length > 0;
+                if (formData.jobs.length === 0) return false;
+                if (formData.jobs.includes("other")) {
+                    return formData.custom_job.trim().length > 0;
+                }
+                return true;
             case 5: 
                 return formData.job_types.length > 0;
             case 6: 
@@ -71,6 +76,9 @@ export default function Order(){
         // Resolve final location value if custom option was selected
         const finalLocation = formData.location === "other" ? formData.custom_location.trim() : formData.location;
 
+        // Resolve final jobs array if "other" option was selected
+        const finalJobs = formData.jobs.map(job => job === "other" ? formData.custom_job.trim() : job);
+
         try {
             const response = await fetch("/api/postorder", {
                 headers: { "Content-Type": "application/json" },
@@ -78,6 +86,7 @@ export default function Order(){
                 credentials: "include",
                 body: JSON.stringify({
                     ...formData,
+                    jobs: finalJobs,
                     location: finalLocation,
                     comment: formData.comment.trim() === "" ? "No comment" : formData.comment
                 })
@@ -189,6 +198,7 @@ export default function Order(){
                                     { id: "sanitary", label: t("Sanitary") },
                                     { id: "computer_maintenance", label: t("Computer Maintenance") },
                                     { id: "security_camera", label: t("Security Camera") },
+                                    { id: "other", label: t("Other") },
                                 ].map((item) => {
                                     const isSelected = formData.jobs.includes(item.id);
                                     return (
@@ -205,6 +215,17 @@ export default function Order(){
                                     );
                                 })}
                             </div>
+
+                            {formData.jobs.includes("other") && (
+                                <input 
+                                    type="text" 
+                                    placeholder={t("custom_job_placeholder")} 
+                                    value={formData.custom_job}
+                                    onChange={(e) => handleChange("custom_job", e.target.value)}
+                                    className="w-full mt-3 border border-(--border) bg-background rounded-2xl px-5 py-4 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/20 transition-all shadow-inner animate-fadeIn"
+                                    autoFocus
+                                />
+                            )}
                         </div>
                     )}
 

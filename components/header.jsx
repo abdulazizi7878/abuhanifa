@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { key: "products", href: "/products" },
   { key: "promotions", href: "/promotions" },
   { key: "blog", href: "/blog" },
-  { key: "services", href: "/#services" },
+  { key: "services", href: "#services" },
   { key: "contact", href: "/contact" },
 ];
 
@@ -73,7 +73,7 @@ export default function Header() {
           >
             <img src="/images/logo.jpg" alt="Abuhanifa Logo" className='rounded-full' />
           </div>
-          <span className="hidden sm:inline-block">{t("title")}</span>
+          <span className="hidden sm:inline-block text-lg md:text-xl lg:text-2xl">{t("title")}</span>
         </Link>
 
         {/* Desktop Navigation */}
