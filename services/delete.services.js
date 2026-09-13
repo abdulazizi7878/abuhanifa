@@ -1,10 +1,15 @@
 
+// services/delete.services.js
+
 import cloudinary from "cloudinary";
 
 import {
     DeleteBlog,
     DeleteProduct,
     DeletePromotion,
+    DeleteComments,
+    DeleteMessages,
+    DeleteOrders,
 } from "../repositories/deleteQu";
 
 import {
@@ -105,6 +110,19 @@ export async function DeleteItem(item, id) {
 
         return await DeletePromotion(id);
     }
+
+    if (item === "comments") {
+        return await DeleteComments(id);
+    }
+
+    if (item === "messages") {
+        return await DeleteMessages(id);
+    }
+    
+    if (item === "orders") {
+        return await DeleteOrders(id);    
+    }
+    
 
     throw new Error("Invalid command");
 }

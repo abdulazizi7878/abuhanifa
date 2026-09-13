@@ -14,6 +14,9 @@ export default function ViewPromotions() {
     // Search state
     const [searchQuery, setSearchQuery] = useState("");
 
+    // Active Dropdown Menu State
+    const [activeMenuId, setActiveMenuId] = useState(null);
+
     // Delete modal states
     const [promotionToDelete, setPromotionToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -44,11 +47,20 @@ export default function ViewPromotions() {
         fetchPromotions();
     }, []);
 
+    // Close dropdown menu when clicking anywhere outside
+    useEffect(() => {
+        const handleOutsideClick = () => setActiveMenuId(null);
+        window.addEventListener("click", handleOutsideClick);
+        return () => window.removeEventListener("click", handleOutsideClick);
+    }, []);
+
     const handleEdit = (link) => {
+        setActiveMenuId(null);
         router.push(`/ahiadmin/edit/promotion/${link}`);
     };
 
     const openDeleteModal = (promotion) => {
+        setActiveMenuId(null);
         setPromotionToDelete(promotion);
     };
 
@@ -112,16 +124,16 @@ export default function ViewPromotions() {
 
     return (
         <>
-            <main className="">
-                <div className="max-w-6xl mx-auto space-y-6">
+            <main className="bg-[var(--background)] text-[var(--foreground)]">
+                <div className="max-w-7xl mx-auto space-y-8">
                     {/* Page Title Header & Action Buttons */}
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-4">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[var(--border)]">
                         <div>
-                            <h1 className="text-3xl font-bold en" style={{ color: 'var(--foreground)' }}>
-                                All promotions
+                            <h1 className="text-xl font-bold tracking-tight en text-[var(--secondary)]">
+                                Abuhanifa Installation
                             </h1>
-                            <p className="mt-1 text-sm opacity-80 en">
-                                View and manage existing promotion records.
+                            <p className="text-2xl sm:text-3xl font-extrabold en mt-1">
+                                All promotions
                             </p>
                         </div>
                     </div>
@@ -133,28 +145,27 @@ export default function ViewPromotions() {
                             placeholder="Search by title, description, name, or email..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full sm:w-80 px-4 py-2.5 rounded-lg border text-sm en bg-background text-foreground focus:outline-none focus:ring-2"
-                            style={{ borderColor: 'var(--border)' }}
+                            className="w-full sm:w-80 px-4 py-2.5 rounded-lg border border-[var(--border)] text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:border-[var(--primary)]"
                         />
                     </div>
 
                     {/* Loading State */}
                     {loading && (
-                        <div className="text-center py-20">
-                            <p className="text-lg opacity-80 en">Loading promotions...</p>
+                        <div className="text-center py-28">
+                            <p className="text-base font-medium opacity-80 en">Loading promotions...</p>
                         </div>
                     )}
 
                     {/* Error State */}
                     {!loading && error && (
-                        <div className="text-center py-20 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
-                            <p className="text-lg text-red-600 dark:text-red-400 mb-4 en">
-                                Unable to load promotions.
-                            </p>
+                        <div className="text-center py-20 p-8 rounded-xl border border-red-500/30 bg-red-500/10 max-w-lg mx-auto">
+                            <h2 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2 en">
+                                Unable to Load Promotions
+                            </h2>
+                            <p className="text-sm opacity-80 mb-6 en">Unable to load promotions.</p>
                             <button
                                 onClick={fetchPromotions}
-                                className="px-5 py-2.5 rounded-lg font-medium text-sm transition en cursor-pointer shadow-md"
-                                style={{ backgroundColor: 'var(--primary)', color: 'var(--foreground)' }}
+                                className="px-5 py-2 rounded-lg font-medium text-sm transition en cursor-pointer shadow-md bg-[var(--primary)] text-white"
                             >
                                 Try Again
                             </button>
@@ -163,9 +174,9 @@ export default function ViewPromotions() {
 
                     {/* Empty State */}
                     {!loading && !error && filteredPromotions.length === 0 && (
-                        <div className="text-center py-20 p-8 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>
-                            <h3 className="text-xl font-semibold mb-2 en">No promotions found.</h3>
-                            <p className="text-sm opacity-70 en mb-6">
+                        <div className="text-center py-20 p-10 rounded-2xl border border-dashed border-[var(--border)] max-w-lg mx-auto space-y-4 bg-[var(--background)]">
+                            <h3 className="text-lg font-bold en">No promotions found.</h3>
+                            <p className="text-sm opacity-75 en">
                                 {promotions.length === 0
                                     ? "No promotions available at the moment."
                                     : "No promotions match your search query."}
@@ -173,58 +184,81 @@ export default function ViewPromotions() {
                         </div>
                     )}
 
-                    {/* Promotions Table & Responsive Cards */}
+                    {/* Promotions Table */}
                     {!loading && !error && filteredPromotions.length > 0 && (
-                        <div 
-                            className="rounded-xl shadow-lg border overflow-hidden backdrop-blur-sm"
-                            style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}
-                        >
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left border-collapse">
+                        <div className="rounded-xl border border-[var(--border)] shadow-md bg-[var(--background)]">
+                            <div className="overflow-x-auto min-h-[300px]">
+                                <table className="w-full text-left border-collapse text-sm en">
                                     <thead>
-                                        <tr className="border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--border)' }}>
-                                            <th className="py-4 px-6 font-semibold text-sm en">Title</th>
-                                            <th className="py-4 px-6 font-semibold text-sm en">Description</th>
-                                            <th className="py-4 px-6 font-semibold text-sm en">Contact Info</th>
-                                            <th className="py-4 px-6 font-semibold text-sm text-right en">Actions</th>
+                                        <tr className="border-b border-[var(--border)] bg-[var(--border)]/10 text-xs font-semibold uppercase tracking-wider opacity-80">
+                                            <th className="py-3.5 px-4">Title</th>
+                                            <th className="py-3.5 px-4">Description</th>
+                                            <th className="py-3.5 px-4">Contact Info</th>
+                                            <th className="py-3.5 px-4 text-right">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y" style={{ borderColor: 'var(--border)' }}>
+                                    <tbody className="divide-y divide-[var(--border)]">
                                         {filteredPromotions.map((pr) => (
-                                            <tr key={pr.id} className="transition hover:opacity-90">
+                                            <tr key={pr.id} className="transition hover:bg-[var(--border)]/10">
                                                 {/* Title */}
-                                                <td className="py-4 px-6">
-                                                    <div className="font-medium en" style={{ color: 'var(--foreground)' }}>
+                                                <td className="py-4 px-4">
+                                                    <div className="font-semibold" style={{ color: 'var(--foreground)' }}>
                                                         {pr.title}
                                                     </div>
                                                 </td>
 
                                                 {/* Description */}
-                                                <td className="py-4 px-6 max-w-xs truncate opacity-80 en" style={{ color: 'var(--foreground)' }}>
+                                                <td className="py-4 px-4 max-w-xs truncate opacity-80" style={{ color: 'var(--foreground)' }}>
                                                     {pr.description}
                                                 </td>
 
                                                 {/* Contact Info */}
-                                                <td className="py-4 px-6 text-sm opacity-80 en" style={{ color: 'var(--foreground)' }}>
-                                                    <div>{pr.name}</div>
+                                                <td className="py-4 px-4 text-sm opacity-80" style={{ color: 'var(--foreground)' }}>
+                                                    <div className="font-medium">{pr.name}</div>
                                                     <div className="text-xs opacity-70">{pr.email}</div>
                                                 </td>
 
-                                                {/* Actions */}
-                                                <td className="py-4 px-6 text-right space-x-3">
-                                                    <button
-                                                        onClick={() => handleEdit(pr.link)}
-                                                        className="px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer en"
-                                                        style={{ backgroundColor: 'var(--secondary)', color: '#ffffff' }}
+                                                {/* Actions Dropdown */}
+                                                <td className="py-4 px-4 text-right">
+                                                    <div
+                                                        className="relative inline-block text-left"
+                                                        onClick={(e) => e.stopPropagation()}
                                                     >
-                                                        Edit
-                                                    </button>
-                                                    <button
-                                                        onClick={() => openDeleteModal(pr)}
-                                                        className="px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer bg-red-500 text-white hover:bg-red-600 en"
-                                                    >
-                                                        Delete
-                                                    </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setActiveMenuId(activeMenuId === pr.id ? null : pr.id)}
+                                                            className="p-2 rounded-lg border border-[var(--border)] cursor-pointer bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors"
+                                                            title="Actions"
+                                                        >
+                                                            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                                <circle cx="12" cy="5" r="2" />
+                                                                <circle cx="12" cy="12" r="2" />
+                                                                <circle cx="12" cy="19" r="2" />
+                                                            </svg>
+                                                        </button>
+
+                                                        {activeMenuId === pr.id && (
+                                                            <div className="absolute right-0 top-full mt-1 w-44 rounded-xl shadow-2xl border border-[var(--border)] z-50 overflow-hidden bg-[var(--background)] text-[var(--foreground)] py-1.5">
+                                                                <div>
+                                                                    <button
+                                                                        onClick={() => handleEdit(pr.link)}
+                                                                        className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-[var(--border)]/20 transition-colors"
+                                                                    >
+                                                                        Edit
+                                                                    </button>
+
+                                                                    <div className="border-t border-[var(--border)] my-1"></div>
+
+                                                                    <button
+                                                                        onClick={() => openDeleteModal(pr)}
+                                                                        className="w-full text-left px-4 py-2 text-xs font-medium text-red-500 cursor-pointer hover:bg-red-500/10 transition-colors"
+                                                                    >
+                                                                        Delete
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}
@@ -236,37 +270,34 @@ export default function ViewPromotions() {
 
                     {/* Delete Confirmation Modal */}
                     {promotionToDelete && (
-                        <div 
-                            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
+                        <div
+                            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
                             onClick={closeDeleteModal}
                         >
-                            <div 
-                                className="w-full max-w-md p-6 rounded-xl shadow-2xl border"
-                                style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}
+                            <div
+                                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border border-[var(--border)] space-y-4 bg-[var(--background)] text-[var(--foreground)]"
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                <h3 className="text-xl font-bold mb-2 en text-red-500">Delete Promotion?</h3>
-                                <p className="text-sm mb-4 opacity-80 en">
-                                    Are you sure you want to delete this promotion? This action cannot be undone.
+                                <h3 className="text-xl font-bold text-red-500 en">Delete Promotion?</h3>
+                                <p className="text-sm opacity-80 en leading-relaxed">
+                                    Are you sure you want to delete <span className="font-semibold" style={{ color: 'var(--foreground)' }}>{promotionToDelete.title}</span>? This action cannot be undone.
                                 </p>
 
                                 {/* Selected Promotion Preview Card */}
-                                <div 
-                                    className="p-4 rounded-lg mb-6 border"
-                                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--background)' }}
+                                <div
+                                    className="p-4 rounded-lg border border-[var(--border)] bg-[var(--border)]/5 space-y-1"
                                 >
-                                    <div className="font-semibold en text-base mb-1">{promotionToDelete.title}</div>
+                                    <div className="font-semibold en text-sm">{promotionToDelete.title}</div>
                                     <div className="text-xs opacity-70 en line-clamp-2">{promotionToDelete.description}</div>
                                 </div>
 
                                 {/* Modal Buttons */}
-                                <div className="flex justify-end space-x-3">
+                                <div className="flex justify-end gap-3 pt-2">
                                     <button
                                         type="button"
                                         onClick={closeDeleteModal}
                                         disabled={isDeleting}
-                                        className="px-4 py-2 rounded-lg text-sm font-medium border transition en cursor-pointer disabled:opacity-50"
-                                        style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
+                                        className="px-4 py-2 rounded-lg text-sm font-medium border border-[var(--border)] transition en cursor-pointer disabled:opacity-50 bg-transparent text-[var(--foreground)] hover:bg-[var(--border)]/20"
                                     >
                                         Cancel
                                     </button>
@@ -274,7 +305,7 @@ export default function ViewPromotions() {
                                         type="button"
                                         onClick={confirmDelete}
                                         disabled={isDeleting}
-                                        className="px-4 py-2 rounded-lg text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition en cursor-pointer disabled:opacity-50"
+                                        className="px-4 py-2 rounded-lg text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition en cursor-pointer disabled:opacity-50 shadow-md"
                                     >
                                         {isDeleting ? 'Deleting...' : 'Delete'}
                                     </button>

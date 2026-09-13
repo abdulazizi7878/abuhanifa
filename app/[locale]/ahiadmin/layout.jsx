@@ -2,78 +2,58 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { 
-  LayoutDashboard, 
-  PlusCircle, 
-  Eye, 
-  PackagePlus, 
-  Boxes, 
-  ClipboardPlus, 
-  ClipboardList, 
-  FilePlus2, 
-  FileText, 
-  Tags, 
-  Megaphone, 
-  MessageSquareText, 
-  ShoppingCart, 
-  Menu, 
-  X, 
-  ChevronLeft, 
-  ChevronRight, 
-  ShieldCheck, 
-  Palette, 
-  Sun, 
-  Moon, 
-  Check, 
-  LogOut 
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  LayoutDashboard,
+  PlusCircle,
+  Eye,
+  PackagePlus,
+  Boxes,
+  ClipboardPlus,
+  ClipboardList,
+  FilePlus2,
+  FileText,
+  Tags,
+  Megaphone,
+  MessageSquareText,
+  ShoppingCart,
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight,
+  ShieldCheck,
+  Palette,
+  Sun,
+  Moon,
+  Check,
+  LogOut,
+  User,
+  KeyRound
 } from 'lucide-react';
-
-const adminLinks = [
-  { text: "Dashboard", href: "/ahiadmin", icon: <LayoutDashboard className="w-4 h-4 text-emerald-500" />, category: "Overview" },
-  { text: "Create Blog", href: "/ahiadmin/create/blog", icon: <PlusCircle className="w-4 h-4 text-[var(--primary)]" />, category: "Content" },
-  { text: "View Blogs", href: "/ahiadmin/view/blogs", icon: <Eye className="w-4 h-4 text-purple-400" />, category: "Content" },
-  { text: "Create Product", href: "/ahiadmin/create/product", icon: <PackagePlus className="w-4 h-4 text-[var(--primary)]" />, category: "Inventory" },
-  { text: "View Products", href: "/ahiadmin/view/products", icon: <Boxes className="w-4 h-4 text-purple-400" />, category: "Inventory" },
-  { text: "Create Material", href: "/ahiadmin/create/material", icon: <ClipboardPlus className="w-4 h-4 text-[var(--primary)]" />, category: "Operations" },
-  { text: "View Materials", href: "/ahiadmin/view/materials", icon: <ClipboardList className="w-4 h-4 text-purple-400" />, category: "Inventory" },
-  { text: "Create Estimate", href: "/ahiadmin/create/estimate", icon: <FilePlus2 className="w-4 h-4 text-[var(--primary)]" />, category: "Operations" },
-  { text: "View Estimates", href: "/ahiadmin/view/estimates", icon: <FileText className="w-4 h-4 text-purple-400" />, category: "Operations" },
-  { text: "Create Promotion", href: "/ahiadmin/create/promotion", icon: <Tags className="w-4 h-4 text-[var(--primary)]" />, category: "Marketing" },
-  { text: "View Promotions", href: "/ahiadmin/view/promotions", icon: <Megaphone className="w-4 h-4 text-purple-400" />, category: "Marketing" },
-  { text: "View Comments & Messages", href: "/ahiadmin/view/messages", icon: <MessageSquareText className="w-4 h-4 text-purple-400" />, category: "Support" },
-  { text: "View Job & Product Orders", href: "/ahiadmin/view/orders", icon: <ShoppingCart className="w-4 h-4 text-purple-400" />, category: "Operations" },
-];
-
-/**
- * Exact route-matching helper.
- * Only highlights the navigation item if the current pathname matches the href exactly.
- */
-function isNavItemActive(pathname, href) {
-  if (!pathname) return false;
-
-  const cleanPath = pathname.replace(/\/+$/, '') || '/';
-  const cleanHref = href.replace(/\/+$/, '') || '/';
-
-  return cleanPath === cleanHref;
-}
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(240);
-  const [isResizing, setIsResizing] = useState(false);
+  const router = useRouter();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isContentOpen, setIsContentOpen] = useState(false);
+  const [isInventoryOpen, setIsInventoryOpen] = useState(false);
+  const [isOperationsOpen, setIsOperationsOpen] = useState(false);
+  const [isMarketingOpen, setIsMarketingOpen] = useState(false);
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
+
+  // Theme state
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const sidebarRef = useRef(null);
+  // Sidebar resizing state
+  const [sidebarWidth, setSidebarWidth] = useState(288);
+  const isResizingRef = useRef(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('ahi_theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+
     if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
       setIsDark(false);
       document.documentElement.classList.remove('dark');
@@ -86,31 +66,57 @@ export default function AdminLayout({ children }) {
   }, []);
 
   useEffect(() => {
+    if (pathname.includes('/ahiadmin/create/blog') || pathname.includes('/ahiadmin/view/blogs')) {
+      setIsContentOpen(true);
+    }
+    if (pathname.includes('/ahiadmin/create/product') || pathname.includes('/ahiadmin/view/products') || pathname.includes('/ahiadmin/view/materials')) {
+      setIsInventoryOpen(true);
+    }
+    if (pathname.includes('/ahiadmin/create/material') || pathname.includes('/ahiadmin/create/estimate') || pathname.includes('/ahiadmin/view/estimates') || pathname.includes('/ahiadmin/view/orders')) {
+      setIsOperationsOpen(true);
+    }
+    if (pathname.includes('/ahiadmin/create/promotion') || pathname.includes('/ahiadmin/view/promotions')) {
+      setIsMarketingOpen(true);
+    }
+    if (pathname.includes('/ahiadmin/view/messages') || pathname.includes('/ahiadmin/view/orders')) {
+      setIsSupportOpen(true);
+    }
+
+    // Close mobile drawer on route change
+    setIsSidebarOpen(false);
+  }, [pathname]);
+
+  // Handle sidebar resizing
+  useEffect(() => {
     const handleMouseMove = (e) => {
-      if (!isResizing) return;
+      if (!isResizingRef.current) return;
       const newWidth = e.clientX;
-      if (newWidth >= 180 && newWidth <= 400) {
+      if (newWidth >= 220 && newWidth <= 450) {
         setSidebarWidth(newWidth);
-        if (isCollapsed && newWidth > 200) {
-          setIsCollapsed(false);
-        }
       }
     };
 
     const handleMouseUp = () => {
-      setIsResizing(false);
+      if (isResizingRef.current) {
+        isResizingRef.current = false;
+        document.body.style.userSelect = '';
+      }
     };
 
-    if (isResizing) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-    }
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing, isCollapsed]);
+  }, []);
+
+  const startResizing = (e) => {
+    e.preventDefault();
+    isResizingRef.current = true;
+    document.body.style.userSelect = 'none';
+  };
 
   const toggleTheme = (darkTheme) => {
     setIsDark(darkTheme);
@@ -126,178 +132,477 @@ export default function AdminLayout({ children }) {
     setThemeMenuOpen(false);
   };
 
+  const isExactActive = (path) => pathname === path;
+  const isSubActive = (prefix) => pathname.startsWith(prefix);
+
+  const getBreadcrumbs = () => {
+    const segments = pathname.split('/').filter(Boolean);
+    return segments.map((segment, index) => {
+      const href = '/' + segments.slice(0, index + 1).join('/');
+      const label = segment.charAt(0).toUpperCase() + segment.slice(1);
+      return { href, label };
+    });
+  };
+
+  const breadcrumbs = getBreadcrumbs();
+
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans flex transition-colors duration-200 selection:bg-[var(--primary)]/30 selection:text-[var(--foreground)]">
-      
+    <div className="h-screen bg-[var(--background)] text-[var(--foreground)] flex overflow-hidden antialiased selection:bg-[var(--primary)] selection:text-[var(--primary-foreground)]">
       {/* Mobile Backdrop */}
-      {sidebarOpen && (
-        <div 
-          onClick={() => setSidebarOpen(false)} 
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden transition-opacity"
-          aria-hidden="true"
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden backdrop-blur-xs transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside 
-        ref={sidebarRef}
-        aria-label="Admin Navigation Sidebar"
-        style={{ width: isCollapsed ? '72px' : `${sidebarWidth}px` }}
-        className={`fixed inset-y-0 left-0 z-50 flex flex-col bg-[var(--background)] border-r border-[var(--border)] transition-[width] duration-75 lg:sticky lg:top-0 lg:h-screen select-none ${
-          sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0'
-        }`}
+      <aside
+        style={{ width: `${sidebarWidth}px` }}
+        className={`
+          fixed inset-y-0 left-0 z-50 bg-[var(--background)] border-r border-[var(--border)]
+          flex flex-col transition-transform duration-200 ease-in-out
+          lg:static lg:translate-x-0 shrink-0 select-none shadow-xl lg:shadow-none
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
       >
-        {/* Sidebar Header / Brand */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-[var(--border)] shrink-0">
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg bg-[var(--background)] border border-[var(--border)] flex items-center justify-center shrink-0 shadow-xs">
-              <ShieldCheck className="w-4 h-4 text-[var(--primary)]" />
+        {/* Brand Header */}
+        <div className="h-16 px-6 border-b border-[var(--border)] bg-[var(--background)] flex items-center justify-between shrink-0">
+          <Link
+            href="/ahiadmin"
+            className="flex items-center gap-2.5 rounded-lg p-1 -ml-1 cursor-pointer"
+          >
+            <div className="w-9 h-9 bg-[var(--primary)] text-[var(--primary-foreground)] rounded-lg shadow-xs flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-            {!isCollapsed && (
-              <div className="flex flex-col truncate">
-                <span className="font-bold text-xs tracking-tight text-[var(--foreground)] truncate">Abu Hanifa</span>
-                <span className="text-[9px] font-bold uppercase tracking-widest text-[var(--primary)]">Installation</span>
+
+            <div className="flex flex-col truncate">
+              <span className="font-bold text-sm tracking-tight truncate">Abu Hanifa</span>
+              <span className="text-[9px] font-semibold uppercase tracking-widest text-[var(--primary)]">Installation</span>
+            </div>
+          </Link>
+
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="lg:hidden p-1.5 text-[var(--muted-foreground)] hover:text-[var(--foreground)] rounded-lg hover:bg-[var(--muted)] cursor-pointer"
+            aria-label="Close sidebar"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1.5 text-sm font-medium bg-[var(--background)] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          {/* Dashboard */}
+          <Link
+            href="/ahiadmin"
+            className={`
+              flex items-center gap-3 px-3 py-2.5 rounded-lg
+              transition-colors outline-none border-0 cursor-pointer
+              ${isExactActive("/ahiadmin")
+                ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+              }
+            `}
+          >
+            <LayoutDashboard className="w-4 h-4 text-emerald-500" />
+            <span>Dashboard</span>
+          </Link>
+
+          {/* Content */}
+          <div className="space-y-1">
+            <button
+              onClick={() => setIsContentOpen(!isContentOpen)}
+              className={`
+                w-full flex items-center justify-between px-3 py-2.5
+                rounded-lg transition-colors outline-none border-0 cursor-pointer
+                ${isSubActive("/ahiadmin/create/blog") || isSubActive("/ahiadmin/view/blogs")
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }
+              `}
+            >
+              <div className="flex items-center gap-3">
+                <FileText className="w-4 h-4" />
+                <span>Content</span>
+              </div>
+              {isContentOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+
+            {isContentOpen && (
+              <div className="pl-9 space-y-1 py-1">
+                <Link
+                  href="/ahiadmin/create/blog"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/create/blog")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  Create Blog
+                </Link>
+                <Link
+                  href="/ahiadmin/view/blogs"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/blogs")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Blogs
+                </Link>
               </div>
             )}
           </div>
-          
-          {/* Mobile Close Button */}
-          <button 
-            type="button"
-            onClick={() => setSidebarOpen(false)}
-            aria-label="Close sidebar drawer"
-            className="p-1.5 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] opacity-70 hover:opacity-100 lg:hidden transition-colors cursor-pointer"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
 
-        {/* Navigation Links */}
-        <nav className="flex-1 px-2.5 py-4 space-y-1 overflow-y-auto overflow-x-visible">
-          {adminLinks.map((item, index) => {
-            const isActive = isNavItemActive(pathname, item.href);
-            return (
-              <div 
-                key={index} 
-                className="relative"
-                onMouseEnter={() => isCollapsed && setHoveredIndex(index)}
-                onMouseLeave={() => isCollapsed && setHoveredIndex(null)}
-              >
-                <Link
-                  href={item.href}
-                  onClick={() => setSidebarOpen(false)}
-                  aria-label={item.text}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-xs transition-all duration-150 group relative ${
-                    isActive
-                      ? 'bg-[var(--primary)]/15 text-[var(--primary)] font-bold border border-[var(--primary)]/30 shadow-xs'
-                      : 'text-[var(--foreground)] opacity-75 hover:opacity-100 hover:bg-[var(--muted)]/50 border border-transparent'
-                  }`}
-                >
-                  <span className="shrink-0 transition-transform group-hover:scale-110 flex items-center justify-center w-5 h-5">
-                    {item.icon}
-                  </span>
-                  {!isCollapsed && (
-                    <div className="flex flex-col truncate">
-                      <span className="truncate">{item.text}</span>
-                      <span className="text-[8px] uppercase tracking-wider opacity-50">{item.category}</span>
-                    </div>
-                  )}
-
-                  {/* Subtle Accent Indicator for Active Item */}
-                  {isActive && !isCollapsed && (
-                    <span className="absolute right-2 w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
-                  )}
-                </Link>
-
-                {/* Floating Tooltip for Collapsed Sidebar */}
-                {isCollapsed && hoveredIndex === index && (
-                  <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 z-50 px-3 py-1.5 rounded-lg bg-[var(--background)] border border-[var(--border)] shadow-xl whitespace-nowrap pointer-events-none flex flex-col animate-in fade-in zoom-in-95 duration-150">
-                    <span className="text-xs font-bold text-[var(--foreground)] flex items-center gap-2">
-                      {item.text}
-                      {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
-                    </span>
-                    <span className="text-[8px] uppercase tracking-wider text-[var(--primary)] font-semibold">{item.category}</span>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </nav>
-
-        {/* Desktop Collapse & Footer */}
-        <div className="p-3 border-t border-[var(--border)] hidden lg:flex items-center justify-between shrink-0">
-          {!isCollapsed && (
-            <span className="text-[11px] font-medium opacity-60 truncate">Collapse</span>
-          )}
-          <button
-            type="button"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            aria-label={isCollapsed ? "Expand sidebar navigation" : "Collapse sidebar navigation"}
-            className="p-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] opacity-75 hover:opacity-100 transition-all cursor-pointer mx-auto lg:mx-0"
-          >
-            {isCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
-          </button>
-        </div>
-
-        {/* Resize Handle for Desktop Sidebar */}
-        <div 
-          onMouseDown={() => setIsResizing(true)}
-          className="absolute top-0 right-0 w-1.5 h-full cursor-col-resize hover:bg-[var(--primary)]/50 transition-colors hidden lg:block"
-          title="Drag to resize sidebar"
-        />
-      </aside>
-
-      {/* Main Content Wrapper */}
-      <div className="flex-1 flex flex-col min-w-0">
-        
-        {/* Top Header */}
-        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-6 sm:px-8 bg-[var(--background)]/90 border-b border-[var(--border)] backdrop-blur-md">
-          <div className="flex items-center gap-4">
+          {/* Inventory */}
+          <div className="space-y-1">
             <button
-              type="button"
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open mobile navigation menu"
-              className="p-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] lg:hidden transition-colors cursor-pointer shrink-0"
+              onClick={() => setIsInventoryOpen(!isInventoryOpen)}
+              className={`
+                w-full flex items-center justify-between px-3 py-2.5
+                rounded-lg transition-colors outline-none border-0 cursor-pointer
+                ${pathname.includes("/ahiadmin/create/product") || pathname.includes("/ahiadmin/view/products") || pathname.includes("/ahiadmin/view/materials")
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }
+              `}
             >
-              <Menu className="w-4 h-4" />
+              <div className="flex items-center gap-3">
+                <Boxes className="w-4 h-4" />
+                <span>Inventory</span>
+              </div>
+              {isInventoryOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
             </button>
-            <div>
-              <h1 className="text-base sm:text-lg font-bold tracking-tight text-[var(--foreground)]">
-                Abu Hanifa Installation
-              </h1>
-              <p className="text-[11px] opacity-60 font-medium hidden sm:block">
-                Enterprise administration & operational management platform.
-              </p>
-            </div>
+
+            {isInventoryOpen && (
+              <div className="pl-9 space-y-1 py-1">
+                <Link
+                  href="/ahiadmin/create/product"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/create/product")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  Create Product
+                </Link>
+                <Link
+                  href="/ahiadmin/view/products"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/products")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Products
+                </Link>
+                <Link
+                  href="/ahiadmin/view/materials"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/materials")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Materials
+                </Link>
+              </div>
+            )}
           </div>
 
-          {/* Right Header Controls */}
+          {/* Operations */}
+          <div className="space-y-1">
+            <button
+              onClick={() => setIsOperationsOpen(!isOperationsOpen)}
+              className={`
+                w-full flex items-center justify-between px-3 py-2.5
+                rounded-lg transition-colors outline-none border-0 cursor-pointer
+                ${pathname.includes("/ahiadmin/create/material") || pathname.includes("/ahiadmin/create/estimate") || pathname.includes("/ahiadmin/view/estimates") || pathname.includes("/ahiadmin/view/orders")
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }
+              `}
+            >
+              <div className="flex items-center gap-3">
+                <ClipboardList className="w-4 h-4" />
+                <span>Operations</span>
+              </div>
+              {isOperationsOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+
+            {isOperationsOpen && (
+              <div className="pl-9 space-y-1 py-1">
+                <Link
+                  href="/ahiadmin/create/material"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/create/material")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  Create Material
+                </Link>
+                <Link
+                  href="/ahiadmin/create/estimate"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/create/estimate")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  Create Estimate
+                </Link>
+                <Link
+                  href="/ahiadmin/view/estimates"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/estimates")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Estimates
+                </Link>
+                <Link
+                  href="/ahiadmin/view/orders"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/orders")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Orders
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Marketing */}
+          <div className="space-y-1">
+            <button
+              onClick={() => setIsMarketingOpen(!isMarketingOpen)}
+              className={`
+                w-full flex items-center justify-between px-3 py-2.5
+                rounded-lg transition-colors outline-none border-0 cursor-pointer
+                ${pathname.includes("/ahiadmin/create/promotion") || pathname.includes("/ahiadmin/view/promotions")
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }
+              `}
+            >
+              <div className="flex items-center gap-3">
+                <Megaphone className="w-4 h-4" />
+                <span>Marketing</span>
+              </div>
+              {isMarketingOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+
+            {isMarketingOpen && (
+              <div className="pl-9 space-y-1 py-1">
+                <Link
+                  href="/ahiadmin/create/promotion"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/create/promotion")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  Create Promotion
+                </Link>
+                <Link
+                  href="/ahiadmin/view/promotions"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/promotions")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Promotions
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Support */}
+          <div className="space-y-1">
+            <button
+              onClick={() => setIsSupportOpen(!isSupportOpen)}
+              className={`
+                w-full flex items-center justify-between px-3 py-2.5
+                rounded-lg transition-colors outline-none border-0 cursor-pointer
+                ${pathname.includes("/ahiadmin/view/messages") || pathname.includes("/ahiadmin/view/orders")
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }
+              `}
+            >
+              <div className="flex items-center gap-3">
+                <MessageSquareText className="w-4 h-4" />
+                <span>Support</span>
+              </div>
+              {isSupportOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+
+            {isSupportOpen && (
+              <div className="pl-9 space-y-1 py-1">
+                <Link
+                  href="/ahiadmin/view/messages"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/messages")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  Comments & Messages
+                </Link>
+                <Link
+                  href="/ahiadmin/view/orders"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/orders")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Orders
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Change Password Link */}
+          <Link
+            href="/ahiadmin/change-password"
+            className={`
+              flex items-center gap-3 px-3 py-2.5 rounded-lg
+              transition-colors outline-none border-0 cursor-pointer
+              ${isExactActive("/ahiadmin/change-password")
+                ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+              }
+            `}
+          >
+            <KeyRound className="w-4 h-4 text-amber-500" />
+            <span>Change Password</span>
+          </Link>
+        </nav>
+
+        {/* Sidebar Footer */}
+        <div className="p-4 border-t border-[var(--border)] bg-[var(--background)] shrink-0">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 rounded-full bg-[var(--muted)] text-[var(--foreground)] flex items-center justify-center font-semibold text-sm shrink-0">
+                <User className="w-4 h-4" />
+              </div>
+
+              <div className="min-w-0">
+                <p className="text-sm font-medium truncate">Abu Hanifa Admin</p>
+                <p className="text-xs text-[var(--muted-foreground)] truncate">Installation Management</p>
+              </div>
+            </div>
+
+            <Link
+              href="/"
+              className="p-2 text-[var(--muted-foreground)] hover:text-rose-500 rounded-lg hover:bg-[var(--muted)] outline-none transition-colors border-0 cursor-pointer"
+              title="Exit Admin"
+            >
+              <LogOut className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Resizer */}
+        <div
+          onMouseDown={startResizing}
+          className="hidden lg:flex absolute top-0 right-0 w-1.5 h-full cursor-col-resize hover:bg-[var(--primary)]/50 transition-colors items-center justify-center group"
+          title="Drag to resize sidebar"
+        >
+          <div className="w-0.5 h-8 bg-[var(--border)] group-hover:bg-[var(--primary)] rounded-full" />
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+        {/* Top Bar */}
+        <header className="h-16 px-6 bg-[var(--background)] border-b border-[var(--border)] flex items-center justify-between shrink-0 z-30 sticky top-0">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="lg:hidden p-2 -ml-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] rounded-lg hover:bg-[var(--muted)] outline-none border-0 cursor-pointer bg-[var(--background)]"
+              aria-label="Open sidebar"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            <h1 className="text-base font-semibold tracking-tight lg:hidden">
+              Abu Hanifa Admin
+            </h1>
+
+            <nav className="hidden lg:flex items-center space-x-2 text-sm font-medium">
+              {breadcrumbs.map((crumb, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                return (
+                  <div key={crumb.href} className="flex items-center space-x-2">
+                    {index > 0 && <ChevronRight className="w-4 h-4 text-[var(--muted-foreground)]" />}
+                    {isLast ? (
+                      <span className="text-[var(--foreground)] font-semibold">{crumb.label}</span>
+                    ) : (
+                      <Link href={crumb.href} className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
+                        {crumb.label}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+          </div>
+
           <div className="flex items-center gap-3">
-            {/* Theme Switcher Dropdown */}
+            {/* Theme Switcher */}
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setThemeMenuOpen(!themeMenuOpen)}
-                aria-label="Toggle theme selection menu"
-                className="flex items-center gap-2 py-1.5 px-3 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] hover:opacity-100 transition-all cursor-pointer shadow-xs"
+                className="flex items-center gap-2 py-1.5 px-3 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] hover:opacity-100 transition-all cursor-pointer shadow-xs text-xs font-semibold"
               >
                 <Palette className="w-3.5 h-3.5 text-[var(--primary)]" />
-                <span className="text-xs font-semibold capitalize hidden sm:inline">{isDark ? 'Dark Mode' : 'Light Mode'}</span>
+                <span className="capitalize hidden sm:inline">{isDark ? 'Dark Mode' : 'Light Mode'}</span>
               </button>
 
               {themeMenuOpen && (
                 <div className="absolute right-0 mt-2 w-40 rounded-xl bg-[var(--background)] border border-[var(--border)] shadow-2xl p-1.5 z-50">
-                  <div className="px-3 py-1 text-[9px] font-bold uppercase tracking-wider opacity-50">
-                    Theme Mode
-                  </div>
+                  <div className="px-3 py-1 text-[9px] font-bold uppercase tracking-wider opacity-50">Theme Mode</div>
                   <div className="flex flex-col gap-1 mt-1">
                     <button
                       type="button"
                       onClick={() => toggleTheme(false)}
-                      className={`flex items-center justify-between w-full px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-                        !isDark ? 'bg-[var(--primary)] text-slate-950 font-bold shadow-xs' : 'text-[var(--foreground)] opacity-75 hover:opacity-100 hover:bg-[var(--muted)]/50'
-                      }`}
+                      className={`flex items-center justify-between w-full px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${!isDark ? 'bg-[var(--primary)] text-[var(--primary-foreground)] font-bold shadow-xs' : 'text-[var(--foreground)] opacity-75 hover:opacity-100 hover:bg-[var(--muted)]/50'
+                        }`}
                     >
                       <div className="flex items-center gap-2">
                         <Sun className="w-3.5 h-3.5" />
@@ -308,9 +613,8 @@ export default function AdminLayout({ children }) {
                     <button
                       type="button"
                       onClick={() => toggleTheme(true)}
-                      className={`flex items-center justify-between w-full px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-                        isDark ? 'bg-[var(--primary)] text-slate-950 font-bold shadow-xs' : 'text-[var(--foreground)] opacity-75 hover:opacity-100 hover:bg-[var(--muted)]/50'
-                      }`}
+                      className={`flex items-center justify-between w-full px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${isDark ? 'bg-[var(--primary)] text-[var(--primary-foreground)] font-bold shadow-xs' : 'text-[var(--foreground)] opacity-75 hover:opacity-100 hover:bg-[var(--muted)]/50'
+                        }`}
                     >
                       <div className="flex items-center gap-2">
                         <Moon className="w-3.5 h-3.5" />
@@ -323,26 +627,21 @@ export default function AdminLayout({ children }) {
               )}
             </div>
 
-            {/* Admin Avatar & Quick Exit */}
-            <div className="flex items-center gap-2 pl-2 border-l border-[var(--border)]">
-              <Link 
-                href="/" 
-                aria-label="Exit admin console and return to main application" 
-                className="p-1.5 rounded-lg bg-[var(--background)] border border-[var(--border)] opacity-75 hover:opacity-100 hover:text-rose-500 transition-all cursor-pointer" 
-                title="Exit Admin"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-              </Link>
+            <div className="flex lg:hidden items-center">
+              <div className="w-8 h-8 rounded-full bg-[var(--muted)] text-[var(--foreground)] flex items-center justify-center font-semibold text-xs shrink-0 border border-[var(--border)]">
+                <User className="w-3.5 h-3.5" />
+              </div>
             </div>
           </div>
         </header>
 
-        {/* Main Workspace Area */}
-        <main className="flex-1 p-6 sm:p-10 max-w-7xl w-full mx-auto overflow-x-hidden">
-          {children}
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto p-6 lg:p-8 w-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
-
     </div>
   );
 }

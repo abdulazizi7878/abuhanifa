@@ -11,6 +11,14 @@ export default function ViewCommentsMessages() {
     const [errorComments, setErrorComments] = useState(false);
     const [errorMessages, setErrorMessages] = useState(false);
 
+    // Active Dropdown Menu State
+    const [activeMenuId, setActiveMenuId] = useState(null);
+
+    // Delete Modal State
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null); // { type: 'comments' | 'messages', id, name }
+    const [isDeleting, setIsDeleting] = useState(false);
+
     // Search state
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -58,6 +66,72 @@ export default function ViewCommentsMessages() {
         }
     };
 
+    // Close dropdown menu when clicking anywhere outside
+    useEffect(() => {
+        const handleOutsideClick = () => setActiveMenuId(null);
+        window.addEventListener("click", handleOutsideClick);
+        return () => window.removeEventListener("click", handleOutsideClick);
+    }, []);
+
+    // Open Delete Modal
+    const openDeleteModal = (type, item) => {
+        setActiveMenuId(null);
+        setSelectedItem({
+            type,
+            id: item.id,
+            name: item.name || (type === 'comments' ? 'this comment' : 'this message')
+        });
+        setDeleteModalOpen(true);
+    };
+
+    // Close Delete Modal
+    const closeDeleteModal = () => {
+        if (isDeleting) return;
+        setSelectedItem(null);
+        setDeleteModalOpen(false);
+    };
+
+    // Confirm Delete Handler
+    const confirmDelete = async () => {
+        if (!selectedItem) return;
+
+        setIsDeleting(true);
+        try {
+            const response = await fetch("/api/delete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    item: selectedItem.type,
+                    id: selectedItem.id,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "We couldn't delete the item");
+            }
+
+            toast.success(data.message || "Item Deleted successfully");
+
+            // Remove from local state depending on type
+            if (selectedItem.type === "comments") {
+                setComments((prev) => prev.filter((c) => c.id !== selectedItem.id));
+            } else if (selectedItem.type === "messages") {
+                setMessages((prev) => prev.filter((m) => m.id !== selectedItem.id));
+            }
+
+            closeDeleteModal();
+        } catch (err) {
+            console.error(err);
+            toast.error(err.message || "We couldn't delete the item");
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     useEffect(() => {
         fetchComments();
         fetchMessages();
@@ -101,16 +175,16 @@ export default function ViewCommentsMessages() {
 
     return (
         <>
-            <main className="">
-                <div className="max-w-6xl mx-auto space-y-8">
+            <main className="bg-[var(--background)] text-[var(--foreground)]">
+                <div className="max-w-7xl mx-auto space-y-8">
                     {/* Page Title Header */}
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-4">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[var(--border)]">
                         <div>
-                            <h1 className="text-3xl font-bold en" style={{ color: 'var(--foreground)' }}>
-                                Comments & Messages
+                            <h1 className="text-xl font-bold tracking-tight en text-[var(--secondary)]">
+                                Abuhanifa Installation
                             </h1>
-                            <p className="mt-1 text-sm opacity-80 en">
-                                View and manage user feedback and inquiries.
+                            <p className="text-2xl sm:text-3xl font-extrabold en mt-1">
+                                Comments & Messages
                             </p>
                         </div>
                     </div>
@@ -122,15 +196,14 @@ export default function ViewCommentsMessages() {
                             placeholder="Search by name, email, or content..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full sm:w-80 px-4 py-2.5 rounded-lg border text-sm en bg-background text-foreground focus:outline-none focus:ring-2"
-                            style={{ borderColor: 'var(--border)' }}
+                            className="w-full sm:w-80 px-4 py-2.5 rounded-lg border border-[var(--border)] text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:border-[var(--primary)]"
                         />
                     </div>
 
                     {/* Loading State */}
                     {isLoading && (
-                        <div className="text-center py-20">
-                            <p className="text-lg opacity-80 en">Loading data...</p>
+                        <div className="text-center py-28">
+                            <p className="text-base font-medium opacity-80 en">Loading data...</p>
                         </div>
                     )}
 
@@ -138,41 +211,74 @@ export default function ViewCommentsMessages() {
                         <div className="space-y-10">
                             {/* Comments Section */}
                             <div className="space-y-4">
-                                <h2 className="text-2xl font-bold en" style={{ color: 'var(--foreground)' }}>
+                                <h2 className="text-2xl font-bold en text-[var(--foreground)]">
                                     All Comments
                                 </h2>
-                                
+
                                 {errorComments ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
+                                    <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10 max-w-lg mx-auto">
                                         <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load comments.</p>
-                                        <button onClick={fetchComments} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
+                                        <button onClick={fetchComments} className="px-4 py-2 rounded-lg text-xs font-medium bg-[var(--primary)] text-white">Try Again</button>
                                     </div>
                                 ) : filteredComments.length === 0 ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>
+                                    <div className="text-center py-10 p-6 rounded-xl border border-dashed border-[var(--border)]">
                                         <p className="text-sm opacity-70 en">No comments found matching your query.</p>
                                     </div>
                                 ) : (
-                                    <div 
-                                        className="rounded-xl shadow-lg border overflow-hidden backdrop-blur-sm"
-                                        style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}
+                                    <div
+                                        className="rounded-xl border border-[var(--border)] shadow-md bg-[var(--background)]"
                                     >
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full text-left border-collapse">
+                                        <div className="overflow-x-auto min-h-[200px]">
+                                            <table className="w-full text-left border-collapse text-sm en">
                                                 <thead>
-                                                    <tr className="border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--border)' }}>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">User</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Comment</th>
+                                                    <tr className="border-b border-[var(--border)] bg-[var(--border)]/10 text-xs font-semibold uppercase tracking-wider opacity-80">
+                                                        <th className="py-3.5 px-4">User</th>
+                                                        <th className="py-3.5 px-4">Comment</th>
+                                                        <th className="py-3.5 px-4 text-right">Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y" style={{ borderColor: 'var(--border)' }}>
+                                                <tbody className="divide-y divide-[var(--border)]">
                                                     {filteredComments.map((cm, index) => (
-                                                        <tr key={index} className="transition hover:opacity-90">
-                                                            <td className="py-4 px-6 align-top">
-                                                                <div className="font-medium en text-sm" style={{ color: 'var(--foreground)' }}>{cm.name}</div>
-                                                                <div className="text-xs opacity-70 en">{cm.email}</div>
+                                                        <tr key={cm.id || index} className="transition hover:bg-[var(--border)]/10">
+                                                            <td className="py-4 px-4 align-top">
+                                                                <div className="font-semibold text-sm" style={{ color: 'var(--foreground)' }}>{cm.name}</div>
+                                                                <div className="text-xs opacity-70">{cm.email}</div>
+                                                                <div className="text-[10px] opacity-50 mt-1">ID: {cm.id}</div>
                                                             </td>
-                                                            <td className="py-4 px-6 text-sm opacity-90 en" style={{ color: 'var(--foreground)' }}>
+                                                            <td className="py-4 px-4 text-sm opacity-90 align-top" style={{ color: 'var(--foreground)' }}>
                                                                 {cm.comment}
+                                                            </td>
+                                                            <td className="py-4 px-4 align-top text-right">
+                                                                <div
+                                                                    className="relative inline-block text-left"
+                                                                    onClick={(e) => e.stopPropagation()}
+                                                                >
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => setActiveMenuId(activeMenuId === `comment-${cm.id}` ? null : `comment-${cm.id}`)}
+                                                                        className="p-2 rounded-lg border border-[var(--border)] cursor-pointer bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors"
+                                                                        title="Actions"
+                                                                    >
+                                                                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                                            <circle cx="12" cy="5" r="2" />
+                                                                            <circle cx="12" cy="12" r="2" />
+                                                                            <circle cx="12" cy="19" r="2" />
+                                                                        </svg>
+                                                                    </button>
+
+                                                                    {activeMenuId === `comment-${cm.id}` && (
+                                                                        <div className="absolute right-0 top-full mt-1 w-44 rounded-xl shadow-2xl border border-[var(--border)] z-50 overflow-hidden bg-[var(--background)] text-[var(--foreground)] py-1.5">
+                                                                            <div>
+                                                                                <button
+                                                                                    onClick={() => openDeleteModal("comments", cm)}
+                                                                                    className="w-full text-left px-4 py-2 text-xs font-medium text-red-500 cursor-pointer hover:bg-red-500/10 transition-colors"
+                                                                                >
+                                                                                    Delete
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     ))}
@@ -185,41 +291,74 @@ export default function ViewCommentsMessages() {
 
                             {/* Messages Section */}
                             <div className="space-y-4">
-                                <h2 className="text-2xl font-bold en" style={{ color: 'var(--foreground)' }}>
+                                <h2 className="text-2xl font-bold en text-[var(--foreground)]">
                                     All Messages
                                 </h2>
 
                                 {errorMessages ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
+                                    <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10 max-w-lg mx-auto">
                                         <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load messages.</p>
-                                        <button onClick={fetchMessages} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
+                                        <button onClick={fetchMessages} className="px-4 py-2 rounded-lg text-xs font-medium bg-[var(--primary)] text-white">Try Again</button>
                                     </div>
                                 ) : filteredMessages.length === 0 ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>
+                                    <div className="text-center py-10 p-6 rounded-xl border border-dashed border-[var(--border)]">
                                         <p className="text-sm opacity-70 en">No messages found matching your query.</p>
                                     </div>
                                 ) : (
-                                    <div 
-                                        className="rounded-xl shadow-lg border overflow-hidden backdrop-blur-sm"
-                                        style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}
+                                    <div
+                                        className="rounded-xl border border-[var(--border)] shadow-md bg-[var(--background)]"
                                     >
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full text-left border-collapse">
+                                        <div className="overflow-x-auto min-h-[200px]">
+                                            <table className="w-full text-left border-collapse text-sm en">
                                                 <thead>
-                                                    <tr className="border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--border)' }}>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Sender</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Message</th>
+                                                    <tr className="border-b border-[var(--border)] bg-[var(--border)]/10 text-xs font-semibold uppercase tracking-wider opacity-80">
+                                                        <th className="py-3.5 px-4">Sender</th>
+                                                        <th className="py-3.5 px-4">Message</th>
+                                                        <th className="py-3.5 px-4 text-right">Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y" style={{ borderColor: 'var(--border)' }}>
+                                                <tbody className="divide-y divide-[var(--border)]">
                                                     {filteredMessages.map((ms, index) => (
-                                                        <tr key={index} className="transition hover:opacity-90">
-                                                            <td className="py-4 px-6 align-top">
-                                                                <div className="font-medium en text-sm" style={{ color: 'var(--foreground)' }}>{ms.name}</div>
-                                                                <div className="text-xs opacity-70 en">{ms.email}</div>
+                                                        <tr key={ms.id || index} className="transition hover:bg-[var(--border)]/10">
+                                                            <td className="py-4 px-4 align-top">
+                                                                <div className="font-semibold text-sm" style={{ color: 'var(--foreground)' }}>{ms.name}</div>
+                                                                <div className="text-xs opacity-70">{ms.email}</div>
+                                                                <div className="text-[10px] opacity-50 mt-1">ID: {ms.id}</div>
                                                             </td>
-                                                            <td className="py-4 px-6 text-sm opacity-90 en" style={{ color: 'var(--foreground)' }}>
+                                                            <td className="py-4 px-4 text-sm opacity-90 align-top" style={{ color: 'var(--foreground)' }}>
                                                                 {ms.message}
+                                                            </td>
+                                                            <td className="py-4 px-4 align-top text-right">
+                                                                <div
+                                                                    className="relative inline-block text-left"
+                                                                    onClick={(e) => e.stopPropagation()}
+                                                                >
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => setActiveMenuId(activeMenuId === `message-${ms.id}` ? null : `message-${ms.id}`)}
+                                                                        className="p-2 rounded-lg border border-[var(--border)] cursor-pointer bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors"
+                                                                        title="Actions"
+                                                                    >
+                                                                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                                            <circle cx="12" cy="5" r="2" />
+                                                                            <circle cx="12" cy="12" r="2" />
+                                                                            <circle cx="12" cy="19" r="2" />
+                                                                        </svg>
+                                                                    </button>
+
+                                                                    {activeMenuId === `message-${ms.id}` && (
+                                                                        <div className="absolute right-0 top-full mt-1 w-44 rounded-xl shadow-2xl border border-[var(--border)] z-50 overflow-hidden bg-[var(--background)] text-[var(--foreground)] py-1.5">
+                                                                            <div>
+                                                                                <button
+                                                                                    onClick={() => openDeleteModal("messages", ms)}
+                                                                                    className="w-full text-left px-4 py-2 text-xs font-medium text-red-500 cursor-pointer hover:bg-red-500/10 transition-colors"
+                                                                                >
+                                                                                    Delete
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     ))}
@@ -228,6 +367,49 @@ export default function ViewCommentsMessages() {
                                         </div>
                                     </div>
                                 )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Delete Confirmation Modal */}
+                    {deleteModalOpen && selectedItem && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={closeDeleteModal}>
+                            <div
+                                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border border-[var(--border)] space-y-4 bg-[var(--background)] text-[var(--foreground)]"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="space-y-1">
+                                    <h3 className="text-xl font-bold text-red-500 en capitalize">
+                                        Delete {selectedItem.type.slice(0, -1)}
+                                    </h3>
+                                    <p className="text-sm opacity-80 en leading-relaxed">
+                                        Are you sure you want to delete this {selectedItem.type.slice(0, -1)} from <span className="font-semibold" style={{ color: 'var(--foreground)' }}>{selectedItem.name}</span>? This action cannot be undone.
+                                    </p>
+                                </div>
+
+                                <div className="p-3 rounded-lg border border-[var(--border)] text-xs space-y-1 bg-[var(--border)]/5">
+                                    <div className="opacity-70"><span className="font-medium">Item Type:</span> {selectedItem.type}</div>
+                                    <div className="opacity-70"><span className="font-medium">Item ID:</span> {selectedItem.id}</div>
+                                </div>
+
+                                <div className="flex justify-end gap-3 pt-2">
+                                    <button
+                                        type="button"
+                                        onClick={closeDeleteModal}
+                                        disabled={isDeleting}
+                                        className="px-4 py-2 rounded-lg text-sm font-medium border border-[var(--border)] transition en cursor-pointer disabled:opacity-50 bg-transparent text-[var(--foreground)] hover:bg-[var(--border)]/20"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={confirmDelete}
+                                        disabled={isDeleting}
+                                        className="px-4 py-2 rounded-lg text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition en cursor-pointer disabled:opacity-50 shadow-md"
+                                    >
+                                        {isDeleting ? "Deleting..." : "Yes, Delete"}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )}

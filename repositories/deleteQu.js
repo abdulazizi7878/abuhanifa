@@ -1,3 +1,8 @@
+
+
+// file: repositories/deleteQu.js
+
+
 import {db} from "../lib/db";
 
 
@@ -19,6 +24,30 @@ export async function DeleteProduct(id) {
 export async function DeletePromotion(id) {
     const res = await db.query(
         "DELETE FROM promotions where id = ?",
+        [id]
+    )
+    return res;
+}
+
+export async function DeleteOrders(id) {
+    const res = await db.query(
+        "DELETE FROM orders WHERE id = ?",
+        [id]
+    )
+    return res;
+}
+
+export async function DeleteComments(id) {
+    const res = await db.query(
+        "DELETE FROM comments WHERE id = ?",
+        [id]
+    )
+    return res;
+}
+
+export async function DeleteMessages(id) {
+    const res = await db.query(
+        "DELETE FROM contact WHERE id = ?",
         [id]
     )
     return res;

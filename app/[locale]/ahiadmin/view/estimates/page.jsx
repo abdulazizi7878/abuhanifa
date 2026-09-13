@@ -2,6 +2,10 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 export default function EstimatesManagementPage() {
   const router = useRouter();
@@ -86,11 +90,7 @@ export default function EstimatesManagementPage() {
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
+      return dayjs(dateString).fromNow();
     } catch {
       return dateString;
     }
@@ -176,21 +176,20 @@ export default function EstimatesManagementPage() {
 
   return (
     <>
-      <div className="bg-background text-foreground">
+      <div className="bg-[var(--background)] text-[var(--foreground)]">
         <div className="max-w-7xl mx-auto space-y-8">
 
           {/* Top Header & Branding */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[var(--border)]">
             <div>
-              <h1 className="text-xl font-bold tracking-tight en" style={{ color: "var(--secondary)" }}>
+              <h1 className="text-xl font-bold tracking-tight en text-[var(--secondary)]">
                 Abuhanifa Installation
               </h1>
               <p className="text-2xl sm:text-3xl font-extrabold en mt-1">Estimates</p>
             </div>
             <button
               onClick={() => router.push("/ahiadmin/create/estimate")}
-              className="px-5 py-2.5 rounded-lg text-sm font-medium transition en cursor-pointer shadow-md flex items-center gap-2 hover:opacity-90"
-              style={{ backgroundColor: "var(--primary)", color: "var(--foreground)" }}
+              className="px-5 py-2.5 rounded-lg text-sm font-medium transition en cursor-pointer shadow-md flex items-center gap-2 hover:opacity-90 bg-[var(--primary)] text-white"
             >
               + Create Estimate
             </button>
@@ -203,8 +202,7 @@ export default function EstimatesManagementPage() {
               placeholder="Search by customer name or project..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-80 px-4 py-2.5 rounded-lg border text-sm en bg-background text-foreground focus:outline-none focus:ring-2"
-              style={{ borderColor: "var(--border)" }}
+              className="w-full sm:w-80 px-4 py-2.5 rounded-lg border border-[var(--border)] text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:border-[var(--primary)]"
             />
 
             <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
@@ -212,17 +210,10 @@ export default function EstimatesManagementPage() {
                 <button
                   key={status}
                   onClick={() => setStatusFilter(status)}
-                  className={`px-4 py-2 rounded-lg text-xs font-semibold capitalize transition en cursor-pointer border ${
-                    statusFilter === status
-                      ? "shadow-sm"
-                      : "opacity-70 hover:opacity-100"
-                  }`}
-                  style={{
-                    backgroundColor:
-                      statusFilter === status ? "var(--primary)" : "var(--background)",
-                    borderColor: "var(--border)",
-                    color: "var(--foreground)",
-                  }}
+                  className={`px-4 py-2 rounded-lg text-xs font-semibold capitalize transition en cursor-pointer border ${statusFilter === status
+                      ? "shadow-sm bg-[var(--primary)] text-white border-[var(--primary)]"
+                      : "bg-[var(--background)] text-[var(--foreground)] border-[var(--border)] opacity-70 hover:opacity-100"
+                    }`}
                 >
                   {status}
                 </button>
@@ -246,8 +237,7 @@ export default function EstimatesManagementPage() {
               <p className="text-sm opacity-80 mb-6 en">{errorMessage}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="px-5 py-2 rounded-lg font-medium text-sm transition en cursor-pointer shadow-md"
-                style={{ backgroundColor: "var(--primary)", color: "var(--foreground)" }}
+                className="px-5 py-2 rounded-lg font-medium text-sm transition en cursor-pointer shadow-md bg-[var(--primary)] text-white"
               >
                 Retry
               </button>
@@ -257,8 +247,7 @@ export default function EstimatesManagementPage() {
           {/* Empty State */}
           {!loading && !error && filteredEstimates.length === 0 && (
             <div
-              className="text-center py-20 p-10 rounded-2xl border border-dashed max-w-lg mx-auto space-y-4"
-              style={{ borderColor: "var(--border)" }}
+              className="text-center py-20 p-10 rounded-2xl border border-dashed border-[var(--border)] max-w-lg mx-auto space-y-4 bg-[var(--background)]"
             >
               <h3 className="text-lg font-bold en">No estimates yet.</h3>
               <p className="text-sm opacity-75 en">
@@ -269,8 +258,7 @@ export default function EstimatesManagementPage() {
               {estimates.length === 0 && (
                 <button
                   onClick={() => router.push("/ahiadmin/create/estimate")}
-                  className="px-5 py-2.5 rounded-lg font-medium text-sm transition en cursor-pointer shadow-md inline-block"
-                  style={{ backgroundColor: "var(--primary)", color: "var(--foreground)" }}
+                  className="px-5 py-2.5 rounded-lg font-medium text-sm transition en cursor-pointer shadow-md inline-block bg-[var(--primary)] text-white"
                 >
                   Create Estimate
                 </button>
@@ -281,15 +269,13 @@ export default function EstimatesManagementPage() {
           {/* Estimates Table */}
           {!loading && !error && filteredEstimates.length > 0 && (
             <div
-              className="rounded-xl border shadow-md bg-background"
-              style={{ borderColor: "var(--border)" }}
+              className="rounded-xl border border-[var(--border)] shadow-md bg-[var(--background)]"
             >
               <div className="overflow-x-auto min-h-[300px]">
                 <table className="w-full text-left border-collapse text-sm en">
                   <thead>
                     <tr
-                      className="border-b text-xs font-semibold uppercase tracking-wider opacity-80"
-                      style={{ borderColor: "var(--border)", backgroundColor: "var(--border)" }}
+                      className="border-b border-[var(--border)] bg-[var(--border)]/10 text-xs font-semibold uppercase tracking-wider opacity-80"
                     >
                       <th className="py-3.5 px-4">#</th>
                       <th className="py-3.5 px-4">Customer</th>
@@ -300,9 +286,9 @@ export default function EstimatesManagementPage() {
                       <th className="py-3.5 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
+                  <tbody className="divide-y divide-[var(--border)]">
                     {filteredEstimates.map((est, index) => (
-                      <tr key={est.id}>
+                      <tr key={est.id} className="transition hover:bg-[var(--border)]/10">
                         <td className="py-4 px-4 opacity-70 font-medium">{index + 1}</td>
                         <td className="py-4 px-4 font-semibold">{est.customerName || "N/A"}</td>
                         <td className="py-4 px-4 opacity-90">{est.projectTitle || "No project title"}</td>
@@ -315,10 +301,12 @@ export default function EstimatesManagementPage() {
                             {est.status || "draft"}
                           </span>
                         </td>
-                        <td className="py-4 px-4 font-bold" style={{ color: "var(--secondary)" }}>
+                        <td className="py-4 px-4 font-bold text-[var(--secondary)]">
                           {formatCurrency(est.grandTotal)} ETB
                         </td>
-                        <td className="py-4 px-4 text-xs opacity-75">{formatDate(est.createdAt)}</td>
+                        <td className="py-4 px-4 text-xs opacity-75" title={est.createdAt}>
+                          {formatDate(est.createdAt)}
+                        </td>
                         <td className="py-4 px-4 text-right">
                           <div
                             className="relative inline-block text-left"
@@ -327,8 +315,7 @@ export default function EstimatesManagementPage() {
                             <button
                               type="button"
                               onClick={() => setActiveMenuId(activeMenuId === est.id ? null : est.id)}
-                              className="p-2 rounded-lg border cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                              style={{ borderColor: "var(--border)" }}
+                              className="p-2 rounded-lg border border-[var(--border)] cursor-pointer bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors"
                               title="Actions"
                             >
                               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -340,16 +327,15 @@ export default function EstimatesManagementPage() {
 
                             {activeMenuId === est.id && (
                               <div
-                                className="absolute right-0 top-full mt-1 w-44 rounded-xl shadow-2xl border z-50 overflow-hidden bg-background text-foreground"
-                                style={{ borderColor: "var(--border)" }}
+                                className="absolute right-0 top-full mt-1 w-44 rounded-xl shadow-2xl border border-[var(--border)] z-50 overflow-hidden bg-[var(--background)] text-[var(--foreground)] py-1.5"
                               >
-                                <div className="py-1">
+                                <div>
                                   <button
                                     onClick={() => {
                                       setActiveMenuId(null);
                                       router.push(`/ahiadmin/edit/estimate/${est.id}`);
                                     }}
-                                    className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                    className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-[var(--border)]/20 transition-colors"
                                   >
                                     Edit
                                   </button>
@@ -357,7 +343,7 @@ export default function EstimatesManagementPage() {
                                   <button
                                     onClick={() => handleDuplicate(est.id)}
                                     disabled={duplicatingId === est.id}
-                                    className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer disabled:opacity-50 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                    className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer disabled:opacity-50 hover:bg-[var(--border)]/20 transition-colors"
                                   >
                                     {duplicatingId === est.id ? "Duplicating..." : "Duplicate"}
                                   </button>
@@ -369,7 +355,7 @@ export default function EstimatesManagementPage() {
                                           handleCopyPublicLink(est.publicToken);
                                           setActiveMenuId(null);
                                         }}
-                                        className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                        className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-[var(--border)]/20 transition-colors"
                                       >
                                         {copiedToken === est.publicToken ? "Link Copied!" : "Copy Link"}
                                       </button>
@@ -379,14 +365,14 @@ export default function EstimatesManagementPage() {
                                           setActiveMenuId(null);
                                           router.push(`/estimate/${est.publicToken}`);
                                         }}
-                                        className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                        className="w-full text-left px-4 py-2 text-xs font-medium cursor-pointer hover:bg-[var(--border)]/20 transition-colors"
                                       >
                                         Public Link
                                       </button>
                                     </>
                                   )}
 
-                                  <div className="border-t my-1" style={{ borderColor: "var(--border)" }}></div>
+                                  <div className="border-t border-[var(--border)] my-1"></div>
 
                                   <button
                                     onClick={() => openDeleteModal(est)}
@@ -410,12 +396,11 @@ export default function EstimatesManagementPage() {
           {/* Delete Confirmation Modal */}
           {deleteModalOpen && estimateToDelete && (
             <div
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
               onClick={() => !isDeleting && setDeleteModalOpen(false)}
             >
               <div
-                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border space-y-4 bg-background text-foreground"
-                style={{ borderColor: "var(--border)" }}
+                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border border-[var(--border)] space-y-4 bg-[var(--background)] text-[var(--foreground)]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <h3 className="text-xl font-bold text-red-500 en">Delete Estimate?</h3>
@@ -428,8 +413,7 @@ export default function EstimatesManagementPage() {
                     type="button"
                     onClick={() => setDeleteModalOpen(false)}
                     disabled={isDeleting}
-                    className="px-4 py-2 rounded-lg text-sm font-medium border transition en cursor-pointer disabled:opacity-50"
-                    style={{ borderColor: "var(--border)", color: "var(--foreground)" }}
+                    className="px-4 py-2 rounded-lg text-sm font-medium border border-[var(--border)] transition en cursor-pointer disabled:opacity-50 bg-transparent text-[var(--foreground)] hover:bg-[var(--border)]/20"
                   >
                     Cancel
                   </button>
@@ -447,7 +431,7 @@ export default function EstimatesManagementPage() {
           )}
 
         </div>
-      </div>    
+      </div>
     </>
   );
 }

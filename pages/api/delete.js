@@ -1,6 +1,9 @@
+
+// file: pages/api/delete.js
+
+
 import { DeleteItem } from "../../services/delete.services";
 import { requireAdmin } from "../../lib/auth";
-import { log } from "node:console";
 
 export default async function handler(req,res) {
     

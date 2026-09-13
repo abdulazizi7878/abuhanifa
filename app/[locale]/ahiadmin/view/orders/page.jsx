@@ -6,12 +6,16 @@ import ImageViewer from "@/components/imgviewer";
 
 export default function ViewOrders() {
     const [jobOrders, setJobOrders] = useState([]);
-    const [productOrders, setProductOrders] = useState([]);
-    
     const [loadingJobs, setLoadingJobs] = useState(true);
-    const [loadingProducts, setLoadingProducts] = useState(true);
     const [errorJobs, setErrorJobs] = useState(false);
-    const [errorProducts, setErrorProducts] = useState(false);
+
+    // Active Dropdown Menu State
+    const [activeMenuId, setActiveMenuId] = useState(null);
+
+    // Delete Modal State
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     // Search state
     const [searchQuery, setSearchQuery] = useState("");
@@ -41,34 +45,64 @@ export default function ViewOrders() {
         }
     };
 
-    // Fetch Product Orders
-    const fetchProductOrders = async () => {
-        setLoadingProducts(true);
-        setErrorProducts(false);
+    // Close dropdown menu when clicking anywhere outside
+    useEffect(() => {
+        const handleOutsideClick = () => setActiveMenuId(null);
+        window.addEventListener("click", handleOutsideClick);
+        return () => window.removeEventListener("click", handleOutsideClick);
+    }, []);
+
+    // Open Delete Modal
+    const openDeleteModal = (order) => {
+        setActiveMenuId(null);
+        setSelectedOrder(order);
+        setDeleteModalOpen(true);
+    };
+
+    // Close Delete Modal
+    const closeDeleteModal = () => {
+        if (isDeleting) return;
+        setSelectedOrder(null);
+        setDeleteModalOpen(false);
+    };
+
+    // Confirm Delete Handler
+    const confirmDelete = async () => {
+        if (!selectedOrder) return;
+
+        setIsDeleting(true);
         try {
-            const response = await fetch("/api/showproductorders", {
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            const response = await fetch("/api/delete", {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    item: "orders",
+                    id: selectedOrder.id,
+                }),
             });
-            if (!response.ok) {
-                throw new Error('Failed to fetch product orders.');
-            }
+
             const data = await response.json();
-            setProductOrders(data?.data || []);
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "We couldn't delete the item");
+            }
+
+            toast.success(data.message || "Item Deleted successfully");
+            // Remove the deleted order from local state
+            setJobOrders((prevOrders) => prevOrders.filter((order) => order.id !== selectedOrder.id));
+            closeDeleteModal();
         } catch (err) {
             console.error(err);
-            setErrorProducts(true);
-            toast.error('Unable to load product orders.');
+            toast.error(err.message || "We couldn't delete the item");
         } finally {
-            setLoadingProducts(false);
+            setIsDeleting(false);
         }
     };
 
     useEffect(() => {
         fetchJobOrders();
-        fetchProductOrders();
     }, []);
 
     // Filtered Job Orders
@@ -94,41 +128,21 @@ export default function ViewOrders() {
         });
     }, [jobOrders, searchQuery]);
 
-    // Filtered Product Orders
-    const filteredProductOrders = useMemo(() => {
-        return productOrders.filter((or) => {
-            const query = searchQuery.toLowerCase();
-            const username = (or.username || "").toLowerCase();
-            const phone = (or.phone_number || "").toLowerCase();
-            const location = (or.location || "").toLowerCase();
-            const account = (or.account_number || "").toLowerCase();
-            const productName = (or.product_name || "").toLowerCase();
 
-            return (
-                !searchQuery ||
-                username.includes(query) ||
-                phone.includes(query) ||
-                location.includes(query) ||
-                account.includes(query) ||
-                productName.includes(query)
-            );
-        });
-    }, [productOrders, searchQuery]);
-
-    const isLoading = loadingJobs || loadingProducts;
+    const isLoading = loadingJobs;
 
     return (
         <>
-            <main className="">
-                <div className="max-w-6xl mx-auto space-y-8">
+            <main className="bg-[var(--background)] text-[var(--foreground)]">
+                <div className="max-w-7xl mx-auto space-y-8">
                     {/* Page Title Header */}
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-4">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[var(--border)]">
                         <div>
-                            <h1 className="text-3xl font-bold en" style={{ color: 'var(--foreground)' }}>
-                                Orders Management
+                            <h1 className="text-xl font-bold tracking-tight en text-[var(--secondary)]">
+                                Abuhanifa Installation
                             </h1>
-                            <p className="mt-1 text-sm opacity-80 en">
-                                View and manage all job and product orders.
+                            <p className="text-2xl sm:text-3xl font-extrabold en mt-1">
+                                Orders Management
                             </p>
                         </div>
                     </div>
@@ -140,15 +154,14 @@ export default function ViewOrders() {
                             placeholder="Search by name, phone, location, product, or details..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full sm:w-96 px-4 py-2.5 rounded-lg border text-sm en bg-background text-foreground focus:outline-none focus:ring-2"
-                            style={{ borderColor: 'var(--border)' }}
+                            className="w-full sm:w-96 px-4 py-2.5 rounded-lg border border-[var(--border)] text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:border-[var(--primary)]"
                         />
                     </div>
 
                     {/* Loading State */}
                     {isLoading && (
-                        <div className="text-center py-20">
-                            <p className="text-lg opacity-80 en">Loading orders...</p>
+                        <div className="text-center py-28">
+                            <p className="text-base font-medium opacity-80 en">Loading orders...</p>
                         </div>
                     )}
 
@@ -156,135 +169,86 @@ export default function ViewOrders() {
                         <div className="space-y-12">
                             {/* Job Orders Section */}
                             <div className="space-y-4">
-                                <h2 className="text-2xl font-bold en" style={{ color: 'var(--foreground)' }}>
+                                <h2 className="text-2xl font-bold en text-[var(--foreground)]">
                                     All Job Orders
                                 </h2>
 
                                 {errorJobs ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
+                                    <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10 max-w-lg mx-auto">
                                         <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load job orders.</p>
-                                        <button onClick={fetchJobOrders} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
+                                        <button onClick={fetchJobOrders} className="px-4 py-2 rounded-lg text-xs font-medium bg-[var(--primary)] text-white">Try Again</button>
                                     </div>
                                 ) : filteredJobOrders.length === 0 ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>
+                                    <div className="text-center py-10 p-6 rounded-xl border border-dashed border-[var(--border)]">
                                         <p className="text-sm opacity-70 en">No job orders found matching your search.</p>
                                     </div>
                                 ) : (
-                                    <div 
-                                        className="rounded-xl shadow-lg border overflow-hidden backdrop-blur-sm"
-                                        style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}
+                                    <div
+                                        className="rounded-xl border border-[var(--border)] shadow-md bg-[var(--background)]"
                                     >
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full text-left border-collapse">
+                                        <div className="overflow-x-auto min-h-[300px]">
+                                            <table className="w-full text-left border-collapse text-sm en">
                                                 <thead>
-                                                    <tr className="border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--border)' }}>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Client Info</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Job Details</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Comment</th>
+                                                    <tr className="border-b border-[var(--border)] bg-[var(--border)]/10 text-xs font-semibold uppercase tracking-wider opacity-80">
+                                                        <th className="py-3.5 px-4">Client Info</th>
+                                                        <th className="py-3.5 px-4">Job Details</th>
+                                                        <th className="py-3.5 px-4">Comment</th>
+                                                        <th className="py-3.5 px-4 text-right">Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y" style={{ borderColor: 'var(--border)' }}>
+                                                <tbody className="divide-y divide-[var(--border)]">
                                                     {filteredJobOrders.map((or, index) => (
-                                                        <tr key={index} className="transition hover:opacity-90">
-                                                            <td className="py-4 px-6 align-top">
-                                                                <div className="font-medium text-sm en" style={{ color: 'var(--foreground)' }}>{or.name}</div>
-                                                                <div className="text-xs opacity-70 en">{or.phone_number}</div>
-                                                                <div className="text-xs opacity-70 en">{or.location}</div>
+                                                        <tr key={or.id || index} className="transition hover:bg-[var(--border)]/10">
+                                                            <td className="py-4 px-4 align-top">
+                                                                <div className="font-semibold text-sm" style={{ color: 'var(--foreground)' }}>{or.name}</div>
+                                                                <div className="text-xs opacity-70">{or.phone_number}</div>
+                                                                <div className="text-xs opacity-70">{or.location}</div>
+                                                                <div className="text-[10px] opacity-50 mt-1">ID: {or.id}</div>
                                                             </td>
-                                                            <td className="py-4 px-6 align-top text-sm en" style={{ color: 'var(--foreground)' }}>
+                                                            <td className="py-4 px-4 align-top text-sm" style={{ color: 'var(--foreground)' }}>
                                                                 <div className="font-semibold">{or.job}</div>
                                                                 <div className="text-xs opacity-70">{or.job_type}</div>
                                                             </td>
-                                                            <td className="py-4 px-6 align-top text-sm en opacity-90" style={{ color: 'var(--foreground)' }}>
+                                                            <td className="py-4 px-4 align-top text-sm opacity-90" style={{ color: 'var(--foreground)' }}>
                                                                 {or.comment ? (
-                                                                    <div className="p-3 rounded-lg border border-() bg-background/50 text-xs">
+                                                                    <div className="p-3 rounded-lg border border-[var(--border)] bg-[var(--border)]/5 text-xs">
                                                                         {or.comment}
                                                                     </div>
                                                                 ) : (
-                                                                    <span className="text-foreground/40 italic text-xs">Skipped by the user</span>
+                                                                    <span className="opacity-40 italic text-xs">Skipped by the user</span>
                                                                 )}
                                                             </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                                                            <td className="py-4 px-4 align-top text-right">
+                                                                <div
+                                                                    className="relative inline-block text-left"
+                                                                    onClick={(e) => e.stopPropagation()}
+                                                                >
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => setActiveMenuId(activeMenuId === `order-${or.id}` ? null : `order-${or.id}`)}
+                                                                        className="p-2 rounded-lg border border-[var(--border)] cursor-pointer bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors"
+                                                                        title="Actions"
+                                                                    >
+                                                                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                                            <circle cx="12" cy="5" r="2" />
+                                                                            <circle cx="12" cy="12" r="2" />
+                                                                            <circle cx="12" cy="19" r="2" />
+                                                                        </svg>
+                                                                    </button>
 
-                            {/* Product Orders Section */}
-                            <div className="space-y-4">
-                                <h2 className="text-2xl font-bold en" style={{ color: 'var(--foreground)' }}>
-                                    All Product Orders
-                                </h2>
-
-                                {errorProducts ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-red-500/30 bg-red-500/10">
-                                        <p className="text-sm text-red-600 dark:text-red-400 mb-2 en">Unable to load product orders.</p>
-                                        <button onClick={fetchProductOrders} className="px-4 py-2 rounded-lg text-xs font-medium bg-() text-()">Try Again</button>
-                                    </div>
-                                ) : filteredProductOrders.length === 0 ? (
-                                    <div className="text-center py-10 p-6 rounded-xl border border-dashed" style={{ borderColor: 'var(--border)' }}>
-                                        <p className="text-sm opacity-70 en">No product orders found matching your search.</p>
-                                    </div>
-                                ) : (
-                                    <div 
-                                        className="rounded-xl shadow-lg border overflow-hidden backdrop-blur-sm"
-                                        style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}
-                                    >
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full text-left border-collapse">
-                                                <thead>
-                                                    <tr className="border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--border)' }}>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Customer</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Product</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Financials</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm en">Images</th>
-                                                        <th className="py-4 px-6 font-semibold text-sm text-right en">Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y" style={{ borderColor: 'var(--border)' }}>
-                                                    {filteredProductOrders.map((or, index) => (
-                                                        <tr key={index} className="transition hover:opacity-90">
-                                                            <td className="py-4 px-6 align-top">
-                                                                <div className="font-medium text-sm en" style={{ color: 'var(--foreground)' }}>{or.username}</div>
-                                                                <div className="text-xs opacity-70 en">{or.phone_number}</div>
-                                                                <div className="text-xs opacity-70 en">{or.location}</div>
-                                                                <div className="text-xs opacity-50 en mt-1">Acc: {or.account_number}</div>
-                                                            </td>
-                                                            <td className="py-4 px-6 align-top text-sm en" style={{ color: 'var(--foreground)' }}>
-                                                                <div className="font-semibold">{or.product_name}</div>
-                                                                <div className="text-xs opacity-70">Qty: {or.amount}</div>
-                                                            </td>
-                                                            <td className="py-4 px-6 align-top text-sm en" style={{ color: 'var(--foreground)' }}>
-                                                                <div>Price: {or.price}</div>
-                                                                <div className="font-bold text-xs opacity-90 mt-1">Total: {Number(or.price) * Number(or.amount)}</div>
-                                                            </td>
-                                                            <td className="py-4 px-6 align-top space-y-2 text-xs en">
-                                                                {or.image && (
-                                                                    <div>
-                                                                        <button
-                                                                            onClick={() => setViewingImage(or.image)}
-                                                                            className="text-blue-500 hover:underline font-medium cursor-pointer"
-                                                                        >
-                                                                            View Receipt
-                                                                        </button>
-                                                                    </div>
-                                                                )}
-                                                                {or.product_image && (
-                                                                    <div>
-                                                                        <button
-                                                                            onClick={() => setViewingImage(or.product_image)}
-                                                                            className="text-blue-500 hover:underline font-medium cursor-pointer"
-                                                                        >
-                                                                            View Product
-                                                                        </button>
-                                                                    </div>
-                                                                )}
-                                                            </td>
-                                                            <td className="py-4 px-6 align-top text-right text-xs opacity-70 en">
-                                                                {or.created_at}
+                                                                    {activeMenuId === `order-${or.id}` && (
+                                                                        <div className="absolute right-0 top-full mt-1 w-44 rounded-xl shadow-2xl border border-[var(--border)] z-50 overflow-hidden bg-[var(--background)] text-[var(--foreground)] py-1.5">
+                                                                            <div>
+                                                                                <button
+                                                                                    onClick={() => openDeleteModal(or)}
+                                                                                    className="w-full text-left px-4 py-2 text-xs font-medium text-red-500 cursor-pointer hover:bg-red-500/10 transition-colors"
+                                                                                >
+                                                                                    Delete
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     ))}
@@ -297,11 +261,54 @@ export default function ViewOrders() {
                         </div>
                     )}
 
+                    {/* Delete Confirmation Modal */}
+                    {deleteModalOpen && selectedOrder && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={closeDeleteModal}>
+                            <div
+                                className="w-full max-w-md p-6 rounded-2xl shadow-2xl border border-[var(--border)] space-y-4 bg-[var(--background)] text-[var(--foreground)]"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="space-y-1">
+                                    <h3 className="text-xl font-bold text-red-500 en">
+                                        Confirm Deletion
+                                    </h3>
+                                    <p className="text-sm opacity-80 en leading-relaxed">
+                                        Are you sure you want to delete the order for <span className="font-semibold" style={{ color: 'var(--foreground)' }}>{selectedOrder.name}</span>? This action cannot be undone.
+                                    </p>
+                                </div>
+
+                                <div className="p-3 rounded-lg border border-[var(--border)] text-xs space-y-1 bg-[var(--border)]/5">
+                                    <div className="opacity-70"><span className="font-medium">Item ID:</span> {selectedOrder.id}</div>
+                                    <div className="opacity-70"><span className="font-medium">Job:</span> {selectedOrder.job} ({selectedOrder.job_type})</div>
+                                </div>
+
+                                <div className="flex justify-end gap-3 pt-2">
+                                    <button
+                                        type="button"
+                                        onClick={closeDeleteModal}
+                                        disabled={isDeleting}
+                                        className="px-4 py-2 rounded-lg text-sm font-medium border border-[var(--border)] transition en cursor-pointer disabled:opacity-50 bg-transparent text-[var(--foreground)] hover:bg-[var(--border)]/20"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={confirmDelete}
+                                        disabled={isDeleting}
+                                        className="px-4 py-2 rounded-lg text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition en cursor-pointer disabled:opacity-50 shadow-md"
+                                    >
+                                        {isDeleting ? "Deleting..." : "Yes, Delete"}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Image Viewer Modal */}
                     {viewingImage && (
-                        <ImageViewer 
-                            imageSrc={viewingImage} 
-                            OnClick={() => setViewingImage(null)} 
+                        <ImageViewer
+                            imageSrc={viewingImage}
+                            OnClick={() => setViewingImage(null)}
                         />
                     )}
                 </div>
