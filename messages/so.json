@@ -27,7 +27,7 @@
         "why 2": "Waxaan fiiro gaar ah u leenahay faahfaahinta iyo shaqada tayada sare leh.",
         "why 3": "Qiimo cad oo aan lahayn kharashyo qarsoon.",
         "why 4": "Ballanqaad ku aaddan badbaadada iyo heerarka warshadaha.",
-        "why 5": "Waxaan ku faannaa inaan dhammaan qaybaha xirfadaha isu keenנۆ hal saqaf hoostiis.",
+        "why 5": "Waxaan ku faannaa inaan dhammaan qaybaha xirfadaha isu keenno hal saqaf hoostiis.",
         "join": "Ku biir kanaalkayaga Telegram-ka",
         "order": "Hadda dalbo",
         "review": "Faallooyinka macaamiisheenna qanacsan",
@@ -214,6 +214,14 @@
         "We couldn't order your product!": "Lama dalban karo badeecadaada!",
         "Order successfully sent!": "Dalabka si guul leh ayaa loo diray!",
         "Your order couldn't be sent!": "Dalabkaaga lama diri karin!"
+    },
+    "products": {
+        "Share": "La wadaag",
+        "Call Now": "Hadda Wac",
+        "Order": "Dalbo",
+        "Choose Order Method": "Dooro Habka Dalabka",
+        "Order with Telegram": "Kaga Dalbo Telegram",
+        "Order with WhatsApp": "Kaga Dalbo WhatsApp"
     },
     "comment": {
         "Name": "Magaca",

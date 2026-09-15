@@ -215,6 +215,14 @@
         "Order successfully sent!": "ትእዛዝ ብዕወት ተላኢኹ!",
         "Your order couldn't be sent!": "ትእዛዝኩም ክልእክ ኣይከኣለን!"
     },
+    "products": {
+        "Share": "ክፈል",
+        "Call Now": "ሕጂ ደውል",
+        "Order": "ትእዛዝ",
+        "Choose Order Method": "ሜላ ትእዛዝ ምረጽ",
+        "Order with Telegram": "ብቴሌግራም ኣዘዝ",
+        "Order with WhatsApp": "ብዋትሳፕ ኣዘዝ"
+    },
     "comment": {
         "Name": "ሽም",
         "Email": "ኢሜይል",
