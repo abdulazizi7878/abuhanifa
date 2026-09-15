@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import ImageViewer from "@/components/imgviewer";
+import { FileText, ExternalLink } from "lucide-react";
 
 export default function ViewOrders() {
     const [jobOrders, setJobOrders] = useState([]);
@@ -22,6 +23,23 @@ export default function ViewOrders() {
 
     // Image viewer modal states
     const [viewingImage, setViewingImage] = useState(null);
+
+    // File size formatter helper
+    const formatFileSize = (bytes) => {
+        if (!bytes) return "";
+
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return (
+            parseFloat(
+                (bytes / Math.pow(k, i)).toFixed(2)
+            ) +
+            " " +
+            sizes[i]
+        );
+    };
 
     // Fetch Job Orders
     const fetchJobOrders = async () => {
@@ -115,6 +133,7 @@ export default function ViewOrders() {
             const job = (or.job || "").toLowerCase();
             const jobType = (or.job_type || "").toLowerCase();
             const comment = (or.comment || "").toLowerCase();
+            const attachmentName = (or.attachment_original_name || "").toLowerCase();
 
             return (
                 !searchQuery ||
@@ -123,7 +142,8 @@ export default function ViewOrders() {
                 location.includes(query) ||
                 job.includes(query) ||
                 jobType.includes(query) ||
-                comment.includes(query)
+                comment.includes(query) ||
+                attachmentName.includes(query)
             );
         });
     }, [jobOrders, searchQuery]);
@@ -151,7 +171,7 @@ export default function ViewOrders() {
                     <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <input
                             type="text"
-                            placeholder="Search by name, phone, location, product, or details..."
+                            placeholder="Search by name, phone, location, product, details, or attachment..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full sm:w-96 px-4 py-2.5 rounded-lg border border-[var(--border)] text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:border-[var(--primary)]"
@@ -192,6 +212,7 @@ export default function ViewOrders() {
                                                     <tr className="border-b border-[var(--border)] bg-[var(--border)]/10 text-xs font-semibold uppercase tracking-wider opacity-80">
                                                         <th className="py-3.5 px-4">Client Info</th>
                                                         <th className="py-3.5 px-4">Job Details</th>
+                                                        <th className="py-3.5 px-4">Attachment</th>
                                                         <th className="py-3.5 px-4">Comment</th>
                                                         <th className="py-3.5 px-4 text-right">Actions</th>
                                                     </tr>
@@ -208,6 +229,57 @@ export default function ViewOrders() {
                                                             <td className="py-4 px-4 align-top text-sm" style={{ color: 'var(--foreground)' }}>
                                                                 <div className="font-semibold">{or.job}</div>
                                                                 <div className="text-xs opacity-70">{or.job_type}</div>
+                                                            </td>
+                                                            <td className="py-4 px-4 align-top text-sm">
+                                                                {!or.attachment_url ? (
+                                                                    <span className="opacity-40 italic text-xs">No attachment</span>
+                                                                ) : or.attachment_mime_type?.startsWith("image/") ? (
+                                                                    <div className="flex items-center gap-3">
+                                                                        <img
+                                                                            src={or.attachment_url}
+                                                                            alt={or.attachment_original_name || "Attachment"}
+                                                                            className="w-16 h-16 object-cover rounded-lg cursor-pointer border border-[var(--border)] hover:opacity-95 transition shrink-0"
+                                                                            onClick={() => setViewingImage(or.attachment_url)}
+                                                                        />
+                                                                        <div className="min-w-0 flex-1">
+                                                                            <p className="text-xs font-semibold truncate max-w-[160px]" title={or.attachment_original_name}>
+                                                                                {or.attachment_original_name || "Image attachment"}
+                                                                            </p>
+                                                                            {or.attachment_size && (
+                                                                                <p className="text-[10px] opacity-60 font-mono mt-0.5">
+                                                                                    {formatFileSize(or.attachment_size)}
+                                                                                </p>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="flex items-center justify-between gap-3 p-2.5 rounded-lg border border-[var(--border)] bg-[var(--border)]/5 max-w-[260px]">
+                                                                        <div className="flex items-center gap-2.5 min-w-0">
+                                                                            <div className="w-8 h-8 rounded-md bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center shrink-0">
+                                                                                <FileText className="w-4 h-4" />
+                                                                            </div>
+                                                                            <div className="min-w-0">
+                                                                                <p className="text-xs font-semibold truncate max-w-[120px]" title={or.attachment_original_name}>
+                                                                                    {or.attachment_original_name || "File attachment"}
+                                                                                </p>
+                                                                                {or.attachment_size && (
+                                                                                    <p className="text-[10px] opacity-60 font-mono">
+                                                                                        {formatFileSize(or.attachment_size)}
+                                                                                    </p>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                        <a
+                                                                            href={or.attachment_url}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="px-2.5 py-1 rounded-md text-xs font-medium bg-[var(--background)] hover:bg-[var(--border)]/20 border border-[var(--border)] transition shrink-0 inline-flex items-center gap-1 text-[var(--foreground)]"
+                                                                        >
+                                                                            <span>Open</span>
+                                                                            <ExternalLink className="w-3 h-3 opacity-70" />
+                                                                        </a>
+                                                                    </div>
+                                                                )}
                                                             </td>
                                                             <td className="py-4 px-4 align-top text-sm opacity-90" style={{ color: 'var(--foreground)' }}>
                                                                 {or.comment ? (

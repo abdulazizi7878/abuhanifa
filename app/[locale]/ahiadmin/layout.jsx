@@ -69,16 +69,16 @@ export default function AdminLayout({ children }) {
     if (pathname.includes('/ahiadmin/create/blog') || pathname.includes('/ahiadmin/view/blogs')) {
       setIsContentOpen(true);
     }
-    if (pathname.includes('/ahiadmin/create/product') || pathname.includes('/ahiadmin/view/products') || pathname.includes('/ahiadmin/view/materials')) {
+    if (pathname.includes('/ahiadmin/create/product') || pathname.includes('/ahiadmin/view/products')) {
       setIsInventoryOpen(true);
     }
-    if (pathname.includes('/ahiadmin/create/material') || pathname.includes('/ahiadmin/create/estimate') || pathname.includes('/ahiadmin/view/estimates') || pathname.includes('/ahiadmin/view/orders')) {
+    if (pathname.includes('/ahiadmin/create/material') || pathname.includes('/ahiadmin/create/estimate') || pathname.includes('/ahiadmin/view/estimates') || pathname.includes('/ahiadmin/view/materials')) {
       setIsOperationsOpen(true);
     }
     if (pathname.includes('/ahiadmin/create/promotion') || pathname.includes('/ahiadmin/view/promotions')) {
       setIsMarketingOpen(true);
     }
-    if (pathname.includes('/ahiadmin/view/messages') || pathname.includes('/ahiadmin/view/orders')) {
+    if (pathname.includes('/ahiadmin/view/messages') || pathname.includes('/ahiadmin/create/review') || pathname.includes('/ahiadmin/view/reviews') || pathname.includes('/ahiadmin/view/orders')) {
       setIsSupportOpen(true);
     }
 
@@ -266,7 +266,7 @@ export default function AdminLayout({ children }) {
               className={`
                 w-full flex items-center justify-between px-3 py-2.5
                 rounded-lg transition-colors outline-none border-0 cursor-pointer
-                ${pathname.includes("/ahiadmin/create/product") || pathname.includes("/ahiadmin/view/products") || pathname.includes("/ahiadmin/view/materials")
+                ${pathname.includes("/ahiadmin/create/product") || pathname.includes("/ahiadmin/view/products")
                   ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
                   : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
                 }
@@ -305,18 +305,6 @@ export default function AdminLayout({ children }) {
                 >
                   View Products
                 </Link>
-                <Link
-                  href="/ahiadmin/view/materials"
-                  className={`
-                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
-                    ${isExactActive("/ahiadmin/view/materials")
-                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
-                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
-                    }
-                  `}
-                >
-                  View Materials
-                </Link>
               </div>
             )}
           </div>
@@ -328,7 +316,7 @@ export default function AdminLayout({ children }) {
               className={`
                 w-full flex items-center justify-between px-3 py-2.5
                 rounded-lg transition-colors outline-none border-0 cursor-pointer
-                ${pathname.includes("/ahiadmin/create/material") || pathname.includes("/ahiadmin/create/estimate") || pathname.includes("/ahiadmin/view/estimates") || pathname.includes("/ahiadmin/view/orders")
+                ${pathname.includes("/ahiadmin/create/material") || pathname.includes("/ahiadmin/create/estimate") || pathname.includes("/ahiadmin/view/estimates") || pathname.includes("/ahiadmin/view/materials")
                   ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
                   : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
                 }
@@ -380,16 +368,16 @@ export default function AdminLayout({ children }) {
                   View Estimates
                 </Link>
                 <Link
-                  href="/ahiadmin/view/orders"
+                  href="/ahiadmin/view/materials"
                   className={`
                     block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
-                    ${isExactActive("/ahiadmin/view/orders")
+                    ${isExactActive("/ahiadmin/view/materials")
                       ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
                       : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
                     }
                   `}
                 >
-                  View Orders
+                  View Materials
                 </Link>
               </div>
             )}
@@ -452,7 +440,7 @@ export default function AdminLayout({ children }) {
               className={`
                 w-full flex items-center justify-between px-3 py-2.5
                 rounded-lg transition-colors outline-none border-0 cursor-pointer
-                ${pathname.includes("/ahiadmin/view/messages") || pathname.includes("/ahiadmin/view/orders")
+                ${pathname.includes("/ahiadmin/view/messages") || pathname.includes("/ahiadmin/create/review") || pathname.includes("/ahiadmin/view/reviews")
                   ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
                   : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
                 }
@@ -479,6 +467,7 @@ export default function AdminLayout({ children }) {
                 >
                   Comments & Messages
                 </Link>
+
                 <Link
                   href="/ahiadmin/view/orders"
                   className={`
@@ -489,7 +478,31 @@ export default function AdminLayout({ children }) {
                     }
                   `}
                 >
-                  View Orders
+                  Orders
+                </Link>
+                <Link
+                  href="/ahiadmin/create/review"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/create/review")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  Create Review
+                </Link>
+                <Link
+                  href="/ahiadmin/view/reviews"
+                  className={`
+                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
+                    ${isExactActive("/ahiadmin/view/reviews")
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
+                    }
+                  `}
+                >
+                  View Reviews
                 </Link>
               </div>
             )}

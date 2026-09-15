@@ -1,6 +1,5 @@
 import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 
 import { routing } from "./i18n/routing";
 
@@ -17,8 +16,8 @@ export default function proxy(request) {
 
   for (const currentLocale of routing.locales) {
     if (
-      pathname === "/" + currentLocale ||
-      pathname.startsWith("/" + currentLocale + "/")
+      pathname === `/${currentLocale}` ||
+      pathname.startsWith(`/${currentLocale}/`)
     ) {
       locale = currentLocale;
       break;
@@ -33,7 +32,7 @@ export default function proxy(request) {
 
   if (locale) {
     pathnameWithoutLocale =
-      pathname.slice(("/" + locale).length) || "/";
+      pathname.slice(`/${locale}`.length) || "/";
   }
 
   // ==========================================
@@ -44,9 +43,9 @@ export default function proxy(request) {
     pathnameWithoutLocale === "/ahiadmin" ||
     pathnameWithoutLocale.startsWith("/ahiadmin/") ||
     pathnameWithoutLocale === "/estimates" ||
-    pathnameWithoutLocale.startsWith("/material")||
-    pathnameWithoutLocale.startsWith("/material/")||
-    pathnameWithoutLocale.startsWith("/estimates/");
+    pathnameWithoutLocale.startsWith("/estimates/") ||
+    pathnameWithoutLocale === "/material" ||
+    pathnameWithoutLocale.startsWith("/material/");
 
   // ==========================================
   // PUBLIC ROUTE
@@ -57,56 +56,18 @@ export default function proxy(request) {
   }
 
   // ==========================================
-  // GET AUTH TOKEN
+  // CHECK TOKEN
   // ==========================================
 
   const token = request.cookies.get("token")?.value;
 
   if (!token) {
     const signInPath = locale
-      ? "/" + locale + "/signin"
+      ? `/${locale}/signin`
       : "/signin";
 
     return NextResponse.redirect(
       new URL(signInPath, request.url)
-    );
-  }
-
-  // ==========================================
-  // VERIFY JWT
-  // ==========================================
-
-  let user;
-
-  try {
-    user = jwt.verify(token, process.env.KEY);
-  } catch (error) {
-    console.error("Invalid JWT:", error);
-
-    const signInPath = locale
-      ? "/" + locale + "/signin"
-      : "/signin";
-
-    const response = NextResponse.redirect(
-      new URL(signInPath, request.url)
-    );
-
-    response.cookies.delete("token");
-
-    return response;
-  }
-
-  // ==========================================
-  // CHECK ADMIN ROLE
-  // ==========================================
-
-  if (!user || user.role !== "admin") {
-    const forbiddenPath = locale
-      ? "/" + locale + "/403"
-      : "/403";
-
-    return NextResponse.redirect(
-      new URL(forbiddenPath, request.url)
     );
   }
 
@@ -126,4 +87,3 @@ export const config = {
     "/((?!api|_next|.*\\..*).*)",
   ],
 };
-

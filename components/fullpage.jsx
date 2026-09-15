@@ -465,16 +465,7 @@ function Cont() {
       </section>
 
       {/* REVIEWS SECTION */}
-      <section className="my-20 flex flex-col w-11/12">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mx-auto w-11/12"
-        >
-          <h1 className="text-center font-bold text-2xl">{t("review")}</h1>
-        </motion.div>
-
+      <section className="flex flex-col w-11/12">
         <div className="w-full mx-auto px-4 py-10 flex flex-wrap justify-center items-center gap-10">
           <Reviews />
         </div>
@@ -520,6 +511,7 @@ function Cont() {
               <li className="_LI text-sm">{t("p4")}</li>
               <li className="_LI text-sm">{t("p5")}</li>
               <li className="_LI text-sm">{t("p6")}</li>
+              <li className="_LI text-sm">{t("p7")}</li>
             </ul>
           </div>
         </motion.div>

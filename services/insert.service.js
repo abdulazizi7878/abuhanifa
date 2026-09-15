@@ -1,3 +1,7 @@
+
+// file: services/insert.service.js
+
+
 import {InsertMessage, InsertOrder, InsertOrderProduct, InsertProduct, InsertPromotion} from "../repositories/insertQu";
 import { randomUUID } from "crypto";
 
@@ -7,14 +11,22 @@ export async function EnterOrder(
     location,
     jobs,
     job_types,
-    comment
+    comment,
+    attachment_url = null,
+    attachment_public_id = null,
+    attachment_original_name = null,
+    attachment_mime_type = null,
+    attachment_size = null,
+    attachment_resource_type = null
 ) {
     if (!name || typeof name !== "string") {
         throw new Error("Enter a valid Name!");
     }
 
     if (!contact_info) {
-        throw new Error("Enter a valid contact information!");
+        throw new Error(
+            "Enter a valid contact information!"
+        );
     }
 
     if (!location) {
@@ -25,7 +37,10 @@ export async function EnterOrder(
         throw new Error("Enter at least one Job!");
     }
 
-    if (!Array.isArray(job_types) || job_types.length === 0) {
+    if (
+        !Array.isArray(job_types) ||
+        job_types.length === 0
+    ) {
         throw new Error("Enter at least one Job Type!");
     }
 
@@ -33,14 +48,19 @@ export async function EnterOrder(
     const job = jobs.join(", ");
     const job_type = job_types.join(", ");
 
-    // Repo stays completely unchanged
     const response = await InsertOrder(
         name,
         contact_info,
         location,
         job,
         job_type,
-        comment
+        comment,
+        attachment_url,
+        attachment_public_id,
+        attachment_original_name,
+        attachment_mime_type,
+        attachment_size,
+        attachment_resource_type
     );
 
     return response;

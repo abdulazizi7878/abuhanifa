@@ -59,7 +59,7 @@ export default function Header() {
         color: 'var(--foreground)'
       }}
     >
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-14 max-w-8xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
         <Link 
           href="/" 
@@ -73,7 +73,7 @@ export default function Header() {
           >
             <img src="/images/logo.jpg" alt="Abuhanifa Logo" className='rounded-full' />
           </div>
-          <span className="hidden sm:inline-block text-lg md:text-xl lg:text-2xl">{t("title")}</span>
+          <span className="sm:text-md md:text-lg lg:text-2xl text-md">{t("title")}</span>
         </Link>
 
         {/* Desktop Navigation */}

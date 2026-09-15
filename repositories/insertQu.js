@@ -1,10 +1,55 @@
+
+// file: repositories/insertQu.js
+
 import {db} from "../lib/db";
 
 
-export async function InsertOrder(name,contact_info,location, job, job_type, comment) {
+export async function InsertOrder(
+    name,
+    contact_info,
+    location,
+    job,
+    job_type,
+    comment,
+    attachment_url = null,
+    attachment_public_id = null,
+    attachment_original_name = null,
+    attachment_mime_type = null,
+    attachment_size = null,
+    attachment_resource_type = null
+) {
     const [result] = await db.query(
-        "INSERT INTO orders(name, phone_number,location,job,job_type, comment) VALUES(?,?,?,?,?,?)",
-        [name,contact_info,location,job,job_type,comment]
+        `
+        INSERT INTO orders (
+            name,
+            phone_number,
+            location,
+            job,
+            job_type,
+            comment,
+            attachment_url,
+            attachment_public_id,
+            attachment_original_name,
+            attachment_mime_type,
+            attachment_size,
+            attachment_resource_type
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+        [
+            name,
+            contact_info,
+            location,
+            job,
+            job_type,
+            comment,
+            attachment_url,
+            attachment_public_id,
+            attachment_original_name,
+            attachment_mime_type,
+            attachment_size,
+            attachment_resource_type
+        ]
     );
 
     return [result];

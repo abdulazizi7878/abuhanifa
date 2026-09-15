@@ -99,3 +99,21 @@ export async function ShowProductPreview(){
 
     return products;
 }
+
+export async function GetOrderById(id) {
+    const [rows] = await db.query(
+        `
+        SELECT
+            id,
+            attachment_public_id,
+            attachment_resource_type
+        FROM orders
+        WHERE id = ?
+        `,
+        [id]
+    );
+
+    if (rows.length === 0) return null;
+
+    return rows[0];
+}

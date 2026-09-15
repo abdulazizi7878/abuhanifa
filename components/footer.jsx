@@ -103,8 +103,8 @@ export default function Footer(){
             </div>
 
             <div className="my-4 w-11/12 flex flex-col  py-2 px-4 sm:px-10 md:px-10 lg:px-10 rounded-full">
-                <span className="text-center text-[11px] sm:text-sm ">ABU-HANIFA INSTALLATION | 2026 &copy; ALL RIGHT RESERVED </span>
-                <a href="https://profile.offlix.app" className="text-center text-[11px] sm:text-sm ">DESIGNED AND DEVELOPED BY ...ABDU...</a>
+                <span className="text-center text-[11px] sm:text-sm ">ABUHANIFA INSTALLATION ETHIOPIA | 2026 &copy; ALL RIGHT RESERVED </span>
+                <a href="https://profile.offlix.app" className="text-center text-[11px] sm:text-sm ">DESIGNED AND DEVELOPED BY ...ABDULAZIZ S...</a>
                 <hr className="my-2" />
             </div>
 

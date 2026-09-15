@@ -16,6 +16,7 @@ import {
     GetBlogById,
     GetProductById,
     GetPromotionById,
+    GetOrderById,
 } from "../repositories/viewQu";
 
 cloudinary.v2.config({
@@ -120,7 +121,20 @@ export async function DeleteItem(item, id) {
     }
     
     if (item === "orders") {
-        return await DeleteOrders(id);    
+        const order = await GetOrderById(id);
+
+        if (!order) {
+            throw new Error("Order not found");
+        }
+
+        if (order.attachment_public_id) {
+            await DeleteCloudinaryMedia(
+                order.attachment_public_id,
+                order.attachment_resource_type || "image"
+            );
+        }
+
+        return await DeleteOrders(id);
     }
     
 

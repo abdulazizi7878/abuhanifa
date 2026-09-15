@@ -1,3 +1,6 @@
+
+// file: app/[locale]/ahiadmin/edit/blog/[link]/page.jsx
+
 "use client";
 
 import { useEffect, useState, use } from "react";
