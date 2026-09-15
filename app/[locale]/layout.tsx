@@ -5,7 +5,8 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import LanguageModal from "@/components/LanguageModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -209,6 +210,7 @@ export default async function RootLayout({
           }}
         />
 
+        <LanguageModal />
 
         {children}
         <Analytics />

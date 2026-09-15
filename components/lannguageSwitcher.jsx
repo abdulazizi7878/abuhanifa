@@ -1,3 +1,6 @@
+
+// file: components/languageSwitcher.jsx
+
 "use client";
 
 import { useLocale } from "next-intl";
