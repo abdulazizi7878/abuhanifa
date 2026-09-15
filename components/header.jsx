@@ -73,7 +73,7 @@ export default function Header() {
           >
             <img src="/images/logo.jpg" alt="Abuhanifa Logo" className='rounded-full' />
           </div>
-          <span className="sm:text-md md:text-lg lg:text-2xl text-md">{t("title")}</span>
+          <span className="sm:text-md md:text-lg lg:text-2xl text-[11px]">{t("title")}</span>
         </Link>
 
         {/* Desktop Navigation */}
