@@ -17,7 +17,7 @@ cloudinary.v2.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
+const MAX_FILE_SIZE = 40 * 1024 * 1024; // 20 MB
 
 const ALLOWED_MIME_TYPES = new Set([
     "image/jpeg",
