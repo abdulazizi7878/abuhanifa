@@ -2,23 +2,25 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import LanguageSwitcher from './lannguageSwitcher';
-
-const NAV_ITEMS = [
-  { key: "home", href: "/" },
-  { key: "order", href: "/order" },
-  { key: "products", href: "/products" },
-  { key: "promotions", href: "/promotions" },
-  { key: "blog", href: "/blog" },
-  { key: "services", href: "#services" },
-  { key: "contact", href: "/contact" },
-];
 
 export default function Header() {
   const t = useTranslations("header");
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+
+  const localeLang = useLocale();
+
+  const NAV_ITEMS = [
+    { key: "home", href: "/" },
+    { key: "order", href: "/order" },
+    { key: "products", href: "/products" },
+    { key: "promotions", href: "/promotions" },
+    { key: "blog", href: "/blog" },
+    { key: "services", href: `/${localeLang}#services` },
+    { key: "contact", href: "/contact" },
+  ];
 
   // Sync dark mode state with document element on mount
   useEffect(() => {

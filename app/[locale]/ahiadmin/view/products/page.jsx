@@ -8,11 +8,13 @@ export default function ViewProducts() {
     const router = useRouter();
 
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
-    // Search state
+    // Filter states
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("ALL");
 
     // Active Dropdown Menu State
     const [activeMenuId, setActiveMenuId] = useState(null);
@@ -20,6 +22,20 @@ export default function ViewProducts() {
     // Delete modal states
     const [productToDelete, setProductToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+
+    // Fetch categories
+    const fetchCategories = async () => {
+        try {
+            const res = await fetch("/api/categories");
+            if (res.ok) {
+                const data = await res.json();
+                const catList = Array.isArray(data) ? data : (data.categories || []);
+                setCategories(catList);
+            }
+        } catch (err) {
+            console.error("Failed to load categories:", err);
+        }
+    };
 
     // Fetch products on load
     const fetchProducts = async () => {
@@ -47,8 +63,19 @@ export default function ViewProducts() {
     };
 
     useEffect(() => {
+        fetchCategories();
         fetchProducts();
     }, []);
+
+    // Create a map of category ID to name for fast lookup
+    const categoryMap = useMemo(() => {
+        const map = {};
+        categories.forEach((cat) => {
+            const id = String(cat.id || cat._id);
+            map[id] = cat.name;
+        });
+        return map;
+    }, [categories]);
 
     // Close dropdown menu when clicking anywhere outside
     useEffect(() => {
@@ -106,16 +133,36 @@ export default function ViewProducts() {
         }
     };
 
-    // Filtered products based on search query
+    // Filtered products based on search query and selected category
     const filteredProducts = useMemo(() => {
         return products.filter((pr) => {
             const query = searchQuery.toLowerCase();
             const name = (pr.name || "").toLowerCase();
             const price = String(pr.price || "").toLowerCase();
 
-            return !searchQuery || name.includes(query) || price.includes(query);
+            const matchesSearch = !searchQuery || name.includes(query) || price.includes(query);
+
+            const prCategoryId = pr.category_id || pr.categoryId || (pr.category && (pr.category.id || pr.category._id));
+            const matchesCategory =
+                selectedCategory === "ALL" ||
+                String(prCategoryId) === String(selectedCategory);
+
+            return matchesSearch && matchesCategory;
         });
-    }, [products, searchQuery]);
+    }, [products, searchQuery, selectedCategory]);
+
+    // Helper to resolve product category name
+    const getCategoryName = (pr) => {
+        if (pr.category_name) return pr.category_name;
+        if (pr.category?.name) return pr.category.name;
+
+        const catId = pr.category_id || pr.categoryId;
+        if (catId && categoryMap[String(catId)]) {
+            return categoryMap[String(catId)];
+        }
+
+        return "Uncategorized";
+    };
 
     return (
         <>
@@ -139,7 +186,7 @@ export default function ViewProducts() {
                         </button>
                     </div>
 
-                    {/* Search Bar */}
+                    {/* Controls: Search Bar & Category Filter */}
                     <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <input
                             type="text"
@@ -148,6 +195,20 @@ export default function ViewProducts() {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full sm:w-80 px-4 py-2.5 rounded-lg border border-[var(--border)] text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:border-[var(--primary)]"
                         />
+
+                        {/* Category Filter Dropdown */}
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="w-full sm:w-60 px-4 py-2.5 rounded-lg border border-[var(--border)] text-sm en bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:border-[var(--primary)] cursor-pointer"
+                        >
+                            <option value="ALL">All Categories</option>
+                            {categories.map((cat) => (
+                                <option key={cat.id || cat._id} value={cat.id || cat._id}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     {/* Loading State */}
@@ -180,7 +241,7 @@ export default function ViewProducts() {
                             <p className="text-sm opacity-75 en">
                                 {products.length === 0
                                     ? "Add your first product to get started."
-                                    : "No products match your search query."}
+                                    : "No products match your search or category filter."}
                             </p>
                             {products.length === 0 && (
                                 <button
@@ -201,6 +262,7 @@ export default function ViewProducts() {
                                     <thead>
                                         <tr className="border-b border-[var(--border)] bg-[var(--border)]/10 text-xs font-semibold uppercase tracking-wider opacity-80">
                                             <th className="py-3.5 px-4">Name</th>
+                                            <th className="py-3.5 px-4">Category</th>
                                             <th className="py-3.5 px-4">Price</th>
                                             <th className="py-3.5 px-4 text-right">Actions</th>
                                         </tr>
@@ -213,6 +275,11 @@ export default function ViewProducts() {
                                                     <div className="font-semibold" style={{ color: 'var(--foreground)' }}>
                                                         {pr.name}
                                                     </div>
+                                                </td>
+
+                                                {/* Category */}
+                                                <td className="py-4 px-4 opacity-80 font-medium">
+                                                    {getCategoryName(pr)}
                                                 </td>
 
                                                 {/* Price */}

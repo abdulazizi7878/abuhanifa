@@ -65,10 +65,23 @@ export async function GetPromotionById(id) {
     return rows[0];
 }
 
-
 export async function ShowAllProducts() {
     const [products] = await db.query(
-        "SELECT id, name, description, image, link, media_resource_type FROM products;"
+        `
+        SELECT
+            products.id,
+            products.name,
+            products.description,
+            products.image,
+            products.link,
+            products.media_resource_type,
+            products.category_id,
+            categories.name AS category_name
+        FROM products
+        LEFT JOIN categories
+            ON products.category_id = categories.id
+        ORDER BY products.id DESC;
+        `
     );
 
     return products;
@@ -76,9 +89,23 @@ export async function ShowAllProducts() {
 
 export async function ShowOneProduct(link) {
     const [product] = await db.query(
-        "SELECT id, name, description, image, link, media_resource_type FROM products WHERE link = ?",
+        `
+        SELECT
+            products.id,
+            products.name,
+            products.description,
+            products.image,
+            products.link,
+            products.media_resource_type,
+            products.category_id,
+            categories.name AS category_name
+        FROM products
+        LEFT JOIN categories
+            ON products.category_id = categories.id
+        WHERE products.link = ?
+        `,
         [link]
-    )
+    );
 
     return product;
 }
@@ -114,6 +141,24 @@ export async function GetOrderById(id) {
     );
 
     if (rows.length === 0) return null;
+
+    return rows[0];
+}
+
+export async function GetProductByName(name) {
+    const [rows] = await db.query(
+        `
+        SELECT id, name
+        FROM products
+        WHERE name = ?
+        LIMIT 1
+        `,
+        [name]
+    );
+
+    if (rows.length === 0) {
+        return null;
+    }
 
     return rows[0];
 }

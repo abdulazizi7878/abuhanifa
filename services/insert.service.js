@@ -1,7 +1,7 @@
 
 // file: services/insert.service.js
 
-
+import { GetProductByName } from "../repositories/viewQu";
 import {InsertMessage, InsertOrder, InsertOrderProduct, InsertProduct, InsertPromotion} from "../repositories/insertQu";
 import { randomUUID } from "crypto";
 
@@ -89,17 +89,61 @@ export async function EnterPromotion(name,title,description,image,publicId,resou
     return response;
 }
 
-export async function EnterProduct(name,price,description,image,publicId,resourceType) {
-    if(!name) throw new Error("Enter a valid Name");
-    if (!price) throw new Error("Enter a valid Price");
-    if(!description) throw new Error("Enter a valid Description");
-    if(!image) throw new Error("Enter a valid image");
-    if(!publicId) throw new Error("Something went wrong");
-    if(!resourceType) throw new Error("Something went wrong");
-    
-    let link = await randomUUID();
+export async function EnterProduct(
+    name,
+    price,
+    description,
+    image,
+    publicId,
+    resourceType,
+    category_id = null
+) {
+    if (!name) {
+        throw new Error("Enter a valid Name");
+    }
 
-    const response = await InsertProduct(name,price,description,image,link,publicId,resourceType);
+    if (!price) {
+        throw new Error("Enter a valid Price");
+    }
+
+    if (!description) {
+        throw new Error("Enter a valid Description");
+    }
+
+    if (!image) {
+        throw new Error("Enter a valid image");
+    }
+
+    if (!publicId) {
+        throw new Error("Something went wrong");
+    }
+
+    if (!resourceType) {
+        throw new Error("Something went wrong");
+    }
+
+    const cleanName = name.trim();
+
+    let finalName = cleanName;
+    let counter = 1;
+
+    while (await GetProductByName(finalName)) {
+        finalName = `${cleanName}-${counter}`;
+        counter++;
+    }
+
+    const link = await randomUUID();
+
+    const response = await InsertProduct(
+        finalName,
+        price,
+        description,
+        image,
+        link,
+        publicId,
+        resourceType,
+        category_id
+    );
 
     return response;
 }

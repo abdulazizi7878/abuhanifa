@@ -71,11 +71,41 @@ export async function InsertPromotion(name, title, description, image,link, publ
     return result;
 }
 
-export async function InsertProduct(name,price,description,image,link,publicId,resourceType) {
+export async function InsertProduct(
+    name,
+    price,
+    description,
+    image,
+    link,
+    publicId,
+    resourceType,
+    category_id = null
+) {
     const [result] = await db.query(
-        "INSERT INTO products(name,price,description,image,link, media_public_id,media_resource_type) VALUES(?,?,?,?,?,?,?)",
-        [name,price,description,image,link,publicId,resourceType]
-    )
+        `
+        INSERT INTO products (
+            name,
+            price,
+            description,
+            image,
+            link,
+            media_public_id,
+            media_resource_type,
+            category_id
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+        [
+            name,
+            price,
+            description,
+            image,
+            link,
+            publicId,
+            resourceType,
+            category_id
+        ]
+    );
 
     return result;
 }

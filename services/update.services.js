@@ -1,8 +1,21 @@
 import { UpdateBlog, UpdateProduct, UpdatePromotion } from "../repositories/updateQu";
 
-export async function EditProduct(name,price,description,link) {
-    const response = await UpdateProduct(name,price,description,link);
-    return response
+export async function EditProduct(
+    name,
+    price,
+    description,
+    category_id,
+    link
+) {
+    const response = await UpdateProduct(
+        name,
+        price,
+        description,
+        category_id,
+        link
+    );
+
+    return response;
 }
 
 export async function EditBlog(title,desciption,link) {

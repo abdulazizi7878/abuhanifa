@@ -3,6 +3,7 @@
 import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { FolderPlus, Plus, X } from "lucide-react";
 
 export default function EditProducts({ params }) {
     const router = useRouter();
@@ -10,6 +11,9 @@ export default function EditProducts({ params }) {
     const link = resolvedParams?.link;
 
     const [product, setProduct] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [loadingCategories, setLoadingCategories] = useState(true);
+
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
     const [error, setError] = useState(false);
@@ -18,7 +22,33 @@ export default function EditProducts({ params }) {
     // Form fields state
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
+    const [categoryId, setCategoryId] = useState("");
     const [description, setDescription] = useState("");
+
+    // Modal state for creating a category
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+    const [newCategoryName, setNewCategoryName] = useState("");
+    const [creatingCategory, setCreatingCategory] = useState(false);
+
+    // Fetch categories on mount
+    const fetchCategories = async () => {
+        setLoadingCategories(true);
+        try {
+            const res = await fetch("/api/categories");
+            const data = await res.json();
+            if (res.ok && data) {
+                const categoriesList = Array.isArray(data) ? data : (data.categories || []);
+                setCategories(categoriesList);
+            } else {
+                toast.error("Failed to load categories");
+            }
+        } catch (err) {
+            console.error("Error fetching categories:", err);
+            toast.error("Error loading categories");
+        } finally {
+            setLoadingCategories(false);
+        }
+    };
 
     async function GetProduct() {
         if (!link) {
@@ -44,12 +74,16 @@ export default function EditProducts({ params }) {
                 })
             });
             const resData = await response.json();
-            
+
             if (resData.success && resData?.data?.result?.length > 0) {
                 const productData = resData.data.result[0];
                 setProduct(productData);
                 setName(productData?.name || "");
                 setPrice(productData?.price || "");
+
+                const catId = productData?.category_id || productData?.categoryId || (productData?.category && (productData?.category.id || productData?.category._id));
+                setCategoryId(catId ? String(catId) : "");
+
                 setDescription(productData?.description || "");
             } else {
                 setError(true);
@@ -67,8 +101,50 @@ export default function EditProducts({ params }) {
     }
 
     useEffect(() => {
+        fetchCategories();
         GetProduct();
     }, [link]);
+
+    const handleCreateCategory = async (e) => {
+        e.preventDefault();
+        if (!newCategoryName.trim()) {
+            toast.error("Category name is required");
+            return;
+        }
+
+        setCreatingCategory(true);
+        try {
+            const res = await fetch("/api/categories", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: newCategoryName.trim() })
+            });
+
+            const data = await res.json();
+
+            if (res.ok && (data.success !== false)) {
+                toast.success("Category created successfully!");
+                const createdCat = data.category || data;
+
+                await fetchCategories();
+
+                if (createdCat && (createdCat.id || createdCat._id)) {
+                    const newId = createdCat.id || createdCat._id;
+                    setCategoryId(String(newId));
+                }
+
+                setNewCategoryName("");
+                setIsCategoryModalOpen(false);
+            } else {
+                toast.error(data.message || "Failed to create category");
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error("An error occurred while creating category");
+        } finally {
+            setCreatingCategory(false);
+        }
+    };
 
     async function UpdateProduct(e) {
         e.preventDefault();
@@ -78,12 +154,10 @@ export default function EditProducts({ params }) {
             return;
         }
 
-        // validation for price currently removed
-        /*
-        if (!price) {
-            toast.error("Product price is required.");
+        if (!categoryId) {
+            toast.error("Category selection is required.");
             return;
-        }*/
+        }
 
         setUpdating(true);
         const toastId = toast.loading("Updating product...");
@@ -98,6 +172,7 @@ export default function EditProducts({ params }) {
                     link: link,
                     name: name.trim(),
                     price: price || 1,
+                    category_id: categoryId,
                     description: description.trim()
                 })
             });
@@ -120,7 +195,7 @@ export default function EditProducts({ params }) {
     return (
         <main className="w-full flex flex-col justify-center items-center">
             <div className="w-full max-w-4xl space-y-6">
-                
+
                 {/* Top Bar Navigation */}
                 <div className="flex justify-between items-center mb-2">
                     <button
@@ -174,8 +249,8 @@ export default function EditProducts({ params }) {
 
                 {/* Edit Form */}
                 {!loading && !error && (
-                    <form 
-                        onSubmit={UpdateProduct} 
+                    <form
+                        onSubmit={UpdateProduct}
                         className="rounded-xl shadow-lg border p-6 sm:p-8 space-y-6 backdrop-blur-sm"
                         style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}
                     >
@@ -202,6 +277,42 @@ export default function EditProducts({ params }) {
                                     className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground shadow-sm"
                                     style={{ borderColor: 'var(--border)' }}
                                 />
+                            </div>
+
+                            {/* Category Selection Field */}
+                            <div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="block text-sm font-medium en" style={{ color: 'var(--foreground)' }}>
+                                        Category <span className="text-red-500">*</span>
+                                    </label>
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsCategoryModalOpen(true)}
+                                        className="flex items-center gap-1 text-xs font-semibold transition hover:opacity-80 cursor-pointer"
+                                        style={{ color: 'var(--primary)' }}
+                                    >
+                                        <Plus className="w-3.5 h-3.5" />
+                                        Create Category
+                                    </button>
+                                </div>
+                                <select
+                                    id="categoryId"
+                                    value={categoryId}
+                                    onChange={(e) => setCategoryId(e.target.value)}
+                                    disabled={loadingCategories}
+                                    required
+                                    className="w-full px-4 py-2.5 rounded-lg border text-sm en focus:outline-none focus:ring-2 bg-background text-foreground shadow-sm cursor-pointer"
+                                    style={{ borderColor: 'var(--border)' }}
+                                >
+                                    <option value="">
+                                        {loadingCategories ? "Loading categories..." : "-- Select Category --"}
+                                    </option>
+                                    {categories.map((cat) => (
+                                        <option key={cat.id || cat._id} value={cat.id || cat._id}>
+                                            {cat.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
                             <div>
@@ -259,6 +370,71 @@ export default function EditProducts({ params }) {
                             </button>
                         </div>
                     </form>
+                )}
+
+                {/* Modal for Creating Category */}
+                {isCategoryModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+                        <div
+                            className="w-full max-w-md rounded-xl p-6 shadow-xl border relative"
+                            style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', color: 'var(--foreground)' }}
+                        >
+                            <button
+                                type="button"
+                                onClick={() => setIsCategoryModalOpen(false)}
+                                className="absolute top-4 right-4 text-xs opacity-60 hover:opacity-100 transition p-1"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--primary) 15%, transparent)' }}>
+                                    <FolderPlus className="w-5 h-5" style={{ color: 'var(--primary)' }} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold">Create Category</h3>
+                                    <p className="text-xs opacity-60">Add a new category to assign to products</p>
+                                </div>
+                            </div>
+
+                            <form onSubmit={handleCreateCategory} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium mb-1.5" htmlFor="newCategoryName">
+                                        Category Name <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="newCategoryName"
+                                        placeholder="e.g. Electronics, Clothing..."
+                                        value={newCategoryName}
+                                        onChange={(e) => setNewCategoryName(e.target.value)}
+                                        className="w-full rounded-lg px-3.5 py-2.5 border text-sm outline-none transition"
+                                        style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', color: 'var(--foreground)' }}
+                                        autoFocus
+                                    />
+                                </div>
+
+                                <div className="flex justify-end gap-3 pt-4 border-t" style={{ borderColor: 'var(--border)' }}>
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsCategoryModalOpen(false)}
+                                        className="px-4 py-2 rounded-lg text-xs font-semibold border transition cursor-pointer"
+                                        style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={creatingCategory}
+                                        className="px-4 py-2 rounded-lg text-xs font-semibold transition disabled:opacity-50 cursor-pointer"
+                                        style={{ backgroundColor: 'var(--primary)', color: 'var(--foreground)' }}
+                                    >
+                                        {creatingCategory ? "Creating..." : "Save Category"}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 )}
             </div>
         </main>
