@@ -30,7 +30,7 @@ async function DeleteCloudinaryMedia(publicId, resourceType = "image") {
         throw new Error("Media public ID is missing");
     }
 
-    const allowedResourceTypes = ["image", "video"];
+    const allowedResourceTypes = ["image", "video", "raw"];
 
     if (!allowedResourceTypes.includes(resourceType)) {
         throw new Error(`Invalid media resource type: ${resourceType}`);
