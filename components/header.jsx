@@ -81,14 +81,14 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav aria-label="Main Navigation" className="hidden md:flex md:items-center md:gap-x-6">
           {NAV_ITEMS.map((item) => (
-            <Link
+            <a
               key={item.key}
               href={item.href}
               className="text-sm font-medium transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded-md px-1 py-0.5"
               style={{ color: 'var(--foreground)' }}
             >
               {t(item.key)}
-            </Link>
+            </a>
           ))}
         </nav>
 
