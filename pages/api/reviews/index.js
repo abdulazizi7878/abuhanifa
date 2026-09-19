@@ -1,8 +1,9 @@
-// file: pages/api/reviews/index.js
+import { requireAdmin } from "../../../lib/auth";
 
-import ReviewService from "@/services/review.service";
-
-import { requireAdmin } from "@/lib/auth";
+import {
+    CreateReviewSessionService,
+    GetAllReviewSessionsService,
+} from "../../../services/review.service";
 
 export default async function handler(req, res) {
     const auth = await requireAdmin(req);
@@ -15,64 +16,41 @@ export default async function handler(req, res) {
     }
 
     try {
-        // ==========================================
-        // GET ALL
-        // ==========================================
-
-        if (req.method === "GET") {
-            const { language } = req.query;
-
-            const reviews =
-                await ReviewService.getReviews(
-                    language || null
-                );
-
-            return res.status(200).json({
-                success: true,
-                data: reviews,
-            });
-        }
-
-        // ==========================================
-        // CREATE
-        // ==========================================
-
         if (req.method === "POST") {
-            const review =
-                await ReviewService.createReview(
-                    req.body
-                );
+            const { duration_minutes } = req.body;
+
+            const session = await CreateReviewSessionService(
+                duration_minutes
+            );
 
             return res.status(201).json({
                 success: true,
-                message:
-                    "Review created successfully",
-                data: review,
+                session,
             });
         }
 
-        res.setHeader(
-            "Allow",
-            ["GET", "POST"]
-        );
+        if (req.method === "GET") {
+            const sessions =
+                await GetAllReviewSessionsService();
+
+            return res.status(200).json({
+                success: true,
+                sessions,
+            });
+        }
 
         return res.status(405).json({
             success: false,
-            message: `Method ${req.method} not allowed`,
+            message: "Method Not Allowed",
         });
-    } catch (error) {
-        console.error(
-            "Reviews API error:",
-            error
-        );
+    } catch (err) {
+        console.error("REVIEW API ERROR:", err);
 
-        return res.status(
-            error.statusCode || 500
-        ).json({
+        return res.status(400).json({
             success: false,
             message:
-                error.message ||
-                "Something went wrong",
+                err.message ||
+                "Review operation failed",
         });
     }
 }

@@ -112,7 +112,7 @@ export default function AdminOverviewPage() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border-b border-(--border)/60 pb-6">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-(--foreground)">Abu Hanifa Installation</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-(--foreground)">Abuhanifa Installation Ethiopia</h1>
           <p className="text-sm text-(--muted-foreground) mt-1.5">
             Welcome back, Admin. Here is your real-time platform analytics overview.
           </p>

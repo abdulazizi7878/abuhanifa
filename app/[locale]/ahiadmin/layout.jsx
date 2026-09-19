@@ -172,13 +172,13 @@ export default function AdminLayout({ children }) {
             href="/ahiadmin"
             className="flex items-center gap-2.5 rounded-lg p-1 -ml-1 cursor-pointer"
           >
-            <div className="w-9 h-9 bg-[var(--primary)] text-[var(--primary-foreground)] rounded-lg shadow-xs flex items-center justify-center">
-              <ShieldCheck className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-full shadow-xs flex items-center justify-center">
+              <img src="/images/logo.jpg" alt="LOGO" className='rounded-full'  />
             </div>
 
             <div className="flex flex-col truncate">
-              <span className="font-bold text-sm tracking-tight truncate">Abu Hanifa</span>
-              <span className="text-[9px] font-semibold uppercase tracking-widest text-[var(--primary)]">Installation</span>
+              <span className="font-bold text-sm tracking-tight truncate">Abuhanifa</span>
+              <span className="text-[9px] font-semibold uppercase tracking-widest text-[var(--primary)]">Installation Et</span>
             </div>
           </Link>
 
@@ -534,7 +534,7 @@ export default function AdminLayout({ children }) {
               </div>
 
               <div className="min-w-0">
-                <p className="text-sm font-medium truncate">Abu Hanifa Admin</p>
+                <p className="text-sm font-medium truncate">Abuhanifa Admin</p>
                 <p className="text-xs text-[var(--muted-foreground)] truncate">Installation Management</p>
               </div>
             </div>
@@ -573,7 +573,7 @@ export default function AdminLayout({ children }) {
             </button>
 
             <h1 className="text-base font-semibold tracking-tight lg:hidden">
-              Abu Hanifa Admin
+              Abuhanifa Admin
             </h1>
 
             <nav className="hidden lg:flex items-center space-x-2 text-sm font-medium">

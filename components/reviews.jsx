@@ -10,10 +10,7 @@ import {
     MessageSquareQuote,
 } from "lucide-react";
 
-import {
-    useLocale,
-    useTranslations,
-} from "next-intl";
+import { useTranslations } from "next-intl";
 
 function Stars({ rating, size = 18 }) {
     return (
@@ -35,7 +32,6 @@ function Stars({ rating, size = 18 }) {
 }
 
 export default function Reviews() {
-    const locale = useLocale();
     const t = useTranslations("reviews");
 
     const [reviews, setReviews] = useState([]);
@@ -47,9 +43,7 @@ export default function Reviews() {
                 setLoading(true);
 
                 const response = await fetch(
-                    `/api/public/reviews?language=${encodeURIComponent(
-                        locale
-                    )}`
+                    "/api/public-reviews"
                 );
 
                 const data = await response.json();
@@ -61,7 +55,7 @@ export default function Reviews() {
                     );
                 }
 
-                setReviews(data.data || []);
+                setReviews(data.reviews || []);
             } catch (error) {
                 console.error(
                     "Failed to load reviews:",
@@ -75,7 +69,7 @@ export default function Reviews() {
         }
 
         loadReviews();
-    }, [locale]);
+    }, []);
 
     const averageRating = useMemo(() => {
         if (!reviews.length) {
@@ -121,8 +115,6 @@ export default function Reviews() {
     return (
         <section className="w-full py-16">
             <div className="mx-auto max-w-7xl px-4">
-
-                {/* Header */}
                 <motion.div
                     initial={{
                         opacity: 0,
@@ -161,7 +153,6 @@ export default function Reviews() {
                         </p>
                     </div>
 
-                    {/* Average rating */}
                     <div className="flex items-center gap-4 rounded-3xl border border-[var(--border)]/50 bg-foreground/5 px-6 py-4">
                         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400/15">
                             <Star
@@ -202,7 +193,6 @@ export default function Reviews() {
                     </div>
                 </motion.div>
 
-                {/* Reviews */}
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {reviews.map((review, index) => (
                         <motion.article
@@ -228,7 +218,6 @@ export default function Reviews() {
                             }}
                             className="group relative flex min-h-80 flex-col overflow-hidden rounded-4xl border border-[var(--border)]/50 bg-background p-6 transition-shadow duration-300 hover:shadow-xl"
                         >
-                            {/* Decorative quote */}
                             <div className="absolute right-5 top-5 opacity-10 transition-opacity duration-300 group-hover:opacity-20">
                                 <Quote
                                     size={60}
@@ -236,14 +225,12 @@ export default function Reviews() {
                                 />
                             </div>
 
-                            {/* Review text */}
                             <div className="relative flex-1 rounded-3xl bg-foreground/5 p-5">
                                 <p className="leading-7 text-foreground/80">
-                                    “{review.text}”
+                                    “{review.review_text}”
                                 </p>
                             </div>
 
-                            {/* Rating */}
                             <div className="mt-5 flex items-center justify-between">
                                 <Stars
                                     rating={Number(
@@ -258,10 +245,9 @@ export default function Reviews() {
                                 </span>
                             </div>
 
-                            {/* Customer */}
                             <div className="mt-5 flex items-center gap-3 border-t border-[var(--border)]/30 pt-5">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)]/10 font-bold text-[var(--primary)]">
-                                    {review.customerName
+                                    {review.reviewer_name
                                         ?.charAt(0)
                                         ?.toUpperCase()}
                                 </div>
@@ -269,12 +255,14 @@ export default function Reviews() {
                                 <div>
                                     <p className="font-semibold">
                                         {
-                                            review.customerName
+                                            review.reviewer_name
                                         }
                                     </p>
 
                                     <p className="text-xs text-foreground/45">
-                                        {t("verifiedCustomer")}
+                                        {t(
+                                            "verifiedCustomer"
+                                        )}
                                     </p>
                                 </div>
                             </div>

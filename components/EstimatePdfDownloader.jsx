@@ -313,7 +313,7 @@ function EstimatePDF({ estimate }) {
                 <Text style={{ color: "#ec0800" }}>Abuhanifa</Text> <Text style={{ color: "#007fef" }}>Installation Ethiopia</Text> 
               </Text>
               <Text style={pdfStyles.brandTitleAm}>
-                <Text style={{ color: "#ec0800" }}>አቡሐኒፋ</Text> <Text style={{ color: "#007fef" }}>ኢንስታሌሽን ኢትዮጵያ</Text> 
+                <Text style={{ color: "#ec0800" }}>አቡሐኒፋ</Text> <Text style={{ color: "#007fef" }}>ኢንስታሌሽን ኢትዮጲያ</Text> 
               </Text>
             </View>
           </View>
@@ -492,7 +492,7 @@ function EstimatePDF({ estimate }) {
               <Text style={{ color: "#ec0800" }}>Abuhanifa</Text> <Text style={{ color: "#007fef" }}>Installation Ethiopia</Text> 
             </Text>
             <Text style={{ fontFamily: "VisualGeez", fontSize: 11, fontWeight: "bold", color: "#0c152a", marginTop: 2, textAlign: "center" }}>
-              <Text style={{ color: "#ec0800" }}>አቡሐኒፋ</Text> <Text style={{ color: "#007fef" }}>ኢንስታሌሽን ኢትዮጵያ።</Text> 
+              <Text style={{ color: "#ec0800" }}>አቡሐኒፋ</Text> <Text style={{ color: "#007fef" }}>ኢንስታሌሽን ኢትዮጲያ።</Text> 
             </Text>
           </View>
 
