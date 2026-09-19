@@ -478,7 +478,7 @@ function EstimatePDF({ estimate }) {
 
         <View style={pdfStyles.bottomNote}>
           <Text style={{ fontFamily: "VisualGeez", fontSize: 7.5, color: "#0c152a88", textAlign: "center" }}>
-            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነና ለላቀ ጥራት ሁሌም ከፊት!
+            አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ — ለታማኝነትና ለላቀ ጥራት ሁሌም ከፊት!
           </Text>
         </View>
       </Page>
