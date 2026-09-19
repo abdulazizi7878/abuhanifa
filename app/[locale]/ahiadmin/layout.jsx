@@ -493,7 +493,7 @@ export default function AdminLayout({ children }) {
                   Reviews
                 </Link>
                 <Link
-                  href="/ahiadmin/create/review"
+                  href="/ahiadmin/create/showcase"
                   className={`
                     block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
                     ${isExactActive("/ahiadmin/create/showcase")
