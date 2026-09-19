@@ -183,6 +183,10 @@ function Cont() {
       </section>
 
       <hr className="my-2 w-11/12 border-(--border)" />
+      <section className="my-20 w-11/12 flex flex-col items-center">
+        <InstallationShowcaseSection />
+      </section>
+
 
       {/* MISSION SECTION */}
       <motion.section
@@ -330,9 +334,6 @@ function Cont() {
         </div>
       </section>
 
-      <section className="my-20 w-11/12 flex flex-col items-center">
-        <InstallationShowcaseSection />
-      </section>
 
       {/* 4. PRODUCTS PREVIEW SECTION */}
       <section className="my-20 w-11/12 flex flex-col items-center">

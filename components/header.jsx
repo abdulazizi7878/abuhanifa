@@ -142,7 +142,7 @@ export default function Header() {
       {/* Mobile Navigation Drawer */}
       <div
         id="mobile-menu"
-        className={`fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col justify-between px-6 py-6 transition-all duration-200 ease-in-out md:hidden ${
+        className={`fixed inset-x-0 top-14 bottom-0 z-40 flex flex-col justify-between px-6 py-6 transition-all duration-200 ease-in-out md:hidden ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
         style={{
