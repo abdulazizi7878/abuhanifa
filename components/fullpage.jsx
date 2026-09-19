@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Reviews from "@/components/reviews";
+import InstallationShowcaseSection from "@/components/InstallationShowcaseSection";
 import { useTranslations } from "next-intl";
 import FloatingButtons from "./floatingButtons";
 import ImageSlider from "@/components/ImageSlider";
@@ -327,6 +328,10 @@ function Cont() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="my-20 w-11/12 flex flex-col items-center">
+        <InstallationShowcaseSection />
       </section>
 
       {/* 4. PRODUCTS PREVIEW SECTION */}
