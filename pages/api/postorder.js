@@ -17,21 +17,17 @@ cloudinary.v2.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const MAX_FILE_SIZE = 40 * 1024 * 1024; // 20 MB
+const MAX_FILE_SIZE = 40 * 1024 * 1024; // 40 MB
 
 const ALLOWED_MIME_TYPES = new Set([
     "image/jpeg",
     "image/png",
     "image/webp",
-
     "application/pdf",
-
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-
     "application/zip",
     "application/x-zip-compressed",
-
     "application/acad",
     "application/x-acad",
     "application/autocad",
@@ -45,15 +41,11 @@ const ALLOWED_EXTENSIONS = new Set([
     ".jpeg",
     ".png",
     ".webp",
-
     ".pdf",
-
     ".doc",
     ".docx",
-
     ".dwg",
     ".dxf",
-
     ".zip",
 ]);
 
@@ -85,20 +77,24 @@ export default async function handler(req, res) {
         const [fields, files] = await form.parse(req);
 
         const name = getField(fields, "name");
+
         const contact_info = getField(
             fields,
             "contact_info"
         );
+
         const location = getField(
             fields,
             "location"
         );
+
         const comment = getField(
             fields,
             "comment"
         );
 
         let jobs = getField(fields, "jobs");
+
         let job_types = getField(
             fields,
             "job_types"
@@ -106,6 +102,7 @@ export default async function handler(req, res) {
 
         try {
             jobs = JSON.parse(jobs || "[]");
+
             job_types = JSON.parse(
                 job_types || "[]"
             );
@@ -172,6 +169,13 @@ export default async function handler(req, res) {
                 });
             }
 
+            /*
+             * Extra file-size validation.
+             *
+             * Formidable already enforces maxFileSize,
+             * but we keep this check as an additional
+             * safety layer.
+             */
             if (
                 uploadedFile.size >
                 MAX_FILE_SIZE
@@ -179,10 +183,16 @@ export default async function handler(req, res) {
                 return res.status(400).json({
                     success: false,
                     message:
-                        "File size must not exceed 20 MB.",
+                        "File size must not exceed 40 MB.",
                 });
             }
 
+            /*
+             * Upload attachment to Cloudinary.
+             *
+             * resource_type: auto allows Cloudinary
+             * to determine the correct resource type.
+             */
             const result =
                 await cloudinary.v2.uploader.upload(
                     uploadedFile.filepath,
@@ -212,6 +222,9 @@ export default async function handler(req, res) {
                 result.resource_type;
         }
 
+        /*
+         * Save order to database.
+         */
         await EnterOrder(
             name,
             contact_info,
@@ -238,24 +251,36 @@ export default async function handler(req, res) {
         );
 
         /*
-         * Formidable can throw when the file exceeds
-         * maxFileSize before we reach our own validation.
+         * Formidable file-size errors.
+         *
+         * Do NOT use:
+         *
+         * formidable.errors.maxFieldsSize
+         *
+         * because that property is not available
+         * in the installed Formidable version.
          */
         if (
-            err?.code ===
-            formidable.errors.maxFieldsSize
+            err?.code === "ETOOBIG" ||
+            err?.code === "LIMIT_FILE_SIZE" ||
+            err?.message
+                ?.toLowerCase()
+                .includes("maxfilesize") ||
+            err?.message
+                ?.toLowerCase()
+                .includes("max file size")
         ) {
             return res.status(400).json({
                 success: false,
                 message:
-                    "Uploaded data is too large.",
+                    "Uploaded file is too large. Maximum size is 40 MB.",
             });
         }
 
         return res.status(500).json({
             success: false,
             message:
-                err.message ||
+                err?.message ||
                 "Failed to submit order",
         });
     }
