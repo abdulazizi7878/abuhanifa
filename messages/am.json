@@ -177,7 +177,14 @@
         "Security Camera": "የደህንነት ካሜራ ገጠማ",
         "Optional": "ከተፈለገ",
         "comment_placeholder": "ዝርዝሩን እዚህ ይግለጹ...",
-        "custom_job_placeholder": "ስራዎን እዚህ ይግለጹ..."
+        "custom_job_placeholder": "ስራዎን እዚህ ይግለጹ...",
+        "Uploading attachment...": "አባሪ በመስቀል ላይ...",
+        "File size exceeds 40 MB limit": "የፋይሉ መጠን ከ 40 MB በላይ ነው",
+        "Invalid file type": "የተሳሳተ የፋይል ዓይነት",
+        "Unknown type": "ያልታወቀ ዓይነት",
+        "Remove file": "ፋይሉን አስወግድ",
+        "Uploading...": "በመስቀል ላይ...",
+        "Sending...": "በመላክ ላይ..."
     },
     "products": {
         "Share": "ያጋሩ",

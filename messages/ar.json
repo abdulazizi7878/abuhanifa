@@ -177,7 +177,14 @@
         "Security Camera": "تركيب كاميرات المراقبة",
         "Optional": "اختياري",
         "comment_placeholder": "اكتب التفاصيل هنا...",
-        "custom_job_placeholder": "صف عملك هنا..."
+        "custom_job_placeholder": "صف عملك هنا...",
+        "Uploading attachment...": "جاري تحميل المرفق...",
+        "File size exceeds 40 MB limit": "حجم الملف يتجاوز الحد الأقصى 40 ميجابايت",
+        "Invalid file type": "نوع الملف غير صالح",
+        "Unknown type": "نوع غير معروف",
+        "Remove file": "إزالة الملف",
+        "Uploading...": "جاري التحميل...",
+        "Sending...": "جاري الإرسال..."
     },
     "products": {
         "Share": "مشاركة",

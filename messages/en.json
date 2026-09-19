@@ -177,7 +177,14 @@
         "Security Camera": "Security camera installation",
         "Optional": "Optional",
         "comment_placeholder": "Describe the details here...",
-        "custom_job_placeholder": "Describe your job here..."
+        "custom_job_placeholder": "Describe your job here...",
+        "Uploading attachment...": "Uploading attachment...",
+        "File size exceeds 40 MB limit": "File size exceeds 40 MB limit",
+        "Invalid file type": "Invalid file type",
+        "Unknown type": "Unknown type",
+        "Remove file": "Remove file",
+        "Uploading...": "Uploading...",
+        "Sending...": "Sending..."
     },
     "products": {
         "Share":"Share",

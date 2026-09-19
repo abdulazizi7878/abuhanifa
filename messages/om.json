@@ -177,7 +177,14 @@
         "Security Camera": "Rakibaadda Kaamirooyinka Amniga",
         "Optional": "Filannoon",
         "comment_placeholder": "Tarreeffama asitti ibsaa...",
-        "custom_job_placeholder": "Hojii keessan asirratti ibsaa..."
+        "custom_job_placeholder": "Hojii keessan asirratti ibsaa...",
+        "Uploading attachment...": "Miseensa ol fe'aa jira...",
+        "File size exceeds 40 MB limit": "Hangii faayilii hanga 40 MB caala",
+        "Invalid file type": "Gosa faayilii dogoggoraa",
+        "Unknown type": "Gosa hin beekamne",
+        "Remove file": "Faayilii haqii",
+        "Uploading...": "Ol fe'aa jira...",
+        "Sending...": "Ergaa jira..."
     },
     "orderProduct": {
         "title": "Oomshaa Ajajuun Dura Gataa Sakatta'aa, Gataa sakatta'uuf baay'ina oomshaa galchaa fi kupphooni gadii cuqasaa!",

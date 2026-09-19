@@ -1,15 +1,8 @@
 // file: pages/api/postorder.js
 
-import formidable from "formidable";
 import cloudinary from "cloudinary";
 
 import { EnterOrder } from "../../services/insert.service";
-
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
 
 cloudinary.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -17,24 +10,7 @@ cloudinary.v2.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const MAX_FILE_SIZE = 40 * 1024 * 1024; // 40 MB
-
-const ALLOWED_MIME_TYPES = new Set([
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "application/pdf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/zip",
-    "application/x-zip-compressed",
-    "application/acad",
-    "application/x-acad",
-    "application/autocad",
-    "application/x-autocad",
-    "image/vnd.dwg",
-    "image/vnd.dxf",
-]);
+const MAX_FILE_SIZE = 40 * 1024 * 1024;
 
 const ALLOWED_EXTENSIONS = new Set([
     ".jpg",
@@ -49,14 +25,65 @@ const ALLOWED_EXTENSIONS = new Set([
     ".zip",
 ]);
 
-function getField(fields, field) {
-    const value = fields[field];
+const ALLOWED_RESOURCE_TYPES = new Set([
+    "image",
+    "raw",
+]);
 
-    if (Array.isArray(value)) {
-        return value[0];
+const ORDERS_FOLDER =
+    "abuhanifa-installation/orders";
+
+function getExtension(filename = "") {
+    const lastDot = filename.lastIndexOf(".");
+
+    if (lastDot === -1) {
+        return "";
+    }
+
+    return filename
+        .substring(lastDot)
+        .toLowerCase();
+}
+
+function getString(value) {
+    if (typeof value !== "string") {
+        return "";
+    }
+
+    return value.trim();
+}
+
+function getArray(value) {
+    if (!Array.isArray(value)) {
+        return [];
     }
 
     return value;
+}
+
+async function deleteCloudinaryAsset(
+    publicId,
+    resourceType
+) {
+    if (!publicId) {
+        return;
+    }
+
+    try {
+        await cloudinary.v2.uploader.destroy(
+            publicId,
+            {
+                resource_type:
+                    resourceType || "image",
+                type: "upload",
+            }
+        );
+    } catch (error) {
+        console.error(
+            "Failed to clean up Cloudinary asset:",
+            error
+        );
+    }
 }
 
 export default async function handler(req, res) {
@@ -67,100 +94,138 @@ export default async function handler(req, res) {
         });
     }
 
+    let uploadedCloudinaryAsset = null;
+
     try {
-        const form = formidable({
-            keepExtensions: true,
-            multiples: false,
-            maxFileSize: MAX_FILE_SIZE,
-        });
+        const {
+            name,
+            contact_info,
+            location,
+            jobs,
+            job_types,
+            comment,
 
-        const [fields, files] = await form.parse(req);
+            attachment_url,
+            attachment_public_id,
+            attachment_original_name,
+            attachment_mime_type,
+            attachment_size,
+            attachment_resource_type,
+        } = req.body || {};
 
-        const name = getField(fields, "name");
+        /*
+         * Basic order validation.
+         */
 
-        const contact_info = getField(
-            fields,
-            "contact_info"
-        );
+        const cleanName = getString(name);
+        const cleanContactInfo =
+            getString(contact_info);
+        const cleanLocation =
+            getString(location);
+        const cleanComment =
+            getString(comment);
 
-        const location = getField(
-            fields,
-            "location"
-        );
-
-        const comment = getField(
-            fields,
-            "comment"
-        );
-
-        let jobs = getField(fields, "jobs");
-
-        let job_types = getField(
-            fields,
-            "job_types"
-        );
-
-        try {
-            jobs = JSON.parse(jobs || "[]");
-
-            job_types = JSON.parse(
-                job_types || "[]"
-            );
-        } catch {
+        if (!cleanName) {
             return res.status(400).json({
                 success: false,
-                message: "Invalid job data",
+                message: "Name is required.",
+            });
+        }
+
+        if (!cleanContactInfo) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Contact information is required.",
+            });
+        }
+
+        if (!cleanLocation) {
+            return res.status(400).json({
+                success: false,
+                message: "Location is required.",
+            });
+        }
+
+        const finalJobs = getArray(jobs);
+        const finalJobTypes =
+            getArray(job_types);
+
+        if (finalJobs.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "At least one job is required.",
+            });
+        }
+
+        if (finalJobTypes.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "At least one job type is required.",
             });
         }
 
         /*
          * Attachment is optional.
          */
-        const uploadedFile =
-            files.attachment?.[0] || null;
 
-        let attachment_url = null;
-        let attachment_public_id = null;
-        let attachment_original_name = null;
-        let attachment_mime_type = null;
-        let attachment_size = null;
-        let attachment_resource_type = null;
+        let finalAttachmentUrl = null;
+        let finalAttachmentPublicId = null;
+        let finalAttachmentOriginalName = null;
+        let finalAttachmentMimeType = null;
+        let finalAttachmentSize = null;
+        let finalAttachmentResourceType = null;
 
-        if (uploadedFile) {
-            if (!uploadedFile.filepath) {
+        const hasAttachment =
+            attachment_public_id ||
+            attachment_url ||
+            attachment_original_name ||
+            attachment_size;
+
+        if (hasAttachment) {
+            /*
+             * All important Cloudinary fields are required.
+             */
+
+            if (
+                !attachment_public_id ||
+                !attachment_resource_type ||
+                !attachment_original_name
+            ) {
                 return res.status(400).json({
                     success: false,
-                    message: "Uploaded file is invalid",
+                    message:
+                        "Incomplete attachment information.",
                 });
             }
 
-            const originalName =
-                uploadedFile.originalFilename || "";
+            /*
+             * Validate resource type.
+             */
 
-            const extension =
-                originalName
-                    .toLowerCase()
-                    .substring(
-                        originalName.lastIndexOf(".")
-                    );
-
-            const mimeType =
-                uploadedFile.mimetype || "";
+            if (
+                !ALLOWED_RESOURCE_TYPES.has(
+                    attachment_resource_type
+                )
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Invalid attachment resource type.",
+                });
+            }
 
             /*
-             * Validate file type.
-             *
-             * Check both MIME type and extension
-             * because browsers can report MIME types
-             * differently, especially for CAD files.
+             * Validate original file extension.
              */
+
+            const extension = getExtension(
+                attachment_original_name
+            );
+
             if (
-                !ALLOWED_MIME_TYPES.has(
-                    mimeType
-                ) &&
-                !ALLOWED_EXTENSIONS.has(
-                    extension
-                )
+                !ALLOWED_EXTENSIONS.has(extension)
             ) {
                 return res.status(400).json({
                     success: false,
@@ -170,16 +235,44 @@ export default async function handler(req, res) {
             }
 
             /*
-             * Extra file-size validation.
+             * Validate public_id.
              *
-             * Formidable already enforces maxFileSize,
-             * but we keep this check as an additional
-             * safety layer.
+             * The browser must not be able to submit
+             * an arbitrary Cloudinary asset.
              */
+
             if (
-                uploadedFile.size >
-                MAX_FILE_SIZE
+                !attachment_public_id.startsWith(
+                    `${ORDERS_FOLDER}/`
+                )
             ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Invalid attachment location.",
+                });
+            }
+
+            /*
+             * Validate the claimed size before
+             * contacting Cloudinary.
+             */
+
+            const claimedSize =
+                Number(attachment_size);
+
+            if (
+                !Number.isFinite(claimedSize) ||
+                claimedSize <= 0
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Invalid attachment size.",
+                });
+            }
+
+            if (claimedSize > MAX_FILE_SIZE) {
                 return res.status(400).json({
                     success: false,
                     message:
@@ -188,57 +281,141 @@ export default async function handler(req, res) {
             }
 
             /*
-             * Upload attachment to Cloudinary.
+             * Verify the actual Cloudinary asset.
              *
-             * resource_type: auto allows Cloudinary
-             * to determine the correct resource type.
+             * This is important because we do not trust
+             * attachment_url, size, or resource_type
+             * supplied by the browser.
              */
-            const result =
-                await cloudinary.v2.uploader.upload(
-                    uploadedFile.filepath,
+
+            const cloudinaryAsset =
+                await cloudinary.v2.api.resource(
+                    attachment_public_id,
                     {
-                        folder:
-                            "abuhanifa-installation/orders",
-                        resource_type: "auto",
+                        resource_type:
+                            attachment_resource_type,
+                        type: "upload",
                     }
                 );
 
-            attachment_url =
-                result.secure_url;
+            /*
+             * Make sure the asset really belongs
+             * to our orders folder.
+             */
 
-            attachment_public_id =
-                result.public_id;
+            if (
+                !cloudinaryAsset.public_id.startsWith(
+                    `${ORDERS_FOLDER}/`
+                )
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Invalid Cloudinary asset.",
+                });
+            }
 
-            attachment_original_name =
-                originalName;
+            /*
+             * Verify actual Cloudinary resource type.
+             */
 
-            attachment_mime_type =
-                mimeType;
+            if (
+                cloudinaryAsset.resource_type !==
+                attachment_resource_type
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Attachment resource type mismatch.",
+                });
+            }
 
-            attachment_size =
-                uploadedFile.size;
+            /*
+             * Verify actual file size.
+             */
 
-            attachment_resource_type =
-                result.resource_type;
+            const actualSize =
+                Number(cloudinaryAsset.bytes);
+
+            if (
+                !Number.isFinite(actualSize) ||
+                actualSize <= 0
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Invalid Cloudinary file size.",
+                });
+            }
+
+            if (actualSize > MAX_FILE_SIZE) {
+                await deleteCloudinaryAsset(
+                    attachment_public_id,
+                    attachment_resource_type
+                );
+
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "File size must not exceed 40 MB.",
+                });
+            }
+
+            /*
+             * Store the verified Cloudinary asset.
+             */
+
+            finalAttachmentUrl =
+                cloudinaryAsset.secure_url;
+
+            finalAttachmentPublicId =
+                cloudinaryAsset.public_id;
+
+            finalAttachmentOriginalName =
+                attachment_original_name;
+
+            finalAttachmentMimeType =
+                attachment_mime_type || null;
+
+            finalAttachmentSize =
+                actualSize;
+
+            finalAttachmentResourceType =
+                cloudinaryAsset.resource_type;
+
+            uploadedCloudinaryAsset = {
+                publicId:
+                    cloudinaryAsset.public_id,
+                resourceType:
+                    cloudinaryAsset.resource_type,
+            };
         }
 
         /*
-         * Save order to database.
+         * Save the order.
          */
+
         await EnterOrder(
-            name,
-            contact_info,
-            location,
-            jobs,
-            job_types,
-            comment,
-            attachment_url,
-            attachment_public_id,
-            attachment_original_name,
-            attachment_mime_type,
-            attachment_size,
-            attachment_resource_type
+            cleanName,
+            cleanContactInfo,
+            cleanLocation,
+            finalJobs,
+            finalJobTypes,
+            cleanComment || "No comment",
+            finalAttachmentUrl,
+            finalAttachmentPublicId,
+            finalAttachmentOriginalName,
+            finalAttachmentMimeType,
+            finalAttachmentSize,
+            finalAttachmentResourceType
         );
+
+        /*
+         * Database succeeded.
+         * Do not delete the Cloudinary asset.
+         */
+
+        uploadedCloudinaryAsset = null;
 
         return res.status(200).json({
             success: true,
@@ -251,29 +428,30 @@ export default async function handler(req, res) {
         );
 
         /*
-         * Formidable file-size errors.
-         *
-         * Do NOT use:
-         *
-         * formidable.errors.maxFieldsSize
-         *
-         * because that property is not available
-         * in the installed Formidable version.
+         * If Cloudinary upload succeeded but
+         * database insertion failed, clean up
+         * the Cloudinary asset.
          */
+
+        if (uploadedCloudinaryAsset) {
+            await deleteCloudinaryAsset(
+                uploadedCloudinaryAsset.publicId,
+                uploadedCloudinaryAsset.resourceType
+            );
+        }
+
+        /*
+         * Cloudinary could not find the asset.
+         */
+
         if (
-            err?.code === "ETOOBIG" ||
-            err?.code === "LIMIT_FILE_SIZE" ||
-            err?.message
-                ?.toLowerCase()
-                .includes("maxfilesize") ||
-            err?.message
-                ?.toLowerCase()
-                .includes("max file size")
+            err?.http_code === 404 ||
+            err?.error?.http_code === 404
         ) {
             return res.status(400).json({
                 success: false,
                 message:
-                    "Uploaded file is too large. Maximum size is 40 MB.",
+                    "Attachment was not found on Cloudinary.",
             });
         }
 

@@ -177,7 +177,14 @@
         "Security Camera": "Rakibaadda kaamirooyinka amniga",
         "Optional": "Ikhtiyaari",
         "comment_placeholder": "Halkan ku sharax faahfaahinta...",
-        "custom_job_placeholder": "Halkan ku qor shaqadaada..."
+        "custom_job_placeholder": "Halkan ku qor shaqadaada...",
+        "Uploading attachment...": "Waxaa la soo gelinayaa faylka...",
+        "File size exceeds 40 MB limit": "Cabbirka faylku wuxuu ka badan yahay 40 MB",
+        "Invalid file type": "Astaanta faylku sax maaha",
+        "Unknown type": "Mooto aan la garanayn",
+        "Remove file": "Tir faylka",
+        "Uploading...": "Waa la soo gelinayaa...",
+        "Sending...": "Waa la dirayaa..."
     },
     "orderProduct": {
         "title": "Hubi qiimaha inta aanad dalban badeecada. Si aad u hubiso qiimaha, geli cadadka badeecada oo guji badhanka!",

@@ -177,7 +177,14 @@
         "Security Camera": "ገጠማ ካሜራ ድሕነት",
         "Optional": "ካብ ምርጫ ዝምረጽ",
         "comment_placeholder": "ዝርዝር ኣብዚ ጽሓፉ...",
-        "custom_job_placeholder": "ስራሕኩም ኣብዚ ግለጽዎ..."
+        "custom_job_placeholder": "ስራሕኩም ኣብዚ ግለጽዎ...",
+        "Uploading attachment...": "ዛግናት የፅዕን አሎ...",
+        "File size exceeds 40 MB limit": "ዓቐን ፋይል ካብ 40 MB ንላዕሊ እዩ",
+        "Invalid file type": "ዘይተፈቐደ ዓይነት ፋይል",
+        "Unknown type": "ዘይተፈልጠ ዓይነት",
+        "Remove file": "ፋይል ሰርዝ",
+        "Uploading...": "የፅዕን አሎ...",
+        "Sending...": "ይሰድድ አሎ..."
     },
     "orderProduct": {
         "title": "ንብረት ቅድሚ ምእዛዝኩም ዋጋ መርምሩ። ዋጋ ንምፍላጥ መጠን እቲ ንብረት ኣእቲኹም ነቲ ቁልፊ ጠውቑ!",

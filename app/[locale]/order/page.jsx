@@ -5,14 +5,10 @@ import Footer from "@/components/footer";
 import { useEffect, useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import LanguageSwitcher from "@/components/lannguageSwitcher";
 import {
     Upload,
     FileText,
-    Image as ImageIcon,
-    File,
-    X,
-    Sparkles
+    X
 } from "lucide-react";
 
 export default function Order() {
@@ -32,6 +28,10 @@ export default function Order() {
         attachment: null,
         comment: ""
     });
+
+    const [uploadingFile, setUploadingFile] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [submittingOrder, setSubmittingOrder] = useState(false);
 
     // Image preview state management to handle memory leaks and proper lifecycle cleanup
     const [previewUrl, setPreviewUrl] = useState(null);
@@ -69,11 +69,39 @@ export default function Order() {
         });
     };
 
+    // Helper function to validate file size and extension
+    const validateFile = (file) => {
+        const maxSizeBytes = 40 * 1024 * 1024; // 40 MB
+        if (file.size > maxSizeBytes) {
+            toast.error(t("File size exceeds 40 MB limit") || "File size exceeds 40 MB limit");
+            return false;
+        }
+
+        const allowedExtensions = [
+            "jpg", "jpeg", "png", "webp", "pdf",
+            "doc", "docx", "dwg", "dxf", "zip"
+        ];
+
+        const fileNameParts = file.name.split(".");
+        const extension = fileNameParts.length > 1 ? fileNameParts.pop().toLowerCase() : "";
+
+        if (!allowedExtensions.includes(extension)) {
+            toast.error(t("Invalid file type") || "Invalid file type");
+            return false;
+        }
+
+        return true;
+    };
+
     // File selection handler
     const handleFileSelect = (e) => {
         const file = e.target.files[0];
         if (file) {
-            handleChange("attachment", file);
+            if (validateFile(file)) {
+                handleChange("attachment", file);
+            } else {
+                e.target.value = "";
+            }
         }
     };
 
@@ -93,7 +121,9 @@ export default function Order() {
         setIsDragging(false);
         const file = e.dataTransfer.files[0];
         if (file) {
-            handleChange("attachment", file);
+            if (validateFile(file)) {
+                handleChange("attachment", file);
+            }
         }
     };
 
@@ -138,8 +168,105 @@ export default function Order() {
         }
     };
 
+    // Helper function to handle Cloudinary signature request and direct upload via XMLHttpRequest
+    async function uploadOrderAttachment(file) {
+        if (!validateFile(file)) {
+            throw new Error("Invalid file");
+        }
+
+        const sigRes = await fetch("/api/cloudinary/order-signature", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                filename: file.name,
+                file_size: file.size
+            })
+        });
+
+        const signatureData = await sigRes.json();
+
+        if (!sigRes.ok || !signatureData.success) {
+            throw new Error(signatureData.message || "Failed to get upload signature");
+        }
+
+        const cloudinaryFormData = new FormData();
+        cloudinaryFormData.append("file", file);
+        cloudinaryFormData.append("api_key", signatureData.api_key);
+        cloudinaryFormData.append("timestamp", String(signatureData.timestamp));
+        cloudinaryFormData.append("signature", signatureData.signature);
+        cloudinaryFormData.append("folder", signatureData.folder);
+        cloudinaryFormData.append("public_id", signatureData.public_id);
+
+        const uploadUrl = `https://api.cloudinary.com/v1_1/${signatureData.cloud_name}/auto/upload`;
+
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("POST", uploadUrl);
+
+            // Real-time progress tracker
+            xhr.upload.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const percent = Math.round((event.loaded / event.total) * 100);
+                    setUploadProgress(percent);
+                }
+            };
+
+            xhr.onload = () => {
+                let uploadData;
+                try {
+                    uploadData = JSON.parse(xhr.responseText);
+                } catch (e) {
+                    return reject(new Error("Invalid response from Cloudinary"));
+                }
+
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve({
+                        attachment_url: uploadData.secure_url,
+                        attachment_public_id: uploadData.public_id,
+                        attachment_original_name: file.name,
+                        attachment_mime_type: file.type || "",
+                        attachment_size: file.size,
+                        attachment_resource_type: uploadData.resource_type
+                    });
+                } else {
+                    reject(new Error(uploadData.error?.message || "Failed to upload file to Cloudinary"));
+                }
+            };
+
+            xhr.onerror = () => reject(new Error("Network error during Cloudinary upload"));
+            xhr.onabort = () => reject(new Error("Cloudinary upload aborted"));
+
+            xhr.send(cloudinaryFormData);
+        });
+    }
+
     async function SendData() {
-        const posting = toast.loading(t("Sending your order"));
+        if (submittingOrder || uploadingFile) return;
+
+        let attachmentPayload = null;
+        let postingToastId = null;
+
+        if (formData.attachment) {
+            setUploadingFile(true);
+            setUploadProgress(0);
+
+            try {
+                attachmentPayload = await uploadOrderAttachment(formData.attachment);
+                setUploadProgress(100);
+            } catch (err) {
+                setUploadingFile(false);
+                setUploadProgress(0);
+                toast.error(err.message || t("Your order couldn't be sent!"));
+                return;
+            }
+            setUploadingFile(false);
+        }
+
+        setSubmittingOrder(true);
+        postingToastId = toast.loading(t("Sending your order"));
 
         // Resolve final location value if custom option was selected
         const finalLocation = formData.location === "other" ? formData.custom_location.trim() : formData.location;
@@ -147,38 +274,41 @@ export default function Order() {
         // Resolve final jobs array if "other" option was selected
         const finalJobs = formData.jobs.map(job => job === "other" ? formData.custom_job.trim() : job);
 
-        const data = new FormData();
-        data.append("name", formData.name.trim());
-        data.append("contact_info", formData.contact_info.trim());
-        data.append("location", finalLocation);
-        data.append("jobs", JSON.stringify(finalJobs));
-        data.append("job_types", JSON.stringify(formData.job_types));
-        data.append("comment", formData.comment.trim() === "" ? "No comment" : formData.comment.trim());
-
-        if (formData.attachment) {
-            data.append("attachment", formData.attachment);
-        }
+        const orderJson = {
+            name: formData.name.trim(),
+            contact_info: formData.contact_info.trim(),
+            location: finalLocation,
+            jobs: finalJobs,
+            job_types: formData.job_types,
+            comment: formData.comment.trim() === "" ? "No comment" : formData.comment.trim(),
+            ...(attachmentPayload || {})
+        };
 
         try {
             const response = await fetch("/api/postorder", {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 credentials: "include",
-                body: data,
+                body: JSON.stringify(orderJson),
             });
 
             const result = await response.json();
 
             if (response.ok) {
-                toast.success(t("Order successfully sent!"), { id: posting });
+                toast.success(t("Order successfully sent!"), { id: postingToastId });
                 window.location.href = "/";
             } else {
                 toast.error(
                     result.message || t("Your order couldn't be sent!"),
-                    { id: posting }
+                    { id: postingToastId }
                 );
             }
         } catch (err) {
-            toast.error(t("Your order couldn't be sent!"), { id: posting });
+            toast.error(t("Your order couldn't be sent!"), { id: postingToastId });
+        } finally {
+            setSubmittingOrder(false);
         }
     }
 
@@ -348,7 +478,6 @@ export default function Order() {
                                     {t("attachment_description")}
                                 </p>
 
-                                {/* Hidden Native File Input */}
                                 <input
                                     type="file"
                                     ref={fileInputRef}
@@ -357,7 +486,6 @@ export default function Order() {
                                 />
 
                                 {!formData.attachment ? (
-                                    /* Upload Area */
                                     <div
                                         onClick={() => fileInputRef.current?.click()}
                                         onDragOver={handleDragOver}
@@ -378,40 +506,57 @@ export default function Order() {
                                         </div>
                                     </div>
                                 ) : (
-                                    /* File Preview Card */
-                                    <div className="border border-(--border) rounded-3xl p-4 bg-background shadow-sm flex items-center justify-between gap-4 animate-fadeIn">
-                                        <div className="flex items-center gap-3.5 overflow-hidden">
-                                            {formData.attachment.type.startsWith("image/") && previewUrl ? (
-                                                <div className="w-14 h-14 rounded-2xl overflow-hidden bg-foreground/5 shrink-0 border border-(--border)">
-                                                    <img
-                                                        src={previewUrl}
-                                                        alt="Preview"
-                                                        className="w-full h-full object-cover"
-                                                    />
+                                    <div className="border border-(--border) rounded-3xl p-4 bg-background shadow-sm flex flex-col gap-3 animate-fadeIn">
+                                        <div className="flex items-center justify-between gap-4">
+                                            <div className="flex items-center gap-3.5 overflow-hidden">
+                                                {formData.attachment.type.startsWith("image/") && previewUrl ? (
+                                                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-foreground/5 shrink-0 border border-(--border)">
+                                                        <img
+                                                            src={previewUrl}
+                                                            alt="Preview"
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <div className="w-14 h-14 rounded-2xl bg-(--primary)/10 text-(--primary) flex items-center justify-center shrink-0">
+                                                        <FileText size={26} />
+                                                    </div>
+                                                )}
+                                                <div className="min-w-0">
+                                                    <p className="font-bold text-sm truncate text-foreground">
+                                                        {formData.attachment.name}
+                                                    </p>
+                                                    <p className="text-xs text-foreground/50 font-mono mt-0.5">
+                                                        {formatFileSize(formData.attachment.size)} • {formData.attachment.type || t("Unknown type")}
+                                                    </p>
                                                 </div>
-                                            ) : (
-                                                <div className="w-14 h-14 rounded-2xl bg-(--primary)/10 text-(--primary) flex items-center justify-center shrink-0">
-                                                    <FileText size={26} />
-                                                </div>
-                                            )}
-                                            <div className="min-w-0">
-                                                <p className="font-bold text-sm truncate text-foreground">
-                                                    {formData.attachment.name}
-                                                </p>
-                                                <p className="text-xs text-foreground/50 font-mono mt-0.5">
-                                                    {formatFileSize(formData.attachment.size)} • {formData.attachment.type || t("Unknown type")}
-                                                </p>
                                             </div>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => handleChange("attachment", null)}
+                                                disabled={uploadingFile || submittingOrder}
+                                                className="w-9 h-9 rounded-xl bg-foreground/5 hover:bg-red-500/10 hover:text-red-500 text-foreground/60 flex items-center justify-center transition-all cursor-pointer shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                title={t("Remove file")}
+                                            >
+                                                <X size={18} />
+                                            </button>
                                         </div>
 
-                                        <button
-                                            type="button"
-                                            onClick={() => handleChange("attachment", null)}
-                                            className="w-9 h-9 rounded-xl bg-foreground/5 hover:bg-red-500/10 hover:text-red-500 text-foreground/60 flex items-center justify-center transition-all cursor-pointer shrink-0"
-                                            title={t("Remove file")}
-                                        >
-                                            <X size={18} />
-                                        </button>
+                                        {uploadingFile && (
+                                            <div className="w-full space-y-1.5 pt-2">
+                                                <div className="flex justify-between items-center text-xs text-foreground/70 font-medium">
+                                                    <span>Uploading attachment...</span>
+                                                    <span className="font-bold text-(--primary)">{uploadProgress}%</span>
+                                                </div>
+                                                <div className="w-full bg-foreground/10 h-2 rounded-full overflow-hidden">
+                                                    <div
+                                                        className="bg-(--primary) h-full transition-all duration-200 ease-out rounded-full"
+                                                        style={{ width: `${uploadProgress}%` }}
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -429,6 +574,21 @@ export default function Order() {
                                     className="w-full mt-2 border border-(--border) bg-background rounded-2xl p-4 h-32 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/20 transition-all shadow-inner resize-none"
                                     autoFocus
                                 />
+
+                                {uploadingFile && (
+                                    <div className="w-full space-y-1.5 pt-2 border-t border-(--border)/40">
+                                        <div className="flex justify-between items-center text-xs text-foreground/70 font-medium">
+                                            <span>Uploading attachment...</span>
+                                            <span className="font-bold text-(--primary)">{uploadProgress}%</span>
+                                        </div>
+                                        <div className="w-full bg-foreground/10 h-2 rounded-full overflow-hidden">
+                                            <div
+                                                className="bg-(--primary) h-full transition-all duration-200 ease-out rounded-full"
+                                                style={{ width: `${uploadProgress}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
@@ -438,7 +598,8 @@ export default function Order() {
                         {step > 1 ? (
                             <button
                                 onClick={() => setStep(step - 1)}
-                                className="px-6 py-2.5 rounded-xl border border-(--border) font-medium text-foreground hover:bg-foreground/5 transition-all cursor-pointer"
+                                disabled={uploadingFile || submittingOrder}
+                                className="px-6 py-2.5 rounded-xl border border-(--border) font-medium text-foreground hover:bg-foreground/5 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {t("Back")}
                             </button>
@@ -449,18 +610,22 @@ export default function Order() {
                         {step < totalSteps ? (
                             <button
                                 onClick={() => isStepValid() && setStep(step + 1)}
-                                disabled={!isStepValid()}
-                                className={`px-8 py-2.5 rounded-xl font-semibold transition-all duration-300 ${isStepValid() ? "bg-(--primary) text-background shadow-lg hover:opacity-90 cursor-pointer" : "bg-foreground/10 text-foreground/30 cursor-not-allowed"}`}
+                                disabled={!isStepValid() || uploadingFile || submittingOrder}
+                                className={`px-8 py-2.5 rounded-xl font-semibold transition-all duration-300 ${isStepValid() && !uploadingFile && !submittingOrder ? "bg-(--primary) text-background shadow-lg hover:opacity-90 cursor-pointer" : "bg-foreground/10 text-foreground/30 cursor-not-allowed"}`}
                             >
                                 {t("Next")}
                             </button>
                         ) : (
                             <button
-                                onClick={() => isStepValid() && SendData()}
-                                disabled={!isStepValid()}
-                                className={`px-8 py-2.5 rounded-xl font-semibold transition-all duration-300 ${isStepValid() ? "bg-green-600 text-white shadow-lg hover:bg-green-700 cursor-pointer" : "bg-foreground/10 text-foreground/30 cursor-not-allowed"}`}
+                                onClick={() => isStepValid() && !submittingOrder && !uploadingFile && SendData()}
+                                disabled={!isStepValid() || submittingOrder || uploadingFile}
+                                className={`px-8 py-2.5 rounded-xl font-semibold transition-all duration-300 ${isStepValid() && !submittingOrder && !uploadingFile ? "bg-green-600 text-white shadow-lg hover:bg-green-700 cursor-pointer" : "bg-foreground/10 text-foreground/30 cursor-not-allowed"}`}
                             >
-                                {t("Send")}
+                                {uploadingFile
+                                    ? `Uploading ${uploadProgress}%...`
+                                    : submittingOrder
+                                        ? "Sending..."
+                                        : t("Send")}
                             </button>
                         )}
                     </div>
