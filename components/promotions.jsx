@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Loading from "./loading";
+import ParsedContent from "@/utils/linkParser";
 import { Play, Pause, Volume2, VolumeX, Share2, Phone, Send, MessageCircle, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -173,9 +174,10 @@ function Promotion({ title, description, image, resourceType, name, link }) {
 
                 {/* Description Content Area */}
                 <div className="flex flex-col gap-y-4 px-2">
-                    <p className="text-base sm:text-lg text-(--foreground) opacity-90 leading-relaxed whitespace-pre-line">
-                        {description}
-                    </p>
+                    <ParsedContent
+                        content={description}
+                        className="text-base sm:text-lg text-(--foreground) opacity-90"
+                    />
                 </div>
 
                 {/* Action Buttons */}

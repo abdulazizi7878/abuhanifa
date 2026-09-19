@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import CommentSection from "./over";
 import Loading from "./loading";
+import ParsedContent from "@/utils/linkParser";
 import { Play, Pause, Volume2, VolumeX, MessageSquare, Share2 } from "lucide-react";
 
 export default function Blog({ link }) {
@@ -41,14 +42,14 @@ export default function Blog({ link }) {
                 ) : (
                     blog && blog.length > 0 ? (
                         blog.map((bl, index) => (
-                            <OneBlog 
-                                key={index} 
-                                title={bl.title} 
-                                description={bl.description} 
+                            <OneBlog
+                                key={index}
+                                title={bl.title}
+                                description={bl.description}
                                 link={bl.link}
                                 image={bl.image}
                                 resourceType={bl.media_resource_type}
-                                created_at={bl.created_at} 
+                                created_at={bl.created_at}
                                 blog_id={bl.id}
                             />
                         ))
@@ -105,7 +106,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
                 await navigator.share(blogData);
             }
         } catch (err) {
-            await navigator.clipboard.writeText(window.location.href);            
+            await navigator.clipboard.writeText(window.location.href);
         }
     }
 
@@ -136,7 +137,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
         <div className="w-full border-b border-(--border) pb-12 mb-10 flex flex-wrap gap-10 justify-center">
 
             <div className={`flex duration-500 flex-col gap-y-6 transition-all ${isCommentSectionShown ? "w-full md:w-[55%]" : "w-full max-w-3xl"}`}>
-                
+
                 {/* Title & Date Area */}
                 <div className="flex flex-col gap-y-2.5 px-2">
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-(--foreground) leading-tight">
@@ -158,19 +159,19 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
                     {image ? (
                         isVideo ? (
                             <div className="w-full h-full relative group/video">
-                                <video 
+                                <video
                                     ref={videoRef}
-                                    src={image} 
+                                    src={image}
                                     muted={isMuted}
                                     playsInline
                                     loop
                                     onEnded={() => setIsPlaying(false)}
-                                    className="w-full h-full object-cover" 
+                                    className="w-full h-full object-cover"
                                 />
-                                
+
                                 {/* Custom Video Controls Overlay */}
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/video:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-                                    <button 
+                                    <button
                                         onClick={togglePlay}
                                         className="w-14 h-14 rounded-full bg-(--primary) text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 cursor-pointer"
                                         aria-label={isPlaying ? "Pause video" : "Play video"}
@@ -178,7 +179,7 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
                                         {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
                                     </button>
 
-                                    <button 
+                                    <button
                                         onClick={toggleMute}
                                         className="w-11 h-11 rounded-full bg-(--background) text-(--foreground) flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 cursor-pointer"
                                         aria-label={isMuted ? "Unmute video" : "Mute video"}
@@ -199,30 +200,31 @@ function OneBlog({ title, description, image, resourceType, created_at, link, bl
 
                 {/* Description Content Area */}
                 <div className="flex flex-col gap-y-4 px-2">
-                    <p className="text-base sm:text-lg text-(--foreground) opacity-90 leading-relaxed whitespace-pre-line">
-                        {description}
-                    </p>
+                    <ParsedContent
+                        content={description}
+                        className="text-base sm:text-lg text-(--foreground) opacity-90"
+                    />
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-4 px-2 pt-2">
-                    <button 
-                        onClick={() => setCommentSectionShown(!isCommentSectionShown)} 
+                    <button
+                        onClick={() => setCommentSectionShown(!isCommentSectionShown)}
                         className="flex items-center gap-2 duration-300 cursor-pointer bg-(--foreground)/5 hover:bg-(--foreground)/10 border border-(--border) px-5 py-2.5 rounded-full text-sm font-medium text-(--foreground) transition-all shadow-sm"
                     >
                         <MessageSquare className="w-4 h-4 text-(--primary)" />
                         <span>Comments</span>
                     </button>
 
-                    <button 
-                        onClick={shareBlog} 
+                    <button
+                        onClick={shareBlog}
                         className="flex items-center gap-2 duration-300 cursor-pointer bg-(--foreground)/5 hover:bg-(--foreground)/10 border border-(--border) px-5 py-2.5 rounded-full text-sm font-medium text-(--foreground) transition-all shadow-sm"
                     >
                         <Share2 className="w-4 h-4 text-(--primary)" />
                         <span>Share</span>
                     </button>
                 </div>
-            </div>         
+            </div>
 
             {/* Comment Section Panel */}
             {isCommentSectionShown && (
