@@ -10,7 +10,10 @@ import {
     ShieldAlert,
     CheckCircle2,
     XCircle,
-    RefreshCw
+    RefreshCw,
+    Trash2,
+    Loader2,
+    AlertTriangle
 } from "lucide-react";
 
 const EXPIRATION_OPTIONS = [
@@ -34,6 +37,11 @@ export default function AdminReviewsPage() {
     const [loadingSessions, setLoadingSessions] = useState(true);
     const [listError, setListError] = useState("");
 
+    // State delete dialog & actions
+    const [deletingId, setDeletingId] = useState(null);
+    const [sessionToDelete, setSessionToDelete] = useState(null);
+    const [deleteError, setDeleteError] = useState("");
+
     async function fetchSessions() {
         setLoadingSessions(true);
         setListError("");
@@ -41,7 +49,6 @@ export default function AdminReviewsPage() {
             const res = await fetch("/api/reviews");
             const data = await res.json();
             if (res.ok && data.success) {
-                // Accepts either data.data or data.sessions/data
                 setSessions(data.data || data.sessions || []);
             } else {
                 setListError(data.message || "Failed to load review sessions");
@@ -73,7 +80,6 @@ export default function AdminReviewsPage() {
             const data = await res.json();
 
             if (res.ok && data.success) {
-                // Fixed: reading from data.session or falling back to data.data
                 const sessionObj = data.session || data.data || {};
                 const token = sessionObj.token;
                 const expiresAtRaw = sessionObj.expires_at;
@@ -95,6 +101,38 @@ export default function AdminReviewsPage() {
             setGenError(err.message || "Network error occurred");
         } finally {
             setGenerating(false);
+        }
+    }
+
+    async function confirmAndDelete() {
+        if (!sessionToDelete) return;
+
+        const id = sessionToDelete.id;
+        setDeletingId(id);
+        setDeleteError("");
+
+        try {
+            const res = await fetch("/api/delete", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    item: "reviews",
+                    id: id
+                })
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            if (res.ok && (data.success || res.status === 200)) {
+                setSessions((prev) => prev.filter((item) => item.id !== id));
+                setSessionToDelete(null);
+            } else {
+                setDeleteError(data.message || "Failed to delete review session");
+            }
+        } catch (err) {
+            setDeleteError("Network error occurred during deletion");
+        } finally {
+            setDeletingId(null);
         }
     }
 
@@ -236,12 +274,14 @@ export default function AdminReviewsPage() {
                                         <th className="p-4">Reviewer</th>
                                         <th className="p-4">Rating</th>
                                         <th className="p-4">Review Content</th>
+                                        <th className="p-4 text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-[var(--border)]">
                                     {sessions.map((session) => {
                                         const status = getSessionStatus(session);
                                         const StatusIcon = status.icon;
+                                        const isDeleting = deletingId === session.id;
 
                                         return (
                                             <tr key={session.id || session.token} className="hover:bg-[var(--foreground)]/5 transition">
@@ -273,6 +313,24 @@ export default function AdminReviewsPage() {
                                                 <td className="p-4 max-w-xs truncate text-xs opacity-80" title={session.review_text}>
                                                     {session.review_text || <span className="opacity-40 italic">—</span>}
                                                 </td>
+                                                <td className="p-4 text-right whitespace-nowrap">
+                                                    <button
+                                                        onClick={() => {
+                                                            setDeleteError("");
+                                                            setSessionToDelete(session);
+                                                        }}
+                                                        disabled={isDeleting}
+                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-rose-500/20 bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition text-xs font-bold cursor-pointer disabled:opacity-50"
+                                                        title="Delete Review Session"
+                                                    >
+                                                        {isDeleting ? (
+                                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                                        ) : (
+                                                            <Trash2 className="w-3.5 h-3.5" />
+                                                        )}
+                                                        <span>Delete</span>
+                                                    </button>
+                                                </td>
                                             </tr>
                                         );
                                     })}
@@ -281,6 +339,62 @@ export default function AdminReviewsPage() {
                         </div>
                     )}
                 </div>
+
+                {/* Delete Confirmation Modal */}
+                {sessionToDelete && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                        <div className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--background)] p-6 space-y-6 shadow-2xl">
+                            <div className="flex items-start gap-4">
+                                <div className="p-3 rounded-2xl bg-rose-500/10 text-rose-500 shrink-0">
+                                    <AlertTriangle className="w-6 h-6" />
+                                </div>
+                                <div className="space-y-1">
+                                    <h3 className="text-lg font-bold">Delete Review Session?</h3>
+                                    <p className="text-xs opacity-70 leading-relaxed">
+                                        Are you sure you want to delete this review entry? This action cannot be undone.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {deleteError && (
+                                <div className="p-3 rounded-xl border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-medium">
+                                    {deleteError}
+                                </div>
+                            )}
+
+                            <div className="flex items-center justify-end gap-3 pt-2">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        if (!deletingId) {
+                                            setSessionToDelete(null);
+                                            setDeleteError("");
+                                        }
+                                    }}
+                                    disabled={deletingId !== null}
+                                    className="px-5 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 text-xs font-bold transition cursor-pointer disabled:opacity-50"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={confirmAndDelete}
+                                    disabled={deletingId !== null}
+                                    className="px-5 py-2.5 rounded-xl bg-rose-600 text-white hover:bg-rose-700 text-xs font-bold transition cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                                >
+                                    {deletingId !== null ? (
+                                        <>
+                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                            <span>Deleting...</span>
+                                        </>
+                                    ) : (
+                                        <span>Confirm Delete</span>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
             </div>
         </main>

@@ -490,19 +490,7 @@ export default function AdminLayout({ children }) {
                     }
                   `}
                 >
-                  Create Review
-                </Link>
-                <Link
-                  href="/ahiadmin/view/reviews"
-                  className={`
-                    block px-3 py-2 rounded-lg text-xs transition-colors outline-none border-0 cursor-pointer
-                    ${isExactActive("/ahiadmin/view/reviews")
-                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold"
-                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/50"
-                    }
-                  `}
-                >
-                  View Reviews
+                  Reviews
                 </Link>
               </div>
             )}

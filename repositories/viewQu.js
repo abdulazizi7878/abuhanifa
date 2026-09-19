@@ -162,3 +162,29 @@ export async function GetProductByName(name) {
 
     return rows[0];
 }
+
+export async function GetReviewById(id) {
+    const [rows] = await db.query(
+        `
+        SELECT
+            id,
+            token,
+            expires_at,
+            used_at,
+            reviewer_name,
+            rating,
+            review_text,
+            created_at
+        FROM reviews
+        WHERE id = ?
+        LIMIT 1
+        `,
+        [id]
+    );
+
+    if (rows.length === 0) {
+        return null;
+    }
+
+    return rows[0];
+}

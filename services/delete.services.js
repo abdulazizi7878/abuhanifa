@@ -10,6 +10,7 @@ import {
     DeleteComments,
     DeleteMessages,
     DeleteOrders,
+    DeleteReview,
 } from "../repositories/deleteQu";
 
 import {
@@ -17,6 +18,7 @@ import {
     GetProductById,
     GetPromotionById,
     GetOrderById,
+    GetReviewById,
 } from "../repositories/viewQu";
 
 cloudinary.v2.config({
@@ -135,6 +137,16 @@ export async function DeleteItem(item, id) {
         }
 
         return await DeleteOrders(id);
+    }
+
+    if (item === "reviews") {
+        const review = await GetReviewById(id);
+
+        if (!review) {
+            throw new Error("Review not found");
+        }
+
+        return await DeleteReview(id);
     }
     
 

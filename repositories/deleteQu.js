@@ -52,3 +52,15 @@ export async function DeleteMessages(id) {
     )
     return res;
 }
+
+export async function DeleteReview(id) {
+    const [result] = await db.query(
+        `
+        DELETE FROM reviews
+        WHERE id = ?
+        `,
+        [id]
+    );
+
+    return result;
+}
