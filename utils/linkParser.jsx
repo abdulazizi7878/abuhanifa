@@ -1,5 +1,29 @@
+"use client";
+
 import React from "react";
-import { Youtube, Video, Instagram, Send, FileText, ExternalLink } from "lucide-react";
+import { Play, Video, Send, FileText, ExternalLink } from "lucide-react";
+
+/**
+ * Custom SVG icons for brand platforms where Lucide brand icons are unavailable
+ */
+function InstagramIcon({ className = "w-4 h-4" }) {
+    return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+        </svg>
+    );
+}
+
+function YoutubeIcon({ className = "w-4 h-4" }) {
+    return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+            <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" />
+        </svg>
+    );
+}
 
 /**
  * Gets icon, label, and style config for a given URL string.
@@ -27,7 +51,7 @@ function getLinkConfig(urlStr) {
     ) {
         return {
             label: "Watch on YouTube",
-            icon: Youtube,
+            icon: YoutubeIcon,
             color: "hover:border-red-500/40 hover:bg-red-500/10 text-red-500"
         };
     }
@@ -45,14 +69,13 @@ function getLinkConfig(urlStr) {
     if (hostname.includes("instagram.com")) {
         return {
             label: "View on Instagram",
-            icon: Instagram,
+            icon: InstagramIcon,
             color: "hover:border-purple-500/40 hover:bg-purple-500/10 text-purple-500"
         };
     }
 
     // Check Telegram
     if (hostname === "t.me" || hostname.includes("telegram.me") || hostname.includes("telegram.org")) {
-        // If path explicitly ends with .pdf
         if (pathname.endsWith(".pdf")) {
             return {
                 label: "Open PDF",
@@ -125,7 +148,7 @@ export default function ParsedContent({ content, className = "" }) {
                     if (config) {
                         const Icon = config.icon;
                         elements.push(
-                            <div key={`link-${pIdx}-${matchIndex}`} className="my-2 inline-block w-full sm:w-auto">
+                            <span key={`link-${pIdx}-${matchIndex}`} className="my-2 inline-block w-full sm:w-auto">
                                 <a
                                     href={rawUrl}
                                     target="_blank"
@@ -135,7 +158,7 @@ export default function ParsedContent({ content, className = "" }) {
                                     <Icon className="w-4 h-4 shrink-0" />
                                     <span>{config.label}</span>
                                 </a>
-                            </div>
+                            </span>
                         );
                     } else {
                         // Fallback to text if invalid URL scheme
