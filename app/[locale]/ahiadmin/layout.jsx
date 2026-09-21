@@ -28,7 +28,8 @@ import {
   Check,
   LogOut,
   User,
-  KeyRound
+  KeyRound,
+  Loader2
 } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
@@ -41,6 +42,10 @@ export default function AdminLayout({ children }) {
   const [isOperationsOpen, setIsOperationsOpen] = useState(false);
   const [isMarketingOpen, setIsMarketingOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+
+  // Logout state
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState('');
 
   // Theme state
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
@@ -132,6 +137,30 @@ export default function AdminLayout({ children }) {
     setThemeMenuOpen(false);
   };
 
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
+    setLogoutError('');
+
+    try {
+      const res = await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (res.ok) {
+        window.location.href = '/signin';
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setLogoutError(data.message || 'Logout failed. Please try again.');
+        setIsLoggingOut(false);
+      }
+    } catch (err) {
+      setLogoutError('Network error occurred during logout.');
+      setIsLoggingOut(false);
+    }
+  };
+
   const isExactActive = (path) => pathname === path;
   const isSubActive = (prefix) => pathname.startsWith(prefix);
 
@@ -173,7 +202,7 @@ export default function AdminLayout({ children }) {
             className="flex items-center gap-2.5 rounded-lg p-1 -ml-1 cursor-pointer"
           >
             <div className="w-9 h-9 rounded-full shadow-xs flex items-center justify-center">
-              <img src="/images/logo.jpg" alt="LOGO" className='rounded-full'  />
+              <img src="/images/logo.jpg" alt="LOGO" className='rounded-full' />
             </div>
 
             <div className="flex flex-col truncate">
@@ -526,7 +555,19 @@ export default function AdminLayout({ children }) {
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-[var(--border)] bg-[var(--background)] shrink-0">
+        <div className="p-4 border-t border-[var(--border)] bg-[var(--background)] shrink-0 space-y-2">
+          {logoutError && (
+            <div className="text-xs text-rose-500 bg-rose-500/10 p-2 rounded-lg font-medium flex items-center justify-between">
+              <span className="truncate">{logoutError}</span>
+              <button
+                onClick={() => setLogoutError('')}
+                className="ml-1 text-rose-500 hover:text-rose-700 font-bold"
+              >
+                ×
+              </button>
+            </div>
+          )}
+
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-9 h-9 rounded-full bg-[var(--muted)] text-[var(--foreground)] flex items-center justify-center font-semibold text-sm shrink-0">
@@ -539,13 +580,20 @@ export default function AdminLayout({ children }) {
               </div>
             </div>
 
-            <Link
-              href="/"
-              className="p-2 text-[var(--muted-foreground)] hover:text-rose-500 rounded-lg hover:bg-[var(--muted)] outline-none transition-colors border-0 cursor-pointer"
-              title="Exit Admin"
+            <button
+              type="button"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="p-2 text-[var(--muted-foreground)] hover:text-rose-500 rounded-lg hover:bg-[var(--muted)] outline-none transition-colors border-0 cursor-pointer disabled:opacity-50"
+              title="Logout"
+              aria-label="Logout"
             >
-              <LogOut className="w-4 h-4" />
-            </Link>
+              {isLoggingOut ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <LogOut className="w-4 h-4" />
+              )}
+            </button>
           </div>
         </div>
 
