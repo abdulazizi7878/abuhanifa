@@ -599,7 +599,7 @@ function HeroSection() {
 
       {/* Dark Translucent Overlay */}
       <div
-        className="absolute inset-0 bg-black/60 opacity-90 transition-all duration-500 scale-105"
+        className="absolute inset-0 bg-black/80 opacity-90 transition-all duration-500 scale-105"
         aria-hidden="true"
       />
 
