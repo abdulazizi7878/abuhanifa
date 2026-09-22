@@ -573,7 +573,7 @@ export default function EstimatePdfDownloader({ estimate }) {
   return (
     <PDFDownloadLink
       document={<EstimatePDF estimate={estimate} />}
-      fileName={`abuhanifainstallation-complete-${data.id || "document"}.pdf`}
+      fileName={`Abuhanifa Installation Ethiopia - Order for ${data.customerName || "undefined"}.pdf`}
       className="px-5 py-2.5 rounded-lg text-sm font-medium transition en cursor-pointer shadow-sm flex items-center gap-2 hover:opacity-90"
       style={{ backgroundColor: "var(--primary)", color: "var(--foreground)" }}
     >
