@@ -132,6 +132,7 @@ export default function PublicEstimatePage() {
             {!loading && !error && estimate && (
               <div className="flex flex-col gap-2 justify-end items-end print:hidden">
                 <EstimatePdfDownloader estimate={estimate} />
+                
                 <br />
                 <ExcelExport estimate={estimate} />
               </div>
