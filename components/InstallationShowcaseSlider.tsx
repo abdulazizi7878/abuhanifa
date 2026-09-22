@@ -14,6 +14,7 @@ export default function InstallationShowcaseSlider() {
 
   const carouselRef = useRef<HTMLDivElement>(null);
 
+  // Fetch showcase images
   useEffect(() => {
     const fetchShowcase = async () => {
       try {
@@ -43,6 +44,7 @@ export default function InstallationShowcaseSlider() {
     fetchShowcase();
   }, []);
 
+  // Automatic scrolling
   useEffect(() => {
     const carousel = carouselRef.current;
 
@@ -51,7 +53,9 @@ export default function InstallationShowcaseSlider() {
     let interval: ReturnType<typeof setInterval> | null = null;
 
     const startAutoScroll = () => {
-      if (interval) clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
 
       interval = setInterval(() => {
         if (!carousel) return;
@@ -75,31 +79,35 @@ export default function InstallationShowcaseSlider() {
       }, 3500);
     };
 
-    startAutoScroll();
-
     const pause = () => {
-      if (interval) clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
     };
 
     const resume = () => {
       startAutoScroll();
     };
 
+    startAutoScroll();
+
+    // Pause only for desktop mouse interaction.
+    // Touch scrolling is left completely to the browser.
     carousel.addEventListener("mouseenter", pause);
     carousel.addEventListener("mouseleave", resume);
-    carousel.addEventListener("touchstart", pause, { passive: true });
-    carousel.addEventListener("touchend", resume, { passive: true });
 
     return () => {
-      if (interval) clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
 
       carousel.removeEventListener("mouseenter", pause);
       carousel.removeEventListener("mouseleave", resume);
-      carousel.removeEventListener("touchstart", pause);
-      carousel.removeEventListener("touchend", resume);
     };
   }, [showcases]);
 
+  // Loading state
   if (loading) {
     return (
       <div className="flex w-full items-center justify-center py-16">
@@ -108,6 +116,7 @@ export default function InstallationShowcaseSlider() {
     );
   }
 
+  // Empty/error state
   if (!showcases.length) {
     return null;
   }
@@ -129,7 +138,6 @@ export default function InstallationShowcaseSlider() {
           snap-mandatory
           scroll-smooth
           overscroll-x-contain
-          touch-pan-x
           [scrollbar-width:none]
           [&::-webkit-scrollbar]:hidden
         "
