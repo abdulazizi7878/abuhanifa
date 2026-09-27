@@ -1,3 +1,5 @@
+// file: components/header_3.jsx
+
 'use client';
 
 import { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
@@ -19,10 +21,18 @@ export default function Header() {
   const hiddenMeasureContainerRef = useRef(null);
   const moreMenuRef = useRef(null);
 
-  // Sync dark mode safely without layout flash
+  // Sync theme with localStorage and system preference on initial mount
   useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      setIsDark(false);
+      document.documentElement.classList.remove('dark');
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -38,21 +48,21 @@ export default function Header() {
   };
 
   const NAV_ITEMS = useMemo(() => [
-    { key: "home", href: "/", priority: 1 },
-    { key: "order", href: "/order", priority: 2 },
-    { key: "products", href: "/products", priority: 3 },
-    { key: "books", href: "/books", priority: 4 },
-    { key: "promotions", href: "/promotions", priority: 5 },
-    { key: "blog", href: "/blog", priority: 6 },
-    { key: "contact", href: "/contact", priority: 7 },
+    { key: "home", href: `/${localeLang}`, priority: 1 },
+    { key: "order", href: `/${localeLang}/order`, priority: 2 },
+    { key: "products", href: `/${localeLang}/products`, priority: 3 },
+    { key: "books", href: `/${localeLang}/books`, priority: 4 },
+    { key: "promotions", href: `/${localeLang}/promotions`, priority: 5 },
+    { key: "blog", href: `/${localeLang}/blog`, priority: 6 },
+    { key: "contact", href: `/${localeLang}/contact`, priority: 7 },
     { key: "services", href: `/${localeLang}#services`, priority: 8 },
   ], [localeLang]);
 
   const [overflowKeys, setOverflowKeys] = useState([]);
 
   const isActive = (href) => {
-    if (href === '/') return pathname === '/';
-    if (href.startsWith('/#') || href.startsWith(`/${localeLang}#`)) return false;
+    if (href === `/${localeLang}` || href === '/') return pathname === `/${localeLang}` || pathname === '/';
+    if (href.includes('#')) return false;
     return pathname.startsWith(href);
   };
 
@@ -161,7 +171,7 @@ export default function Header() {
       <div className="mx-auto flex h-14 max-w-8xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
         {/* Left / Start: Brand / Logo */}
         <Link
-          href="/"
+          href={`/${localeLang}`}
           className="flex items-center gap-2.5 text-lg font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded-md shrink-0 z-10"
         >
           <div
@@ -211,7 +221,6 @@ export default function Header() {
                   </svg>
                 </button>
 
-                {/* RTL Support: Fixed dropdown positioning using end-0 instead of right-0 */}
                 {isMoreOpen && (
                   <div
                     className="absolute end-0 top-full mt-2 w-52 rounded-xl border shadow-2xl py-2 z-[100] flex flex-col overflow-y-auto max-h-[calc(100vh-5rem)] bg-background text-foreground border-border"
@@ -285,7 +294,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Offscreen Measurement Node: Fixed directional overflow for RTL */}
       <div
         ref={hiddenMeasureContainerRef}
         aria-hidden="true"
