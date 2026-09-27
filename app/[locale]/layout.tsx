@@ -197,14 +197,13 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased ${locale === "am" ? "am" : locale === "ar" ? "ar" : "en"} `}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased ${locale === "am" ? "am" : locale === "ar" ? "ar" : "en"
+        }`}
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-
       <body
-        dir={locale === "ar" ? "rtl" : "ltr"}
         className="min-h-full flex flex-col overflow-x-hidden"
-      >        
+      >       
       <NextIntlClientProvider messages={messages}>
         <script
           type="application/ld+json"

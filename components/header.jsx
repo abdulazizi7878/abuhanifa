@@ -19,7 +19,24 @@ export default function Header() {
   const hiddenMeasureContainerRef = useRef(null);
   const moreMenuRef = useRef(null);
 
-  // Defined in priority order (1 is highest priority, 8 is lowest/first to move to More)
+  // Sync dark mode safely without layout flash
+  useEffect(() => {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    setIsDark(isDarkMode);
+  }, []);
+
+  const toggleTheme = () => {
+    const newDark = !isDark;
+    setIsDark(newDark);
+    if (newDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
   const NAV_ITEMS = useMemo(() => [
     { key: "home", href: "/", priority: 1 },
     { key: "order", href: "/order", priority: 2 },
@@ -31,29 +48,14 @@ export default function Header() {
     { key: "services", href: `/${localeLang}#services`, priority: 8 },
   ], [localeLang]);
 
-  // Keys of items that move into the More menu dropdown
   const [overflowKeys, setOverflowKeys] = useState([]);
 
-  // Active route checking helper
   const isActive = (href) => {
     if (href === '/') return pathname === '/';
     if (href.startsWith('/#') || href.startsWith(`/${localeLang}#`)) return false;
     return pathname.startsWith(href);
   };
 
-  // Sync dark mode state with document element on mount
-  useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'));
-  }, []);
-
-  // Toggle dark mode class on html/root tag
-  const toggleTheme = () => {
-    const newDark = !isDark;
-    setIsDark(newDark);
-    document.documentElement.classList.toggle('dark', newDark);
-  };
-
-  // Close menus on Escape key press or click outside
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -76,7 +78,6 @@ export default function Header() {
     };
   }, []);
 
-  // Prevent background scrolling when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -85,7 +86,6 @@ export default function Header() {
     }
   }, [isOpen]);
 
-  // Exact measurement & classification of visibleItems vs overflowItems
   useLayoutEffect(() => {
     const navContainer = navContainerRef.current;
     const measureContainer = hiddenMeasureContainerRef.current;
@@ -95,13 +95,12 @@ export default function Header() {
       const availableWidth = navContainer.clientWidth;
       if (availableWidth <= 0) return;
 
-      // 1. Measure exact widths from offscreen DOM container
       const itemWidths = {};
       NAV_ITEMS.forEach((item) => {
         const el = measureContainer.querySelector(`[data-measure-key="${item.key}"]`);
         if (el) {
           const rect = el.getBoundingClientRect();
-          itemWidths[item.key] = (rect.width > 0 ? rect.width : 70) + 16; // Fallback width + gap spacing
+          itemWidths[item.key] = (rect.width > 0 ? rect.width : 70) + 16;
         }
       });
 
@@ -110,23 +109,20 @@ export default function Header() {
         ? moreBtnEl.getBoundingClientRect().width
         : 80) + 16;
 
-      // 2. Total width if ALL items fit
       const totalWidthNeeded = Object.values(itemWidths).reduce((acc, curr) => acc + curr, 0);
 
-      // If everything fits, overflow list is empty
       if (totalWidthNeeded <= availableWidth) {
         setOverflowKeys([]);
         return;
       }
 
-      // 3. Otherwise, collapse items starting from lowest priority (Services -> Contact -> Blog, etc.)
       const collapseCandidates = [...NAV_ITEMS].sort((a, b) => b.priority - a.priority);
 
       let currentWidth = totalWidthNeeded;
       const newlyOverflowing = [];
 
       for (const item of collapseCandidates) {
-        if (item.priority === 1) break; // Home never collapses
+        if (item.priority === 1) break;
 
         newlyOverflowing.push(item.key);
         currentWidth -= (itemWidths[item.key] || 0);
@@ -149,7 +145,6 @@ export default function Header() {
     return () => resizeObserver.disconnect();
   }, [NAV_ITEMS]);
 
-  // Strict separation: Every item belongs to EXACTLY ONE array
   const visibleItems = NAV_ITEMS.filter((item) => !overflowKeys.includes(item.key));
   const overflowItems = NAV_ITEMS.filter((item) => overflowKeys.includes(item.key));
   const isMoreActive = overflowItems.some((item) => isActive(item.href));
@@ -164,7 +159,7 @@ export default function Header() {
       }}
     >
       <div className="mx-auto flex h-14 max-w-8xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
-        {/* Left: Brand / Logo */}
+        {/* Left / Start: Brand / Logo */}
         <Link
           href="/"
           className="flex items-center gap-2.5 text-lg font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded-md shrink-0 z-10"
@@ -178,10 +173,9 @@ export default function Header() {
           <span className="sm:text-md md:text-lg lg:text-2xl text-[11px] font-bold whitespace-nowrap">{t("title")}</span>
         </Link>
 
-        {/* Center: Adaptive Desktop Navigation Container */}
+        {/* Center: Adaptive Navigation */}
         <div ref={navContainerRef} className="hidden md:flex flex-1 items-center justify-center min-w-0 h-full">
           <nav aria-label="Main Navigation" className="flex items-center gap-x-4 lg:gap-x-6 flex-nowrap">
-            {/* Render Visible Items */}
             {visibleItems.map((item) => {
               const active = isActive(item.href);
               return (
@@ -196,7 +190,6 @@ export default function Header() {
               );
             })}
 
-            {/* Render More Button and Dropdown ONLY if overflowItems exists */}
             {overflowItems.length > 0 && (
               <div className="relative shrink-0" ref={moreMenuRef}>
                 <button
@@ -218,10 +211,10 @@ export default function Header() {
                   </svg>
                 </button>
 
-                {/* Vertical Scrollable Dropdown for Overflow Items */}
+                {/* RTL Support: Fixed dropdown positioning using end-0 instead of right-0 */}
                 {isMoreOpen && (
                   <div
-                    className="absolute right-0 top-full mt-2 w-52 rounded-xl border shadow-2xl py-2 z-[100] flex flex-col overflow-y-auto max-h-[calc(100vh-5rem)] bg-background text-foreground border-border"
+                    className="absolute end-0 top-full mt-2 w-52 rounded-xl border shadow-2xl py-2 z-[100] flex flex-col overflow-y-auto max-h-[calc(100vh-5rem)] bg-background text-foreground border-border"
                     style={{
                       backgroundColor: 'var(--background)',
                       borderColor: 'var(--border)',
@@ -235,7 +228,7 @@ export default function Header() {
                           key={item.key}
                           href={item.href}
                           onClick={() => setIsMoreOpen(false)}
-                          className={`w-full px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/80 text-left block truncate ${active ? 'font-bold text-primary bg-muted/40' : 'text-foreground'
+                          className={`w-full px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/80 text-start block truncate ${active ? 'font-bold text-primary bg-muted/40' : 'text-foreground'
                             }`}
                         >
                           {t(item.key)}
@@ -249,9 +242,8 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* Right: Action Controls (Fixed & Independent) */}
+        {/* Right / End Controls */}
         <div className="flex items-center gap-x-3 shrink-0 z-10">
-          {/* Desktop Theme Switcher */}
           <button
             type="button"
             onClick={toggleTheme}
@@ -270,7 +262,6 @@ export default function Header() {
             )}
           </button>
 
-          {/* Mobile Menu Button */}
           <button
             type="button"
             aria-controls="mobile-menu"
@@ -290,20 +281,18 @@ export default function Header() {
             )}
           </button>
 
-          {/* Language Switcher */}
           <LanguageSwitcher display={false} />
         </div>
       </div>
 
-      {/* Offscreen Measurement Node (Guaranteed accurate measurements using inline styles) */}
+      {/* Offscreen Measurement Node: Fixed directional overflow for RTL */}
       <div
         ref={hiddenMeasureContainerRef}
         aria-hidden="true"
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: '-9999px',
-          left: '-9999px',
-          visibility: 'hidden',
+          opacity: 0,
           pointerEvents: 'none',
           display: 'flex',
           gap: '1.5rem',
@@ -321,7 +310,7 @@ export default function Header() {
         </span>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile Drawer */}
       <div
         id="mobile-menu"
         className={`fixed inset-x-0 top-14 bottom-0 z-40 flex flex-col justify-between px-6 py-6 transition-all duration-200 ease-in-out md:hidden ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
@@ -344,7 +333,6 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Mobile Theme Switcher */}
         <div className="border-t pt-4 flex items-center justify-between" style={{ borderColor: 'var(--border)' }}>
           <span className="text-sm font-medium">Theme</span>
           <button
