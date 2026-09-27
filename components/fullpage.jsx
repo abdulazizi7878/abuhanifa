@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Reviews from "@/components/reviews";
-import HomePageBookSection from "@/components/HomepageBooksSection";
 import InstallationShowcaseSection from "@/components/InstallationShowcaseSection";
 import { useTranslations } from "next-intl";
 import FloatingButtons from "./floatingButtons";

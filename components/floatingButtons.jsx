@@ -10,19 +10,23 @@ export default function FloatingButtons() {
 
   useEffect(() => {
     let isMounted = true;
-    
+
     async function checkAdminStatus() {
       try {
         const res = await fetch("/api/check");
+
         if (res.ok) {
           const data = await res.json();
+
           if (isMounted && data?.authorized) {
             setIsAdmin(true);
           }
         }
       } catch (err) {
-        // ኤረር ቢኖርም ፋይሉ አሳልፎ እንዲሰጥ እና ማሳያውን እንዳያበላሸው ጸጥ እናደርገዋለን
-        if (isMounted) setIsAdmin(false);
+        // Keep the floating buttons working even if the admin check fails.
+        if (isMounted) {
+          setIsAdmin(false);
+        }
       }
     }
 
@@ -34,31 +38,37 @@ export default function FloatingButtons() {
   }, []);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-end">
-      {/* 1. Admin Floating Button (Visible ONLY if admin) */}
+    <div
+      dir="ltr"
+      className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3"
+    >
+      {/* Admin Floating Button */}
       {isAdmin && (
         <button
+          type="button"
           onClick={() => router.push("/ahiadmin")}
-          className="group flex items-center bg-linear-to-r from-blue-600 to-indigo-600 text-white p-3.5 rounded-full shadow-2xl hover:shadow-blue-500/50 hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out cursor-pointer border border-white/20 backdrop-blur-md"
+          className="group flex flex-row items-center rounded-full border border-white/20 bg-linear-to-r from-blue-600 to-indigo-600 p-3.5 text-white shadow-2xl backdrop-blur-md transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-blue-500/50 active:scale-95 cursor-pointer"
           title="Admin Dashboard"
         >
-          <ShieldCheck className="w-5 h-5 text-white animate-pulse" />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2.5 transition-all duration-500 ease-in-out text-xs font-semibold tracking-wide uppercase">
+          <ShieldCheck className="h-5 w-5 shrink-0 text-white animate-pulse" />
+
+          <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold uppercase tracking-wide transition-all duration-500 ease-in-out group-hover:ml-2.5 group-hover:max-w-xs">
             Admin Panel
           </span>
         </button>
       )}
 
-      {/* 2. Telegram Floating Button (Visible ALWAYS for everyone) */}
+      {/* Telegram Floating Button */}
       <a
         href="https://t.me/abuhanifainstallation"
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex items-center bg-[#229ED9] text-white p-3.5 rounded-full shadow-2xl hover:shadow-[#229ED9]/50 hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out cursor-pointer border border-white/25 backdrop-blur-md"
+        className="group flex flex-row items-center rounded-full border border-white/25 bg-[#229ED9] p-3.5 text-white shadow-2xl backdrop-blur-md transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[#229ED9]/50 active:scale-95 cursor-pointer"
         title="Contact on Telegram"
       >
-        <Send className="w-5 h-5 text-white" />
-        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2.5 transition-all duration-500 ease-in-out text-xs font-semibold tracking-wide uppercase">
+        <Send className="h-5 w-5 shrink-0 text-white" />
+
+        <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold uppercase tracking-wide transition-all duration-500 ease-in-out group-hover:ml-2.5 group-hover:max-w-xs">
           Telegram
         </span>
       </a>
