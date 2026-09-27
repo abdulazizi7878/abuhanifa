@@ -419,10 +419,6 @@ function Cont() {
         </motion.div>
       </section>
 
-      <section className="w-11/12">
-        <HomePageBookSection  />
-      </section>
-
       {/* WHY SECTION */}
       <section className="my-26" id="why">
         <div className="flex flex-col justify-center items-center gap-y-10">
