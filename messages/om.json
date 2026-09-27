@@ -72,6 +72,8 @@
     "header": {
         "title": "Ijaarsa Abuu Haniifaa",
         "home": "Fuula Duraa",
+        "more": "Dabalata",
+        "books": "Kitaabota",
         "about": "Saa'a Keenya",
         "contact": "Nu Quunnamaa",
         "services": "Tajaajiloota",
@@ -93,6 +95,24 @@
         "Mission": "Ergama",
         "Contacts": "Nu Quunnamaa",
         "Other": "Afaan Biroo"
+    },
+    "books": {
+        "Library & Publications": "Mana Kitaabaa fi Maxxansawwan",
+        "Featured Books": "Kitaabota Filatamaan",
+        "View All Books": "Kitaabota Hunda Ilaali",
+        "Unable to load books": "Kitaabota fe'uun al-danda'ame",
+        "No books available yet": "Ammaaf kitaabonni hin jiran",
+        "New educational and technical guides will appear here soon": "Qajeelfamoonni barnootaa fi teeknikaa haaraa dhiyootti asitti ni ba'u",
+        "Digital Library": "Mana Kitaabaa Dijiitaalaa",
+        "Books & Publications": "Kitaabota fi Maxxansawwan",
+        "No matching publications": "Maxxansi walfakkaatu hin argamne",
+        "No books found matching": "Kitaabni walfakkaatu hin argamne",
+        "Clear Search": "Barbaacha Haqii",
+        "Read on Telegram": "Telegraama irratti Dubbisi",
+        "Page": "Fuula",
+        "of": "keessaa",
+        "Previous": "Duraa",
+        "Next": "Nesxti / Kan aana"
     },
     "reviews": {
         "customerReviews": "Yaada Maamiltootaa",

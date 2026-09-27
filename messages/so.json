@@ -78,7 +78,9 @@
         "order": "Dalbo",
         "promotions": "Xayeysiisyada",
         "blog": "Blok",
-        "products": "Alaabooyinka"
+        "products": "Alaabooyinka",
+        "more": "Dheeraad",
+        "books": "Buugaag"
     },
     "footer": {
         "ABU - HANIFA INSTALLATION": "ABUHANIFA INSTALLATION ITOOBIYA",
@@ -93,6 +95,24 @@
         "Mission": "Hadafka",
         "Contacts": "Xiriirada",
         "Other": "Kuwo kale"
+    },
+    "books": {
+        "Library & Publications": "Maktabadda & Warqadaha",
+        "Featured Books": "Buugaagta La Xusay",
+        "View All Books": "Eeg Dhammaan Buugaagta",
+        "Unable to load books": "Lama soo rogi karo buugaagta",
+        "No books available yet": "Weli diman buugaag lagu heli karo",
+        "New educational and technical guides will appear here soon": "Hagayaal cusub oo waxbarasho iyo farsamo ayaa dhawaan halkan ka soo muuqan doona",
+        "Digital Library": "Maktabadda Dijital ah",
+        "Books & Publications": "Buugaagta & Warqadaha",
+        "No matching publications": "Lama helin warqado u dhigma",
+        "No books found matching": "Lama helin buugaag u dhigma",
+        "Clear Search": "Nadiifi Raadinta",
+        "Read on Telegram": "Kaga Read Telegram",
+        "Page": "Bogga",
+        "of": "ka mid ah",
+        "Previous": "Hore",
+        "Next": "Agaanteeda / Landheera"
     },
     "reviews": {
         "customerReviews": "Faallooyinka Macaamiisha",

@@ -78,7 +78,9 @@
         "order": "طلب",
         "promotions": "العروض",
         "blog": "المدونة",
-        "products": "المنتجات"
+        "products": "المنتجات",
+        "more": "المزيد",
+        "books": "الكتب"
     },
     "footer": {
         "ABU - HANIFA INSTALLATION": "تركيبات أبو حنيفة",
@@ -93,6 +95,24 @@
         "Mission": "مهمتنا",
         "Contacts": "جهات الاتصال",
         "Other": "أخرى"
+    },
+    "books": {
+        "Library & Publications": "المكتبة والمنشورات",
+        "Featured Books": "الكتب المميزة",
+        "View All Books": "عرض جميع الكتب",
+        "Unable to load books": "تعذر تحميل الكتب",
+        "No books available yet": "لا توجد كتب متاحة حتى الآن",
+        "New educational and technical guides will appear here soon": "ستظهر أدلة تعليمية وتقنية جديدة هنا قريبًا",
+        "Digital Library": "المكتبة الرقمية",
+        "Books & Publications": "الكتب والمنشورات",
+        "No matching publications": "لم يتم العثور على منشورات مطابقة",
+        "No books found matching": "لم يتم العثور على كتب مطابقة",
+        "Clear Search": "مسح البحث",
+        "Read on Telegram": "اقرأ على تلغرام",
+        "Page": "صفحة",
+        "of": "من",
+        "Previous": "السابق",
+        "Next": "التالي"
     },
     "reviews": {
         "customerReviews": "آراء العملاء",

@@ -72,6 +72,8 @@
     "header": {
         "title": "አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ",
         "home": "ዋና ገጽ",
+        "more": "ተጨማሪ",
+        "books": "መጻሕፍት",
         "about": "ስለ እኛ",
         "contact": "አግኙን",
         "services": "አገልግሎቶች",
@@ -79,6 +81,24 @@
         "promotions": "ማስታወቂያ",
         "blog": "ብሎግ",
         "products": "ምርቶች"
+    },
+    "books": {
+        "Library & Publications": "ቤተ-መጻሕፍት እና প্রকাশናዎች",
+        "Featured Books": "ተመራጭ መጻሕፍት",
+        "View All Books": "ሁሉንም መጻሕፍት ይመልከቱ",
+        "Unable to load books": "መጻሕፍትን መጫን አልተቻለም",
+        "No books available yet": "እስካሁን ምንም መጻሕፍት የሉም",
+        "New educational and technical guides will appear here soon": "አዳዲስ የትምህርት እና የቴክኒክ መመሪያዎች በቅርቡ እዚህ ይወጣሉ",
+        "Digital Library": "ዲጂታል ቤተ-መጻሕፍት",
+        "Books & Publications": "መጻሕፍት እና প্রকাশናዎች",
+        "No matching publications": "ምንም የተዛመደ প্রকাশና አልተገኘም",
+        "No books found matching": "ከተፈለገው ጋር የሚዛመድ መጽሐፍ አልተገኘም",
+        "Clear Search": "ፍለጋውን አጽዳ",
+        "Read on Telegram": "በቴሌግራም ያንብቡ",
+        "Page": "ገጽ",
+        "of": "ከ",
+        "Previous": "ቀዳሚ",
+        "Next": "ቀጣይ"
     },
     "footer": {
         "ABU - HANIFA INSTALLATION": "አቡሐኒፋ ኢንስታሌሽን ኢትዮጵያ",

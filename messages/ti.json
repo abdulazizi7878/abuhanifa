@@ -72,6 +72,8 @@
     "header": {
         "title": "አቡሃኒፋ ገጠማ ኢትዮጵያ",
         "home": "መበገሲ",
+        "more": "ተወሳኺ",
+        "books": "መጻሕፍቲ",
         "about": "ብዛዕባና",
         "contact": "ርክብ",
         "services": "ኣገልግሎታት",
@@ -93,6 +95,24 @@
         "Mission": "ዕላማ",
         "Contacts": "ርክባት",
         "Other": "ካልኦት"
+    },
+    "books": {
+        "Library & Publications": "ቤተ-መጻሕፍትን ሕትመታትን",
+        "Featured Books": "ተመረፅቲ መጻሕፍቲ",
+        "View All Books": "ኩሎም መጻሕፍቲ ርአ",
+        "Unable to load books": "መጻሕፍቲ ምፅዓን ኣይተኻእለን",
+        "No books available yet": "ክሳብ ሕጂ ዝተዳለወ መጽሓፍ የለን",
+        "New educational and technical guides will appear here soon": "ሓደሽቲ ናይ ትምህርትን ቴክኒክን መምርሒታት ኣብዚ ቀረባ እዋን ክወፁ እዮም",
+        "Digital Library": "ዲጂታል ቤተ-መጻሕፍቲ",
+        "Books & Publications": "መጻሕፍትን ሕትመታትን",
+        "No matching publications": "ዝተዛመደ ሕትመት ኣይተረኽበን",
+        "No books found matching": "ዝተደለየ መጽሓፍ ኣይተረኽበን",
+        "Clear Search": "ድልየት ኣጽሪ",
+        "Read on Telegram": "በቴሌግራም አንብብ",
+        "Page": "ገጽ",
+        "of": "ካብ",
+        "Previous": "ዝሓለፈ",
+        "Next": "ዝቕጽል"
     },
     "reviews": {
         "customerReviews": "ርኢቶ ተጠቀምቲ",
