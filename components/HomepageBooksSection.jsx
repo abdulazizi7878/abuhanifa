@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight, Book, AlertCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function HomepageBooksSection() {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const t = useTranslations("books");
 
     useEffect(() => {
         let isMounted = true;
@@ -41,17 +43,17 @@ export default function HomepageBooksSection() {
                 <div>
                     <div className="flex items-center gap-2 text-[var(--primary)] font-semibold text-sm uppercase tracking-wider mb-2">
                         <BookOpen className="w-4 h-4" />
-                        <span>Library & Publications</span>
+                        <span>{t("Library & Publications")}</span>
                     </div>
                     <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                        Featured Books
+                        {t("Featured Books")}
                     </h2>
                 </div>
                 <Link
                     href="/books"
                     className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)] hover:underline transition-all"
                 >
-                    <span>View All Books</span>
+                    <span>{t("View All Books")}</span>
                     <ArrowRight className="w-4 h-4" />
                 </Link>
             </div>
@@ -83,7 +85,7 @@ export default function HomepageBooksSection() {
                 <div className="p-8 rounded-2xl border border-[var(--border)] bg-[var(--muted)]/20 text-center space-y-3">
                     <AlertCircle className="w-8 h-8 mx-auto text-rose-500" />
                     <p className="text-sm text-[var(--muted-foreground)]">
-                        Unable to load books right now. Please check back later.
+                        {t("Unable to load books")}
                     </p>
                 </div>
             )}
@@ -92,9 +94,9 @@ export default function HomepageBooksSection() {
             {!loading && !error && books.length === 0 && (
                 <div className="p-12 rounded-2xl border border-[var(--border)] text-center space-y-3">
                     <Book className="w-10 h-10 mx-auto text-[var(--muted-foreground)]" />
-                    <h3 className="font-semibold text-lg">No books available yet</h3>
+                    <h3 className="font-semibold text-lg">{t("No books available yet")}</h3>
                     <p className="text-sm text-[var(--muted-foreground)]">
-                        New educational and technical guides will appear here soon.
+                        {t("New educational and technical guides will appear here soon")}
                     </p>
                 </div>
             )}

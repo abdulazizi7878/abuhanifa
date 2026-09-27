@@ -4,9 +4,11 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ExternalLink, ChevronLeft, ChevronRight, BookX, Search, X } from 'lucide-react';
+import { useTranslations} from "next-intl";
 
 export default function BooksClient({ books = [], currentPage = 1, totalPages = 1 }) {
     const [searchQuery, setSearchQuery] = useState('');
+    const t = useTranslations('books');
 
     const filteredBooks = useMemo(() => {
         if (!searchQuery.trim()) return books;
@@ -25,10 +27,10 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
                 <div className="space-y-2">
                     <div className="flex items-center gap-2 text-[var(--primary)] font-semibold text-xs uppercase tracking-wider">
                         <BookOpen className="w-4 h-4" />
-                        <span>Digital Library</span>
+                        <span>{t("Digital Library")}</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
-                        Books & Publications
+                        {t("Books & Publications")}
                     </h1>
                 </div>
 
@@ -57,10 +59,7 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
             {(!books || books.length === 0) && (
                 <div className="py-20 text-center space-y-4 rounded-3xl border border-[var(--border)] bg-[var(--muted)]/10">
                     <BookX className="w-12 h-12 mx-auto text-[var(--muted-foreground)]" />
-                    <h2 className="text-xl font-bold">No books available yet</h2>
-                    <p className="text-sm text-[var(--muted-foreground)] max-w-md mx-auto">
-                        We haven't published any books in this section yet. Please check back later.
-                    </p>
+                    <h2 className="text-xl font-bold">{t("No books available yet")}</h2>
                 </div>
             )}
 
@@ -68,15 +67,15 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
             {books && books.length > 0 && filteredBooks.length === 0 && (
                 <div className="py-16 text-center space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--muted)]/10">
                     <Search className="w-10 h-10 mx-auto text-[var(--muted-foreground)] opacity-50" />
-                    <h3 className="font-bold text-lg">No matching publications</h3>
+                    <h3 className="font-bold text-lg">{t("No matching publications")}</h3>
                     <p className="text-xs text-[var(--muted-foreground)]">
-                        No books found matching "{searchQuery}".
+                        {t("No books found matching")} "{searchQuery}".
                     </p>
                     <button
                         onClick={() => setSearchQuery('')}
                         className="px-4 py-2 rounded-xl bg-[var(--muted)] text-xs font-semibold hover:bg-[var(--border)] transition-colors mt-2"
                     >
-                        Clear Search
+                        {t("Clear Search")}
                     </button>
                 </div>
             )}
@@ -132,7 +131,7 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
                                                 rel="noopener noreferrer"
                                                 className="w-full py-2.5 px-4 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold text-xs transition-opacity hover:opacity-90 flex items-center justify-center gap-2 text-center"
                                             >
-                                                <span>Read on Telegram</span>
+                                                <span>{t("Read on Telegram")}</span>
                                                 <ExternalLink className="w-3.5 h-3.5" />
                                             </a>
                                         ) : (
@@ -155,7 +154,7 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
             {books && books.length > 0 && !searchQuery && (
                 <div className="flex items-center justify-between pt-8 border-t border-[var(--border)]">
                     <span className="text-xs font-medium text-[var(--muted-foreground)]">
-                        Page {currentPage} of {totalPages}
+                        {t("Page")} {currentPage} {t("of")} {totalPages}
                     </span>
 
                     <div className="flex items-center gap-2">
@@ -165,7 +164,7 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
                                 className="px-4 py-2 rounded-xl border border-[var(--border)] text-xs font-semibold hover:bg-[var(--muted)] flex items-center gap-1 transition-colors"
                             >
                                 <ChevronLeft className="w-4 h-4" />
-                                <span>Previous</span>
+                                <span>{t("Previous")}</span>
                             </Link>
                         ) : (
                             <button
@@ -173,7 +172,7 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
                                 className="px-4 py-2 rounded-xl border border-[var(--border)] text-xs font-semibold opacity-40 cursor-not-allowed flex items-center gap-1"
                             >
                                 <ChevronLeft className="w-4 h-4" />
-                                <span>Previous</span>
+                                    <span>{t("Previous")}</span>
                             </button>
                         )}
 
@@ -182,7 +181,7 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
                                 href={`/books?page=${currentPage + 1}`}
                                 className="px-4 py-2 rounded-xl border border-[var(--border)] text-xs font-semibold hover:bg-[var(--muted)] flex items-center gap-1 transition-colors"
                             >
-                                <span>Next</span>
+                                <span>{t("Next")}</span>
                                 <ChevronRight className="w-4 h-4" />
                             </Link>
                         ) : (
@@ -190,7 +189,7 @@ export default function BooksClient({ books = [], currentPage = 1, totalPages = 
                                 disabled
                                 className="px-4 py-2 rounded-xl border border-[var(--border)] text-xs font-semibold opacity-40 cursor-not-allowed flex items-center gap-1"
                             >
-                                <span>Next</span>
+                                <span>{t("Next")}</span>
                                 <ChevronRight className="w-4 h-4" />
                             </button>
                         )}

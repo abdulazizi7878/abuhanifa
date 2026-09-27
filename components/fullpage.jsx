@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Reviews from "@/components/reviews";
+import HomePageBookSection from "@/components/HomepageBooksSection";
 import InstallationShowcaseSection from "@/components/InstallationShowcaseSection";
 import { useTranslations } from "next-intl";
 import FloatingButtons from "./floatingButtons";
@@ -416,6 +417,10 @@ function Cont() {
             <a href="/products" className="absolute inset-0"></a>
           </div>
         </motion.div>
+      </section>
+
+      <section className="w-11/12">
+        <HomePageBookSection  />
       </section>
 
       {/* WHY SECTION */}

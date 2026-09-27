@@ -186,6 +186,24 @@
         "Uploading": "Uploading...",
         "Sending": "Sending..."
     },
+    "books": {
+        "Library & Publications": "Library & Publications",
+        "Featured Books": "Featured Books",
+        "View All Books":"View All Books",
+        "Unable to load books": "Unable to load books",
+        "No books available yet":"No books available yet",
+        "New educational and technical guides will appear here soon":"New educational and technical guides will appear here soon.",
+        "Digital Library":"Digital Library",
+        "Books & Publications":"Books & Publications",
+        "No matching publications":"No matching publications",
+        "No books found matching":"No books found matching",
+        "Clear Search":"Clear Search",
+        "Read on Telegram":"Read on Telegram",
+        "Page":"Page",
+        "of":"of",
+        "Previous":"Previous",
+        "Next":"Next"
+    },
     "products": {
         "Share":"Share",
         "Call Now":"Call Now",
