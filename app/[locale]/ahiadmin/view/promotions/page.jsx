@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ViewPromotions() {
@@ -127,7 +129,7 @@ export default function ViewPromotions() {
             <main className="bg-[var(--background)] text-[var(--foreground)]">
                 <div className="max-w-7xl mx-auto space-y-8">
                     {/* Page Title Header & Action Buttons */}
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[var(--border)]">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-[var(--border)]">
                         <div>
                             <h1 className="text-xl font-bold tracking-tight en text-[var(--secondary)]">
                                 Abuhanifa Installation
@@ -136,6 +138,15 @@ export default function ViewPromotions() {
                                 All promotions
                             </p>
                         </div>
+
+                        {/* Top Action Button */}
+                        <Link
+                            href="/ahiadmin/create/promotion"
+                            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-[var(--primary)] text-[var(--primary-foreground)] shadow-xs hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+                        >
+                            <Plus className="w-4 h-4 shrink-0" />
+                            <span>Create Promotion</span>
+                        </Link>
                     </div>
 
                     {/* Search Bar */}
