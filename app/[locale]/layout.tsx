@@ -201,8 +201,11 @@ export default async function RootLayout({
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
 
-      <body className={`min-h-full flex flex-col`} >
-        <NextIntlClientProvider messages={messages}>
+      <body
+        dir={locale === "ar" ? "rtl" : "ltr"}
+        className="min-h-full flex flex-col overflow-x-hidden"
+      >        
+      <NextIntlClientProvider messages={messages}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
