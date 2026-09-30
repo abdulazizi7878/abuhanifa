@@ -26,7 +26,7 @@ export async function ShowAllMessages() {
 
 export async function ShowAllPromotions() {
     const [promotions] = await db.query(
-        "SELECT * FROM promotions;"
+        "SELECT * FROM promotions order by id desc;"
     );
 
     return promotions;
