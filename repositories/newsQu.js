@@ -2,7 +2,7 @@ import {db} from "@/lib/db";
 
 
 export async function ShowAllBlogs() {
-    const [result] = await db.query("SELECT * FROM blog;");
+    const [result] = await db.query("SELECT * FROM blog order by id desc;");
     
     if (!result) throw new Error("We couldn't found Blogs");
     
