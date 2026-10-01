@@ -28,9 +28,11 @@ import {
   Loader2,
   Search,
   Folder,
-  LifeBuoy
+  LifeBuoy,
+  Calendar,
 } from 'lucide-react';
 
+// Structured navigation hierarchy with categories & dropdown support
 // Structured navigation hierarchy with categories & dropdown support
 const NAVIGATION_STRUCTURE = [
   {
@@ -41,6 +43,30 @@ const NAVIGATION_STRUCTURE = [
     exact: true,
     keySegment: 'ahiadmin',
     keywords: ['home', 'main', 'overview', 'stats', 'analytics'],
+  },
+  {
+    type: 'group',
+    label: 'Employees & Work',
+    icon: User,
+    key: 'employees-work',
+    children: [
+      {
+        label: 'Employees',
+        href: '/ahiadmin/view/employees',
+        icon: User,
+        keySegment: 'employee',
+        prefixes: ['/ahiadmin/view/employees', '/ahiadmin/create/employee', '/ahiadmin/edit/employee'],
+        keywords: ['staff', 'workers', 'team', 'employees', 'personnel'],
+      },
+      {
+        label: 'Attendance',
+        href: '/ahiadmin/view/attendance',
+        icon: Calendar,
+        keySegment: 'attendance',
+        prefixes: ['/ahiadmin/view/attendance'],
+        keywords: ['weekly', 'attendance', 'presence', 'checklist', 'days'],
+      },
+    ]
   },
   {
     type: 'group',
