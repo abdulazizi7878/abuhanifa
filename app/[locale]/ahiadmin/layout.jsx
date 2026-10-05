@@ -30,6 +30,7 @@ import {
   Folder,
   LifeBuoy,
   Calendar,
+  Briefcase,
 } from 'lucide-react';
 
 // Structured navigation hierarchy with categories & dropdown support
@@ -43,6 +44,22 @@ const NAVIGATION_STRUCTURE = [
     exact: true,
     keySegment: 'ahiadmin',
     keywords: ['home', 'main', 'overview', 'stats', 'analytics'],
+  },
+  {
+    type: 'group',
+    label: 'Business & Contracts',
+    icon: Briefcase,
+    key: 'business-contracts',
+    children: [
+      {
+        label: 'Contracts',
+        href: '/ahiadmin/view/contracts',
+        icon: FileText,
+        keySegment: 'contract',
+        prefixes: ['/ahiadmin/view/contracts', '/ahiadmin/create/contract', '/ahiadmin/edit/contract'],
+        keywords: ['contracts', 'agreements', 'legal', 'documents', 'terms', 'customer contract'],
+      },
+    ],
   },
   {
     type: 'group',
