@@ -185,7 +185,7 @@ export default async function RootLayout({
         telephone: "+251705489696",
         contactType: "customer service",
         areaServed: "ET",
-        availableLanguage: ["English", "Amharic","Arabic"],
+        availableLanguage: ["English", "Amharic","Arabic","Oromifa","Tigrigna","Somali"],
       },
     ],
   };

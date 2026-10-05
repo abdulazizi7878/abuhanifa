@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -31,10 +30,9 @@ import {
   LifeBuoy,
   Calendar,
   Briefcase,
+  Wallet, 
 } from 'lucide-react';
 
-// Structured navigation hierarchy with categories & dropdown support
-// Structured navigation hierarchy with categories & dropdown support
 const NAVIGATION_STRUCTURE = [
   {
     type: 'link',
@@ -58,6 +56,14 @@ const NAVIGATION_STRUCTURE = [
         keySegment: 'contract',
         prefixes: ['/ahiadmin/view/contracts', '/ahiadmin/create/contract', '/ahiadmin/edit/contract'],
         keywords: ['contracts', 'agreements', 'legal', 'documents', 'terms', 'customer contract'],
+      },
+      {
+        label: 'Payment Receivers',
+        href: '/ahiadmin/view/payment-receivers',
+        icon: Wallet,
+        keySegment: 'receiver',
+        prefixes: ['/ahiadmin/view/payment-receivers', '/ahiadmin/create/payment-receiver', '/ahiadmin/edit/payment-receiver'],
+        keywords: ['receivers', 'payments', 'banks', 'accounts', 'payment details', 'finance', 'payees'],
       },
     ],
   },
@@ -120,7 +126,7 @@ const NAVIGATION_STRUCTURE = [
         href: '/ahiadmin/create/showcase',
         icon: Image,
         keySegment: 'showcase',
-        prefixes: ['/ahiadmin/create/showcase', '/ahiadmin/view/showcase'],
+        prefixes: ['/ahiadmin/create/showcase', '/ahiadmin/view/showcase', '/ahiadmin/edit/showcase'],
         keywords: ['show', 'showcase', 'installation', 'gallery', 'photos', 'portfolio'],
       },
     ]
@@ -200,7 +206,7 @@ const NAVIGATION_STRUCTURE = [
         href: '/ahiadmin/create/review',
         icon: Star,
         keySegment: 'review',
-        prefixes: ['/ahiadmin/create/review', '/ahiadmin/view/reviews'],
+        prefixes: ['/ahiadmin/create/review', '/ahiadmin/view/reviews', '/ahiadmin/edit/review'],
         keywords: ['ratings', 'feedback', 'testimonials', 'stars'],
       },
       {
